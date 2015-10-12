@@ -22,7 +22,8 @@
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {:main cljs-browser-repl.core
+                        :compiler {
+                                   ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :optimizations :advanced
                                    :externs ["resources/cljs-browser-repl.ext.js"]
