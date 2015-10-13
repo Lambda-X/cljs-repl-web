@@ -4,15 +4,9 @@
 
 (enable-console-print!)
 
-;; (def initial-state {:console {:created? false}})
-
-;; (defonce app-state (reagent/atom initial-state))
-
-;; (reset! app-state initial-state)
-
 (defn page []
   [:div
-   [echo/echo-console]])
+   [echo/echo-component]])
 
 (defn ^:export main []
   (println "In main()")
