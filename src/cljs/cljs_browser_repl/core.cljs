@@ -1,6 +1,7 @@
 (ns cljs-browser-repl.core
   (:require [reagent.core :as reagent]
-            [cljs-browser-repl.console.echo :as echo]))
+            [cljs-browser-repl.console.echo :as echo]
+            [cljs-browser-repl.console.cljs :as cljs]))
 
 (enable-console-print!)
 
@@ -12,7 +13,7 @@
 
 (defn page []
   [:div
-   [echo/echo-console]])
+   [cljs/cljs-console]])
 
 (defn ^:export main []
   (println "In main()")

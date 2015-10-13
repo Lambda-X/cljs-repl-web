@@ -18,16 +18,20 @@
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
-                                   :source-map-timestamp true}}
+                                   :source-map-timestamp true
+                                   :foreign-libs [{:file "resources/public/js/repl-web.js"
+                                                   :provides ["cljs-bootstrap.repl.web"]}]}}
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {
-                                   ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
+                        :compiler { ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :optimizations :advanced
+                                   :pretty-print false
                                    :externs ["resources/cljs-browser-repl.ext.js"]
-                                   :pretty-print false}}]}
+                                   :foreign-libs [{:file "resources/public/js/repl-web.js"
+                                                   :provides ["cljs-bootstrap.repl.web"]}]}}
+                       ]}
 
   :aliases {"fig-dev" ["figwheel" "dev"]
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
