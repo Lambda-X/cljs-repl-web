@@ -1,6 +1,6 @@
 (defproject cljs-browser-repl "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.122"]
+                 [org.clojure/clojurescript "1.7.145"]
                  [cljsjs/jqconsole "2.11.0-1"]
                  [reagent "0.5.1"]]
   :source-paths ["src/clj"]
@@ -22,12 +22,12 @@
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {
-                                   ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
+                        :compiler { ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :optimizations :advanced
-                                   :externs ["resources/cljs-browser-repl.ext.js"]
-                                   :pretty-print false}}]}
+                                   :pretty-print false
+                                   :externs ["resources/cljs-browser-repl.ext.js"]}}
+                       ]}
 
   :aliases {"fig-dev" ["figwheel" "dev"]
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
