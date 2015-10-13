@@ -13,7 +13,7 @@
 
 (defn page []
   [:div
-   [cljs/cljs-console]])
+   [cljs/clj-console]])
 
 (defn ^:export main []
   (println "In main()")
