@@ -1,14 +1,17 @@
-************************************************************
-* The project still does not work because cljsjs/jqconsole *
-* needs to be pushed. I have it in my local repo and I will*
-* open a PR this weekend                                   *
-************************************************************
-
 # cljs-browser-repl
 
-A reagent app designed to embed a pure ClojureScript REPL.
+A reagent app designed to embed a pure ClojureScript REPL in a web page.
 
-The JavaScript will be ```clojure-browser-repl.js``` and it is typically located in ```resources/public/js/compiled```.
+The JavaScript will be ```cljs-browser-repl.js``` and it is typically located in ```resources/public/js/compiled```.
+
+In order to build the project in both ```dev``` and ```min``` you first need to have a local copy of ```cljsjs/jqconsole``` (the reason is that it has not yet merged to master).
+
+The steps to generate it at the moment are:
+
+* ```git clone https://github.com/arichiardi/packages```
+* ```cd packages/jqconsole```
+* ```boot package build-jar```
+
 
 ## Development Mode
 
@@ -16,9 +19,7 @@ In dev mode, an ```out``` folder, containing all the compiled dependencies will 
 
 #### Figwheel in dev mode:
 
-```
-lein do clean, figwheel dev
-```
+```lein fig-dev```  **or** ```lein figwheel dev```
 
 Figwheel will automatically push cljs changes to the browser.
 
@@ -26,10 +27,7 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 ## Production Build
 
-```
-lein clean
-lein cljsbuild once min
-```
+```lein minify``` **or** ```lein do clean, cljsbuild once min```
 
 ## Resources
 
