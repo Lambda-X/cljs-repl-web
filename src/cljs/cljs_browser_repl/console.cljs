@@ -24,33 +24,37 @@
 
 (defn write!
   "Writes a message to the input console. Type is used as class inside
-  the rendered message and should be either a string or a
-  keyword. Purely side effecting, returns nil."
+  the rendered message and should be either a string or a keyword. It
+  automatically separates messages with \n. Purely side effecting,
+  returns nil."
   [console type & messages]
-  (.Write console (apply str messages) (name type)))
+  (.Write console (str (s/join "\n" messages) "\n") (name type)))
 
 (defn write-error!
-  "Writes a jqconsole-error message to the input console. Purely side
-  effecting, returns nil."
+  "Writes a jqconsole-error message to the input console. It
+  automatically separates messages with \n. Purely side effecting,
+  returns nil."
   [console & messages]
   (apply write! console :jqconsole-error messages))
 
 (defn write-return!
-  "Writes a jqconsole-return message to the input console. Purely side
-  effecting, returns nil."
+  "Writes a jqconsole-return message to the input console. It
+  automatically separates messages with \n. Purely side effecting,
+  returns nil."
   [console & messages]
   (apply write! console :jqconsole-return messages))
 
 (defn write-output!
-  "Writes a jqconsole-return message to the input console. Purely side
-  effecting, returns nil."
+  "Writes a jqconsole-return message to the input console. It
+  automatically separates messages with \n. Purely side effecting,
+  returns nil."
   [console & messages]
   (apply write! console :jqconsole-output messages))
 
 (defn write-exception!
   [console ex]
   (if-let [cause (.-cause ex)]
-    (apply write-error! (s/join "\n" (filter (complement nil?) [cause
-                                                          (.-message cause)
-                                                          (.-stack cause)])))
-    (write-error! "Unhandled exception" ex)))
+    (apply write-error! console (filter (complement nil?) [cause
+                                                           (.-message cause)
+                                                           (.-stack cause)]))
+    (write-error! console (str "Unhandled exception: " ex))))
