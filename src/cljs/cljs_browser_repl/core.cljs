@@ -4,9 +4,9 @@
 
 (enable-console-print!)
 
-(def initial-state {:console {:created? false}})
+;; (def initial-state {:console {:created? false}})
 
-(defonce app-state (reagent/atom initial-state))
+;; (defonce app-state (reagent/atom initial-state))
 
 ;; (reset! app-state initial-state)
 

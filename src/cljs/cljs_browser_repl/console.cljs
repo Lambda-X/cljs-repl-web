@@ -1,5 +1,6 @@
 (ns cljs-browser-repl.console
-  (:require [cljsjs.jqconsole]))
+  (:require [clojure.string :as s :refer [join]]
+            [cljsjs.jqconsole]))
 
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
@@ -20,3 +21,36 @@
   [selector & {:keys [welcome-string prompt-label continue-label disable-auto-focus]
                :or {welcome-string nil prompt-label ">> " continue-label nil disable-auto-focus nil}}]
   (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
+
+(defn write!
+  "Writes a message to the input console. Type is used as class inside
+  the rendered message and should be either a string or a
+  keyword. Purely side effecting, returns nil."
+  [console type & messages]
+  (.Write console (apply str messages) (name type)))
+
+(defn write-error!
+  "Writes a jqconsole-error message to the input console. Purely side
+  effecting, returns nil."
+  [console & messages]
+  (apply write! console :jqconsole-error messages))
+
+(defn write-return!
+  "Writes a jqconsole-return message to the input console. Purely side
+  effecting, returns nil."
+  [console & messages]
+  (apply write! console :jqconsole-return messages))
+
+(defn write-output!
+  "Writes a jqconsole-return message to the input console. Purely side
+  effecting, returns nil."
+  [console & messages]
+  (apply write! console :jqconsole-output messages))
+
+(defn write-exception!
+  [console ex]
+  (if-let [cause (.-cause ex)]
+    (apply write-error! (s/join "\n" (filter (complement nil?) [cause
+                                                          (.-message cause)
+                                                          (.-stack cause)])))
+    (write-error! "Unhandled exception" ex)))

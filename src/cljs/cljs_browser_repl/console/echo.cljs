@@ -7,7 +7,7 @@
   (.Prompt console
            true
            (fn [input]
-             (.Write console (str input "\n") "jqconsole-output")
+             (console/write-output! console (str input "\n"))
              (echo-prompt console))))
 
 (defn echo-console-did-mount []
