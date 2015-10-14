@@ -1,5 +1,6 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
+            [cljs.pprint :as p :refer [pprint]]
             [cljsjs.jqconsole]))
 
 (defn new-jqconsole
@@ -28,7 +29,8 @@
   automatically separates messages with \n. Purely side effecting,
   returns nil."
   [console type & messages]
-  (.Write console (str (s/join "\n" messages) "\n") (name type)))
+  (when-let [msgs (filter (complement nil?) messages)]
+    (.Write console (str (s/join "\n" msgs) "\n") (name type))))
 
 (defn write-error!
   "Writes a jqconsole-error message to the input console. It
@@ -53,8 +55,8 @@
 
 (defn write-exception!
   [console ex]
-  (if-let [cause (.-cause ex)]
-    (apply write-error! console (filter (complement nil?) [cause
-                                                           (.-message cause)
-                                                           (.-stack cause)]))
-    (write-error! console (str "Unhandled exception: " ex))))
+  (if (= js/Error (:message ex))
+    (write-error! console (with-out-str (p/pprint ex)))
+    (if-let [cause (.-cause ex)]
+      (write-error! console (.-message cause) (.-stack cause))
+      (write-error! console (str ex)))))
