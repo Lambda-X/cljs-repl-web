@@ -23,6 +23,17 @@
                :or {welcome-string nil prompt-label ">> " continue-label nil disable-auto-focus nil}}]
   (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
 
+(defn extract-message
+  "Iteratively extracts messages inside (nested #error objects), returns
+  a string. Be sure to pass #error object here."
+  [err]
+  (loop [e err msgs (.-message err)]
+    (if-let [next-err (.-cause e)]
+      (recur next-err (str msgs " - " (.-message next-err)))
+      (if-not (nil? msgs)
+        msgs
+        ""))))
+
 (defn write!
   "Writes a message to the input console. Type is used as class inside
   the rendered message and should be either a string or a keyword. It
@@ -54,9 +65,12 @@
   (apply write! console :jqconsole-output messages))
 
 (defn write-exception!
-  [console ex]
-  (if (= js/Error (:message ex))
-    (write-error! console (with-out-str (p/pprint ex)))
-    (if-let [cause (.-cause ex)]
-      (write-error! console (.-message cause) (.-stack cause))
-      (write-error! console (str ex)))))
+  ([console ex] (write-exception! console ex false))
+  ([console ex print-stack?]
+   (cond
+     (= "ERROR" (.-message ex)) (write-error! console
+                                                   (.-message ex)
+                                                   (.-data ex)
+                                                   (when print-stack? (.-stack ex)))
+     (= :reader-exception (:type (.-data ex))) (write-error! console (.-message ex))
+     :else (write-error! console (extract-message ex)))))

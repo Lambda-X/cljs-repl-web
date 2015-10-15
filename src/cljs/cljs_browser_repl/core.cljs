@@ -9,6 +9,6 @@
    [cljs/cljs-component]])
 
 (defn ^:export main []
-  (println "In main()")
+  (println "In cljs-browser-repl.core/main")
   (reagent/render [page]
                   (.getElementById js/document "app")))
