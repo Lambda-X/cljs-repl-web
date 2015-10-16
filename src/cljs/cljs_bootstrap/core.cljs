@@ -13,7 +13,6 @@
 
 (def success? "Returns if the evaluation was successful" first)
 
-
 (defn ^:extern init-repl
   "The init-repl function accepts a map of options. Currently supported:
 
