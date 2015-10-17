@@ -1,5 +1,5 @@
-(ns cljs-bootstrap.doc-maps)
-
+(ns cljs-bootstrap.doc-maps
+  "Namespace containing special and repl-special doc maps and utils" )
 
 (def special-doc-map
   '{.     {:forms [(.instanceMethod instance args*)
@@ -157,3 +157,19 @@ itself (not its value) is returned. The reader macro #'x expands to (var x)."}})
                     :doc      "Prints the source code for the given symbol, if it can find it.\n  This requires that the symbol resolve to a Var defined in a\n  namespace for which the source is available.\n\n  Example: (source filter)"}
     pst            {:arglists ([] [e])
                     :doc      "Prints a stack trace of the exception.\n  If none supplied, uses the root cause of the most recent repl exception (*e)"}})
+
+(defn special-doc
+  [name-symbol]
+  (assoc (special-doc-map name-symbol)
+    :name name-symbol
+    :special-form true))
+
+(defn repl-special-doc
+  [name-symbol]
+  (assoc (repl-special-doc-map name-symbol)
+    :name name-symbol
+    :repl-special-function true))
+
+(defn repl-special?
+  [form]
+  (and (seq? form) (repl-special-doc-map (first form))))

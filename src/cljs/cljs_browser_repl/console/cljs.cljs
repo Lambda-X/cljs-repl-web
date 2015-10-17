@@ -12,7 +12,7 @@
 (defn cljs-read-eval-print!
   [console line]
   (try
-    (bootstrap/read-eval-print line (partial handle-result! console))
+    (bootstrap/read-eval-print (partial handle-result! console) line)
     (catch js/Error err
       (println "Caught js/Error - " err)
       (console/write-exception! console err))))

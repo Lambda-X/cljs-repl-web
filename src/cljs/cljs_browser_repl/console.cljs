@@ -1,7 +1,7 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
-            [cljs.pprint :as p :refer [pprint]]
-            [cljsjs.jqconsole]))
+            [cljsjs.jqconsole]
+            [cljs-bootstrap.core :as bootstrap]))
 
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
@@ -22,17 +22,6 @@
   [selector & {:keys [welcome-string prompt-label continue-label disable-auto-focus]
                :or {welcome-string nil prompt-label ">> " continue-label nil disable-auto-focus nil}}]
   (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
-
-(defn extract-message
-  "Iteratively extracts messages inside (nested #error objects), returns
-  a string. Be sure to pass #error object here."
-  [err]
-  (loop [e err msgs (.-message err)]
-    (if-let [next-err (.-cause e)]
-      (recur next-err (str msgs " - " (.-message next-err)))
-      (if-not (nil? msgs)
-        msgs
-        ""))))
 
 (defn write!
   "Writes a message to the input console. Type is used as class inside
@@ -66,11 +55,5 @@
 
 (defn write-exception!
   ([console ex] (write-exception! console ex false))
-  ([console ex print-stack?]
-   (cond
-     (= "ERROR" (.-message ex)) (write-error! console
-                                                   (.-message ex)
-                                                   (.-data ex)
-                                                   (when print-stack? (.-stack ex)))
-     (= :reader-exception (:type (.-data ex))) (write-error! console (.-message ex))
-     :else (write-error! console (extract-message ex)))))
+  ([console ex print-stack-trace?]
+   (write-error! console (bootstrap/exception->str ex print-stack-trace?))))
