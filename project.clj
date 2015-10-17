@@ -15,7 +15,7 @@
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :figwheel {:on-jsload "cljs-browser-repl.core/main"
+                        :figwheel {:on-jsload "launcher.test/run"
                                    :css-dirs ["resources/public/styles"]}
                         :compiler {:main cljs-browser-repl.core
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
