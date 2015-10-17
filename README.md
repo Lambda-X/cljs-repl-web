@@ -29,6 +29,12 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 ```lein minify``` **or** ```lein do clean, cljsbuild once min```
 
+## Testing
+
+For testing, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/), after which you can execute:
+
+```lein unit-test``` **or** ```lein do clean, cljsbuild test unit```
+
 ## Resources
 
  * [JQConsole](https://github.com/replit/jq-console)

@@ -5,23 +5,30 @@
                  [reagent "0.5.1"]
                  [com.cognitect/transit-clj "0.8.283"]
                  [com.cognitect/transit-cljs "0.8.225"]]
-  :source-paths ["src/clj"]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.0" :exclusions [cider/cider-nrepl]]]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"  ]
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" ]
+  :hooks [leiningen.cljsbuild]
+  :source-paths ["src/clj"]
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/cljs"]
-                        :figwheel {:on-jsload "cljs-browser-repl.core/main"
+                        :source-paths ["src/cljs" "test/cljs"]
+                        :figwheel {:on-jsload "launcher.test/run"
                                    :css-dirs ["resources/public/styles"]}
                         :compiler {:main cljs-browser-repl.core
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
+                                   :optimizations :none
                                    :source-map-timestamp true}}
-
+                       {:id "test"
+                        :source-paths ["src/cljs" "test/cljs"]
+                        :compiler {:output-to "resources/phantomjs/js/compiled/cljs-browser-repl.js"
+                                   :pretty-print false
+                                   :optimizations :whitespace
+                                   :source-map-timestamp true}}
                        {:id "min"
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
@@ -29,12 +36,16 @@
                                    :optimizations :advanced
                                    :pretty-print false
                                    :externs ["resources/cljs-browser-repl.ext.js"]}}
-                       ]}
+                       ]
+              :test-commands {"unit" ["phantomjs"
+                                      "resources/phantomjs/test.js"
+                                      "resources/phantomjs/test.html"]}}
 
-  :aliases {"fig-dev" ["figwheel" "dev"]
+  :aliases {"fig-dev" ["do" "clean" ["figwheel" "dev"]]
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
             ;; Nested vectors are supported for the "do" task
-            "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]}
+            "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]
+            "unit-test" ^{:doc "Executes unit tests."} ["do" "clean" ["cljsbuild" "test" "unit"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]

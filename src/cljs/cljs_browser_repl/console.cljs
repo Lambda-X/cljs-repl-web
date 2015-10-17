@@ -1,7 +1,7 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
-            [cljs.pprint :as p :refer [pprint]]
-            [cljsjs.jqconsole]))
+            [cljsjs.jqconsole]
+            [cljs-bootstrap.core :as bootstrap]))
 
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
@@ -54,9 +54,6 @@
   (apply write! console :jqconsole-output messages))
 
 (defn write-exception!
-  [console ex]
-  (if (= js/Error (:message ex))
-    (write-error! console (with-out-str (p/pprint ex)))
-    (if-let [cause (.-cause ex)]
-      (write-error! console (.-message cause) (.-stack cause))
-      (write-error! console (str ex)))))
+  ([console ex] (write-exception! console ex false))
+  ([console ex print-stack-trace?]
+   (write-error! console (bootstrap/exception->str ex print-stack-trace?))))
