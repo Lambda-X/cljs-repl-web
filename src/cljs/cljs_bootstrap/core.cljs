@@ -36,11 +36,11 @@
   "Iteratively extracts messages inside (nested #error objects), returns
   a string. Be sure to pass #error object here."
   [err]
-  (loop [e err msgs (.-message err)]
+  (loop [e err msgs [(.-message err)]]
     (if-let [next-err (.-cause e)]
-      (recur next-err (str msgs " - " (.-message next-err)))
-      (if-not (nil? msgs)
-        msgs
+      (recur next-err (conj msgs (.-message next-err)))
+      (if (seq msgs)
+        (clojure.string/join " - " msgs)
         ""))))
 
 (defn ^:export exception->str
