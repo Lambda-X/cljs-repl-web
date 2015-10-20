@@ -45,7 +45,7 @@
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
             ;; Nested vectors are supported for the "do" task
             "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]
-            "unit-test" ^{:doc "Executes unit tests."} ["do" "clean" ["cljsbuild" "test" "unit"]]}
+            "unit-test" ^{:doc "Executes unit tests."} ["cljsbuild" "test" "unit"]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]

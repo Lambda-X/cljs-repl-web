@@ -141,17 +141,16 @@
 
   Supports the following options (opts = option map):
 
-  * :no-result-processing If true, avoids any processing the result and
-                          just forwards it to the callback as is.
+  * :no-pr-str-on-value If true, avoids wrapping value in pr-str.
 
   The opts map passed here overrides the environment options."
-  ([opts cb result]
-   (handle-eval-success! opts cb result identity))
-  ([opts cb result side-effect!]
+  ([opts cb value]
+   (handle-eval-success! opts cb value identity))
+  ([opts cb value side-effect!]
    (side-effect!)
-   (cb true (if-not (:no-result-processing opts)
-              (pr-str result)
-              result))))
+   (cb true (if-not (:no-pr-str-on-value opts)
+              (pr-str value)
+              value))))
 
 (defn handle-eval-error!
   "Handles the case when the evaluation returned error, executing
@@ -181,13 +180,13 @@
      (handle-eval-success! opts cb value side-effect!)
      (handle-eval-error! opts cb error side-effect!))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Process functions - from mfikes/plank ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Processing fns - from mfikes/plank ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn- process-doc
+(defn process-doc
   [cb env sym]
-  (handle-eval-success! {:no-result-processing true}
+  (handle-eval-success! {:no-pr-str-on-value true}
                         cb
                         (with-out-str
                           (cond
@@ -201,7 +200,10 @@
     (cljs/eval st
                expr
                (make-base-eval-opts! opts)
-               (partial handle-eval-success! opts cb))
+               (fn [res]
+                 (if res
+                   (handle-eval-success! (assoc opts :no-pr-str-on-value true) cb (.-stack res))
+                   (handle-eval-success! opts cb res))))
     (handle-eval-success! opts cb nil)))
 
 (defn process-in-ns
