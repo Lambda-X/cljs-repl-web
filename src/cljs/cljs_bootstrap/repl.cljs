@@ -8,7 +8,8 @@
             [cljs.repl :as repl]
             [cognitect.transit :as transit]
             [cljs-bootstrap.load :as load]
-            [cljs-bootstrap.doc-maps :as docs]))
+            [cljs-bootstrap.doc-maps :as docs]
+            [cljs-bootstrap.util :as util]))
 
 (def ^:dynamic  *custom-eval-fn* "See cljs.js/*eval-fn* in ClojureScript core."
   cljs/js-eval)
@@ -21,18 +22,6 @@
 (defonce st (cljs/empty-state))
 
 (defonce app-env (atom {:current-ns 'cljs.user}))
-
-(defn debug-prn
-  [& args]
-  (binding [*print-fn* *print-err-fn*]
-    (apply println args)))
-
-(defn build-error
-  ([msg] (build-error msg nil))
-  ([msg cause]
-   (ex-info msg
-            {:tag :bootstrap/repl-error}
-            cause)))
 
 (defn current-ns
   "Return the current namespace, as a symbol."
@@ -160,7 +149,7 @@
    (handle-eval-result! opts cb ret identity))
   ([opts cb {:keys [value error] :as ret} side-effect!]
    (when (:verbose opts)
-     (debug-prn "Evaluation returned {:value " value " :error " error "}"))
+     (util/debug-prn "Evaluation returned {:value " value " :error " error "}"))
    (when-not error
      (handle-eval-success! opts cb value side-effect!)
      (handle-eval-error! opts cb error side-effect!))))
@@ -181,7 +170,7 @@
 
 (defn- process-pst
   [opts cb expr]
-  (when (:verbose opts) (debug-prn expr))
+  (when (:verbose opts) (util/debug-prn expr))
   (if-let [expr (or expr '*e)]
     (cljs/eval st
                expr
@@ -198,12 +187,12 @@
      eval-opts
      (fn [result]
        (when (:verbose opts)
-         (debug-prn "in-ns first evaluation returned " result))
+         (util/debug-prn "in-ns first evaluation returned " result))
        (if (and (map? result) (:error result))
          (handle-eval-error! opts cb result)
          (let [ns-symbol result]
            (when (:verbose opts)
-             (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
+             (util/debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
            (if-not (symbol? ns-symbol)
              (handle-eval-error! opts
                                  cb
@@ -233,13 +222,13 @@
         argument (second expression-form)]
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
-      require (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))         ;; (process-require :require identity (rest expression-form))
-      require-macros (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))  ;; (process-require :require-macros identity (rest expression-form))
-      import (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))          ;; (process-require :import identity (rest expression-form))
+      require (handle-eval-error! opts cb (util/build-error "This keyword is not supported at the moment"))         ;; (process-require :require identity (rest expression-form))
+      require-macros (handle-eval-error! opts cb (util/build-error "This keyword is not supported at the moment"))  ;; (process-require :require-macros identity (rest expression-form))
+      import (handle-eval-error! opts cb (util/build-error "This keyword is not supported at the moment"))          ;; (process-require :import identity (rest expression-form))
       doc (process-doc cb env argument)
-      source (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))          ;; (println (fetch-source (get-var env argument)))
+      source (handle-eval-error! opts cb (util/build-error "This keyword is not supported at the moment"))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment")))))    ;; (process-load-file argument opts)
+      load-file (handle-eval-error! opts cb (util/build-error "This keyword is not supported at the moment")))))    ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]
@@ -276,7 +265,7 @@
                 opts)
          (fn [{:keys [ns value error] :as ret}]
            (when (:verbose opts)
-             (debug-prn "Evaluation returned " ret))
+             (util/debug-prn "Evaluation returned: " ret))
            (if-not error
              (handle-eval-success! opts
                                   cb
