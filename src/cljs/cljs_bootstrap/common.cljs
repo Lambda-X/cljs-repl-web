@@ -26,3 +26,8 @@
   (when-not (string? s)
     (println "HEY! " s))
   (re-matches #"\\{2,}n|\\{2,}r" s))
+
+(defn valid-eval-result?
+  "Is the string returned from an evaluation valid?"
+  [result]
+  (and (string? result) (not (inline-newline? result))))
