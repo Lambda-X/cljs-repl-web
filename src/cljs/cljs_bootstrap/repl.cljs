@@ -17,11 +17,19 @@
 (def ^:dynamic *custom-load-fn* "See cljs.js/*load-fn* in ClojureScript core."
   load/js-load)
 
+;;;;;;;;;;;;;
+;;; State ;;;
+;;;;;;;;;;;;;
+
 ;; This is the compiler state atom. Note that
 ;; cljs/eval wants exactly an atom.
 (defonce st (cljs/empty-state))
 
 (defonce app-env (atom {:current-ns 'cljs.user}))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Util fns - many from mfikes/plank ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn debug-prn
   [& args]
@@ -118,22 +126,56 @@
   ([& maps]
    (apply merge (make-base-eval-opts!) maps)))
 
-;; (defn require [macros-ns? sym reload]
-  ;; (cljs.js/require
-    ;; {:*compiler*     st
-     ;; :*data-readers* tags/*cljs-data-readers*
-     ;; :*load-fn*      *custom-load-fn*
-     ;; :*eval-fn*      *custom-eval-fn*}
-    ;; sym
-    ;; reload
-    ;; {:macros-ns macros-ns?
-     ;; :verbose   (:verbose @app-env)}
-    ;; (fn [res]
-      ;; (println "require result:" res))))
+(defn self-require?
+  [specs]
+  (some
+    (fn [quoted-spec-or-kw]
+      (and (not (keyword? quoted-spec-or-kw))
+        (let [spec (second quoted-spec-or-kw)
+              ns (if (sequential? spec)
+                   (first spec)
+                   spec)]
+          (= ns @current-ns))))
+    specs))
 
-;; (defn require-destructure [macros-ns? args]
-  ;; (let [[[_ sym] reload] args]
-    ;; (require macros-ns? sym reload)))
+(defn canonicalize-specs
+  [specs]
+  (letfn [(canonicalize [quoted-spec-or-kw]
+            (if (keyword? quoted-spec-or-kw)
+              quoted-spec-or-kw
+              (as-> (second quoted-spec-or-kw) spec
+                (if (vector? spec) spec [spec]))))]
+    (map canonicalize specs)))
+
+(defn process-reloads!
+  [specs]
+  (if-let [k (some #{:reload :reload-all} specs)]
+    (let [specs (->> specs (remove #{k}))]
+      (if (= k :reload-all)
+        (reset! cljs.js/*loaded* #{})
+        (apply swap! cljs.js/*loaded* disj (map first specs)))
+      specs)
+    specs))
+
+(defn make-ns-form
+  [kind specs target-ns]
+  (if (= kind :import)
+    (with-meta `(~'ns ~target-ns
+                  (~kind
+                    ~@(map (fn [quoted-spec-or-kw]
+                             (if (keyword? quoted-spec-or-kw)
+                               quoted-spec-or-kw
+                               (second quoted-spec-or-kw)))
+                        specs)))
+      {:merge true :line 1 :column 1})
+    (with-meta `(~'ns ~target-ns
+                  (~kind
+                    ~@(-> specs canonicalize-specs process-reloads!)))
+      {:merge true :line 1 :column 1})))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Eval handling fns ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn handle-eval-success!
   "Handles the case when the evaluation returned success, executing
@@ -165,24 +207,43 @@
 (defn handle-eval-result!
   "Handles the evaluation result, calling the callback in the right way,
   based on success or error of the evaluation and executing
-  (side-effect!) *before* the callback is called. Does not care about
-  other evaluation result keys.
+  (side-effect!) *before* the callback is called. There is also a arity
+  for differentiating the side effect based on success or error.
 
   Supports the following options (opts = option map):
   * :verbose If true, prints the evaluation return.
 
   The opts map passed here overrides the environment options."
   ([opts cb ret]
-   (handle-eval-result! opts cb ret identity))
-  ([opts cb {:keys [value error] :as ret} side-effect!]
-   (println value "!" error "|" ret)
+   (handle-eval-result! opts cb identity ret))
+  ([opts cb side-effect! {:keys [value error] :as ret}]
    (if-not error
      (handle-eval-success! opts cb value side-effect!)
-     (handle-eval-error! opts cb error side-effect!))))
+     (handle-eval-error! opts cb error side-effect!)))
+  ([opts cb side-effect-on-success! side-effect-on-error! {:keys [value error] :as ret}]
+   (if-not error
+     (handle-eval-success! opts cb value side-effect-on-success!)
+     (handle-eval-error! opts cb error side-effect-on-error!))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Processing fns - from mfikes/plank ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn process-require
+  [opts cb kind specs]
+  (let [is-self-require? (and (= :kind :require) (self-require? specs))
+        [target-ns restore-ns] (if-not is-self-require?
+                                 [(:current-ns @app-env) nil]
+                                 ['cljs.user (:current-ns @app-env)])
+        ns-form (make-ns-form kind specs target-ns)]
+    (when (:verbose opts)
+      (debug-prn "Processing " (name kind) " via ns: " (pr-str ns-form)))
+    (cljs/eval
+     st
+     ns-form
+     (make-base-eval-opts! opts)
+     (partial handle-eval-result! opts cb #(when is-self-require?
+                                             (swap! app-env assoc :current-ns restore-ns))))))
 
 (defn process-doc
   [cb env sym]
@@ -247,9 +308,9 @@
         argument (second expression-form)]
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
-      require (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})) ;; (process-require :require identity (rest expression-form))
+      require (process-require opts cb :require (rest expression-form))
       require-macros (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))  ;; (process-require :require-macros identity (rest expression-form))
-      import (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (process-require :import identity (rest expression-form))
+      import (process-require  opts cb :import (rest expression-form))
       doc (process-doc cb env argument)
       source (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
