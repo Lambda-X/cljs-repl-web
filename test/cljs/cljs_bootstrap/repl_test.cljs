@@ -6,13 +6,28 @@
 (deftest current-ns
   (is (symbol? (repl/current-ns)) "The current ns should be a symbol"))
 
+(deftest process-pst
+  (let [[success error] (do (repl/read-eval-print {} common/echo-callback "(throw (ex-info \"Exception\" {:tag :exception}))")
+                            (repl/read-eval-print {} common/echo-callback "*e"))]
+    (is success "The evaluation of *e should return successfully")
+    (is (string? error) "The evaluation of *e should return a string")
+    (is (re-find #"Exception" error) "The evaluation of *e should return the correct message")
+    (common/reset-errors))
+  (let [[success error] (do (repl/read-eval-print {} common/echo-callback "(throw (ex-info \"Exception\" {:tag :exception}))")
+                            (repl/read-eval-print {} common/echo-callback "(pst)"))]
+    (is success "The evaluation of *e should return successfully")
+    (is (string? error) "The pst form should return a string")
+    (is (re-find #"Exception" error) "the pst form should return the stacktrace as string")
+    (common/reset-errors)))
+
 (deftest process-doc
   (let [[success error] (repl/read-eval-print {} common/echo-callback "(doc 'println)")]
     (is (not success) "In-ns but no symbol should NOT succeed") "Doc but no symbol should have correct error")
   (let [[success result] (repl/read-eval-print {} common/echo-callback "(doc println)")]
     (is success "Doc with symbol should succeed")
     ;; Cannot test #"cljs.core\/println" because of a compilation bug?
-    (is (re-find #"cljs\.core.{1}println" result) "Doc with symbol should return nil")))
+    (is (re-find #"cljs\.core.{1}println" result) "Doc with symbol should return nil"))
+  (common/reset-errors))
 
 (deftest process-in-ns
   (let [[success error] (repl/read-eval-print {} common/echo-callback "(in-ns \"my.first.namespace\")")]
@@ -23,14 +38,17 @@
     (is (= "nil" result)) "In-ns with symbol should return nil"
 
     ;; Note that (do (in-ns 'my.namespace) (def a 3) (in-ns 'cljs) my.namespace/a)
-    ;; Does not work!
+    ;; Does not work in ClojureScript!
     (let [[success result] (do (repl/read-eval-print {} common/echo-callback "(in-ns 'first.namespace)")
                                (repl/read-eval-print {} common/echo-callback "(def a 3)")
                                (repl/read-eval-print {} common/echo-callback "(in-ns 'second.namespace)")
                                (repl/read-eval-print {} common/echo-callback "first.namespace/a"))]
-      (is (= "3" result))) "Defining in ns should intern persistent var"))
+      (is (= "3" result))) "Defining in ns should intern persistent var")
+  (common/reset-errors)
+  (common/reset-namespace))
 
 (deftest repl-test
   (current-ns)
+  (process-pst)
   (process-in-ns)
   (process-doc))

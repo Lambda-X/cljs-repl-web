@@ -12,11 +12,9 @@
   ([opts]
    (set! *target* "default")
    ;; Options
-   (swap! repl/app-env assoc :verbose (:verbose opts))
+   (swap! repl/app-env assoc (repl/valid-opts opts))
    ;; Create cljs.user
-   (if (= *target* "nodejs")
-     (set! (.. js/global -cljs -user) #js {})
-     (set! (.. js/window -cljs -user) #js {}))))
+   (set! (.. js/window -cljs -user) #js {})))
 
 (defn ^:export read-eval-print
   "Reads evaluates and prints the input source. The second parameter,
@@ -47,6 +45,6 @@
   "Return the message string of the input exception."
   ([ex] (exception->str ex false))
   ([ex print-stack?]
-   (cond
-     (= :reader-exception (:type (.-data ex))) (.-message ex)
-     :else (extract-message ex))))
+   (str (extract-message ex) (when (and print-stack?
+                                        (not (nil? (.-stack ex))))
+                               (str "\n" (.-stack ex))))))
