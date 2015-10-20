@@ -1,7 +1,8 @@
 (ns cljs-bootstrap.core
   (:require-macros [cljs.env.macros :refer [with-compiler-env]])
   (:require [cljs.js :as cljs]
-            [cljs-bootstrap.repl :as repl]))
+            [cljs-bootstrap.repl :as repl]
+            [cljs-bootstrap.common :as common]))
 
 (defn ^:extern init-repl
   "The init-repl function accepts a map of options. Currently supported:
@@ -30,21 +31,10 @@
 (defn ^:export get-prompt []
   (str (repl/current-ns) "=> "))
 
-(defn extract-message
-  "Iteratively extracts messages inside (nested #error objects), returns
-  a string. Be sure to pass #error object here."
-  [err]
-  (loop [e err msgs [(.-message err)]]
-    (if-let [next-err (.-cause e)]
-      (recur next-err (conj msgs (.-message next-err)))
-      (if (seq msgs)
-        (clojure.string/join " - " msgs)
-        ""))))
-
 (defn ^:export exception->str
   "Return the message string of the input exception."
   ([ex] (exception->str ex false))
   ([ex print-stack?]
-   (str (extract-message ex) (when (and print-stack?
+   (str (common/extract-message ex) (when (and print-stack?
                                         (not (nil? (.-stack ex))))
                                (str "\n" (.-stack ex))))))
