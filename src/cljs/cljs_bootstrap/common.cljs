@@ -19,3 +19,10 @@
   "Evaluates (in-ns 'cljs.user), resetting the current namespace."
   #(repl/read-eval-print {} echo-callback "(in-ns 'cljs.user)"))
 
+(defn inline-newline?
+  "Returns true if the string contains the newline \\\\n or \\\\r as
+  characters."
+  [s]
+  (when-not (string? s)
+    (println "HEY! " s))
+  (re-matches #"\\{2,}n|\\{2,}r" s))

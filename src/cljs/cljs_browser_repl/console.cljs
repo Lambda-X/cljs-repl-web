@@ -56,5 +56,4 @@
 (defn write-exception!
   ([console ex] (write-exception! console ex false))
   ([console ex print-stack-trace?]
-   (println "2" ex)
    (write-error! console (bootstrap/exception->str ex print-stack-trace?))))
