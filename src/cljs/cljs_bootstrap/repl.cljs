@@ -185,10 +185,11 @@
 
   * :no-pr-str-on-value If true, avoids wrapping value in pr-str.
 
-  The opts map passed here overrides the environment options."
+  The opts map passed here overrides the environment options.
+  Note that value is always the last parameter."
   ([opts cb value]
-   (handle-eval-success! opts cb value identity))
-  ([opts cb value side-effect!]
+   (handle-eval-success! opts cb identity value))
+  ([opts cb side-effect! value]
    (side-effect!)
    (cb true (if-not (:no-pr-str-on-value opts)
               (pr-str value)
@@ -196,10 +197,11 @@
 
 (defn handle-eval-error!
   "Handles the case when the evaluation returned error, executing
-  (side-effect!) *before* the callback is called with [false, error]."
+  (side-effect!) *before* the callback is called with [false, error].
+  Note that error is always the last parameter."
   ([opts cb error]
-   (handle-eval-error! opts cb error identity))
-  ([opts cb error side-effect!]
+   (handle-eval-error! opts cb identity error))
+  ([opts cb side-effect! error]
    (side-effect!)
    (set! *e error)
    (cb false error)))
@@ -218,12 +220,12 @@
    (handle-eval-result! opts cb identity ret))
   ([opts cb side-effect! {:keys [value error] :as ret}]
    (if-not error
-     (handle-eval-success! opts cb value side-effect!)
-     (handle-eval-error! opts cb error side-effect!)))
+     (handle-eval-success! opts cb side-effect! value)
+     (handle-eval-error! opts cb side-effect! error)))
   ([opts cb side-effect-on-success! side-effect-on-error! {:keys [value error] :as ret}]
    (if-not error
-     (handle-eval-success! opts cb value side-effect-on-success!)
-     (handle-eval-error! opts cb error side-effect-on-error!))))
+     (handle-eval-success! opts cb side-effect-on-success! value)
+     (handle-eval-error! opts cb side-effect-on-error! error))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Processing fns - from mfikes/plank ;;;
@@ -238,12 +240,14 @@
         ns-form (make-ns-form kind specs target-ns)]
     (when (:verbose opts)
       (debug-prn "Processing " (name kind) " via ns: " (pr-str ns-form)))
-    (cljs/eval
-     st
-     ns-form
-     (make-base-eval-opts! opts)
-     (partial handle-eval-result! opts cb #(when is-self-require?
-                                             (swap! app-env assoc :current-ns restore-ns))))))
+    (cljs/eval st
+               ns-form
+               (make-base-eval-opts! opts)
+               (partial handle-eval-result!
+                        opts
+                        cb
+                        #(when is-self-require?
+                           (swap! app-env assoc :current-ns restore-ns))))))
 
 (defn process-doc
   [cb env sym]
@@ -286,8 +290,8 @@
            (if (some (partial = ns-symbol) (known-namespaces))
              (handle-eval-success! opts
                                    cb
-                                   nil
-                                   #(swap! app-env assoc :current-ns ns-symbol))
+                                   #(swap! app-env assoc :current-ns ns-symbol)
+                                   nil)
              (let [ns-form `(~'ns ~ns-symbol)]
                (cljs/eval
                 st
@@ -298,8 +302,8 @@
                     (handle-eval-error! opts cb e)
                     (handle-eval-success! opts
                                           cb
-                                          nil
-                                          #(swap! app-env assoc :current-ns ns-symbol)))))))))))))
+                                          #(swap! app-env assoc :current-ns ns-symbol)
+                                          nil))))))))))))
 
 (defn process-repl-special
   [opts cb expression-form]
@@ -340,25 +344,24 @@
     (let [expression-form (repl-read-string source)]
       (if (docs/repl-special? expression-form)
         (process-repl-special opts cb expression-form)
-        (cljs/eval-str
-         st
-         source
-         source
-         ;; opts (map)
-         (merge (make-base-eval-opts!)
-                {:source-map false
-                 :def-emits-var true}
-                opts)
-         (fn [{:keys [ns value error] :as ret}]
-           (when (:verbose opts)
-             (debug-prn "Evaluation returned: " ret))
-           (if-not error
-             (handle-eval-success! opts
-                                  cb
-                                  value
-                                  #(do
-                                     (process-1-2-3 expression-form value)
-                                     (swap! app-env assoc :current-ns ns)))
-             (handle-eval-error! opts cb error))))))
+        (cljs/eval-str st
+                       source
+                       source
+                       ;; opts (map)
+                       (merge (make-base-eval-opts!)
+                              {:source-map false
+                               :def-emits-var true}
+                              opts)
+                       (fn [{:keys [ns value error] :as ret}]
+                         (when (:verbose opts)
+                           (debug-prn "Evaluation returned: " ret))
+                         (if-not error
+                           (handle-eval-success! opts
+                                                 cb
+                                                 #(do
+                                                    (process-1-2-3 expression-form value)
+                                                    (swap! app-env assoc :current-ns ns))
+                                                 value)
+                           (handle-eval-error! opts cb error))))))
     (catch :default e
       (handle-eval-error! opts cb e))))
