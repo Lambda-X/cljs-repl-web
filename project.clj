@@ -7,7 +7,7 @@
                  [com.cognitect/transit-cljs "0.8.225"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-figwheel "0.4.0" :exclusions [cider/cider-nrepl]]]
+            [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" ]
   :hooks [leiningen.cljsbuild]

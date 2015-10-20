@@ -1,12 +1,13 @@
 (ns cljs-bootstrap.repl
-  (:require-macros [cljs.env.macros :refer [with-compiler-env]])
+  (:refer-clojure :exclude [load-file])
+  (:require-macros [cljs.env.macros :refer [with-compiler-env]]
+                   [cljs.repl :refer [pst]])
   (:require [cljs.js :as cljs]
             [cljs.tagged-literals :as tags]
             [cljs.tools.reader :as r]
             [cljs.analyzer :as ana]
             [cljs.env :as env]
             [cljs.repl :as repl]
-            [cognitect.transit :as transit]
             [cljs-bootstrap.load :as load]
             [cljs-bootstrap.doc-maps :as docs]))
 
@@ -24,15 +25,8 @@
 
 (defn debug-prn
   [& args]
-  (binding [*print-fn* *print-err-fn*]
+  (binding [cljs.core/*print-fn* cljs.core/*print-err-fn*]
     (apply println args)))
-
-(defn build-error
-  ([msg] (build-error msg nil))
-  ([msg cause]
-   (ex-info msg
-            {:tag :bootstrap/repl-error}
-            cause)))
 
 (defn current-ns
   "Return the current namespace, as a symbol."
@@ -93,13 +87,36 @@
       (update var :name #(symbol (name %)))
       var)))
 
-(defn make-base-eval-opts
-  []
-  {:ns      (:current-ns @app-env)
-   :context :expr
-   :load    *custom-load-fn*
-   :eval    *custom-eval-fn*
-   :verbose (:verbose @app-env)})
+(def valid-opts-set
+  "Set of valid option for external input validation:
+
+  * :verbose If true, enables more traces."
+  #{:verbose})
+
+(defn valid-opts
+  "Extract options according to the valid-opts-set."
+  [opts]
+  (into {} (filter (comp valid-opts-set first) @app-env)))
+
+(defn env-opts!
+  "Reads the map of environment options. Usually these are set when the
+  repl is initialized. The function works like merge, the mapping from
+  the latter (left-to-right) will be the mapping in the result. Extracts
+  the options in the valid-options set."
+  [& maps] (apply merge @app-env maps))
+
+(defn make-base-eval-opts!
+  "Gets the base set of evaluation options. The variadic arity function
+  works like merge, the mapping from the latter (left-to-right) will be
+  the mapping in the result. Extracts the options in the valid-options
+  set."
+  ([]
+   (env-opts! {:ns      (:current-ns @app-env)
+               :context :expr
+               :load    *custom-load-fn*
+               :eval    *custom-eval-fn*}))
+  ([& maps]
+   (apply merge (make-base-eval-opts!) maps)))
 
 ;; (defn require [macros-ns? sym reload]
   ;; (cljs.js/require
@@ -159,9 +176,8 @@
   ([opts cb ret]
    (handle-eval-result! opts cb ret identity))
   ([opts cb {:keys [value error] :as ret} side-effect!]
-   (when (:verbose opts)
-     (debug-prn "Evaluation returned {:value " value " :error " error "}"))
-   (when-not error
+   (println value "!" error "|" ret)
+   (if-not error
      (handle-eval-success! opts cb value side-effect!)
      (handle-eval-error! opts cb error side-effect!))))
 
@@ -179,52 +195,48 @@
                             (docs/repl-special-doc-map sym) (repl/print-doc (docs/repl-special-doc sym))
                             :else (repl/print-doc (get-var env sym))))))
 
-(defn- process-pst
+(defn process-pst
   [opts cb expr]
-  (when (:verbose opts) (debug-prn expr))
   (if-let [expr (or expr '*e)]
     (cljs/eval st
                expr
-               (merge (make-base-eval-opts) opts)
-               (partial handle-eval-result! opts cb))
+               (make-base-eval-opts! opts)
+               (partial handle-eval-success! opts cb))
     (handle-eval-success! opts cb nil)))
 
 (defn process-in-ns
   [opts cb ns-string]
-  (let [eval-opts (merge (make-base-eval-opts) opts)]
-    (cljs/eval
-     st
-     ns-string
-     eval-opts
-     (fn [result]
-       (when (:verbose opts)
-         (debug-prn "in-ns first evaluation returned " result))
-       (if (and (map? result) (:error result))
-         (handle-eval-error! opts cb result)
-         (let [ns-symbol result]
-           (when (:verbose opts)
-             (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
-           (if-not (symbol? ns-symbol)
-             (handle-eval-error! opts
-                                 cb
-                                 (build-error "Argument to in-ns must be a symbol"))
-             (if (some (partial = ns-symbol) (known-namespaces))
-               (handle-eval-success! opts
-                                     cb
-                                     nil
-                                     #(swap! app-env assoc :current-ns ns-symbol))
-               (let [ns-form `(~'ns ~ns-symbol)]
-                 (cljs/eval
-                  st
-                  ns-form
-                  eval-opts
-                  (fn [{e :error}]
-                    (if e
-                      (handle-eval-error! opts cb e)
-                      (handle-eval-success! opts
-                                            cb
-                                            nil
-                                            #(swap! app-env assoc :current-ns ns-symbol))))))))))))))
+  (cljs/eval
+   st
+   ns-string
+   (make-base-eval-opts! opts)
+   (fn [result]
+     (if (and (map? result) (:error result))
+       (handle-eval-error! opts cb result)
+       (let [ns-symbol result]
+         (when (:verbose opts)
+           (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
+         (if-not (symbol? ns-symbol)
+           (handle-eval-error! opts
+                               cb
+                               (ex-info "Argument to in-ns must be a symbol" {:tag ::error}))
+           (if (some (partial = ns-symbol) (known-namespaces))
+             (handle-eval-success! opts
+                                   cb
+                                   nil
+                                   #(swap! app-env assoc :current-ns ns-symbol))
+             (let [ns-form `(~'ns ~ns-symbol)]
+               (cljs/eval
+                st
+                ns-form
+                (make-base-eval-opts! opts)
+                (fn [{e :error}]
+                  (if e
+                    (handle-eval-error! opts cb e)
+                    (handle-eval-success! opts
+                                          cb
+                                          nil
+                                          #(swap! app-env assoc :current-ns ns-symbol)))))))))))))
 
 (defn process-repl-special
   [opts cb expression-form]
@@ -233,13 +245,13 @@
         argument (second expression-form)]
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
-      require (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))         ;; (process-require :require identity (rest expression-form))
-      require-macros (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))  ;; (process-require :require-macros identity (rest expression-form))
-      import (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))          ;; (process-require :import identity (rest expression-form))
+      require (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})) ;; (process-require :require identity (rest expression-form))
+      require-macros (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))  ;; (process-require :require-macros identity (rest expression-form))
+      import (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (process-require :import identity (rest expression-form))
       doc (process-doc cb env argument)
-      source (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment"))          ;; (println (fetch-source (get-var env argument)))
+      source (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-error! opts cb (build-error "This keyword is not supported at the moment")))))    ;; (process-load-file argument opts)
+      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})))))    ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]
@@ -270,13 +282,13 @@
          source
          source
          ;; opts (map)
-         (merge (make-base-eval-opts)
+         (merge (make-base-eval-opts!)
                 {:source-map false
                  :def-emits-var true}
                 opts)
          (fn [{:keys [ns value error] :as ret}]
            (when (:verbose opts)
-             (debug-prn "Evaluation returned " ret))
+             (debug-prn "Evaluation returned: " ret))
            (if-not error
              (handle-eval-success! opts
                                   cb

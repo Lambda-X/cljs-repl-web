@@ -1,4 +1,4 @@
-(ns cljs-bootstrap.common
+(ns cljs-bootstrap.util
   (:require [cljs-bootstrap.repl :as repl]))
 
 (defn echo-callback
@@ -18,4 +18,3 @@
 (def reset-namespace
   "Evaluates (in-ns 'cljs.user), resetting the current namespace."
   #(repl/read-eval-print {} echo-callback "(in-ns 'cljs.user)"))
-

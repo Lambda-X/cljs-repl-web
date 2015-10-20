@@ -14,7 +14,7 @@
   (try
     (bootstrap/read-eval-print (partial handle-result! console) line)
     (catch js/Error err
-      (println "Caught js/Error - " err)
+      (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))
 
 (defn cljs-console-prompt!
@@ -42,7 +42,7 @@
   []
   (fn []
     (println "Initializing the ClojureScript REPL")
-    (bootstrap/init-repl {:verbose true})
+    (bootstrap/init-repl)
     (println "Building ClojureScript React component")
     (reagent/create-class {:reagent-render cljs-console-render
                            :component-did-mount cljs-console-did-mount})))

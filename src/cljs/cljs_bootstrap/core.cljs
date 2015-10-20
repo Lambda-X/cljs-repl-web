@@ -12,11 +12,9 @@
   ([opts]
    (set! *target* "default")
    ;; Options
-   (swap! repl/app-env assoc :verbose (:verbose opts))
+   (swap! repl/app-env assoc (repl/valid-opts opts))
    ;; Create cljs.user
-   (if (= *target* "nodejs")
-     (set! (.. js/global -cljs -user) #js {})
-     (set! (.. js/window -cljs -user) #js {}))))
+   (set! (.. js/window -cljs -user) #js {})))
 
 (defn ^:export read-eval-print
   "Reads evaluates and prints the input source. The second parameter,
@@ -36,17 +34,17 @@
   "Iteratively extracts messages inside (nested #error objects), returns
   a string. Be sure to pass #error object here."
   [err]
-  (loop [e err msgs (.-message err)]
+  (loop [e err msgs [(.-message err)]]
     (if-let [next-err (.-cause e)]
-      (recur next-err (str msgs " - " (.-message next-err)))
-      (if-not (nil? msgs)
-        msgs
+      (recur next-err (conj msgs (.-message next-err)))
+      (if (seq msgs)
+        (clojure.string/join " - " msgs)
         ""))))
 
 (defn ^:export exception->str
   "Return the message string of the input exception."
   ([ex] (exception->str ex false))
   ([ex print-stack?]
-   (cond
-     (= :reader-exception (:type (.-data ex))) (.-message ex)
-     :else (extract-message ex))))
+   (str (extract-message ex) (when (and print-stack?
+                                        (not (nil? (.-stack ex))))
+                               (str "\n" (.-stack ex))))))
