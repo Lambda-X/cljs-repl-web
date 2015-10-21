@@ -25,11 +25,14 @@
                     (.SetPromptLabel console (bootstrap/get-prompt)) ;; necessary for namespace changes
                     (cljs-console-prompt! console)))))
 
-(defn cljs-console-did-mount []
+(defn cljs-console-did-mount
+  [console-opts]
   (js/$
    (fn []
      (let [jqconsole (console/new-jqconsole "#cljs-console"
-                                            :prompt-label (bootstrap/get-prompt))]
+                                            (merge {:prompt-label (bootstrap/get-prompt)
+                                                    :disable-auto-focus true}
+                                                   console-opts))]
        (app/add-console! :cljs-console jqconsole)
        (cljs-console-prompt! jqconsole)))))
 
@@ -38,11 +41,24 @@
    [:div#cljs-console.console.cljs-console]])
 
 (defn cljs-component
-  "A console for evaluating Clojure(Script) forms."
+  "Creates a new instance of e which loads on the input
+  selector (any jQuery selector will work) and configuration. The
+  options are passed as named parameters and follow the jq-console ones.
+
+  * :welcome-string is the string to be shown when the terminal is first
+    rendered. Defaults to nil.
+  * :prompt-label is the label to be shown before the input when using
+    Prompt(). Defaults to namespace=>.
+  * :continue-label is the label to be shown before the continued lines
+    of the input when using Prompt(). Defaults to nil.
+  * :disable-auto-focus is a boolean indicating whether we should disable
+    the default auto-focus behavior. Defaults to true, the console never
+    takes focus."
   []
-  (fn []
+  (fn [console-opts]
     (println "Initializing the ClojureScript REPL")
     (bootstrap/init-repl)
     (println "Building ClojureScript React component")
-    (reagent/create-class {:reagent-render cljs-console-render
-                           :component-did-mount cljs-console-did-mount})))
+    (reagent/create-class {:display-name "cljs-console-component"
+                           :reagent-render cljs-console-render
+                           :component-did-mount #(cljs-console-did-mount console-opts)})))
