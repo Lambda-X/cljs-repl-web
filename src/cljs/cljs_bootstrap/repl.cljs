@@ -221,11 +221,7 @@
   ([opts cb side-effect! {:keys [value error] :as ret}]
    (if-not error
      (handle-eval-success! opts cb side-effect! value)
-     (handle-eval-error! opts cb side-effect! error)))
-  ([opts cb side-effect-on-success! side-effect-on-error! {:keys [value error] :as ret}]
-   (if-not error
-     (handle-eval-success! opts cb side-effect-on-success! value)
-     (handle-eval-error! opts cb side-effect-on-error! error))))
+     (handle-eval-error! opts cb side-effect! error))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Processing fns - from mfikes/plank ;;;
@@ -239,13 +235,11 @@
                                  ['cljs.user (:current-ns @app-env)])
         ns-form (make-ns-form kind specs target-ns)]
     (when (:verbose opts)
-      (debug-prn "Processing " (name kind) " via ns: " (pr-str ns-form)))
+      (debug-prn "Processing" kind "via" (pr-str ns-form)))
     (cljs/eval st
                ns-form
                (make-base-eval-opts! opts)
-               (partial handle-eval-result!
-                        opts
-                        cb
+               (partial handle-eval-result! opts cb
                         #(when is-self-require?
                            (swap! app-env assoc :current-ns restore-ns))))))
 
@@ -318,7 +312,9 @@
       doc (process-doc cb env argument)
       source (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})))))    ;; (process-load-file argument opts)
+      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))       ;; (process-load-file argument opts)
+    )))
+
 
 (defn process-1-2-3
   [expression-form value]

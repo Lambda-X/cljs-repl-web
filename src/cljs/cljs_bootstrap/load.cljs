@@ -5,8 +5,8 @@
 
 (defn js-load
   [{:keys [name macros path file] :as full} cb]
-  {:lang   :js
-   :source ""}
+  (cb {:lang   :js
+       :source ""})
   ;; (cond
     ;; (skip-load? full) (cb {:lang   :js
                            ;; :source ""})
