@@ -1,7 +1,7 @@
 (defproject cljs-browser-repl "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.145"]
-                 [cljsjs/jqconsole "2.11.0-1"]
+                 [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]
                  [com.cognitect/transit-clj "0.8.283"]
                  [com.cognitect/transit-cljs "0.8.225"]]
