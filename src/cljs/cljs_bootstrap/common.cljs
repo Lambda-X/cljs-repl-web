@@ -23,8 +23,6 @@
   "Returns true if the string contains the newline \\\\n or \\\\r as
   characters."
   [s]
-  (when-not (string? s)
-    (println "HEY! " s))
   (re-matches #"\\{2,}n|\\{2,}r" s))
 
 (defn valid-eval-result?
