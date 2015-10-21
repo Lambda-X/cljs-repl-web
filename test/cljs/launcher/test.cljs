@@ -2,7 +2,8 @@
   (:require [cljs.test :refer [successful?] :refer-macros [run-tests run-all-tests]]
             [cljs-browser-repl.console-test]
             [cljs-bootstrap.core-test]
-            [cljs-bootstrap.repl-test]))
+            [cljs-bootstrap.repl-test]
+            [cljs-bootstrap.common-test]))
 
 (enable-console-print!)
 

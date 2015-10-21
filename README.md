@@ -17,9 +17,9 @@ The steps to generate it at the moment are:
 
 In dev mode, an ```out``` folder, containing all the compiled dependencies will be also created in the same folder of ```clojure-browser-repl.js```.
 
-#### Figwheel in dev mode:
+#### Figwheel:
 
-```lein fig-dev```  **or** ```lein figwheel dev```
+```lein fig-dev```  **or** ```lein fig-dev*``` if you want to clean as well.
 
 Figwheel will automatically push cljs changes to the browser.
 
@@ -31,9 +31,11 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 ## Testing
 
-For testing, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/), after which you can execute:
+Tests at the moment complete smoothly in the Firefox/Chrome Developer Console but not with PhanthomJS.
 
-```lein unit-test``` **or** ```lein do clean, cljsbuild test unit```
+The former is easier to check: after having booted Figwheel you have to open the Developer Console and run ```luncher.test.run()```. Moreover, tests are executed every time Figwheel reloads.
+
+For improving on the latter, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/), after which you can: ```lein unit-test```.
 
 ## Resources
 
