@@ -53,15 +53,6 @@
   [line]
   (r/read-string {:read-cond :allow :features #{:cljs}} line))
 
-(defn is-readable?
-  [line]
-  (binding [r/*data-readers* tags/*cljs-data-readers*]
-    (try
-      (repl-read-string line)
-      true
-      (catch :default _
-        false))))
-
 (defn ns-form?
   [form]
   (and (seq? form) (= 'ns (first form))))
@@ -216,9 +207,11 @@
   * :verbose If true, prints the evaluation return.
 
   The opts map passed here overrides the environment options."
-  ([opts cb ret]
-   (handle-eval-result! opts cb identity ret))
-  ([opts cb side-effect! {:keys [value error] :as ret}]
+  ([opts cb res]
+   (handle-eval-result! opts cb identity res))
+  ([opts cb side-effect! {:keys [value error] :as res}]
+   (when (:verbose opts)
+     (debug-prn "Handling result:\n" (with-out-str (pprint res))))
    (if-not error
      (handle-eval-success! opts cb side-effect! value)
      (handle-eval-error! opts cb side-effect! error))))
@@ -312,9 +305,7 @@
       doc (process-doc cb env argument)
       source (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))       ;; (process-load-file argument opts)
-    )))
-
+      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})))))   ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]
@@ -332,7 +323,8 @@
 
   The first parameter is a map of configuration options, currently
   supporting:
-  * :verbose Prints the evaluation return
+
+  * :verbose will enable the the evaluation logging, defaults to false.
 
   The opts map passed here overrides the environment options."
   [opts cb source]
@@ -361,3 +353,17 @@
                            (handle-eval-error! opts cb error))))))
     (catch :default e
       (handle-eval-error! opts cb e))))
+
+(def rep
+  "Reads evaluates and prints the input source. The second parameter,
+  eval-callback, is a function (fn [success, result] ...) where success
+  is a boolean indicating if everything went right and result will
+  contain the actual result of the evaluation or an error map.
+
+  The first parameter is a map of configuration options, currently
+  supporting:
+
+  * :verbose will enable the the evaluation logging, defaults to false.
+
+  The opts map passed here overrides the environment options."
+  read-eval-print)

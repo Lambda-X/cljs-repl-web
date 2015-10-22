@@ -24,7 +24,6 @@
                   prompt-label "$ "
                   continue-label nil
                   disable-auto-focus false}}]
-  (println welcome-string prompt-label continue-label disable-auto-focus)
   (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
 
 (defn write!
