@@ -1,5 +1,5 @@
 (ns cljs-bootstrap.common
-  (:require [cljs-bootstrap.repl :as repl]))
+  (:require [clojure.string :as string]))
 
 (defn echo-callback
   "Echoes the input success and result, returning [success,
@@ -11,13 +11,15 @@
 
 (def success? "Returns if the evaluation was successful" first)
 
-(def reset-errors
-  "Evaluates (set! *e nil), resetting the current *e."
-  #(repl/read-eval-print {} echo-callback "(set! *e nil)"))
+(defn wrap-success
+  "Wraps the message in a success map."
+  [message]
+  {:value message})
 
-(def reset-namespace
-  "Evaluates (in-ns 'cljs.user), resetting the current namespace."
-  #(repl/read-eval-print {} echo-callback "(in-ns 'cljs.user)"))
+(defn wrap-error
+  "Wraps the message in a error map."
+  [message]
+  {:error message})
 
 (defn inline-newline?
   "Returns true if the string contains the newline \\\\n or \\\\r as
@@ -38,5 +40,18 @@
     (if-let [next-err (.-cause e)]
       (recur next-err (conj msgs (.-message next-err)))
       (if (seq msgs)
-        (clojure.string/join " - " msgs)
+        (string/join " - " msgs)
         ""))))
+
+(defn error-keyword-not-supported
+  "Yields a \"keyword not supported\" error map. Receives the
+  symbol/keyword printed in the message and ex-info data."
+  [keyword ex-info-data]
+  (wrap-error (ex-info (str "The " keyword " keyword is not supported at the moment")
+                       ex-info-data)))
+
+(defn error-argument-must-be-symbol
+  "Yields a \"Argument must a be a symbol\" error map. Receives the
+  symbol/fn name printed in the message and ex-info data."
+  [symbol ex-info-data]
+  (wrap-error (ex-info (str "Argument to " symbol " must be a symbol") ex-info-data)))

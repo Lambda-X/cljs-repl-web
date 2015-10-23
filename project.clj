@@ -2,9 +2,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.145"]
                  [cljsjs/jqconsole "2.12.0-0"]
-                 [reagent "0.5.1"]
-                 [com.cognitect/transit-clj "0.8.283"]
-                 [com.cognitect/transit-cljs "0.8.225"]]
+                 [reagent "0.5.1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
@@ -35,8 +33,7 @@
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :optimizations :advanced
                                    :pretty-print false
-                                   :externs ["resources/cljs-browser-repl.ext.js"]}}
-                       ]
+                                   :externs ["resources/cljs-browser-repl.ext.js"]}}]
               :test-commands {"unit" ["phantomjs"
                                       "resources/phantomjs/test.js"
                                       "resources/phantomjs/test.html"]}}
@@ -44,7 +41,6 @@
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
-            ;; Nested vectors are supported for the "do" task
             "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]
             "unit-test" ^{:doc "Execute unit tests."} ["cljsbuild" "test" "unit"]
             "unit-test*" ^{:doc "Clean and execute unit tests but does not clean."} ["do" "clean" ["cljsbuild" "test" "unit"]]}

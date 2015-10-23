@@ -35,6 +35,6 @@
   "Return the message string of the input exception."
   ([ex] (exception->str ex false))
   ([ex print-stack?]
-   (str (common/extract-message ex) (when (and print-stack?
-                                        (not (nil? (.-stack ex))))
-                               (str "\n" (.-stack ex))))))
+   (str (common/extract-message ex)
+        (when (and ex print-stack?)
+          (str "\n" (.-stack ex))))))
