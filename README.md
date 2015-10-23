@@ -31,11 +31,16 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 ## Testing
 
-Tests at the moment complete smoothly in the Firefox/Chrome Developer Console but not with PhanthomJS.
+Tests at the moment complete smoothly in the Firefox/Chrome Developer Console but not with PhanthomJS or SlimerJS.
+The weird returned error form requiring or ns-ing a namespace is:
+
+``` clojure
+#error {:message "ERROR", :data {:tag :cljs/analysis-error}, :cause #object[Error Error: Namespace "first.namespace" already declared.]}
+```
 
 The former is easier to check: after having booted Figwheel you have to open the Developer Console and run ```luncher.test.run()```. Moreover, tests are executed every time Figwheel reloads.
 
-For improving on the latter, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/), after which you can: ```lein unit-test```.
+For improving on the latter, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/) and/or [SlimerJS](http://slimerjs.org/), after which you can: ```lein test-phantom``` and/or ```lein test-slimer``` respectively. Featuring [doo](https://github.com/bensu/doo) here.
 
 ## Resources
 
