@@ -1,4 +1,5 @@
-(ns cljs-bootstrap.common)
+(ns cljs-bootstrap.common
+  (:require [clojure.string :as string]))
 
 (defn echo-callback
   "Echoes the input success and result, returning [success,
@@ -39,7 +40,7 @@
     (if-let [next-err (.-cause e)]
       (recur next-err (conj msgs (.-message next-err)))
       (if (seq msgs)
-        (clojure.string/join " - " msgs)
+        (string/join " - " msgs)
         ""))))
 
 (defn error-keyword-not-supported
