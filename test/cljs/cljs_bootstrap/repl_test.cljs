@@ -2,7 +2,8 @@
   (:require [cljs.test :refer-macros [deftest is]]
             [cljs-bootstrap.repl :as repl]
             [cljs-bootstrap.common :as common :refer [echo-callback valid-eval-result?
-                                                      extract-message success? result]]))
+                                                      extract-message valid-eval-error?
+                                                      success? result]]))
 
 (defn reset-env
   []
@@ -35,6 +36,7 @@
 (deftest process-doc
   (let [[success error] (repl/read-eval-print {} echo-callback "(doc 'println)")]
     (is (not success) "(doc 'symbol) should have correct error")
+    (is (valid-eval-error? error) "(doc 'symbol) should result in an js/Error")
     (reset-env))
   (let [[success result] (repl/read-eval-print {} echo-callback "(doc println)")]
     (is success "(doc symbol) should succeed")
@@ -46,10 +48,12 @@
 (deftest process-in-ns
   (let [[success error] (repl/read-eval-print {} echo-callback "(in-ns \"first.namespace\")")]
     (is (not success) "(in-ns \"string\") should NOT succeed")
+    (is (valid-eval-error? error) "(in-ns \"string\")  should result in an js/Error")
     (is (= "Argument to in-ns must be a symbol" (extract-message error)) "(in-ns \"string\") should have correct error")
     (reset-env))
   (let [[success error] (repl/read-eval-print {} echo-callback "(in-ns first.namespace)")]
     (is (not success) "(in-ns symbol) should NOT succeed")
+    (is (valid-eval-error? error) "(in-ns symbol)  should result in an js/Error")
     ;; Weird, but at least gives off an error
     (is (or (re-find #"is not defined" (extract-message error))
             (re-find #"Argument to in-ns must be a symbol" (extract-message error)) ) "(in-ns symbol) should have correct error")
@@ -72,6 +76,7 @@
 (deftest process-ns
   (let [[success error] (repl/read-eval-print {} echo-callback "(ns 'first.namespace)")]
     (is (not success) "(ns 'something) should NOT succeed")
+    (is (valid-eval-error? error) "(ns 'something) should result in an js/Error")
     (is (re-find #"Namespaces must be named by a symbol" (extract-message error)) "(ns 'something) should have correct error")
     (reset-env))
   (let [[success result] (repl/read-eval-print {} echo-callback "(ns first.namespace)")]
@@ -83,10 +88,12 @@
 (deftest process-require
   (let [[success error] (repl/read-eval-print {} echo-callback "(require something)")]
     (is (not success) "(require something) should NOT succeed")
+    (is (valid-eval-error? error) "(require something) should result in an js/Error")
     (is (re-find #"is not ISeqable" (extract-message error)) "(require something) should have correct error")
     (reset-env))
-  (let [[success error] (repl/read-eval-print {:verbose true} echo-callback "(require \"something\")")]
+  (let [[success error] (repl/read-eval-print {} echo-callback "(require \"something\")")]
     (is (not success) "(require \"something\") should NOT succeed")
+    (is (valid-eval-error? error) "(require \"something\") should result in an js/Error")
     (is (re-find #"Argument to require must be a symbol" (extract-message error)) "(require \"something\") should have correct error")
     (reset-env))
   (let [[success value] (repl/read-eval-print {} echo-callback "(require 'something.ns)")]
@@ -121,6 +128,7 @@
     (let [rs (repl/read-eval-print {} swapping-callback "_arsenununpa42")]
       (is (= 1 (count @results)) "Evaluating an undefined symbol should return one message only")
       (is (not (success? (first @results))) "Evaluating an undefined symbol should not succeed")
+      (is (valid-eval-error? (result (first @results))) "Evaluating an undefined symbol should result in an js/Error")
       (is #(re-find #"undeclared Var.*_arsenununpa42" (result (first @results))) "Evaluating an undefined symbol should")
       (reset! results [])
       (reset-env))))

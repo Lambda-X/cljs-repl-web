@@ -34,6 +34,8 @@
 ;;; Util fns - many from mfikes/plank ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(def ex-info-data "The ex-info data for this file" {:tag ::error})
+
 (defn debug-prn
   [& args]
   (binding [cljs.core/*print-fn* cljs.core/*print-err-fn*]
@@ -184,8 +186,10 @@
               value))))
 
 (defn forward-error!
-  "Handles the case when the evaluation returned error."
+  "Handles the case when the evaluation returned error.
+  Always pushes a js/Error to the callback."
   ([opts cb error]
+   {:pre [(instance? js/Error error)]}
    (set! *e error)
    (cb false error)))
 
@@ -219,7 +223,7 @@
            (debug-prn "Last warning message: " warning-msg))
          (on-error!)
          (reset-last-warning!)
-         (forward-error! opts cb warning-msg))
+         (forward-error! opts cb (ex-info warning-msg ex-info-data)))
      (let [{:keys [value error]} res]
        (if-not error
          (do (on-success!) (reset-last-warning!) (forward-success! opts cb value))
@@ -233,7 +237,7 @@
   [opts cb kind specs]
   ;; TODO - cannot find a way to handle (require something) correctly, note no quote
   (if-not (= 'quote (ffirst specs))
-    (handle-eval-result! opts cb (common/error-argument-must-be-symbol "require" {:tag ::error}))
+    (handle-eval-result! opts cb (common/error-argument-must-be-symbol "require" ex-info-data))
     (let [is-self-require? (and (= :kind :require) (self-require? specs))
           [target-ns restore-ns] (if-not is-self-require?
                                    [(:current-ns @app-env) nil]
@@ -290,7 +294,7 @@
            (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
          (if-not (symbol? ns-symbol)
            (handle-eval-result! opts cb
-                                (common/error-argument-must-be-symbol "in-ns" {:tag ::error}))
+                                (common/error-argument-must-be-symbol "in-ns" ex-info-data))
            (if (some (partial = ns-symbol) (known-namespaces))
              (handle-eval-result! opts cb
                                   #(swap! app-env assoc :current-ns ns-symbol)
@@ -317,12 +321,12 @@
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
       require (process-require opts cb :require (rest expression-form))
-      require-macros (handle-eval-result! opts cb (common/error-keyword-not-supported "require-macros" {:tag ::error})) ;; (process-require :require-macros identity (rest expression-form))
+      require-macros (handle-eval-result! opts cb (common/error-keyword-not-supported "require-macros" ex-info-data)) ;; (process-require :require-macros identity (rest expression-form))
       import (process-require  opts cb :import (rest expression-form))
       doc (process-doc cb env argument)
-      source (handle-eval-result! opts cb (common/error-keyword-not-supported "source" {:tag ::error}))                 ;; (println (fetch-source (get-var env argument)))
+      source (handle-eval-result! opts cb (common/error-keyword-not-supported "source" ex-info-data))                 ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-result! opts cb (common/error-keyword-not-supported "load-file" {:tag ::error})))))        ;; (process-load-file argument opts)
+      load-file (handle-eval-result! opts cb (common/error-keyword-not-supported "load-file" ex-info-data)))))        ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]

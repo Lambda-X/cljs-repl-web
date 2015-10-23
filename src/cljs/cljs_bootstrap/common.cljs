@@ -32,6 +32,11 @@
   [result]
   (and (string? result) (not (inline-newline? result))))
 
+(defn valid-eval-error?
+  "Is the string returned from an evaluation valid?"
+  [error]
+  (instance? js/Error error))
+
 (defn extract-message
   "Iteratively extracts messages inside (nested #error objects), returns
   a string. Be sure to pass #error object here."
