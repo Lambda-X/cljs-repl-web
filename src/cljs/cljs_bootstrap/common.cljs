@@ -42,6 +42,15 @@
         (clojure.string/join " - " msgs)
         ""))))
 
-(def keyword-not-supported-error
-  "Function that yields a \"keyword not supported error\""
-  #(wrap-error (ex-info "This keyword is not supported at the moment" {:tag ::error})))
+(defn error-keyword-not-supported
+  "Yields a \"keyword not supported\" error map. Receives the
+  symbol/keyword printed in the message and ex-info data."
+  [keyword ex-info-data]
+  (wrap-error (ex-info (str "The " keyword " keyword is not supported at the moment")
+                       ex-info-data)))
+
+(defn error-argument-must-be-symbol
+  "Yields a \"Argument must a be a symbol\" error map. Receives the
+  symbol/fn name printed in the message and ex-info data."
+  [symbol ex-info-data]
+  (wrap-error (ex-info (str "Argument to " symbol " must be a symbol") ex-info-data)))

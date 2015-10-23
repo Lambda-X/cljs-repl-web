@@ -232,7 +232,7 @@
   [opts cb kind specs]
   ;; TODO - cannot find a way to handle (require something) correctly, note no quote
   (if-not (= 'quote (ffirst specs))
-    (handle-eval-result! opts cb (common/wrap-error (ex-info "Argument to require must be a symbol" {:tag ::error})))
+    (handle-eval-result! opts cb (common/error-argument-must-be-symbol "require" {:tag ::error}))
     (let [is-self-require? (and (= :kind :require) (self-require? specs))
           [target-ns restore-ns] (if-not is-self-require?
                                    [(:current-ns @app-env) nil]
@@ -289,7 +289,7 @@
            (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
          (if-not (symbol? ns-symbol)
            (handle-eval-result! opts cb
-                                (common/wrap-error (ex-info "Argument to in-ns must be a symbol" {:tag ::error})))
+                                (common/error-argument-must-be-symbol "in-ns" {:tag ::error}))
            (if (some (partial = ns-symbol) (known-namespaces))
              (handle-eval-result! opts cb
                                   #(swap! app-env assoc :current-ns ns-symbol)
@@ -316,12 +316,12 @@
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
       require (process-require opts cb :require (rest expression-form))
-      require-macros (handle-eval-result! opts cb (common/keyword-not-supported-error)) ;; (process-require :require-macros identity (rest expression-form))
+      require-macros (handle-eval-result! opts cb (common/error-keyword-not-supported "require-macros" {:tag ::error})) ;; (process-require :require-macros identity (rest expression-form))
       import (process-require  opts cb :import (rest expression-form))
       doc (process-doc cb env argument)
-      source (handle-eval-result! opts cb (common/keyword-not-supported-error))          ;; (println (fetch-source (get-var env argument)))
+      source (handle-eval-result! opts cb (common/error-keyword-not-supported "source" {:tag ::error}))                 ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-result! opts cb (common/keyword-not-supported-error)))))   ;; (process-load-file argument opts)
+      load-file (handle-eval-result! opts cb (common/error-keyword-not-supported "load-file" {:tag ::error})))))        ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]
