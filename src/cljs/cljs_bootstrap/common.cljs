@@ -10,7 +10,15 @@
 
 (def success? "Returns if the evaluation was successful" first)
 
+(defn wrap-success
+  "Wraps the message in a success map."
+  [message]
+  {:value message})
 
+(defn wrap-error
+  "Wraps the message in a error map."
+  [message]
+  {:error message})
 
 (defn inline-newline?
   "Returns true if the string contains the newline \\\\n or \\\\r as
@@ -33,3 +41,7 @@
       (if (seq msgs)
         (clojure.string/join " - " msgs)
         ""))))
+
+(def keyword-not-supported-error
+  "Function that yields a \"keyword not supported error\""
+  #(wrap-error (ex-info "This keyword is not supported at the moment" {:tag ::error})))

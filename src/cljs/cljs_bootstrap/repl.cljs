@@ -8,8 +8,10 @@
             [cljs.analyzer :as ana]
             [cljs.env :as env]
             [cljs.repl :as repl]
+            [cljs.pprint :refer [pprint]]
             [cljs-bootstrap.load :as load]
-            [cljs-bootstrap.doc-maps :as docs]))
+            [cljs-bootstrap.doc-maps :as docs]
+            [cljs-bootstrap.common :as common]))
 
 (def ^:dynamic  *custom-eval-fn* "See cljs.js/*eval-fn* in ClojureScript core."
   cljs/js-eval)
@@ -21,11 +23,12 @@
 ;;; State ;;;
 ;;;;;;;;;;;;;
 
-;; This is the compiler state atom. Note that
-;; cljs/eval wants exactly an atom.
+;; This is the compiler state atom. Note that cljs/eval wants exactly an atom.
 (defonce st (cljs/empty-state))
 
-(defonce app-env (atom {:current-ns 'cljs.user}))
+(defonce app-env (atom {:current-ns 'cljs.user
+                        :last-eval-warning nil})) ;; if there is a msg the last eval generated a warning
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Util fns - many from mfikes/plank ;;;
@@ -168,53 +171,58 @@
 ;;; Eval handling fns ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn handle-eval-success!
-  "Handles the case when the evaluation returned success, executing
-  (side-effect!) *before* the callback is called with [true, result].
-
+(defn forward-success!
+  "Handles the case when the evaluation returned success.
   Supports the following options (opts = option map):
 
   * :no-pr-str-on-value If true, avoids wrapping value in pr-str.
 
-  The opts map passed here overrides the environment options.
-  Note that value is always the last parameter."
+  The opts map passed here overrides the environment options."
   ([opts cb value]
-   (handle-eval-success! opts cb identity value))
-  ([opts cb side-effect! value]
-   (side-effect!)
    (cb true (if-not (:no-pr-str-on-value opts)
               (pr-str value)
               value))))
 
-(defn handle-eval-error!
-  "Handles the case when the evaluation returned error, executing
-  (side-effect!) *before* the callback is called with [false, error].
-  Note that error is always the last parameter."
+(defn forward-error!
+  "Handles the case when the evaluation returned error."
   ([opts cb error]
-   (handle-eval-error! opts cb identity error))
-  ([opts cb side-effect! error]
-   (side-effect!)
    (set! *e error)
    (cb false error)))
+
+(defn reset-last-warning!
+  []
+  (swap! app-env assoc :last-eval-warning nil))
 
 (defn handle-eval-result!
   "Handles the evaluation result, calling the callback in the right way,
   based on success or error of the evaluation and executing
-  (side-effect!) *before* the callback is called. There is also a arity
+  (side-effect!) *before* the callback is called. There is also an arity
   for differentiating the side effect based on success or error.
 
   Supports the following options (opts = option map):
-  * :verbose If true, prints the evaluation return.
+  * :verbose will enable the the evaluation logging, defaults to false.
 
-  The opts map passed here overrides the environment options."
+  Note1: The opts map passed here overrides the environment options.
+  Note2: This function will also clear the :last-eval-warning flag in
+  app-env."
   ([opts cb res]
    (handle-eval-result! opts cb identity res))
   ([opts cb side-effect! {:keys [value error] :as res}]
+   (handle-eval-result! opts cb side-effect! side-effect! res))
+  ([opts cb on-success! on-error! res]
+   {:pre [(map? res) (or (find res :error) (find res :value))]}
    (when (:verbose opts)
      (debug-prn "Handling result:\n" (with-out-str (pprint res))))
-   (if-not error
-     (handle-eval-success! opts cb side-effect! value)
-     (handle-eval-error! opts cb side-effect! error))))
+   (if-let [warning-msg (:last-eval-warning @app-env)]
+     (do (when (:verbose opts)
+           (debug-prn "Last warning message: " warning-msg))
+         (on-error!)
+         (reset-last-warning!)
+         (forward-error! opts cb warning-msg))
+     (let [{:keys [value error]} res]
+       (if-not error
+         (do (on-success!) (reset-last-warning!) (forward-success! opts cb value))
+         (do (on-error!) (reset-last-warning!) (forward-error! opts cb error)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Processing fns - from mfikes/plank ;;;
@@ -222,29 +230,37 @@
 
 (defn process-require
   [opts cb kind specs]
-  (let [is-self-require? (and (= :kind :require) (self-require? specs))
-        [target-ns restore-ns] (if-not is-self-require?
-                                 [(:current-ns @app-env) nil]
-                                 ['cljs.user (:current-ns @app-env)])
-        ns-form (make-ns-form kind specs target-ns)]
-    (when (:verbose opts)
-      (debug-prn "Processing" kind "via" (pr-str ns-form)))
-    (cljs/eval st
-               ns-form
-               (make-base-eval-opts! opts)
-               (partial handle-eval-result! opts cb
-                        #(when is-self-require?
-                           (swap! app-env assoc :current-ns restore-ns))))))
+  ;; TODO - cannot find a way to handle (require something) correctly, note no quote
+  (if-not (= 'quote (ffirst specs))
+    (handle-eval-result! opts cb (common/wrap-error (ex-info "Argument to require must be a symbol" {:tag ::error})))
+    (let [is-self-require? (and (= :kind :require) (self-require? specs))
+          [target-ns restore-ns] (if-not is-self-require?
+                                   [(:current-ns @app-env) nil]
+                                   ['cljs.user (:current-ns @app-env)])
+          ns-form (make-ns-form kind specs target-ns)]
+      (when (:verbose opts)
+        (debug-prn "Processing" kind "via" (pr-str ns-form)))
+      (cljs/eval st
+                 ns-form
+                 (make-base-eval-opts! opts)
+                 (fn [error]
+                   (handle-eval-result! opts cb
+                                        #(when is-self-require?
+                                           (swap! app-env assoc :current-ns restore-ns))
+                                        (if error
+                                          (common/wrap-error error)
+                                          (common/wrap-success nil))))))))
 
 (defn process-doc
   [cb env sym]
-  (handle-eval-success! {:no-pr-str-on-value true}
-                        cb
+  (handle-eval-result! {:no-pr-str-on-value true}
+                       cb
+                       (common/wrap-success
                         (with-out-str
                           (cond
                             (docs/special-doc-map sym) (repl/print-doc (docs/special-doc sym))
                             (docs/repl-special-doc-map sym) (repl/print-doc (docs/repl-special-doc sym))
-                            :else (repl/print-doc (get-var env sym))))))
+                            :else (repl/print-doc (get-var env sym)))))))
 
 (defn process-pst
   [opts cb expr]
@@ -253,10 +269,11 @@
                expr
                (make-base-eval-opts! opts)
                (fn [res]
-                 (if res
-                   (handle-eval-success! (assoc opts :no-pr-str-on-value true) cb (.-stack res))
-                   (handle-eval-success! opts cb res))))
-    (handle-eval-success! opts cb nil)))
+                 (let [[opts msg] (if res
+                                    [(assoc opts :no-pr-str-on-value true) (.-stack res)]
+                                    [opts res])]
+                   (handle-eval-result! opts cb (common/wrap-success msg)))))
+    (handle-eval-result! opts cb (common/wrap-success nil))))
 
 (defn process-in-ns
   [opts cb ns-string]
@@ -266,31 +283,30 @@
    (make-base-eval-opts! opts)
    (fn [result]
      (if (and (map? result) (:error result))
-       (handle-eval-error! opts cb result)
+       (handle-eval-result! opts cb result)
        (let [ns-symbol result]
          (when (:verbose opts)
            (debug-prn "in-ns argument is symbol? " (symbol? ns-symbol)))
          (if-not (symbol? ns-symbol)
-           (handle-eval-error! opts
-                               cb
-                               (ex-info "Argument to in-ns must be a symbol" {:tag ::error}))
+           (handle-eval-result! opts cb
+                                (common/wrap-error (ex-info "Argument to in-ns must be a symbol" {:tag ::error})))
            (if (some (partial = ns-symbol) (known-namespaces))
-             (handle-eval-success! opts
-                                   cb
-                                   #(swap! app-env assoc :current-ns ns-symbol)
-                                   nil)
+             (handle-eval-result! opts cb
+                                  #(swap! app-env assoc :current-ns ns-symbol)
+                                  (common/wrap-success nil))
              (let [ns-form `(~'ns ~ns-symbol)]
                (cljs/eval
                 st
                 ns-form
                 (make-base-eval-opts! opts)
-                (fn [{e :error}]
-                  (if e
-                    (handle-eval-error! opts cb e)
-                    (handle-eval-success! opts
-                                          cb
-                                          #(swap! app-env assoc :current-ns ns-symbol)
-                                          nil))))))))))))
+                (fn [error]
+                  (handle-eval-result! opts
+                                       cb
+                                       #(swap! app-env assoc :current-ns ns-symbol)
+                                       identity
+                                       (if error
+                                         (common/wrap-error error)
+                                         (common/wrap-success nil)))))))))))))
 
 (defn process-repl-special
   [opts cb expression-form]
@@ -300,12 +316,12 @@
     (case (first expression-form)
       in-ns (process-in-ns opts cb argument)
       require (process-require opts cb :require (rest expression-form))
-      require-macros (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))  ;; (process-require :require-macros identity (rest expression-form))
+      require-macros (handle-eval-result! opts cb (common/keyword-not-supported-error)) ;; (process-require :require-macros identity (rest expression-form))
       import (process-require  opts cb :import (rest expression-form))
       doc (process-doc cb env argument)
-      source (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error}))          ;; (println (fetch-source (get-var env argument)))
+      source (handle-eval-result! opts cb (common/keyword-not-supported-error))          ;; (println (fetch-source (get-var env argument)))
       pst (process-pst opts cb argument)
-      load-file (handle-eval-error! opts cb (ex-info "This keyword is not supported at the moment" {:tag ::error})))))   ;; (process-load-file argument opts)
+      load-file (handle-eval-result! opts cb (common/keyword-not-supported-error)))))   ;; (process-load-file argument opts)
 
 (defn process-1-2-3
   [expression-form value]
@@ -314,6 +330,23 @@
     (set! *3 *2)
     (set! *2 *1)
     (set! *1 value)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Results manipulation ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn custom-warning-handler
+  "Handles the case when the evaluation returns a warning and can be
+  passed as a warning handler when partially applied. At the moment it
+  treats warnings as errors."
+  [opts cb warning-type env extra]
+  (when (:verbose opts)
+    (debug-prn (str "Handling warning:\n" (with-out-str (pprint {:warning-type warning-type
+                                                                 :env env
+                                                                 :extra extra})))))
+  (when (warning-type ana/*cljs-warnings*)
+    (when-let [s (ana/error-message warning-type extra)]
+      (swap! app-env assoc :last-eval-warning (ana/message env s)))))
 
 (defn read-eval-print
   "Reads evaluates and prints the input source. The second parameter,
@@ -330,29 +363,28 @@
   [opts cb source]
   (try
     (let [expression-form (repl-read-string source)]
-      (if (docs/repl-special? expression-form)
-        (process-repl-special opts cb expression-form)
-        (cljs/eval-str st
-                       source
-                       source
-                       ;; opts (map)
-                       (merge (make-base-eval-opts!)
-                              {:source-map false
-                               :def-emits-var true}
-                              opts)
-                       (fn [{:keys [ns value error] :as ret}]
-                         (when (:verbose opts)
-                           (debug-prn "Evaluation returned: " ret))
-                         (if-not error
-                           (handle-eval-success! opts
-                                                 cb
-                                                 #(do
-                                                    (process-1-2-3 expression-form value)
-                                                    (swap! app-env assoc :current-ns ns))
-                                                 value)
-                           (handle-eval-error! opts cb error))))))
+      (binding [ana/*cljs-warning-handlers* [(partial custom-warning-handler opts cb)]]
+        (if (docs/repl-special? expression-form)
+          (process-repl-special opts cb expression-form)
+          (cljs/eval-str st
+                         source
+                         source
+                         ;; opts (map)
+                         (merge (make-base-eval-opts!)
+                                {:source-map false
+                                 :def-emits-var true}
+                                opts)
+                         (fn [ret]
+                           (when (:verbose opts)
+                             (debug-prn "Evaluation returned: " ret))
+                           (handle-eval-result! opts
+                                                cb
+                                                #(do (process-1-2-3 expression-form (:value ret))
+                                                     (swap! app-env assoc :current-ns (:ns ret)))
+                                                identity
+                                                ret))))))
     (catch :default e
-      (handle-eval-error! opts cb e))))
+      (handle-eval-result! opts cb (common/wrap-error e)))))
 
 (def rep
   "Reads evaluates and prints the input source. The second parameter,
