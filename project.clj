@@ -5,6 +5,7 @@
                  [reagent "0.5.1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
+            [lein-doo "0.1.6-SNAPSHOT"]
             [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" ]
@@ -23,27 +24,25 @@
                                    :source-map-timestamp true}}
                        {:id "test"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :compiler {:output-to "resources/phantomjs/js/compiled/cljs-browser-repl.js"
-                                   :pretty-print false
-                                   :optimizations :whitespace
-                                   :source-map-timestamp true}}
+                        :compiler {:main launcher.runner
+                                   :output-to "resources/private/test/compiled/cljs-browser-repl.js"
+                                   :pretty-print false}}
                        {:id "min"
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :optimizations :advanced
                                    :pretty-print false
-                                   :externs ["resources/cljs-browser-repl.ext.js"]}}]
-              :test-commands {"unit" ["phantomjs"
-                                      "resources/phantomjs/test.js"
-                                      "resources/phantomjs/test.html"]}}
+                                   :externs ["resources/cljs-browser-repl.ext.js"]}}]}
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
             "minify" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
             "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]
-            "unit-test" ^{:doc "Execute unit tests."} ["cljsbuild" "test" "unit"]
-            "unit-test*" ^{:doc "Clean and execute unit tests but does not clean."} ["do" "clean" ["cljsbuild" "test" "unit"]]}
+            "test-phantom" ^{:doc "Execute unit tests with PhantomJS (must be installed)."} ["doo" "phantom" "test" "once"]
+            "test-phantom*" ^{:doc "Clean and execute unit tests with PhantomJS (must be installed)."} ["do" "clean" ["doo" "phantom" "test" "once"]]
+            "test-slimer" ^{:doc "Execute unit tests with SlimerJS (must be installed)."} ["doo" "slimer" "test" "once"]
+            "test-slimer*" ^{:doc "Clean and execute unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "once"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
