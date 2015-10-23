@@ -14,3 +14,4 @@ pom.xml.asc
 .repl/
 figwheel_server.log
 resources/**/compiled/
+out/
