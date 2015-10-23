@@ -175,7 +175,7 @@
   "Handles the case when the evaluation returned success.
   Supports the following options (opts = option map):
 
-  * :no-pr-str-on-value If true, avoids wrapping value in pr-str.
+  * :no-pr-str-on-value avoids wrapping value in pr-str.
 
   The opts map passed here overrides the environment options."
   ([opts cb value]
@@ -201,6 +201,7 @@
 
   Supports the following options (opts = option map):
   * :verbose will enable the the evaluation logging, defaults to false.
+  * :no-pr-str-on-value avoids wrapping value in pr-str
 
   Note1: The opts map passed here overrides the environment options.
   Note2: This function will also clear the :last-eval-warning flag in
