@@ -1,4 +1,4 @@
-(ns launcher.runner
+(ns  ^:figwheel-always launcher.runner
   (:require [doo.runner :refer-macros [doo-all-tests]]
             [cljs-browser-repl.console-test]
             [cljs-bootstrap.core-test]
