@@ -7,7 +7,4 @@
 
 (enable-console-print!)
 
-;; (defmethod cljs.test/report [:cljs.test/default :end-run-tests] [m]
-;;   (successful? m))
-
-(doo-all-tests #"^cljs.*-test")
+(doo-all-tests) ;; #"^cljs.*-test" not supported yet
