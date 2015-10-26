@@ -8,7 +8,7 @@ In order to build the project in both ```dev``` and ```min``` you first need to 
 
 The steps to generate it at the moment are:
 
-* ```git clone https://github.com/arichiardi/packages```
+* ```git clone -b cljsjs-jqconsole https://github.com/arichiardi/packages```
 * ```cd packages/jqconsole```
 * ```boot package build-jar```
 
