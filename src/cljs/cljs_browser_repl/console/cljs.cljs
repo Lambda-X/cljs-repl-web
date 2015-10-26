@@ -7,7 +7,7 @@
 (defn handle-result!
   [console result]
   (let [write-fn (if (bootstrap/success? result) console/write-return! console/write-exception!)]
-    (write-fn console result)))
+    (write-fn console (bootstrap/unwrap-result result))))
 
 (defn cljs-read-eval-print!
   [console line]
