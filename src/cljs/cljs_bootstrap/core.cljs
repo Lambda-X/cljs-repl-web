@@ -37,3 +37,27 @@
   "Return the message string of the input `js/Error`."
   ([error] (common/extract-message error))
   ([error print-stack?] (common/extract-message error print-stack?)))
+
+(defn ^:export unwrap-result
+  "Unwraps the result of an evaluation.
+
+  It returns the content of `:value` in case of success and the content
+  of `:error` (a `js/Error`) in case of failure."
+  [result-map]
+  (if (:success? result-map)
+    (:value result-map)
+    (:error result-map)))
+
+(defn ^:export success?
+  "Given a `result-map`, tells whether the evaluation was successful."
+  [result-map]
+  (:success? result-map))
+
+(defn ^:export result->string
+  "Given a `result-map`, returns the result of an evaluation as string."
+  ([result-map]
+   (result->string result-map false))
+  ([result-map print-stack?]
+   (if (:success? result-map)
+     (:value result-map)
+     (common/extract-message (:error result-map) print-stack?))))

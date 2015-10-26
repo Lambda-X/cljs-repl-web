@@ -1,13 +1,12 @@
 (ns cljs-browser-repl.console.cljs
   (:require [reagent.core :as reagent]
-            [cljs-bootstrap.core :as bootstrap :refer [read-eval-call get-prompt]]
-            [cljs-bootstrap.common :as bootcommon :refer [success?]]
+            [cljs-bootstrap.core :as bootstrap]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.console :as console]))
 
 (defn handle-result!
   [console result]
-  (let [write-fn (if (success? result) console/write-return! console/write-exception!)]
+  (let [write-fn (if (bootstrap/success? result) console/write-return! console/write-exception!)]
     (write-fn console result)))
 
 (defn cljs-read-eval-print!

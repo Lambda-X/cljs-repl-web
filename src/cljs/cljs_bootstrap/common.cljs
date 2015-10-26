@@ -24,30 +24,6 @@
   [result-map]
   result-map)
 
-(defn unwrap-result
-  "Unwraps the result of an evaluation.
-
-  It returns the content of `:value` in case of success and the content
-  of `:error` (a `js/Error`) in case of failure."
-  [result-map]
-  (if (:success? result-map)
-    (:value result-map)
-    (:error result-map)))
-
-(defn success?
-  "Given a `result-map`, tells whether the evaluation was successful."
-  [result-map]
-  (:success? result-map))
-
-(defn result-map->string
-  "Given a `result-map`, returns the result of an evaluation as string."
-  ([result]
-   (result-map->string result false))
-  ([result-map print-stack?]
-   (if (:success result-map)
-     (:value result-map)
-     (extract-message (:error result-map) print-stack?))))
-
 (defn wrap-success
   "Wraps the message in a success map."
   [message]

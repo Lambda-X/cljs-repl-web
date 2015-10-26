@@ -1,9 +1,9 @@
 (ns ^:figwheel-load cljs-bootstrap.repl-test
   (:require [cljs.test :refer-macros [deftest is]]
             [cljs-bootstrap.repl :as repl]
+            [cljs-bootstrap.core :as core :refer [success? unwrap-result]]
             [cljs-bootstrap.common :as common :refer [echo-callback valid-eval-result?
-                                                      extract-message valid-eval-error?
-                                                      success? unwrap-result]]))
+                                                      extract-message valid-eval-error?]]))
 (defn reset-env
   []
   (repl/read-eval-call {} identity "(set! *e nil)")
