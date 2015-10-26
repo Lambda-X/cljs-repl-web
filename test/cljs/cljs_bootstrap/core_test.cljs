@@ -4,4 +4,5 @@
             [cljs-bootstrap.common :as common]))
 
 (deftest prompt
-  (is (not (empty? (re-seq #"=>" (core/get-prompt))))))
+  (is (not (empty? (re-seq #"=>" (core/get-prompt)))) "core/get-prompt should correcly return =>")
+  (is (not (string? (core/get-prompt))) "core/get-prompt should be a string"))
