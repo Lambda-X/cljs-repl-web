@@ -24,8 +24,8 @@
   ```
 
   It initializes the repl harness if necessary."
-  ([callback source] (repl/read-eval-print {} callback source))
-  ([opts callback source] (repl/read-eval-print opts callback source)))
+  ([callback source] (repl/read-eval-call {} callback source))
+  ([opts callback source] (repl/read-eval-call opts callback source)))
 
 (defn ^:export get-prompt
   "Retrieves the repl prompt to display, according to the current
@@ -33,10 +33,7 @@
   []
   (str (repl/current-ns) "=> "))
 
-(defn ^:export exception->str
+(defn ^:export error->str
   "Return the message string of the input `js/Error`."
-  ([error] (exception->str error false))
-  ([error print-stack?]
-   (str (common/extract-message ex)
-        (when (and ex print-stack?)
-          (str "\n" (.-stack ex))))))
+  ([error] (common/extract-message error))
+  ([error print-stack?] (common/extract-message error print-stack?)))

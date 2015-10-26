@@ -1,15 +1,52 @@
 (ns cljs-bootstrap.common
   (:require [clojure.string :as string]))
 
+(defn extract-message
+  "Iteratively extracts messages inside (nested #error objects), returns
+  a string. Be sure to pass #error object here."
+  ([err]
+   (extract-message err false))
+  ([err print-stack?]
+   (str (loop [e err msgs [(.-message err)]]
+          (if-let [next-err (.-cause e)]
+            (recur next-err (conj msgs (.-message next-err)))
+            (if (seq msgs)
+              (string/join " - " msgs)
+              "")))
+        (when (and err print-stack?)
+          (str "\n" (.-stack err))))))
+
 (defn echo-callback
-  "Echoes the input success and result, returning [success,
-  result]. Useful for debugging."
-  [success result]
-  [success result])
+  "Callback that just echoes the result map. It also asserts the correct
+  result format in its post condition. Useful for debugging and
+  testing."
+  {:post [(map? %) (find % :success?) (or (find % :error) (find % :value))]} ;; TODO, use dire or schema
+  [result-map]
+  result-map)
 
-(def result "Returns the result of an evaluation" second)
+(defn unwrap-result
+  "Unwraps the result of an evaluation.
 
-(def success? "Returns if the evaluation was successful" first)
+  It returns the content of `:value` in case of success and the content
+  of `:error` (a `js/Error`) in case of failure."
+  [result-map]
+  (if (:success? result-map)
+    (:value result-map)
+    (:error result-map)))
+
+(defn success?
+  "Given a `result-map`, tells whether the evaluation was successful."
+  [result-map]
+  (:success? result-map))
+
+(defn result-map->string
+  "Given a `result-map`, returns the result of an evaluation as string."
+  ([result]
+   (result-map->string result false))
+  ([result-map print-stack?]
+   (if (:success result-map)
+     (:value result-map)
+     (extract-message (:error result-map) print-stack?))))
 
 (defn wrap-success
   "Wraps the message in a success map."
@@ -36,17 +73,6 @@
   "Is the string returned from an evaluation valid?"
   [error]
   (instance? js/Error error))
-
-(defn extract-message
-  "Iteratively extracts messages inside (nested #error objects), returns
-  a string. Be sure to pass #error object here."
-  [err]
-  (loop [e err msgs [(.-message err)]]
-    (if-let [next-err (.-cause e)]
-      (recur next-err (conj msgs (.-message next-err)))
-      (if (seq msgs)
-        (string/join " - " msgs)
-        ""))))
 
 (defn error-keyword-not-supported
   "Yields a \"keyword not supported\" error map. Receives the

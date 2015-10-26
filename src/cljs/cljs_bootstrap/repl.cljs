@@ -181,9 +181,10 @@
 
   * :no-pr-str-on-value avoids wrapping value in pr-str."
   ([opts cb value]
-   (cb true (if-not (:no-pr-str-on-value opts)
-              (pr-str value)
-              value))))
+   (cb {:success? true
+        :value (if-not (:no-pr-str-on-value opts)
+                 (pr-str value)
+                 value)})))
 
 (defn forward-error!
   "Handles the case when the evaluation returned error.
@@ -191,7 +192,8 @@
   ([opts cb error]
    {:pre [(instance? js/Error error)]}
    (set! *e error)
-   (cb false error)))
+   (cb {:success? false
+        :error error})))
 
 (defn reset-last-warning!
   []

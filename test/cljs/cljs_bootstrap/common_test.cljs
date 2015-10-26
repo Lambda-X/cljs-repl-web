@@ -18,3 +18,16 @@
   (let [msg (common/extract-message empty-err)]
     (is (= "" msg))
     (is (string? msg))))
+
+(def successful-map {:success? true :value "This is a result"})
+(def unsuccessful-map {:success? false :error (js/Error "This is an error")})
+
+(deftest result-getters
+  (is (common/success? successful-map))
+  (is (common/valid-eval-result? (common/unwrap-result successful-map)))
+  (is (not (common/valid-eval-error? (common/unwrap-result successful-map))))
+  (is (= "This is a result" (common/unwrap-result successful-map)))
+  (is (not (common/success? unsuccessful-map)))
+  (is (not (common/valid-eval-result? (common/unwrap-result unsuccessful-map))))
+  (is (common/valid-eval-error? (common/unwrap-result unsuccessful-map)))
+  (is (= "This is an error" (common/extract-message (common/unwrap-result unsuccessful-map)))))
