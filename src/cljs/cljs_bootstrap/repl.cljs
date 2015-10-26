@@ -27,7 +27,9 @@
 (defonce st (cljs/empty-state))
 
 (defonce app-env (atom {:current-ns 'cljs.user
-                        :last-eval-warning nil})) ;; if there is a msg the last eval generated a warning
+                        :last-eval-warning nil
+                        :initializing? false
+                        :needs-init? true}))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -197,6 +199,19 @@
   []
   (swap! app-env assoc :last-eval-warning nil))
 
+(defn custom-warning-handler
+  "Handles the case when the evaluation returns a warning and can be
+  passed as a warning handler when partially applied. At the moment it
+  treats warnings as errors."
+  [opts cb warning-type env extra]
+  (when (:verbose opts)
+    (debug-prn (str "Handling warning:\n" (with-out-str (pprint {:warning-type warning-type
+                                                                 :env env
+                                                                 :extra extra})))))
+  (when (warning-type ana/*cljs-warnings*)
+    (when-let [s (ana/error-message warning-type extra)]
+      (swap! app-env assoc :last-eval-warning (ana/message env s)))))
+
 (defn handle-eval-result!
   "Handles the evaluation result, calling the callback in the right way,
   based on success or error of the evaluation and executing
@@ -205,7 +220,7 @@
 
   Supports the following options (opts = option map):
   * :verbose will enable the the evaluation logging, defaults to false.
-  * :no-pr-str-on-value avoids wrapping value in pr-str
+  * :no-pr-str-on-value avoids wrapping successful value in a pr-str
 
   Note1: The opts map passed here overrides the environment options.
   Note2: This function will also clear the :last-eval-warning flag in
@@ -336,22 +351,41 @@
     (set! *2 *1)
     (set! *1 value)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Results manipulation ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
+;;; External API ;;;
+;;;;;;;;;;;;;;;;;;;;
 
-(defn custom-warning-handler
-  "Handles the case when the evaluation returns a warning and can be
-  passed as a warning handler when partially applied. At the moment it
-  treats warnings as errors."
-  [opts cb warning-type env extra]
-  (when (:verbose opts)
-    (debug-prn (str "Handling warning:\n" (with-out-str (pprint {:warning-type warning-type
-                                                                 :env env
-                                                                 :extra extra})))))
-  (when (warning-type ana/*cljs-warnings*)
-    (when-let [s (ana/error-message warning-type extra)]
-      (swap! app-env assoc :last-eval-warning (ana/message env s)))))
+(defn init-repl!
+  "The init-repl function."
+  [opts]
+  (set! *target* "default")
+  ;; Options
+  (swap! app-env merge (valid-opts opts))
+  ;; Create cljs.user
+  (set! (.. js/window -cljs -user) #js {}))
+
+(defn update-to-initializing
+  [old-app-env]
+  (if (and (not (:initializing? old-app-env))
+           (:needs-init? old-app-env))
+    (assoc old-app-env :initializing? true)
+    (assoc old-app-env :needs-init? false)))
+
+(defn update-to-initialized
+  [old-app-env]
+  {:pre [(:needs-init? old-app-env) (:initializing? old-app-env)]}
+  (merge old-app-env {:initializing? false
+                      :needs-init? false}))
+
+(defn init-repl-if-necessary!
+  [opts cb]
+  (when (:needs-init? (swap! app-env update-to-initializing))
+    (try
+      (do (init-repl! opts)
+          (swap! app-env update-to-initialized))
+      (catch :default e
+        (handle-eval-result! opts cb (common/wrap-error (str "INIT - "
+                                                             (common/extract-message e))))))))
 
 (defn read-eval-print
   "Reads evaluates and prints the input source. The second parameter,
@@ -366,8 +400,10 @@
 
   The opts map passed here overrides the environment options."
   [opts cb source]
+  (init-repl-if-necessary! opts cb)
   (try
-    (let [expression-form (repl-read-string source)]
+    (let [expression-form (repl-read-string source)
+          opts (valid-opts opts)]
       (binding [ana/*cljs-warning-handlers* [(partial custom-warning-handler opts cb)]]
         (if (docs/repl-special? expression-form)
           (process-repl-special opts cb expression-form)
@@ -390,17 +426,3 @@
                                                 ret))))))
     (catch :default e
       (handle-eval-result! opts cb (common/wrap-error e)))))
-
-(def rep
-  "Reads evaluates and prints the input source. The second parameter,
-  eval-callback, is a function (fn [success, result] ...) where success
-  is a boolean indicating if everything went right and result will
-  contain the actual result of the evaluation or an error map.
-
-  The first parameter is a map of configuration options, currently
-  supporting:
-
-  * :verbose will enable the the evaluation logging, defaults to false.
-
-  The opts map passed here overrides the environment options."
-  read-eval-print)

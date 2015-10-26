@@ -4,11 +4,24 @@
             [cljs-bootstrap.common :as common :refer [echo-callback valid-eval-result?
                                                       extract-message valid-eval-error?
                                                       success? result]]))
-
 (defn reset-env
   []
   (repl/read-eval-print {} identity "(set! *e nil)")
   (repl/read-eval-print {} identity "(in-ns 'cljs.user)"))
+
+
+(deftest init
+  ;; This test heavily relies on text execution order. If the repl is already
+  ;; initialized before this point this will fail. It is a good idea not to put
+  ;; repl tests in other places other then this file or force test execution
+  ;; order if this happens.
+  ;; (is (not (:initializing? @repl/app-env)) "Flag :initializing? should be false before init")
+  ;; (is (:needs-init? @repl/app-env) "Flag :needs-init? should be true before init")
+  (let [[success error] (repl/read-eval-print {} echo-callback "(def c 4)")]
+    (is success "Init should return successfully")
+    (is (not (:initializing? @repl/app-env)) "Flag :initializing? should be false when the init exits")
+    (is (not (:needs-init? @repl/app-env)) "Flag :needs-init? should be false when the init exits")
+    (reset-env)))
 
 (deftest current-ns
   (is (symbol? (repl/current-ns)) "The current ns should be a symbol"))

@@ -12,7 +12,7 @@
 (defn cljs-read-eval-print!
   [console line]
   (try
-    (bootstrap/read-eval-print (partial handle-result! console) line)
+    (bootstrap/rep (partial handle-result! console) line)
     (catch js/Error err
       (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))
@@ -56,8 +56,6 @@
     takes focus."
   []
   (fn [console-opts]
-    (println "Initializing the ClojureScript REPL")
-    (bootstrap/init-repl)
     (println "Building ClojureScript React component")
     (reagent/create-class {:display-name "cljs-console-component"
                            :reagent-render cljs-console-render
