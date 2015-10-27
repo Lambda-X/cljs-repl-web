@@ -24,7 +24,7 @@
     (is (= "Could not eval -) - Unmatched delimiter )" msg))
     (is (string? msg)))
   (let [msg (extract-message empty-err)]
-    (is (= "" msg))
+    (is (= "Error" msg))
     (is (string? msg)))
   (let [msg (extract-message (err-with-ERROR) true)]
     (is (re-find #"Write this.*and this please" msg))))
