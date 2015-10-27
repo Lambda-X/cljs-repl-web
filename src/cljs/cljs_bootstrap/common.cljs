@@ -27,10 +27,13 @@
   ([err exclude-error-msg?]
    (extract-message err exclude-error-msg? false))
   ([err exclude-error-msg? print-stack?]
-   (str (string/join " - " (cond->> (error-seq err)
-                             true (filter (complement nil?))
-                             exclude-error-msg? (filter #(not= "ERROR" (.-message %1)))
-                             true (map #(.-message %1))))
+   (str (let [strings (cond->> (keep identity (error-seq err))
+                           exclude-error-msg? (filter #(not= "ERROR" (.-message %1)))
+                           true (map #(.-message %1))
+                           true (filter (complement empty?)))]
+          (if (seq strings)
+            (string/join " - " strings)
+            "Error"))
         (when print-stack?
           (str "\n" (string/join "\n" (drop 1 (string/split-lines (.-stack err)))))))))
 
