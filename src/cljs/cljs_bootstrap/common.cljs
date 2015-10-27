@@ -1,20 +1,38 @@
 (ns cljs-bootstrap.common
   (:require [clojure.string :as string]))
 
+;; js/Error tree representation
+(defn error-branch?
+  [error]
+  (instance? js/Error error))
+
+(defn error-children
+  [error]
+  [(.-cause error)])
+
+(defn error-seq
+  [error]
+  (tree-seq error-branch? error-children error))
+
 (defn extract-message
   "Iteratively extracts messages inside (nested #error objects), returns
-  a string. Be sure to pass #error object here."
+  a string. If the boolean `exclude-error-msg?` is true, the \"ERROR\"
+  only message will be included in the final string. If the boolean
+  `print-stack?` is true, the stack will be added to the final
+  string. They both default to false.
+
+  ** Be sure to pass a js/Error object here **"
   ([err]
-   (extract-message err false))
-  ([err print-stack?]
-   (str (loop [e err msgs [(.-message err)]]
-          (if-let [next-err (.-cause e)]
-            (recur next-err (conj msgs (.-message next-err)))
-            (if (seq msgs)
-              (string/join " - " msgs)
-              "")))
-        (when (and err print-stack?)
-          (str "\n" (.-stack err))))))
+   (extract-message err false false))
+  ([err exclude-error-msg?]
+   (extract-message err exclude-error-msg? false))
+  ([err exclude-error-msg? print-stack?]
+   (str (string/join " - " (cond->> (error-seq err)
+                             true (filter (complement nil?))
+                             exclude-error-msg? (filter #(not= "ERROR" (.-message %1)))
+                             true (map #(.-message %1))))
+        (when print-stack?
+          (str "\n" (string/join "\n" (drop 1 (string/split-lines (.-stack err)))))))))
 
 (defn echo-callback
   "Callback that just echoes the result map. It also asserts the correct

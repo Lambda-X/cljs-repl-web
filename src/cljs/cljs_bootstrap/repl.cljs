@@ -299,7 +299,7 @@
                (make-base-eval-opts! opts)
                (fn [res]
                  (let [[opts msg] (if res
-                                    [(assoc opts :no-pr-str-on-value true) (.-stack res)]
+                                    [(assoc opts :no-pr-str-on-value true) (common/extract-message res true true)]
                                     [opts res])]
                    (handle-eval-result! opts cb (common/wrap-success msg)))))
     (handle-eval-result! opts cb (common/wrap-success nil))))

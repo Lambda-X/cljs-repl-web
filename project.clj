@@ -4,8 +4,9 @@
                  [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]]
 
-  :plugins [[lein-cljsbuild "1.1.0"]
-            ]
+  :plugins [[lein-cljsbuild "1.1.0"]]
+
+  ;; :figwheel {:repl false}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "resources/private/test" "target" "out"]
   :hooks [leiningen.cljsbuild]

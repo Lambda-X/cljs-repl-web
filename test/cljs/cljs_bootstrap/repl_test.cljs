@@ -27,19 +27,20 @@
   (is (symbol? (repl/current-ns)) "The current ns should be a symbol"))
 
 (deftest process-pst
-  (let [res (do (repl/read-eval-call {} echo-callback "(throw (ex-info \"Exception\" {:tag :exception}))")
+  (let [res (do (repl/read-eval-call {} echo-callback "(throw (ex-info \"This is my custom error message %#FT%\" {:tag :exception}))")
                 (repl/read-eval-call {} echo-callback "*e"))
         error (unwrap-result res)]
     (is (success? res) "Eval of *e with error should return successfully")
     (is (valid-eval-result? error) "Eval of *e with error should be a valid error")
-    (is (re-find #"xception" error) "Eval of *e with error should return the correct message")
+    (is (re-find #"This is my custom error message %#FT%" error) "Eval of *e with error should return the correct message")
     (reset-env))
   ;; This test fails in phanthomjs, but is correctly handled inside the browser
-  (let [res (do (repl/read-eval-call {} echo-callback "(throw (ex-info \"Exception\" {:tag :exception}))")
+  (let [res (do (repl/read-eval-call {} echo-callback "(throw (ex-info \"This is my custom error message %#FT%\" {:tag :exception}))")
                 (repl/read-eval-call {} echo-callback "(pst)"))
         trace (unwrap-result res)]
     (is (success? res) "(pst) with previous error should return successfully")
     (is (valid-eval-result? trace) "(pst) with previous error should be a valid result")
+    (is (re-find #"This is my custom error message %#FT%" trace) "(pst) with previous error should return the correct message")
     (is (re-find #"cljs\$core\$ExceptionInfo" trace) "(pst) with previous error should return the trace as string")
     (reset-env))
   (let [res (repl/read-eval-call {} echo-callback "(pst)")
