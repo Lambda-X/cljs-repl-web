@@ -12,6 +12,7 @@ The steps to generate it at the moment are:
 * ```cd packages/jqconsole```
 * ```boot package build-jar```
 
+[Boot](https://github.com/boot-clj/boot#install) must be installed on the machine.
 
 ## Development Mode
 
