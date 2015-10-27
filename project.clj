@@ -4,12 +4,12 @@
                  [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]]
 
-  :plugins [[lein-cljsbuild "1.1.0"]]
+  :plugins [[lein-cljsbuild "1.1.0"]
+            [lein-codox "0.9.0"]]
 
   ;; :figwheel {:repl false}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "resources/private/test" "target" "out"]
-  :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
 
   :cljsbuild {:builds [{:id "dev"
@@ -34,6 +34,12 @@
                                    :optimizations :advanced
                                    :pretty-print false
                                    :externs ["resources/cljs-browser-repl.ext.js"]}}]}
+
+  :codox {:language :clojurescript
+          :source-paths ["src/cljs"]
+          :namespaces [cljs-bootstrap.core]
+          :output-path "doc"
+          :metadata {:doc/format :markdown}}
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
