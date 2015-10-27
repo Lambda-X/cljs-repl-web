@@ -215,25 +215,25 @@
 (defn handle-eval-result!
   "Handles the evaluation result, calling the callback in the right way,
   based on the success or error of the evaluation and executing
-  `(side-effect!)` *before* the callback is called. It expects the same
-  map as ClojureScript's `cljs.js` callback, that is `:value` if success
-  and `:error` if not.
+  (side-effect!) *before* the callback is called. It expects the same
+  map as ClojureScript's cljs.js callback, that is :value if success
+  and :error if not.
 
   ** Every function in this namespace should call handle-eval-result! as
   single point of exit and therefore respect its contract. **
 
   It supports the following opts (map):
 
-  * `:verbose` will enable the the evaluation logging, defaults to false.
-  * `:no-pr-str-on-value` avoids wrapping successful value in a pr-str
+  * :verbose will enable the the evaluation logging, defaults to false.
+  * :no-pr-str-on-value avoids wrapping successful value in a pr-str
 
-  ### Notes ###
+  Notes
 
   1. The opts map passed here overrides the environment options.
   2. This function will also clear the :last-eval-warning flag in
-   app-env.
+     app-env.
   3. There is also an arity for differentiating the side effect based on
-   success or error."
+     success or error."
   ([opts cb res]
    (handle-eval-result! opts cb identity res))
   ([opts cb side-effect! {:keys [value error] :as res}]
@@ -402,12 +402,12 @@
   The first parameter is a map of configuration options, currently
   supporting:
 
-  * `:verbose` will enable the the evaluation logging, defaults to false.
+  * :verbose will enable the the evaluation logging, defaults to false.
 
-  The second parameter `cb`, should be a 1-arity function which receives
+  The second parameter cb, should be a 1-arity function which receives
   the result map.
 
-  Therefore, given cb = `(fn [result] ...)`, the main map keys are:
+  Therefore, given cb (fn [result] ...), the main map keys are:
 
   ```
   { :success? ;; a boolean indicating if everything went right

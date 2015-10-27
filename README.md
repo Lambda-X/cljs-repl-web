@@ -43,6 +43,10 @@ The former is easier to check: after having booted Figwheel you have to open the
 
 For improving on the latter, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/) and/or [SlimerJS](http://slimerjs.org/), after which you can: ```lein test-phantom``` and/or ```lein test-slimer``` respectively. Featuring [doo](https://github.com/bensu/doo) here.
 
+## Docs
+
+The documentation tool of choice is [Codox](https://github.com/weavejester/codox). You just need to execute `lein codox` and open `doc/index.html` in order to see the result.
+
 ## Resources
 
  * [JQConsole](https://github.com/replit/jq-console)
