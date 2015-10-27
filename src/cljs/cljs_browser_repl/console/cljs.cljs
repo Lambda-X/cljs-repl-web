@@ -1,18 +1,18 @@
 (ns cljs-browser-repl.console.cljs
   (:require [reagent.core :as reagent]
-            [cljs-bootstrap.core :as bootstrap :refer [read-eval-print get-prompt]]
+            [cljs-bootstrap.core :as bootstrap]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.console :as console]))
 
 (defn handle-result!
-  [console success result]
-  (let [write-fn (if success console/write-return! console/write-exception!)]
-    (write-fn console result)))
+  [console result]
+  (let [write-fn (if (bootstrap/success? result) console/write-return! console/write-exception!)]
+    (write-fn console (bootstrap/unwrap-result result))))
 
 (defn cljs-read-eval-print!
   [console line]
   (try
-    (bootstrap/rep (partial handle-result! console) line)
+    (bootstrap/read-eval-call (partial handle-result! console) line)
     (catch js/Error err
       (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))

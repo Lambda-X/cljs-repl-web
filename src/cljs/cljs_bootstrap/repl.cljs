@@ -179,13 +179,12 @@
   "Handles the case when the evaluation returned success.
   Supports the following options (opts = option map):
 
-  * :no-pr-str-on-value avoids wrapping value in pr-str.
-
-  The opts map passed here overrides the environment options."
+  * :no-pr-str-on-value avoids wrapping value in pr-str."
   ([opts cb value]
-   (cb true (if-not (:no-pr-str-on-value opts)
-              (pr-str value)
-              value))))
+   (cb {:success? true
+        :value (if-not (:no-pr-str-on-value opts)
+                 (pr-str value)
+                 value)})))
 
 (defn forward-error!
   "Handles the case when the evaluation returned error.
@@ -193,7 +192,8 @@
   ([opts cb error]
    {:pre [(instance? js/Error error)]}
    (set! *e error)
-   (cb false error)))
+   (cb {:success? false
+        :error error})))
 
 (defn reset-last-warning!
   []
@@ -214,17 +214,26 @@
 
 (defn handle-eval-result!
   "Handles the evaluation result, calling the callback in the right way,
-  based on success or error of the evaluation and executing
-  (side-effect!) *before* the callback is called. There is also an arity
-  for differentiating the side effect based on success or error.
+  based on the success or error of the evaluation and executing
+  `(side-effect!)` *before* the callback is called. It expects the same
+  map as ClojureScript's `cljs.js` callback, that is `:value` if success
+  and `:error` if not.
 
-  Supports the following options (opts = option map):
-  * :verbose will enable the the evaluation logging, defaults to false.
-  * :no-pr-str-on-value avoids wrapping successful value in a pr-str
+  ** Every function in this namespace should call handle-eval-result! as
+  single point of exit and therefore respect its contract. **
 
-  Note1: The opts map passed here overrides the environment options.
-  Note2: This function will also clear the :last-eval-warning flag in
-  app-env."
+  It supports the following opts (map):
+
+  * `:verbose` will enable the the evaluation logging, defaults to false.
+  * `:no-pr-str-on-value` avoids wrapping successful value in a pr-str
+
+  ### Notes ###
+
+  1. The opts map passed here overrides the environment options.
+  2. This function will also clear the :last-eval-warning flag in
+   app-env.
+  3. There is also an arity for differentiating the side effect based on
+   success or error."
   ([opts cb res]
    (handle-eval-result! opts cb identity res))
   ([opts cb side-effect! {:keys [value error] :as res}]
@@ -290,7 +299,7 @@
                (make-base-eval-opts! opts)
                (fn [res]
                  (let [[opts msg] (if res
-                                    [(assoc opts :no-pr-str-on-value true) (.-stack res)]
+                                    [(assoc opts :no-pr-str-on-value true) (common/extract-message res true true)]
                                     [opts res])]
                    (handle-eval-result! opts cb (common/wrap-success msg)))))
     (handle-eval-result! opts cb (common/wrap-success nil))))
@@ -387,18 +396,26 @@
         (handle-eval-result! opts cb (common/wrap-error (str "INIT - "
                                                              (common/extract-message e))))))))
 
-(defn read-eval-print
-  "Reads evaluates and prints the input source. The second parameter,
-  eval-callback, is a function (fn [success, result] ...) where success
-  is a boolean indicating if everything went right and result will
-  contain the actual result of the evaluation or an error map.
+(defn read-eval-call
+  "Reads, evaluates and calls back with the evaluation result.
 
   The first parameter is a map of configuration options, currently
   supporting:
 
-  * :verbose will enable the the evaluation logging, defaults to false.
+  * `:verbose` will enable the the evaluation logging, defaults to false.
 
-  The opts map passed here overrides the environment options."
+  The second parameter `cb`, should be a 1-arity function which receives
+  the result map.
+
+  Therefore, given cb = `(fn [result] ...)`, the main map keys are:
+
+  ```
+  { :success? ;; a boolean indicating if everything went right
+    :value    ;; (if (success? result)) will contain the actual yield of the evaluation
+    :error    ;; (if (not (success? result)) will contain a js/Error }
+  ```
+
+  It initializes the repl harness if necessary."
   [opts cb source]
   (init-repl-if-necessary! opts cb)
   (try
