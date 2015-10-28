@@ -6,7 +6,7 @@
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]
-            [lein-simpleton "1.3.0"]]
+            [lein-simpleton "1.4.0-SNAPSHOT"]]
 
   ;; :figwheel {:repl false}
 
@@ -53,7 +53,9 @@
             "test-slimer*" ^{:doc "Clean and execute once unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "once"]]
             "auto-slimer" ^{:doc "Clean and execute automatic unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "auto"]]
             "tests" ^{:doc "Execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["doo" "headless" "test" "once"]
-            "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]}
+            "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
+            "serve" ^{:doc "Compile and start a server on port 5042 at resources/public"} ["do" "cljsbuild" "once" "dev" ["simpleton" "5042" ":from" "resources/public"]]
+            "serve*" ^{:doc "Clean, compile and start a server on port 5042 at resources/public"} ["do" "clean" ["cljsbuild" "once" "dev"] ["simpleton" "5042" ":from" "resources/public"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
