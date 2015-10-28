@@ -30,14 +30,15 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 This is useful in order to be sure that Figwheel does not interfere with the classpath.
 
-Open two terminals. In the first one, execute:
+First of all, build the project with `lein cljsbuild once dev`, then pen two terminals.
 
+In the first one, execute:
 ```
-lein simpleton 5042 :from resources/public
+cd resources/public
+lein simpleton 5042
 ```
 
-In the second one:
-
+In the second one, execute:
 `./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
 
 Then connect your browser to `http://localhost:5042` (your app will appear).
