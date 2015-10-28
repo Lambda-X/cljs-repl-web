@@ -30,19 +30,23 @@ Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 This is useful in order to be sure that Figwheel does not interfere with the classpath.
 
-First of all, build the project with `lein cljsbuild once dev`, then pen two terminals.
+There is a problem, solved [here](https://github.com/tailrecursion/lein-simpleton/pull/7) in `lein-simpleton`, so you need either to wait for the merge and then point to the correct version or build locally from my branch (at the moment the latest is `1.4.0-SNAPSHOT`):
+
+```git clone -b from-fix git@github.com:arichiardi/lein-simpleton.git```
+
+After that, build the project with `lein cljsbuild once dev`. Now open two terminals.
 
 In the first one, execute:
-```
-cd resources/public
-lein simpleton 5042
-```
+`./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
 
 In the second one, execute:
-`./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
+```
+lein simpleton 5042 :from resources/public
+```
 
 Then connect your browser to `http://localhost:5042` (your app will appear).
 
+If you want a battery included alias, launch `lein serve`.
 
 ## Production Build
 
