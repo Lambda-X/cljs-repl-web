@@ -32,9 +32,13 @@ This is useful in order to be sure that Figwheel does not interfere with the cla
 
 There is a problem, solved [here](https://github.com/tailrecursion/lein-simpleton/pull/7) in `lein-simpleton`, so you need either to wait for the merge and then point to the correct version or build locally from my branch (at the moment the latest is `1.4.0-SNAPSHOT`):
 
-```git clone -b from-fix git@github.com:arichiardi/lein-simpleton.git```
+```
+git clone -b from-fix git@github.com:arichiardi/lein-simpleton.git
+cd lein-simpleton
+lein install
+```
 
-After that, build the project with `lein cljsbuild once dev`. Now open two terminals.
+After that, you should have the fixed jar in `.m2/repository`. Come back to `cljs-browser-repl` and build the project with `lein cljsbuild once dev`. Open two terminals.
 
 In the first one, execute:
 `./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
