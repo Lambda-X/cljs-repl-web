@@ -5,7 +5,8 @@
                  [reagent "0.5.1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-codox "0.9.0"]]
+            [lein-codox "0.9.0"]
+            [lein-simpleton "1.3.0"]]
 
   ;; :figwheel {:repl false}
 

@@ -26,6 +26,23 @@ Figwheel will automatically push cljs changes to the browser.
 
 Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
+#### Vanilla ClojureScript REPL:
+
+This is useful in order to be sure that Figwheel does not interfere with the classpath.
+
+Open two terminals. In the first one, execute:
+
+```
+lein simpleton 5042 :from resources/public
+```
+
+In the second one:
+
+`./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
+
+Then connect your browser to `http://localhost:5042` (your app will appear).
+
+
 ## Production Build
 
 ```lein minify``` **or** ```lein do clean, cljsbuild once min```

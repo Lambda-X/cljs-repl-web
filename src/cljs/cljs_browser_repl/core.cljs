@@ -1,6 +1,9 @@
 (ns cljs-browser-repl.core
   (:require [reagent.core :as reagent]
+            [clojure.browser.repl :as repl]
             [cljs-browser-repl.console.cljs :as cljs]))
+
+(defonce conn (repl/connect "http://localhost:9000/repl"))
 
 (enable-console-print!)
 
