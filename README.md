@@ -58,16 +58,11 @@ If you want a battery included alias, launch `lein serve`.
 
 ## Testing
 
-Tests at the moment complete smoothly in the Firefox/Chrome Developer Console but not with PhanthomJS or SlimerJS.
-The weird returned error form requiring or ns-ing a namespace is:
+Tests at the moment complete smoothly in the Firefox/Chrome Developer Console, PhantomJS and SlimerJS.
 
-``` clojure
-#error {:message "ERROR", :data {:tag :cljs/analysis-error}, :cause #object[Error Error: Namespace "first.namespace" already declared.]}
-```
+You can test inside the browser's Developer Console after having booted Figwheel using ```luncher.test.run()```. Moreover, tests are executed every time Figwheel reloads.
 
-The former is easier to check: after having booted Figwheel you have to open the Developer Console and run ```luncher.test.run()```. Moreover, tests are executed every time Figwheel reloads.
-
-For improving on the latter, you need first of all [PhantomJS](https://github.com/ariya/phantomjs/) and/or [SlimerJS](http://slimerjs.org/), after which you can: ```lein test-phantom``` and/or ```lein test-slimer``` respectively. Featuring [doo](https://github.com/bensu/doo) here.
+For headless tests you need first of all [PhantomJS](https://github.com/ariya/phantomjs/) and/or [SlimerJS](http://slimerjs.org/), after which you can: ```lein test-phantom``` and/or ```lein test-slimer``` respectively. Featuring [doo](https://github.com/bensu/doo) here.
 
 ## Docs
 
