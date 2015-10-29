@@ -36,6 +36,8 @@
                                                     :disable-auto-focus true}
                                                    console-opts))]
        (app/add-console! :cljs-console jqconsole)
+       (console/register-matchings! jqconsole
+                                     console/default-matchings)
        (cljs-console-prompt! jqconsole)))))
 
 (defn cljs-console-render []
@@ -63,11 +65,21 @@
                            :reagent-render cljs-console-render
                            :component-did-mount #(cljs-console-did-mount console-opts)})))
 
-(defn cljs-button-component [caption on-click-fn]
+(defn cljs-button-component
+  [caption on-click-fn]
   [:input.jqconsole-button
    {:type "button" :value caption :on-click on-click-fn }])
+
+(defn cljs-reset-console-and-prompt!
+  [console]
+  (console/reset-console! console)
+  (cljs-console-prompt! console))
 
 (defn cljs-buttons-component []
   (let [console (app/console :cljs-console)]
     [:div.cljs-buttons-container
-     [cljs-button-component "Clear" #(console/clear-console! console)]]))
+     [cljs-button-component "Clear" #(console/clear-console! console)]
+     [cljs-button-component "Reset" #(cljs-reset-console-and-prompt! console)]
+     [cljs-button-component "Dump"  #(println (console/dump-console console))] ; copy to clipboard?
+     ]))
+

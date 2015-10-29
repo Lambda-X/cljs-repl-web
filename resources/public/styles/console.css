@@ -65,6 +65,29 @@
 }
 
 .jqconsole-button {
+    margin: 0px 2px;
+}
+
+/* Character matchings */
+
+ /* ( ) */
+.match-round-brackets {
+    color: red;
+}
+
+/* [ ] */
+.match-square-brackets {
+    color: green;
+}
+
+/* { } */
+.match-curly-brackets {
+    color: blue;
+}
+
+/* " " */
+.match-string {
+    color: yellow;
 }
 
 /*.brace {

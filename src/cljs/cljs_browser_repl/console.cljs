@@ -3,6 +3,12 @@
             [cljsjs.jqconsole]
             [cljs-bootstrap.core :as bootstrap]))
 
+(def default-matchings
+  {:match-round-brackets  [\( \)]
+   :match-square-brackets [\[ \]]
+   :match-curly-brackets  [\{ \}]
+   :match-string          [\" \"] })
+
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
   selector (any jQuery selector will work) and configuration. The
@@ -66,3 +72,26 @@
   prompt."
   [console]
   (.Clear console))
+
+(defn reset-console!
+  "jqconsole wrapper, resets the console to its initial state, cancelling 
+  all current and pending operations."
+  [console]
+  (.Reset console))
+
+(defn dump-console
+  "jqconsole wrapper, returns the text content of the console."
+  [console]
+  (.Dump console))
+
+(defn register-matching!
+  "jqconsole wrapper, registers an opening and closing characters to match."
+  [console matching-name opening closing]
+  (.RegisterMatching console opening closing (name matching-name)))
+
+(defn register-matchings!
+  "Registers each matching in the provided map. The key is used as CSS 
+  class"
+  [console matchings]
+  (doseq [[matching-name [opening closing]] matchings]
+    (register-matching! console matching-name opening closing)))
