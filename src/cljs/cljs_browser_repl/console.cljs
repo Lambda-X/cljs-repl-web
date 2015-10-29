@@ -60,3 +60,9 @@
   ([console ex] (write-exception! console ex false))
   ([console ex print-stack-trace?]
    (write-error! console (bootstrap/error->str ex print-stack-trace?))))
+
+(defn clear-console!
+  "jqconsole wrapper, clears the console's content excluding the current 
+  prompt."
+  [console]
+  (.Clear console))

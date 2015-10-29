@@ -25,6 +25,8 @@
                     (.SetPromptLabel console (bootstrap/get-prompt)) ;; necessary for namespace changes
                     (cljs-console-prompt! console)))))
 
+; Reagent components
+
 (defn cljs-console-did-mount
   [console-opts]
   (js/$
@@ -60,3 +62,12 @@
     (reagent/create-class {:display-name "cljs-console-component"
                            :reagent-render cljs-console-render
                            :component-did-mount #(cljs-console-did-mount console-opts)})))
+
+(defn cljs-button-component [caption on-click-fn]
+  [:input.jqconsole-button
+   {:type "button" :value caption :on-click on-click-fn }])
+
+(defn cljs-buttons-component []
+  (let [console (app/console :cljs-console)]
+    [:div.cljs-buttons-container
+     [cljs-button-component "Clear" #(console/clear-console! console)]]))
