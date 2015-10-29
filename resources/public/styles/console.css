@@ -6,6 +6,10 @@
     border: 1px solid #d5ceb4;
 }
 
+.jqconsole {
+    padding: 5px;
+}
+
 /* The inner console element. */
 /* .jqconsole { */
 /*   background-color: black;; */
@@ -52,6 +56,38 @@
   font-weight: normal;
   font-family: monospace;
   background-color: #E6959B;
+}
+
+/* Additional elements */
+.cljs-buttons-container {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.jqconsole-button {
+    margin: 0px 2px;
+}
+
+/* Character matchings */
+
+ /* ( ) */
+.match-round-brackets {
+    color: red;
+}
+
+/* [ ] */
+.match-square-brackets {
+    color: green;
+}
+
+/* { } */
+.match-curly-brackets {
+    color: blue;
+}
+
+/* " " */
+.match-string {
+    color: yellow;
 }
 
 /*.brace {

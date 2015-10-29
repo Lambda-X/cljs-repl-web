@@ -9,7 +9,8 @@
 
 (defn page []
   [:div
-   [cljs/cljs-component]])
+   [cljs/cljs-component]
+   [cljs/cljs-buttons-component]])
 
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")
