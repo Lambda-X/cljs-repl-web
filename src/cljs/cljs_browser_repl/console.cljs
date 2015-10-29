@@ -3,12 +3,6 @@
             [cljsjs.jqconsole]
             [cljs-bootstrap.core :as bootstrap]))
 
-(def default-matchings
-  {:match-round-brackets  [\( \)]
-   :match-square-brackets [\[ \]]
-   :match-curly-brackets  [\{ \}]
-   :match-string          [\" \"] })
-
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
   selector (any jQuery selector will work) and configuration. The
@@ -79,7 +73,7 @@
   [console]
   (.Reset console))
 
-(defn dump-console
+(defn dump-console!
   "jqconsole wrapper, returns the text content of the console."
   [console]
   (.Dump console))

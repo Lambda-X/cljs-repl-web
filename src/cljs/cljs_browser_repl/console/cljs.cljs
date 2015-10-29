@@ -4,6 +4,12 @@
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.console :as console]))
 
+(def default-matchings
+  {:match-round-brackets  [\( \)]
+   :match-square-brackets [\[ \]]
+   :match-curly-brackets  [\{ \}]
+   :match-string          [\" \"] })
+
 (defn handle-result!
   [console result]
   (let [write-fn (if (bootstrap/success? result) console/write-return! console/write-exception!)]
@@ -36,8 +42,7 @@
                                                     :disable-auto-focus true}
                                                    console-opts))]
        (app/add-console! :cljs-console jqconsole)
-       (console/register-matchings! jqconsole
-                                     console/default-matchings)
+       (console/register-matchings! jqconsole default-matchings)
        (cljs-console-prompt! jqconsole)))))
 
 (defn cljs-console-render []
@@ -80,6 +85,6 @@
     [:div.cljs-buttons-container
      [cljs-button-component "Clear" #(console/clear-console! console)]
      [cljs-button-component "Reset" #(cljs-reset-console-and-prompt! console)]
-     [cljs-button-component "Dump"  #(println (console/dump-console console))] ; copy to clipboard?
+     [cljs-button-component "Dump"  #(println (console/dump-console! console))] ; copy to clipboard?
      ]))
 
