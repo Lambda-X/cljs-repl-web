@@ -1,7 +1,7 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
             [cljsjs.jqconsole]
-            [cljs-bootstrap.core :as bootstrap]))
+            [replumb.core :as replumb]))
 
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input
@@ -59,10 +59,10 @@
 (defn write-exception!
   ([console ex] (write-exception! console ex false))
   ([console ex print-stack-trace?]
-   (write-error! console (bootstrap/error->str ex print-stack-trace?))))
+   (write-error! console (replumb/error->str ex print-stack-trace?))))
 
 (defn clear-console!
-  "jqconsole wrapper, clears the console's content excluding the current 
+  "jqconsole wrapper, clears the console's content excluding the current
   prompt."
   [console]
   (.Clear console))

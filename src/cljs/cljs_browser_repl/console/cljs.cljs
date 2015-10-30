@@ -1,6 +1,6 @@
 (ns cljs-browser-repl.console.cljs
   (:require [reagent.core :as reagent]
-            [cljs-bootstrap.core :as bootstrap]
+            [replumb.core :as replumb]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.console :as console]))
 
@@ -12,13 +12,13 @@
 
 (defn handle-result!
   [console result]
-  (let [write-fn (if (bootstrap/success? result) console/write-return! console/write-exception!)]
-    (write-fn console (bootstrap/unwrap-result result))))
+  (let [write-fn (if (replumb/success? result) console/write-return! console/write-exception!)]
+    (write-fn console (replumb/unwrap-result result))))
 
 (defn cljs-read-eval-print!
   [console line]
   (try
-    (bootstrap/read-eval-call (partial handle-result! console) line)
+    (replumb/read-eval-call (partial handle-result! console) line)
     (catch js/Error err
       (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))
@@ -28,7 +28,7 @@
   (doto console
     (.Prompt true (fn [input]
                     (cljs-read-eval-print! console input)
-                    (.SetPromptLabel console (bootstrap/get-prompt)) ;; necessary for namespace changes
+                    (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
                     (cljs-console-prompt! console)))))
 
 ; Reagent components
@@ -38,7 +38,7 @@
   (js/$
    (fn []
      (let [jqconsole (console/new-jqconsole "#cljs-console"
-                                            (merge {:prompt-label (bootstrap/get-prompt)
+                                            (merge {:prompt-label (replumb/get-prompt)
                                                     :disable-auto-focus true}
                                                    console-opts))]
        (app/add-console! :cljs-console jqconsole)

@@ -1,9 +1,6 @@
 (ns  ^:figwheel-always launcher.runner
   (:require [doo.runner :refer-macros [doo-all-tests]]
-            [cljs-browser-repl.console-test]
-            [cljs-bootstrap.core-test]
-            [cljs-bootstrap.repl-test]
-            [cljs-bootstrap.common-test]))
+            [cljs-browser-repl.console-test]))
 
 ;; Add COMPILED flag to cljs eval to turn off namespace already declared errors
 (set! js/COMPILED true)

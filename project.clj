@@ -1,6 +1,7 @@
 (defproject cljs-browser-repl "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.145"]
+                 [replumb/replumb "0.1.0-SNAPSHOT"]
                  [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]]
 
@@ -35,12 +36,6 @@
                                    :optimizations :advanced
                                    :pretty-print false
                                    :externs ["resources/cljs-browser-repl.ext.js"]}}]}
-
-  :codox {:language :clojurescript
-          :source-paths ["src/cljs"]
-          :namespaces [cljs-bootstrap.core]
-          :output-path "doc"
-          :metadata {:doc/format :markdown}}
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
