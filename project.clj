@@ -5,7 +5,8 @@
                  [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]
                  [re-com "0.7.0-alpha1"]
-                 [timothypratley/reanimated "0.1.1"]]
+                 [timothypratley/reanimated "0.1.1"]
+                 [cljs-ajax "0.5.1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]

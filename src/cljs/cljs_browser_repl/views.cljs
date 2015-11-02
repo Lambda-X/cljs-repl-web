@@ -3,6 +3,7 @@
             [re-com.core :refer [md-icon-button v-box]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
+            [cljs-browser-repl.gist :as gist]
             [cljs-browser-repl.console :as console]
             [cljs-browser-repl.console.cljs :as cljs]))
 
@@ -69,7 +70,8 @@
                :disabled? (not (app/console-created? :cljs-console))]
               [md-icon-button
                :md-icon-name "zmdi-github"
-               :on-click #()
+               :on-click #(gist/create-gist
+                           (console/dump-console! (app/console :cljs-console)))
                :class "cljs-btn"
                :tooltip "Create a Gist"
                :tooltip-position :below-center
