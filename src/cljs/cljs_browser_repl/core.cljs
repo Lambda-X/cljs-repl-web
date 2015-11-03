@@ -1,13 +1,11 @@
 (ns cljs-browser-repl.core
   (:require [reagent.core :as reagent]
-            [re-com.core     :refer [p h-box v-box box gap line scroller border label title button checkbox hyperlink-href
+            [re-com.core  :refer [p h-box v-box box gap line scroller border label title button checkbox hyperlink-href
                                      slider horizontal-bar-tabs info-button input-text input-textarea
                                      popover-anchor-wrapper popover-content-wrapper popover-tooltip px] :refer-macros [handler-fn]]
-            [re-com.box      :refer [h-box-args-desc v-box-args-desc box-args-desc gap-args-desc line-args-desc scroller-args-desc border-args-desc flex-child-style]]
-            [re-com.util     :refer [px]]
-            [re-com.validate :refer [string-or-hiccup? alert-type? vector-of-maps?]]
+            [re-com.util :refer [px]]
             [clojure.browser.repl :as repl]
-            [cljs-browser-repl.console.cljs :as cljs]))
+            [cljs-browser-repl.views :as views]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
 
@@ -28,11 +26,11 @@
                :size "1 1 auto"
                :gap "10px"
                :children [[gap :size "0 1 70px"]
-                          [cljs/cljs-button-components]
+                          [views/cljs-button-components]
                           [box
                            :size "1"
                            :style {:overflow "hidden"}
-                           :child [cljs/cljs-component]]
+                           :child [views/cljs-console-component]]
                           [gap :size "0 1 80px"]]]
               [line
                :size "2px"]]])

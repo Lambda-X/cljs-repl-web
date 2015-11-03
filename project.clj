@@ -56,7 +56,7 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
-                             [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
+                             [lein-figwheel "0.5.0-SNAPSHOT" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
                               ;; Load CIDER, refactor-nrepl and piggieback middleware
