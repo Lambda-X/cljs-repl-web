@@ -19,11 +19,7 @@
     focus.
 
   See https://github.com/replit/jq-console#instantiating"
-  [selector {:keys [welcome-string prompt-label continue-label disable-auto-focus]
-             :or {welcome-string nil
-                  prompt-label "$ "
-                  continue-label nil
-                  disable-auto-focus false}}]
+  [selector {:keys [welcome-string prompt-label continue-label disable-auto-focus]}]
   (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
 
 (defn write!
@@ -68,7 +64,7 @@
   (.Clear console))
 
 (defn reset-console!
-  "jqconsole wrapper, resets the console to its initial state, cancelling 
+  "jqconsole wrapper, resets the console to its initial state, cancelling
   all current and pending operations."
   [console]
   (.Reset console))
@@ -84,7 +80,7 @@
   (.RegisterMatching console opening closing (name matching-name)))
 
 (defn register-matchings!
-  "Registers each matching in the provided map. The key is used as CSS 
+  "Registers each matching in the provided map. The key is used as CSS
   class"
   [console matchings]
   (doseq [[matching-name [opening closing]] matchings]
