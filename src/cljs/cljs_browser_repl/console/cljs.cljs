@@ -84,17 +84,17 @@
    :gap "4px"
    :children [[md-icon-button
                :md-icon-name "zmdi-delete"
-               :on-click #(console/clear-console! (app/console :cljs-console))
-               :class "cljs-btn"
-               :disabled? (app/console-created? :cljs-console)]
-              [md-icon-button
-               :md-icon-name "zmdi-format-clear-all"
                :on-click #(cljs-reset-console-and-prompt! (app/console :cljs-console))
                :class "cljs-btn"
-               :disabled? (app/console-created? :cljs-console)]
+               :disabled? (not (app/console-created? :cljs-console))]
+              [md-icon-button
+               :md-icon-name "zmdi-format-clear-all"
+               :on-click #(console/clear-console! (app/console :cljs-console))
+               :class "cljs-btn"
+               :disabled? (not (app/console-created? :cljs-console))]
               ;; copy to clipboard?
               [md-icon-button
                :md-icon-name "zmdi-github"
                :on-click #()
                :class "cljs-btn"
-               :disabled? (app/console-created? :cljs-console)]]])
+               :disabled? (not (app/console-created? :cljs-console))]]])
