@@ -40,6 +40,14 @@
     (console/register-matchings! default-matchings)))
 
 (defn cljs-reset-console-and-prompt!
+  "Resets the console and forces the focus onto it."
   [console]
   (console/reset-console! console)
+  (console/focus-console! console)
   (cljs-console-prompt! console))
+
+(defn cljs-clear-console!
+  "Clears the console and put forces the focus onto it."
+  [console]
+  (console/clear-console! console)
+  (console/focus-console! console))

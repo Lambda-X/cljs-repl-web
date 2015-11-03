@@ -57,15 +57,20 @@
                :md-icon-name "zmdi-delete"
                :on-click #(cljs/cljs-reset-console-and-prompt! (app/console :cljs-console))
                :class "cljs-btn"
+               :tooltip "Reset"
+               :tooltip-position :left-center
                :disabled? (not (app/console-created? :cljs-console))]
               [md-icon-button
                :md-icon-name "zmdi-format-clear-all"
-               :on-click #(console/clear-console! (app/console :cljs-console))
+               :on-click #(cljs/cljs-clear-console! (app/console :cljs-console))
                :class "cljs-btn"
+               :tooltip "Clear"
+               :tooltip-position :left-center
                :disabled? (not (app/console-created? :cljs-console))]
-              ;; copy to clipboard?
               [md-icon-button
                :md-icon-name "zmdi-github"
                :on-click #()
                :class "cljs-btn"
+               :tooltip "Create a Gist"
+               :tooltip-position :below-center
                :disabled? (not (app/console-created? :cljs-console))]]])

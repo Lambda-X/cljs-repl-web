@@ -85,3 +85,10 @@
   [console matchings]
   (doseq [[matching-name [opening closing]] matchings]
     (register-matching! console matching-name opening closing)))
+
+(defn focus-console!
+  "jqconsole wrapper, forces the focus onto the console so events can be 
+  captured."
+  [console]
+  (.Focus console))
+
