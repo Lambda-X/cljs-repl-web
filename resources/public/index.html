@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <link href="styles/console.css" rel="stylesheet" type="text/css">
+<html lang="en">
+  <head>
+     <meta charset='utf-8'>
+     <title>Clojurescript REPL (dev)</title>
 
-    <div id="app"></div>
+     <link rel="stylesheet" href="assets/css/bootstrap.css">
+     <link rel="stylesheet" href="assets/css/material-design-iconic-font.min.css">
+     <link rel="stylesheet" href="assets/css/re-com.css">
+
+     <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" type="text/css">
+     <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300" rel="stylesheet" type="text/css">
+
+     <link href="styles/css/console.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="app" style="height: inherit"></div>
     <script src="js/compiled/cljs-browser-repl.js"></script>
-    <script>cljs_browser_repl.core.main();</script>
+    <script>
+         window.prstr  = function (obj) { return cljs.core.pr_str(obj) };
+         window.onload = function () {
+           cljs_browser_repl.core.main();
+         }
+     </script>
   </body>
 </html>

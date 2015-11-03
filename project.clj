@@ -3,7 +3,8 @@
                  [org.clojure/clojurescript "1.7.145"]
                  [replumb/replumb "0.1.0-SNAPSHOT"]
                  [cljsjs/jqconsole "2.12.0-0"]
-                 [reagent "0.5.1"]]
+                 [reagent "0.5.1"]
+                 [re-com "0.7.0-alpha1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]
@@ -16,8 +17,8 @@
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :figwheel {:on-jsload "launcher.test/run"
-                                   :css-dirs ["resources/public/styles"]}
+                        :figwheel {:on-jsload "cljs-browser-repl.core/main"
+                                   :css-dirs ["resources/public/styles/css/"]}
                         :compiler {:main cljs-browser-repl.core
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :output-dir "resources/public/js/compiled/out"

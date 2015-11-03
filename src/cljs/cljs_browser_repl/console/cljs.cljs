@@ -1,5 +1,7 @@
 (ns cljs-browser-repl.console.cljs
   (:require [reagent.core :as reagent]
+            [re-com.core     :refer [md-icon-button v-box] :refer-macros [handler-fn]]
+            [re-com.validate :refer [string-or-hiccup? alert-type? vector-of-maps?]]
             [replumb.core :as replumb]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.console :as console]))
@@ -37,7 +39,7 @@
   [console-opts]
   (js/$
    (fn []
-     (let [jqconsole (console/new-jqconsole "#cljs-console"
+     (let [jqconsole (console/new-jqconsole ".cljs-console"
                                             (merge {:prompt-label (replumb/get-prompt)
                                                     :disable-auto-focus true}
                                                    console-opts))]
@@ -46,8 +48,7 @@
        (cljs-console-prompt! jqconsole)))))
 
 (defn cljs-console-render []
-  [:div.console-container
-   [:div#cljs-console.console.cljs-console]])
+  [:div.cljs-console.console])
 
 (defn cljs-component
   "Creates a new instance of e which loads on the input
@@ -70,21 +71,30 @@
                            :reagent-render cljs-console-render
                            :component-did-mount #(cljs-console-did-mount console-opts)})))
 
-(defn cljs-button-component
-  [caption on-click-fn]
-  [:input.jqconsole-button
-   {:type "button" :value caption :on-click on-click-fn }])
-
 (defn cljs-reset-console-and-prompt!
   [console]
   (console/reset-console! console)
   (cljs-console-prompt! console))
 
-(defn cljs-buttons-component []
-  (let [console (app/console :cljs-console)]
-    [:div.cljs-buttons-container
-     [cljs-button-component "Clear" #(console/clear-console! console)]
-     [cljs-button-component "Reset" #(cljs-reset-console-and-prompt! console)]
-     [cljs-button-component "Dump"  #(println (console/dump-console! console))] ; copy to clipboard?
-     ]))
-
+(defn cljs-button-components []
+  "Return a vector of components containing the cljs console buttons.
+   To place them in a layout, call the function (it does not return a
+   component)."
+  [v-box
+   :gap "4px"
+   :children [[md-icon-button
+               :md-icon-name "zmdi-delete"
+               :on-click #(cljs-reset-console-and-prompt! (app/console :cljs-console))
+               :class "cljs-btn"
+               :disabled? (not (app/console-created? :cljs-console))]
+              [md-icon-button
+               :md-icon-name "zmdi-format-clear-all"
+               :on-click #(console/clear-console! (app/console :cljs-console))
+               :class "cljs-btn"
+               :disabled? (not (app/console-created? :cljs-console))]
+              ;; copy to clipboard?
+              [md-icon-button
+               :md-icon-name "zmdi-github"
+               :on-click #()
+               :class "cljs-btn"
+               :disabled? (not (app/console-created? :cljs-console))]]])
