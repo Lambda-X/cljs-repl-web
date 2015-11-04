@@ -1,8 +1,7 @@
 (ns cljs-browser-repl.app
   (:require [reagent.core :as reagent]))
 
-(def initial-state {:consoles {}
-                    :app-ready? false})
+(def initial-state {:consoles {}})
 
 (defonce state (reagent/atom initial-state))
 
@@ -23,9 +22,3 @@
 
 (def console-created? "Was the console created? Returns a truey or falsey value."
   console)
-
-(defn ready?
-  "Is the app ready to be shown?."
-  []
-  false
-  #_(console-created? :cljs-console))

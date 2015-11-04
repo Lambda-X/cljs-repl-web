@@ -13,26 +13,25 @@
 
 (enable-console-print!)
 
-(set! re-com.box/debug true)
+;; (set! re-com.box/debug true)
 
 (defn page []
   [anim/pop-when true
    [v-box
     :class "app-main"
     :size   "1 1 auto"
-    :margin "2px"
     :gap    "20px"
     :align  :stretch
     :children [[h-box
                 :size "1 1 auto"
                 :gap "10px"
-                :children [[views/cljs-button-components]
+                :children [[gap :size "20px"]
+                           [views/cljs-button-components]
                            [box
                             :size "1"
                             :style {:overflow "hidden"}
                             :child [views/cljs-console-component]]]]
-               [line
-                :size "2px"]]]])
+               [line :size "2px"]]]])
 
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")
