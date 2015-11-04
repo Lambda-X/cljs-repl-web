@@ -4,36 +4,35 @@
                                      slider horizontal-bar-tabs info-button input-text input-textarea
                                      popover-anchor-wrapper popover-content-wrapper popover-tooltip px] :refer-macros [handler-fn]]
             [re-com.util :refer [px]]
-            [clojure.browser.repl :as repl]
+            [timothypratley.reanimated.core :as anim]
+            ;; [clojure.browser.repl :as repl]
+            [cljs-browser-repl.app :as app]
             [cljs-browser-repl.views :as views]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
 
 (enable-console-print!)
 
+(set! re-com.box/debug true)
+
 (defn page []
-  [v-box
-   :size   "1 1 auto"
-   :margin "2px"
-   :gap    "20px"
-   :align  :stretch
-   :children [[title
-               :label "ClojureScript REPL"
-               :underline? true
-               :level :level2
-               :style {:align-self :center}]
-              [h-box
-               :size "1 1 auto"
-               :gap "10px"
-               :children [[gap :size "0 1 70px"]
-                          [views/cljs-button-components]
-                          [box
-                           :size "1"
-                           :style {:overflow "hidden"}
-                           :child [views/cljs-console-component]]
-                          [gap :size "0 1 80px"]]]
-              [line
-               :size "2px"]]])
+  [anim/pop-when true
+   [v-box
+    :class "app-main"
+    :size   "1 1 auto"
+    :margin "2px"
+    :gap    "20px"
+    :align  :stretch
+    :children [[h-box
+                :size "1 1 auto"
+                :gap "10px"
+                :children [[views/cljs-button-components]
+                           [box
+                            :size "1"
+                            :style {:overflow "hidden"}
+                            :child [views/cljs-console-component]]]]
+               [line
+                :size "2px"]]]])
 
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")

@@ -4,21 +4,19 @@
                  [replumb/replumb "0.1.0-SNAPSHOT"]
                  [cljsjs/jqconsole "2.12.0-0"]
                  [reagent "0.5.1"]
-                 [re-com "0.7.0-alpha1"]]
+                 [re-com "0.7.0-alpha1"]
+                 [timothypratley/reanimated "0.1.1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]
             [lein-simpleton "1.4.0-SNAPSHOT"]]
-
-  ;; :figwheel {:repl false}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "resources/private/test" "target" "out"]
   :source-paths ["src/clj"]
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :figwheel {:on-jsload "cljs-browser-repl.core/main"
-                                   :css-dirs ["resources/public/styles/css/"]}
+                        :figwheel {:on-jsload "launcher.test/run"}
                         :compiler {:main cljs-browser-repl.core
                                    :output-to "resources/public/js/compiled/cljs-browser-repl.js"
                                    :output-dir "resources/public/js/compiled/out"
@@ -56,9 +54,11 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
-                             [lein-figwheel "0.5.0-SNAPSHOT" :exclusions [cider/cider-nrepl]]]
+                             [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
+                              :repl true
+                              :css-dirs ["resources/public/styles/css/"]
                               ;; Load CIDER, refactor-nrepl and piggieback middleware
                               :nrepl-middleware ["cider.nrepl/cider-middleware"
                                                  "refactor-nrepl.middleware/wrap-refactor"

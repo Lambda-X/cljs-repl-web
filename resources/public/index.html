@@ -12,15 +12,31 @@
      <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300" rel="stylesheet" type="text/css">
 
      <link href="styles/css/console.css" rel="stylesheet" type="text/css">
+     <link href="styles/css/app.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <div id="app" style="height: inherit"></div>
+    <div class="app-main page-header">
+      <h1>A ClojureScript REPL <small>featuring replumb</small></h1>
+    </div>
+    <div id="app" class="app-main">
+      <div class="app-progress-bar panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Cleaning up parens...</h2>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar"
+               aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+               style="width: 100%">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="js/compiled/cljs-browser-repl.js"></script>
     <script>
-         window.prstr  = function (obj) { return cljs.core.pr_str(obj) };
-         window.onload = function () {
-           cljs_browser_repl.core.main();
-         }
-     </script>
+         window.prstr = function (obj) { return cljs.core.pr_str(obj) };
+         window.onload = function () { cljs_browser_repl.core.main(); }
+    </script>
+
   </body>
 </html>
