@@ -1,0 +1,9 @@
+.app-main {
+    padding: 20px;
+}
+
+.app-progress-bar {
+    padding: 4px;
+    width: 40%;
+    margin: auto;
+}
