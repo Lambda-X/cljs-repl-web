@@ -37,7 +37,8 @@
                                        :disable-auto-focus true
                                        :continue-label "  "}
                                       console-opts))
-    (console/register-matchings! default-matchings)))
+    (console/register-matchings! default-matchings)
+    (console/color-crap!)))
 
 (defn cljs-reset-console-and-prompt!
   "Resets the console and forces the focus onto it."
