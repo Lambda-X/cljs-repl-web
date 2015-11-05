@@ -1,8 +1,6 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
             [cljsjs.jqconsole]
-            [cljsjs.highlight]
-            [cljsjs.highlight.langs.clojure]
             [replumb.core :as replumb]))
 
 (defn new-jqconsole
@@ -89,42 +87,8 @@
     (register-matching! console matching-name opening closing)))
 
 (defn focus-console!
-  "jqconsole wrapper, forces the focus onto the console so events can be
+  "jqconsole wrapper, forces the focus onto the console so events can be 
   captured."
   [console]
   (.Focus console))
 
-;TODO: developer was crying when pushing!!!
-(defn ^:private add-code! [$node]
-  "we need help hljs detect code so we mutate node adding code tag wrapper"
-  (.addClass $node "clojure")
-  (.wrapInner $node "<code></code>"))
-
-(defn ^:private seq-children [node]
-  (array-seq (.children (js/$ node))))
-
-(defn highlight-prompt-before-after! [prompt]
-  (if-let [prompt-children (seq-children prompt)]
-    (doseq [prompt-child prompt-children]
-      (let [node (second (seq-children prompt-child))
-            $node (js/$ node)]
-        (if-not (.hasClass $node "clojure")
-          (do (add-code! $node)
-              (js/hljs.highlightBlock node)))))))
-
-(defn highlight-prompt-left-right! [prompt]
-  (let [node (first (array-seq (.html prompt (.text prompt))))]
-    (add-code! (js/$ node))
-    (js/hljs.highlightBlock node)))
-
-(defn highlight-prompt-block!
-  [input-source prompt-left prompt-right prompt-before prompt-after]
-  (.on input-source "change keyup paste" (fn []
-                                           (highlight-prompt-before-after! prompt-before)
-                                           (highlight-prompt-before-after! prompt-after)
-                                           (highlight-prompt-left-right! prompt-left)
-                                           (highlight-prompt-left-right! prompt-right)
-                                           )))
-
-(defn color-crap! [console]
-  (highlight-prompt-block! (.-$input_source console) (.-$prompt_left console) (.-$prompt_right console) (.-$prompt_before console) (.-$prompt_after console)))
