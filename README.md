@@ -14,6 +14,17 @@ The steps to generate it at the moment are:
 
 [Boot](https://github.com/boot-clj/boot#install) must be installed on the machine.
 
+### Generate the ClojureScript API 
+
+The project needs to create the ClojureScript `cljs-browser-repl.cljs-api` namespace and relative custom data taken from the amazing work at [cljs-api-info](https://github.com/cljsinfo/cljs-api-docs).
+
+In order to generate the namespace inside `src`,  run:
+
+`lein run -m cljs-api.generator/-main`
+
+If you need to update the `edn` with the latest version from `cljs-api-docs` follow the instructions on their project page. This will generate a `cljs-api.edn` that you will need to copy from `cljs-api-docs/catalog` to `resources`.
+
+
 ## Development Mode
 
 In dev mode, an ```out``` folder, containing all the compiled dependencies will be also created in the same folder of ```clojure-browser-repl.js```.

@@ -6,14 +6,21 @@
                  [reagent "0.5.1"]
                  [re-com "0.7.0-alpha1"]
                  [timothypratley/reanimated "0.1.1"]
-                 [cljs-ajax "0.5.1"]]
+                 [cljs-ajax "0.5.1"]
+                 [endophile "0.1.2"]
+                 [markdown-clj "0.9.78"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]
             [lein-simpleton "1.4.0-SNAPSHOT"]]
 
+  ;; from https://github.com/technomancy/leiningen/wiki/Faster
+  ;; :eval-in :nrepl ;; enable this only if you know what you are doing
+  :jvm-opts ^:replace []
+
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "resources/private/test" "target" "out"]
   :source-paths ["src/clj"]
+  :test-paths ["test/clj"]
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
@@ -36,6 +43,8 @@
                                    :optimizations :advanced
                                    :pretty-print false
                                    :externs ["resources/cljs-browser-repl.ext.js"]}}]}
+
+  ;; :prep-tasks ["run" "-m cljs-api.generator/-main" "src/cljs/cljs_browser_repl/cljs_api.cljs"]
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
