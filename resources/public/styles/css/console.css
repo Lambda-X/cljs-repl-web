@@ -24,8 +24,9 @@
 }
 
 .jqconsole-old-prompt {
-   color: #9A7C7D;
-   font-weight: normal;
+  opacity: 0.5;
+  /* color: #9A7C7D; */
+  font-weight: normal;
 }
 
 .jqconsole-output {
