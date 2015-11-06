@@ -2,11 +2,11 @@
   (:require [replumb.core :as replumb]
             [cljs-browser-repl.console :as console]))
 
-(def default-matchings
-  {:match-round-brackets  [\( \)]
-   :match-square-brackets [\[ \]]
-   :match-curly-brackets  [\{ \}]
-   :match-string          [\" \"] })
+(def default-matchings {})
+  ;; {:match-round-brackets  [\( \)]
+  ;;  :match-square-brackets [\[ \]]
+  ;;  :match-curly-brackets  [\{ \}]
+  ;;  :match-string          [\" \"] })
 
 (defn handle-result!
   [console result]
