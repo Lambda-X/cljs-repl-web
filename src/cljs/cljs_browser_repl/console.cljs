@@ -1,6 +1,9 @@
 (ns cljs-browser-repl.console
   (:require [clojure.string :as s :refer [join]]
             [cljsjs.jqconsole]
+            [cljsjs.highlight]
+            [cljsjs.highlight.langs.clojure]
+            [cljsjs.jqconsole]
             [replumb.core :as replumb]))
 
 (defn new-jqconsole
@@ -155,10 +158,9 @@
            ))))
 
 (defn color-crap! [console]
-  (highlight-prompt-block!
-   (.-$input_source console)
-   (.-$prompt_left console)
-   (.-$prompt_right console)
-   (.-$prompt_before console)
-   (.-$prompt_after console)
-   (.-$console console)))
+  (highlight-prompt-block! (.-$input_source console)
+                           (.-$prompt_left console)
+                           (.-$prompt_right console)
+                           (.-$prompt_before console)
+                           (.-$prompt_after console)
+                           (.-$console console)))
