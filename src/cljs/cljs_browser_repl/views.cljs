@@ -1,6 +1,7 @@
 (ns cljs-browser-repl.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
+            [re-frame.core :refer [subscribe dispatch]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller]]
@@ -25,7 +26,7 @@
   (js/$
    (fn []
      (let [jqconsole (cljs/cljs-console! console-opts)]
-       (app/add-console! :cljs-console jqconsole)
+       (dispatch [:add-console :cljs-console jqconsole])
        (cljs/cljs-console-prompt! jqconsole)))))
 
 (defn cljs-console-render []
@@ -114,7 +115,7 @@
         save-auth-data (reagent/atom nil)
         ok-fn #(do (reset! showing? false)
                    (let [{:keys [username password]} @auth-data
-                         text (console/dump-console! (app/console :cljs-console))]
+                         text (console/dump-console! (subscribe [:get-console :cljs-console]))]
                      (gist/create-gist username password text on-gist-created gist-error-handler)))
         cancel-fn #(do
                      (reset! auth-data @save-auth-data)
@@ -130,7 +131,7 @@
                 :class "cljs-btn"
                 :tooltip "Create Gist"
                 :tooltip-position :below-center
-                :disabled? (not (app/console-created? :cljs-console))]
+                :disabled? (not @(subscribe [:console-created? :cljs-console]))]
      :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
 
 (defn cljs-buttons
@@ -142,18 +143,18 @@
    :gap "4px"
    :children [[md-icon-button
                :md-icon-name "zmdi-delete"
-               :on-click #(cljs/cljs-reset-console-and-prompt! (app/console :cljs-console))
+               :on-click #(cljs/cljs-reset-console-and-prompt! (subscribe [:get-console :cljs-console]))
                :class "cljs-btn"
                :tooltip "Reset"
                :tooltip-position :left-center
-               :disabled? (not (app/console-created? :cljs-console))]
+               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
               [md-icon-button
                :md-icon-name "zmdi-format-clear-all"
-               :on-click #(cljs/cljs-clear-console! (app/console :cljs-console))
+               :on-click #(cljs/cljs-clear-console! (subscribe [:get-console :cljs-console]))
                :class "cljs-btn"
                :tooltip "Clear"
                :tooltip-position :left-center
-               :disabled? (not (app/console-created? :cljs-console))]
+               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
               [gist-login-popover-dialog]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -267,7 +268,7 @@
                        :class "btn btn-default api-panel-button-send-repl"
                        :style (merge (flex-child-style "1 0 auto")
                                      {:width "100%"})
-                       :disabled? (not (app/console-created? :cljs-console))
+                       :disabled? (not @(subscribe [:console-created? :cljs-console]))
                        :label [h-box
                                :size "1 1 auto"
                                :justify :between

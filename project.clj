@@ -5,6 +5,7 @@
                  [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
+                 [re-frame "0.5.0"]
                  [re-com "0.7.0-alpha1"]
                  [timothypratley/reanimated "0.1.1"]
                  [cljs-ajax "0.5.1"]

@@ -1,12 +1,10 @@
 (ns cljs-browser-repl.core
   (:require [reagent.core :as reagent]
-            [re-com.core  :refer [p h-box v-box box gap line scroller border label title button checkbox hyperlink-href
-                                     slider horizontal-bar-tabs info-button input-text input-textarea
-                                     popover-anchor-wrapper popover-content-wrapper popover-tooltip px] :refer-macros [handler-fn]]
-            [re-com.util :refer [px]]
+            [re-frame.core :refer [dispatch-sync]]
+            [re-com.core :refer [p h-box v-box box gap line]]
             [timothypratley.reanimated.core :as anim]
-            ;; [clojure.browser.repl :as repl]
-            [cljs-browser-repl.app :as app]
+            [cljs-browser-repl.handlers]
+            [cljs-browser-repl.subscriptions]
             [cljs-browser-repl.views :as views]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
@@ -36,4 +34,5 @@
 
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")
+  (dispatch-sync [:initialize])
   (reagent/render [page] (.getElementById js/document "app")))
