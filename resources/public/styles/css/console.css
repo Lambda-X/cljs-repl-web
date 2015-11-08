@@ -240,3 +240,46 @@
 .jqconsole-ansi-overline {
   text-decoration: overline!important;
 }
+
+/*   API Panel    */
+.api-panel-column {
+    background-color: #FFF;
+}
+
+.api-panel-section-title {
+    text-align: center;
+    font-family: "Roboto";
+    font-size: 1.5em;
+}
+
+.api-panel-table {
+    width: 100%;
+}
+
+.api-panel-table tr:nth-child(odd) {
+    background-color: rgb(245,245,245);
+}
+
+.api-panel-table tr:nth-child(even) {
+    background-color: rgb(250,250,250);
+}
+
+.api-panel-table-tr {
+    height: 40px;
+}
+
+.api-panel-table-td-symbols {
+    padding-left: 10px;
+}
+
+.api-panel-topic {
+    padding: 10px;
+    width: 150px;
+    text-transform: uppercase;
+    font-family: "Roboto";
+}
+
+.api-panel-symbol {
+    padding: 0px 5px;
+    font-family: "Courier New";
+}
