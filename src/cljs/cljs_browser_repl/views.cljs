@@ -2,7 +2,7 @@
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
-                                 popover-content-wrapper popover-anchor-wrapper hyperlink-href]]
+                                 popover-content-wrapper popover-anchor-wrapper hyperlink]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
@@ -170,14 +170,18 @@
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing? position sym-doc-map]
-  (let [{name :name desc :description-html examples :examples-html sign :signature} sym-doc-map]
+  [showing? popover-position sym-doc-map]
+  (let [{name :name
+         desc :description-html
+         examples :examples-html
+         sign :signature
+         related :related} sym-doc-map]
     [popover-content-wrapper
      :showing? showing?
-     :position position ; set position dynamically 
-     :width "300"
+     :position popover-position
+     :width "400"
      :backdrop-opacity 0.4
-     :title name     
+     :title name
      :body [(fn []
               [:div
                (when (not-empty sign)
@@ -186,67 +190,77 @@
                  ;; we can use `dangerouslySetInnerHTML` or construct the edn from
                  ;; the html string (using eg. hickory)
                  ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
-                 [:div {:dangerouslySetInnerHTML {:__html desc}}])
+                 [:div
+                  [:p.api-panel-popup-section-title "Docs"]
+                  [:div {:dangerouslySetInnerHTML {:__html desc}}]])
                (when (not-empty examples)
                  [:div
-                  [:p.api-panel-examples "Examples"]
+                  [:p.api-panel-popup-section-title "Examples"]
                   (for [example examples]
                     ;; see above for html
-                    [:div {:dangerouslySetInnerHTML {:__html example}}])])])]]))
+                    [:div {:dangerouslySetInnerHTML {:__html example}}])])
+               (when (not-empty related)
+                 [:div
+                  [:p.api-panel-popup-section-title "Related"]
+                  (for [rel related]
+                    ;; see above for html
+                    ;; we can later make it a link
+                    [:span.api-panel-related-symbol rel])])])]]))
 
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be either a link with popup or
   a simple `<span>`."
-  [symbol]
+  [symbol popover-position]
   (if-let [symbol (get-symbol-doc-map (str symbol))]
-    (let [showing? (reagent/atom false)
-          position :below-center]
+    (let [showing? (reagent/atom false)]
       [popover-anchor-wrapper
        :showing? showing?
-       :position position
-       :anchor [hyperlink-href
+       :position popover-position
+       :anchor [hyperlink
                 :label (:name symbol)
                 :attr {:on-mouse-over (handler-fn (reset! showing? true))
                        :on-mouse-out  (handler-fn (reset! showing? false))}
-                :class "api-panel-symbol"
-                :style {:display "inline-flex"}
-                :href "" ; add url to documentation
-                :target "_blank"]
-       :popover [symbol-popover showing? position symbol]])
+                :class "api-panel-keyword api-panel-symbol"]
+       :popover [symbol-popover showing? popover-position symbol]])
     [:span.api-panel-symbol (str symbol)]))
 
 (defn build-topics-ui
   "Builds the UI for the provided topics in the form of a table."
-  [topics]
+  [topics popover-position]
   [:table.api-panel-topics-table
    (for [topic topics]
      [:tr.api-panel-topics-table-tr
       [:td.api-panel-topic (:title topic)]
       [:td.api-panel-topics-table-td-symbols
-       (map build-symbol-ui (:symbols topic))]])])
+       (map #(build-symbol-ui % popover-position) (:symbols topic))]])])
 
 (defn build-section-ui
   "Builds the UI for a section."
-  [section]
+  [section popover-position]
   [:div
    [:h1.api-panel-section-title (:title section)]
-   (build-topics-ui (:topics section))])
+   (build-topics-ui (:topics section) popover-position)])
 
 (defn build-api-panel-ui
   "Builds the UI for the api panel. Expects the numer of columns in which place the sections 
   of the tutorial and the sections themselves. `cols` must be a divisor of 12."
   [cols sections]
   (let [bootstrap-class-nr (quot 12 cols)
-        secs (count sections)
+        secs (count sections) ; all sections - not partitioned yet
         secs-per-col (quot secs cols)
         partitioned-sections (partition-all (if (zero? (rem secs cols))
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
     [:div.row
-     (for [sections partitioned-sections]
+     ;; we keep the indexes because we want to align the popover correctly
+     (for [[col-index sections] (map-indexed vector partitioned-sections)
+           :let [c (count sections)]]
        [:div.api-panel-column {:class (str "col-md-" bootstrap-class-nr) }
-        (for [section sections]
-          (build-section-ui section))])]))
+        (for [[sec-index section] (map-indexed vector sections)
+              :let [vertical    (if (and (>= c 2) (< sec-index (dec c))) "below" "above")
+                    horiziontal (if (< col-index (quot cols 2)) "right" "left")
+                    position (keyword (str vertical \- horiziontal))]]
+          (build-section-ui section position))])]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
