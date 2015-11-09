@@ -1,12 +1,15 @@
 (ns cljs-browser-repl.views
+  (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
-                                 popover-content-wrapper popover-anchor-wrapper]]
+                                 popover-content-wrapper popover-anchor-wrapper hyperlink]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
             [cljs-browser-repl.console :as console]
-            [cljs-browser-repl.console.cljs :as cljs]))
+            [cljs-browser-repl.console.cljs :as cljs]
+            [cljs-browser-repl.cljs-api :as api]
+            [cljs-browser-repl.api-utils :as api-utils]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reagent helpers  s ;;;
@@ -47,6 +50,10 @@
     (reagent/create-class {:display-name "cljs-console-component"
                            :reagent-render cljs-console-render
                            :component-did-mount #(cljs-console-did-mount console-opts)})))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;      Buttons       ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn gist-login-popover-dialog-body
   [showing? auth-data ok-fn cancel-fn]
@@ -121,10 +128,11 @@
                 :disabled? (not (app/console-created? :cljs-console))]
      :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
 
-(defn cljs-button-components []
+(defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
    To place them in a layout, call the function (it does not return a
    component)."
+  []
   [v-box
    :gap "4px"
    :children [[md-icon-button
@@ -143,4 +151,117 @@
                :disabled? (not (app/console-created? :cljs-console))]
               [gist-login-popover-dialog]]])
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;  API panel section  ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn get-symbol-doc-map
+  "Returns the doc map for the symbol from the `cljs-api-edn` parsed  map."
+  [symbol]
+  (get-in api/cljs-api-edn [:symbols symbol]))
+
+(defn build-signatures-ui
+  "Builds a table for the provided signatures of a symbol."
+  [signatures]
+  [:table.api-panel-signatures-table
+   (for [s signatures]
+     [:tr.api-panel-signatures-table-tr
+      [:td.api-panel-signature s]])])
+
+(defn symbol-popover
+  "A popover's body in which details of the given symbol will be shown."
+  [showing? popover-position sym-doc-map]
+  (let [{name :name
+         desc :description-html
+         examples :examples-html
+         sign :signature
+         related :related} sym-doc-map]
+    [popover-content-wrapper
+     :showing? showing?
+     :position popover-position
+     :width "400"
+     :backdrop-opacity 0.4
+     :title name
+     :body [(fn []
+              [:div
+               (when (not-empty sign)
+                 (build-signatures-ui sign))
+               (when (not-empty desc)
+                 ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+                 ;; the html string (using eg. hickory)
+                 ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+                 [:div
+                  [:p.api-panel-popup-section-title "Docs"]
+                  [:div {:dangerouslySetInnerHTML {:__html desc}}]])
+               (when (not-empty examples)
+                 [:div
+                  [:p.api-panel-popup-section-title "Examples"]
+                  (for [example examples]
+                    ;; see above for html
+                    [:div {:dangerouslySetInnerHTML {:__html example}}])])
+               (when (not-empty related)
+                 [:div
+                  [:p.api-panel-popup-section-title "Related"]
+                  (for [rel related]
+                    ;; see above for html
+                    ;; we can later make it a link
+                    [:span.api-panel-related-symbol rel])])])]]))
+
+(defn build-symbol-ui
+  "Builds the UI for a single symbol. Will be either a link with popup or
+  a simple `<span>`."
+  [symbol popover-position]
+  (if-let [symbol (get-symbol-doc-map (str symbol))]
+    (let [showing? (reagent/atom false)]
+      [popover-anchor-wrapper
+       :showing? showing?
+       :position popover-position
+       :anchor [hyperlink
+                :label (:name symbol)
+                :attr {:on-mouse-over (handler-fn (reset! showing? true))
+                       :on-mouse-out  (handler-fn (reset! showing? false))}
+                :class "api-panel-keyword api-panel-symbol"]
+       :popover [symbol-popover showing? popover-position symbol]])
+    [:span.api-panel-symbol (str symbol)]))
+
+(defn build-topics-ui
+  "Builds the UI for the provided topics in the form of a table."
+  [topics popover-position]
+  [:table.api-panel-topics-table
+   (for [topic topics]
+     [:tr.api-panel-topics-table-tr
+      [:td.api-panel-topic (:title topic)]
+      [:td.api-panel-topics-table-td-symbols
+       (map #(build-symbol-ui % popover-position) (:symbols topic))]])])
+
+(defn build-section-ui
+  "Builds the UI for a section."
+  [section popover-position]
+  [:div
+   [:h1.api-panel-section-title (:title section)]
+   (build-topics-ui (:topics section) popover-position)])
+
+(defn build-api-panel-ui
+  "Builds the UI for the api panel. Expects the numer of columns in which place the sections 
+  of the tutorial and the sections themselves. `cols` must be a divisor of 12."
+  [cols sections]
+  (let [bootstrap-class-nr (quot 12 cols)
+        secs (count sections) ; all sections - not partitioned yet
+        secs-per-col (quot secs cols)
+        partitioned-sections (partition-all (if (zero? (rem secs cols))
+                                              secs-per-col
+                                              (inc secs-per-col)) sections)]
+    [:div.row
+     ;; we keep the indexes because we want to align the popover correctly
+     (for [[col-index sections] (map-indexed vector partitioned-sections)
+           :let [c (count sections)]]
+       [:div.api-panel-column {:class (str "col-md-" bootstrap-class-nr) }
+        (for [[sec-index section] (map-indexed vector sections)
+              :let [vertical    (if (and (>= c 2) (< sec-index (dec c))) "below" "above")
+                    horiziontal (if (< col-index (quot cols 2)) "right" "left")
+                    position (keyword (str vertical \- horiziontal))]]
+          (build-section-ui section position))])]))
+
+(defn api-panel []
+  [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
 
