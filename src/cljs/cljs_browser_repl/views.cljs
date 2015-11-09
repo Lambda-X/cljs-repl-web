@@ -159,17 +159,37 @@
   [symbol]
   (get-in api/cljs-api-edn [:symbols symbol]))
 
+(defn symbol-popover
+  "A popover's body in which details of the given symbol will be shown."
+  [showing? sym-doc-map]
+  (let [{name :name desc :description} sym-doc-map]
+   [popover-content-wrapper
+    :showing? showing?
+    :position :below-center
+    :width "300"
+    :backdrop-opacity 0.4
+    :title name
+    :body [(fn []
+             [:span desc])]]))
+
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be either a link with popup or
   a simple `<span>`."
   [symbol]
   (if-let [symbol (get-symbol-doc-map (str symbol))]
-    [hyperlink-href                     ; add popup
-     :label (:name symbol)
-     :class "api-panel-symbol"
-     :style {:display "inline-flex"}
-     :href ""                         ; add url to documentation
-     :target "_blank"]
+    (let [showing? (reagent/atom false)]
+      [popover-anchor-wrapper
+       :showing? showing?
+       :position :below-center
+       :anchor [hyperlink-href
+                :label (:name symbol)
+                :attr {:on-mouse-over #(reset! showing? true)
+                       :on-mouse-out  #(reset! showing? false)}
+                :class "api-panel-symbol"
+                :style {:display "inline-flex"}
+                :href "" ; add url to documentation
+                :target "_blank"]
+       :popover [symbol-popover showing? symbol]])
     [:span.api-panel-symbol (str symbol)]))
 
 (defn build-topics-ui
