@@ -39,14 +39,14 @@
 ;; :examples ;;;
 ;;;;;;;;;;;;;;;;
 
-(defn assoc-example-html
+(defn assoc-example-htmls
   "Note, needs the value of the symbol map, aka the map containing
   {:examples ...}. It adds a seq of examples in (escaped) html format
-  under :examples-html."
+  under :examples-htmls."
   [api-symbol-content]
   (let [examples (->> api-symbol-content :examples (map :content))
         html (mapv #(md/md-to-html-string %) examples)]
-    (assoc api-symbol-content :examples-html html)))
+    (assoc api-symbol-content :examples-htmls html)))
 
 (defn lift-up-comments
   "Given lines of code, merges each commented line (;) with the
@@ -82,7 +82,7 @@
                 code-content)         ;; fetch content
           code-nodes)))
 
-(defn assoc-example-forms
+(defn assoc-example-strings
   "Note, needs the value of the symbol map, aka the map containing
   {:examples ...}. It adds a seq of examples in (escaped) html format
   under :examples-strings"
@@ -123,8 +123,8 @@
            :symbols (reduce (fn [symbol-map [symbol-k symbol-v]]
                               (assoc symbol-map symbol-k (-> symbol-v
                                                              assoc-description-html
-                                                             assoc-example-forms
-                                                             assoc-example-html)))
+                                                             assoc-example-strings
+                                                             assoc-example-htmls)))
                             {} symbol-name-map))))
 
 (defn exit
