@@ -1,4 +1,5 @@
 (ns cljs-browser-repl.views
+  (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href]]
@@ -159,47 +160,69 @@
   [symbol]
   (get-in api/cljs-api-edn [:symbols symbol]))
 
+(defn build-signatures-ui
+  "Builds a table for the provided signatures of a symbol."
+  [signatures]
+  [:table.api-panel-signatures-table
+   (for [s signatures]
+     [:tr.api-panel-signatures-table-tr
+      [:td.api-panel-signature s]])])
+
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing? sym-doc-map]
-  (let [{name :name desc :description} sym-doc-map]
-   [popover-content-wrapper
-    :showing? showing?
-    :position :below-center
-    :width "300"
-    :backdrop-opacity 0.4
-    :title name
-    :body [(fn []
-             [:span desc])]]))
+  [showing? position sym-doc-map]
+  (let [{name :name desc :description-html examples :examples-html sign :signature} sym-doc-map]
+    [popover-content-wrapper
+     :showing? showing?
+     :position position ; set position dynamically 
+     :width "300"
+     :backdrop-opacity 0.4
+     :title name     
+     :body [(fn []
+              [:div
+               (when (not-empty sign)
+                 (build-signatures-ui sign))
+               (when (not-empty desc)
+                 ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+                 ;; the html string (using eg. hickory)
+                 ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+                 [:div {:dangerouslySetInnerHTML {:__html desc}}])
+               (when (not-empty examples)
+                 [:div
+                  [:p.api-panel-examples "Examples"]
+                  (for [example examples]
+                    ;; see above for html
+                    [:div {:dangerouslySetInnerHTML {:__html example}}])])])]]))
 
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be either a link with popup or
   a simple `<span>`."
   [symbol]
   (if-let [symbol (get-symbol-doc-map (str symbol))]
-    (let [showing? (reagent/atom false)]
+    (let [showing? (reagent/atom false)
+          position :below-center]
       [popover-anchor-wrapper
        :showing? showing?
-       :position :below-center
+       :position position
        :anchor [hyperlink-href
                 :label (:name symbol)
-                :attr {:on-mouse-over #(reset! showing? true)
-                       :on-mouse-out  #(reset! showing? false)}
+                :attr {:on-mouse-over (handler-fn (reset! showing? true))
+                       :on-mouse-out  (handler-fn (reset! showing? false))}
                 :class "api-panel-symbol"
                 :style {:display "inline-flex"}
                 :href "" ; add url to documentation
                 :target "_blank"]
-       :popover [symbol-popover showing? symbol]])
+       :popover [symbol-popover showing? position symbol]])
     [:span.api-panel-symbol (str symbol)]))
 
 (defn build-topics-ui
   "Builds the UI for the provided topics in the form of a table."
   [topics]
-  [:table.api-panel-table
+  [:table.api-panel-topics-table
    (for [topic topics]
-     [:tr.api-panel-table-tr
+     [:tr.api-panel-topics-table-tr
       [:td.api-panel-topic (:title topic)]
-      [:td.api-panel-table-td-symbols
+      [:td.api-panel-topics-table-td-symbols
        (map build-symbol-ui (:symbols topic))]])])
 
 (defn build-section-ui
