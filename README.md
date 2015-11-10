@@ -4,15 +4,6 @@ A reagent app designed to embed a pure ClojureScript REPL in a web page.
 
 The JavaScript will be ```cljs-browser-repl.js``` and it is typically located in ```resources/public/js/compiled```.
 
-In order to build the project in both ```dev``` and ```min``` you first need to have a local copy of ```cljsjs/jqconsole``` (the reason is that it has not yet merged to master).
-
-The steps to generate it at the moment are:
-
-* ```git clone -b cljsjs-jqconsole https://github.com/arichiardi/packages```
-* ```cd packages/jqconsole```
-* ```boot package build-jar```
-
-[Boot](https://github.com/boot-clj/boot#install) must be installed on the machine.
 
 ### Generate the ClojureScript API 
 

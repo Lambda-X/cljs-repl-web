@@ -2,7 +2,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.145"]
                  [replumb/replumb "0.1.0-SNAPSHOT"]
-                 [cljsjs/jqconsole "2.12.0-0"]
+                 [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
                  [re-com "0.7.0-alpha1"]
