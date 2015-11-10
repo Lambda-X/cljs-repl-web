@@ -11,7 +11,7 @@
             [cljs-browser-repl.console :as console]
             [cljs-browser-repl.console.cljs :as cljs]
             [cljs-browser-repl.cljs-api :as api]
-            [cljs-browser-repl.api-utils :as api-utils]))
+            [cljs-browser-repl.cljs-api.utils :as api-utils]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reagent helpers ;;;
