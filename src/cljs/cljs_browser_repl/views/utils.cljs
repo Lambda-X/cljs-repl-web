@@ -66,3 +66,18 @@
   If (< 0 n 10) use the ~R directive, otherwise use ~A"
   [n]
   (pprint/cl-format nil "~:[~a~;~r~]" (< 0 n 10) n))
+
+(defn calculate-popover-position
+  "Calculates the tooltip orientation for a given symbol."
+  [[x y]]
+  (let [h (.-innerHeight js/window)
+        w (.-innerWidth  js/window)
+        v-threshold (quot h 2)
+        v-position  (if (< y v-threshold) "below" "above")
+        h-threshold-left (quot w 3)
+        h-threshold-cent (* 2 h-threshold-left)
+        h-position (cond
+                    (< x h-threshold-left) "right"
+                    (< x h-threshold-cent) "center"
+                    :else "left")]
+    (keyword (str v-position \- h-position))))

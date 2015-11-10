@@ -205,10 +205,10 @@
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-         examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)         
-         popover-width  400
-         popover-height 400
-         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+        examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)
+        popover-width  400
+        popover-height 400
+        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
     [popover-content-wrapper
      :showing? showing?
      :position @popover-position
@@ -236,6 +236,22 @@
                                     [box
                                      :size "none"
                                      :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
+                                  (when (not-empty related)
+                                    [v-box
+                                     :size "0 0 auto"
+                                     :children [[title
+                                                 :label "Related"
+                                                 :level :level4
+                                                 :class "api-panel-related-title"]
+                                                ;; [label :label (utils/strip-namespace "cljs.core/max")]
+                                                [h-box
+                                                 :size "none"
+                                                 :gap "2px"
+                                                 :children (for [rel related]
+                                                             [hyperlink-href
+                                                              :label (utils/strip-namespace rel)
+                                                              :href (utils/symbol->clojuredocs-url rel)
+                                                              :target "_blank"])]]])
                                   (when (not-empty examples)
                                     [v-box
                                      :size "none"
@@ -249,38 +265,7 @@
                                                  :child [h-box
                                                          :size "none"
                                                          :gap "2px"
-                                                         :children (map-indexed example-panel examples)]]]])
-                                  (when (not-empty related)
-                            [v-box
-                             :size "0 0 auto"
-                             :children [[title
-                                         :label "Related"
-                                         :level :level4
-                                         :class "api-panel-related-title"]
-                                        ;; [label :label (utils/strip-namespace "cljs.core/max")]
-                                        [h-box
-                                         :size "none"
-                                         :gap "2px"
-                                         :children (for [rel related]
-                                                     [hyperlink-href
-                                                      :label (utils/strip-namespace rel)
-                                                      :href (utils/symbol->clojuredocs-url rel)
-                                                      :target "_blank"])]]])]]))
-
-(defn calculate-popover-position
-  "Calculates the tooltip orientation for a given symbol."
-  [[x y]]
-  (let [h (.-innerHeight js/window)
-        w (.-innerWidth  js/window)
-        v-threshold (quot h 2)
-        v-position  (if (< y v-threshold) "below" "above")
-        h-threshold-left (quot w 3)
-        h-threshold-cent (* 2 h-threshold-left)
-        h-position (cond
-                    (< x h-threshold-left) "right"
-                    (< x h-threshold-cent) "center"
-                    :else "left")]
-    (keyword (str v-position \- h-position))))
+                                                         :children (map-indexed example-panel examples)]]]])]]])]]))
 
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
@@ -300,7 +285,7 @@
                         :value (:name symbol)
                         :on-click #(do
                                      (reset! popover-position
-                                             (calculate-popover-position [(.-clientX %) (.-clientY %)]))
+                                             (utils/calculate-popover-position [(.-clientX %) (.-clientY %)]))
                                      (reset! showing? true))}]
        :popover [symbol-popover showing? popover-position symbol]])
     [button
@@ -347,17 +332,15 @@
         partitioned-sections (partition-all (if (zero? (rem secs cols))
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
-    [scroller
-     :scroll :auto
-     :child [h-box
-             :size "0 1 50%"
-             :gap "10px"
-             :children (for [sections partitioned-sections]
-                         [v-box
-                          :size "1 1 auto"
-                          :gap "10px"
-                          :children (for [section sections]
-                                      [build-section-ui section])])]]))
+    [h-box
+     :size "0 1 50%"
+     :gap "10px"
+     :children (for [sections partitioned-sections]
+                 [v-box
+                  :size "1 1 auto"
+                  :gap "10px"
+                  :children (for [section sections]
+                              [build-section-ui section])])]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
