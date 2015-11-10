@@ -252,9 +252,10 @@
         examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)]
     [popover-content-wrapper
      :showing? showing?
-     :position popover-position
+     :position @popover-position
      :on-cancel (handler-fn (reset! showing? false))
-     :width "400"
+     :width "300"
+     :height "300"
      :backdrop-opacity 0.1
      :close-button? false
      :title name
@@ -278,7 +279,7 @@
                              :children [[title
                                          :label "Examples"
                                          :level :level4
-                                         :class "api-panel-examples-title"]
+                                         :class "api-panel-popup-section-title"]
                                         [scroller
                                          :h-scroll :auto
                                          :width "300px"
@@ -287,18 +288,41 @@
                                                  :gap "2px"
                                                  :children (map-indexed example-panel examples)]]]])]])]]))
 
+(defn calculate-popover-position
+  "Calculates the tooltip orientation for a given symbol."
+  [[x y]]
+  (let [h (.-innerHeight js/window)
+        w (.-innerWidth  js/window)
+        v-threshold (quot h 2)
+        v-position  (if (< y v-threshold) "below" "above")
+        h-threshold-left (quot w 3)
+        h-threshold-cent (* 2 h-threshold-left)
+        h-position (cond
+                    (< x h-threshold-left) "right"
+                    (< x h-threshold-cent) "center"
+                    :else "left")]
+    (keyword (str v-position \- h-position))))
+
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
-  [symbol popover-position]
+  [symbol]
   (if-let [symbol (get-symbol-doc-map (str symbol))]
-    (let [showing? (reagent/atom false)]
+    (let [showing? (reagent/atom false)
+          popover-position (reagent/atom :below-center)]
       [popover-anchor-wrapper
        :showing? showing?
-       :position popover-position
-       :anchor [button
-                :label (:name symbol)
-                :class "btn-default"
-                :on-click (handler-fn (reset! showing? true))]
+       ;; we initialize the position but it does not matter because we will
+       ;; recalculate it, but we have to specify an initial value
+       :position :below-center
+       ;; we use `:input` instead of `button` because button's `on-click` accepts
+       ;; a parametless function and we need the mouse click coordinates
+       :anchor [:input {:type "button"
+                        :class "btn btn-default"
+                        :value (:name symbol)
+                        :on-click #(do
+                                     (reset! popover-position
+                                             (calculate-popover-position [(.-clientX %) (.-clientY %)]))
+                                     (reset! showing? true))}]
        :popover [symbol-popover showing? popover-position symbol]])
     [button
      :label (str symbol)
@@ -306,7 +330,7 @@
 
 (defn build-section-ui
   "Builds the UI for a section."
-  [section popover-position]
+  [section]
   [v-box
    :size "1 1 auto"
    :gap "10px"
@@ -333,7 +357,7 @@
                                          :style {:flex-flow "wrap"}
                                          :class "wrap"
                                          :children (for [symbol (:symbols topic)]
-                                                     [build-symbol-ui symbol popover-position])])]]]]]])
+                                                     [build-symbol-ui symbol])])]]]]]])
 
 (defn build-api-panel-ui
   "Builds the UI for the api panel. Expects the numer of columns in which place the sections
@@ -349,16 +373,12 @@
      :child [h-box
              :size "0 1 50%"
              :gap "10px"
-             :children (for [[col-index sections] (map-indexed vector partitioned-sections)
-                             :let [sections-count (count sections)]]
+             :children (for [sections partitioned-sections]
                          [v-box
                           :size "1 1 auto"
                           :gap "10px"
-                          :children (for [[sec-index section] (map-indexed vector sections)
-                                         :let [vertical    (if (and (>= sections-count 2) (< sec-index (dec sections-count))) "below" "above")
-                                               horiziontal (if (< col-index (quot cols 2)) "right" "left")
-                                               position (keyword (str vertical \- horiziontal))]]
-                                      [build-section-ui section position])])]]))
+                          :children (for [section sections]
+                                      [build-section-ui section])])]]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
