@@ -166,7 +166,7 @@
   "Builds a table for the provided signatures of a symbol."
   [signatures]
   [v-box
-   :size "1 1 auto"
+   :size "none"
    :gap "2px"
    :children [(for [s signatures]
                 [label
@@ -249,44 +249,52 @@
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-        examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)]
+         examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)         
+         popover-width  400
+         popover-height 400
+         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
     [popover-content-wrapper
      :showing? showing?
      :position @popover-position
      :on-cancel (handler-fn (reset! showing? false))
-     :width "300"
-     :height "300"
+     :width (str popover-width)
+     :height (str popover-height)
      :backdrop-opacity 0.1
      :close-button? false
      :title name
      :body [(fn []
-              [v-box
-               :size "none"
-               :width "300px"
-               :gap "4px"
-               :children [(when (not-empty sign)
-                            [build-signatures-ui sign])
-                          (when (not-empty desc)
-                            ;; we can use `dangerouslySetInnerHTML` or construct the edn from
-                            ;; the html string (using eg. hickory)
-                            ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
-                            [box
-                             :size "0 1 auto"
-                             :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
-                          (when (not-empty examples)
-                            [v-box
-                             :size "0 0 auto"
-                             :children [[title
-                                         :label "Examples"
-                                         :level :level4
-                                         :class "api-panel-popup-section-title"]
-                                        [scroller
-                                         :h-scroll :auto
-                                         :width "300px"
-                                         :child [h-box
-                                                 :size "none"
-                                                 :gap "2px"
-                                                 :children (map-indexed example-panel examples)]]]])]])]]))
+              [scroller
+               :height (str (- popover-height 50))
+               :v-scroll :on
+               :h-scroll :off
+               :child [v-box
+                       :size "none"
+                       :gap "4px"
+                       :width (str popover-content-width)
+                       :children [(when (not-empty sign)
+                                    [build-signatures-ui sign])
+                                  (when (not-empty desc)
+                                    ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+                                    ;; the html string (using eg. hickory)
+                                    ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+                                    [box
+                                     :size "none"
+                                     :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
+                                  (when (not-empty examples)
+                                    [v-box
+                                     :size "none"
+                                     :children [[title
+                                                 :label "Examples"
+                                                 :level :level4
+                                                 :class "api-panel-popup-section-title"]
+                                                [scroller
+                                                 :h-scroll :auto
+                                                 :v-scroll :off
+                                                 :child [h-box
+                                                         :size "none"
+                                                         :gap "2px"
+                                                         :children (map-indexed example-panel examples)]]]])
+                                  ]]])]]))
 
 (defn calculate-popover-position
   "Calculates the tooltip orientation for a given symbol."
