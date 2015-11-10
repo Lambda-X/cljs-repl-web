@@ -1,7 +1,6 @@
 (ns cljs-browser-repl.views
   (:require-macros [re-com.core :refer [handler-fn]])
-  (:require [cljs.pprint :refer [cl-format]]
-            [reagent.core :as reagent]
+  (:require [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller]]
@@ -11,7 +10,8 @@
             [cljs-browser-repl.console :as console]
             [cljs-browser-repl.console.cljs :as cljs]
             [cljs-browser-repl.cljs-api :as api]
-            [cljs-browser-repl.cljs-api.utils :as api-utils]))
+            [cljs-browser-repl.cljs-api.utils :as api-utils]
+            [cljs-browser-repl.views.utils :as utils]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reagent helpers ;;;
@@ -173,50 +173,6 @@
                  :label s
                  :class "api-panel-signature"])]])
 
-(defn number->word
-  "From: http://clojurescriptmadeeasy.com/blog/how-to-humanize-text-cl-format.html
-  If (< 0 n 10) use the ~R directive, otherwise use ~A"
-  [n]
-  (cl-format nil "~:[~a~;~r~]" (< 0 n 10) n))
-
-(defn material-icon-button
-  "a square button containing a material design icon, but material-icon-name"
-  []
-  (let [showing? (reagent/atom false)]
-    (fn
-      [& {:keys [material-icon-name on-click size tooltip tooltip-position emphasise? disabled? class style attr]
-          :or   {md-icon-name "add"}
-          :as   args}]
-      (let [the-button [:div
-                        (merge
-                         {:class    (str
-                                     "rc-md-icon-button noselect "
-                                     (case size
-                                       :smaller "rc-icon-smaller "
-                                       :larger "rc-icon-larger "
-                                       " ")
-                                     (when emphasise? "rc-icon-emphasis ")
-                                     (when disabled? "rc-icon-disabled ")
-                                     class)
-                          :style    (merge
-                                     {:cursor (when-not disabled? "pointer")}
-                                     style)
-                          :on-click (handler-fn
-                                     (when (and on-click (not disabled?))
-                                       (on-click)))}
-                         (when tooltip
-                           {:on-mouse-over (handler-fn (reset! showing? true))
-                            :on-mouse-out  (handler-fn (reset! showing? false))})
-                         attr)
-                        [:i.material-icons material-icon-name]]]
-        (if tooltip
-          [popover-tooltip
-           :label    tooltip
-           :position (if tooltip-position tooltip-position :below-center)
-           :showing? showing?
-           :anchor   the-button]
-          the-button)))))
-
 (defn example-panel
   "Build the example panel, accepts a list of {:html ... :string ...}
   maps."
@@ -229,8 +185,8 @@
    :children [[box
                :size "0 1 auto"
                :min-width "26px"
-               :child [material-icon-button
-                       :material-icon-name (str "looks_" (number->word (inc example-index)))
+               :child [utils/material-icon-button
+                       :material-icon-name (str "looks_" (utils/number->word (inc example-index)))
                        :on-click #()
                        :tooltip "Load the example in the REPL"
                        :tooltip-position :below-center
@@ -294,7 +250,22 @@
                                                          :size "none"
                                                          :gap "2px"
                                                          :children (map-indexed example-panel examples)]]]])
-                                  ]]])]]))
+                                  (when (not-empty related)
+                            [v-box
+                             :size "0 0 auto"
+                             :children [[title
+                                         :label "Related"
+                                         :level :level4
+                                         :class "api-panel-related-title"]
+                                        ;; [label :label (utils/strip-namespace "cljs.core/max")]
+                                        [h-box
+                                         :size "none"
+                                         :gap "2px"
+                                         :children (for [rel related]
+                                                     [hyperlink-href
+                                                      :label (utils/strip-namespace rel)
+                                                      :href (utils/symbol->clojuredocs-url rel)
+                                                      :target "_blank"])]]])]]))
 
 (defn calculate-popover-position
   "Calculates the tooltip orientation for a given symbol."
