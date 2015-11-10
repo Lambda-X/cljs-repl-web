@@ -253,8 +253,10 @@
     [popover-content-wrapper
      :showing? showing?
      :position popover-position
+     :on-cancel (handler-fn (reset! showing? false))
      :width "400"
-     :backdrop-opacity 0.4
+     :backdrop-opacity 0.1
+     :close-button? false
      :title name
      :body [(fn []
               [v-box
@@ -295,13 +297,8 @@
        :position popover-position
        :anchor [button
                 :label (:name symbol)
-                :attr {:on-mouse-over (handler-fn (reset! showing? true))
-                       :on-mouse-out  (handler-fn (reset! showing? false))}
                 :class "btn-default"
-                ;; :style {:display "inline-flex"}
-                ;; :href "" ; add url to documentation
-                ;; :target "_blank"
-                ]
+                :on-click (handler-fn (reset! showing? true))]
        :popover [symbol-popover showing? popover-position symbol]])
     [button
      :label (str symbol)
