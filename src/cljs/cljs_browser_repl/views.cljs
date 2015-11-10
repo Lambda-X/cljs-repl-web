@@ -317,7 +317,6 @@
               [h-box
                :size "0 1 auto"
                :gap "10px"
-               ;; :height "40px"
                :children [[v-box
                            :size "1 0 auto"
                            :children (for [topic (:topics section)]
@@ -331,6 +330,7 @@
                                         [h-box
                                          :size "none"
                                          :gap "2px"
+                                         :style {:flex-flow "wrap"}
                                          :class "wrap"
                                          :children (for [symbol (:symbols topic)]
                                                      [build-symbol-ui symbol popover-position])])]]]]]])
