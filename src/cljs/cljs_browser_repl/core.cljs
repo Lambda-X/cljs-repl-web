@@ -20,7 +20,7 @@
    [v-box
     :class "app-main"
     :size   "1 1 auto"
-    :gap    "20px"
+    :gap    "10px"
     :align  :stretch
     :children [[h-box
                 :size "1 1 auto"

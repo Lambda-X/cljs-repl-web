@@ -1,8 +1,10 @@
 (ns cljs-browser-repl.views
   (:require-macros [re-com.core :refer [handler-fn]])
-  (:require [reagent.core :as reagent]
+  (:require [cljs.pprint :refer [cl-format]]
+            [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
-                                 popover-content-wrapper popover-anchor-wrapper hyperlink]]
+                                 popover-content-wrapper popover-anchor-wrapper hyperlink-href
+                                 popover-tooltip title label scroller]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
@@ -11,9 +13,9 @@
             [cljs-browser-repl.cljs-api :as api]
             [cljs-browser-repl.api-utils :as api-utils]))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Reagent helpers  s ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;;; Reagent helpers ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn cljs-console-did-mount
   [console-opts]
@@ -163,19 +165,91 @@
 (defn build-signatures-ui
   "Builds a table for the provided signatures of a symbol."
   [signatures]
-  [:table.api-panel-signatures-table
-   (for [s signatures]
-     [:tr.api-panel-signatures-table-tr
-      [:td.api-panel-signature s]])])
+  [v-box
+   :size "1 1 auto"
+   :gap "2px"
+   :children [(for [s signatures]
+                [label
+                 :label s
+                 :class "api-panel-signature"])]])
+
+(defn number->word
+  "From: http://clojurescriptmadeeasy.com/blog/how-to-humanize-text-cl-format.html
+  If (< 0 n 10) use the ~R directive, otherwise use ~A"
+  [n]
+  (cl-format nil "~:[~a~;~r~]" (< 0 n 10) n))
+
+(defn material-icon-button
+  "a square button containing a material design icon, but material-icon-name"
+  []
+  (let [showing? (reagent/atom false)]
+    (fn
+      [& {:keys [material-icon-name on-click size tooltip tooltip-position emphasise? disabled? class style attr]
+          :or   {md-icon-name "add"}
+          :as   args}]
+      (let [the-button [:div
+                        (merge
+                         {:class    (str
+                                     "rc-md-icon-button noselect "
+                                     (case size
+                                       :smaller "rc-icon-smaller "
+                                       :larger "rc-icon-larger "
+                                       " ")
+                                     (when emphasise? "rc-icon-emphasis ")
+                                     (when disabled? "rc-icon-disabled ")
+                                     class)
+                          :style    (merge
+                                     {:cursor (when-not disabled? "pointer")}
+                                     style)
+                          :on-click (handler-fn
+                                     (when (and on-click (not disabled?))
+                                       (on-click)))}
+                         (when tooltip
+                           {:on-mouse-over (handler-fn (reset! showing? true))
+                            :on-mouse-out  (handler-fn (reset! showing? false))})
+                         attr)
+                        [:i.material-icons material-icon-name]]]
+        (if tooltip
+          [popover-tooltip
+           :label    tooltip
+           :position (if tooltip-position tooltip-position :below-center)
+           :showing? showing?
+           :anchor   the-button]
+          the-button)))))
+
+(defn example-panel
+  "Build the example panel, accepts a list of {:html ... :string ...}
+  maps."
+  [example-index example-map]
+  {:pre [(:string example-map) (:html example-map)]}
+  [v-box
+   :size "none"
+   :gap "2px"
+   :justify :center
+   :children [[box
+               :size "0 1 auto"
+               :min-width "26px"
+               :child [material-icon-button
+                       :material-icon-name (str "looks_" (number->word (inc example-index)))
+                       :on-click #()
+                       :tooltip "Load the example in the REPL"
+                       :tooltip-position :below-center
+                       :disabled? (not (app/console-created? :cljs-console))]]
+              [box
+               :size "none"
+               :width "100%"
+               :child [:div {:dangerouslySetInnerHTML {:__html (:html example-map)}}]]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
   [showing? popover-position sym-doc-map]
   (let [{name :name
          desc :description-html
-         examples :examples-html
+         examples-htmls :examples-htmls
+         examples-strings :examples-strings
          sign :signature
-         related :related} sym-doc-map]
+         related :related} sym-doc-map
+        examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)]
     [popover-content-wrapper
      :showing? showing?
      :position popover-position
@@ -183,85 +257,111 @@
      :backdrop-opacity 0.4
      :title name
      :body [(fn []
-              [:div
-               (when (not-empty sign)
-                 (build-signatures-ui sign))
-               (when (not-empty desc)
-                 ;; we can use `dangerouslySetInnerHTML` or construct the edn from
-                 ;; the html string (using eg. hickory)
-                 ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
-                 [:div
-                  [:p.api-panel-popup-section-title "Docs"]
-                  [:div {:dangerouslySetInnerHTML {:__html desc}}]])
-               (when (not-empty examples)
-                 [:div
-                  [:p.api-panel-popup-section-title "Examples"]
-                  (for [example examples]
-                    ;; see above for html
-                    [:div {:dangerouslySetInnerHTML {:__html example}}])])
-               (when (not-empty related)
-                 [:div
-                  [:p.api-panel-popup-section-title "Related"]
-                  (for [rel related]
-                    ;; see above for html
-                    ;; we can later make it a link
-                    [:span.api-panel-related-symbol rel])])])]]))
+              [v-box
+               :size "none"
+               :width "300px"
+               :gap "4px"
+               :children [(when (not-empty sign)
+                            [build-signatures-ui sign])
+                          (when (not-empty desc)
+                            ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+                            ;; the html string (using eg. hickory)
+                            ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+                            [box
+                             :size "0 1 auto"
+                             :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
+                          (when (not-empty examples)
+                            [v-box
+                             :size "0 0 auto"
+                             :children [[title
+                                         :label "Examples"
+                                         :level :level4
+                                         :class "api-panel-examples-title"]
+                                        [scroller
+                                         :h-scroll :auto
+                                         :width "300px"
+                                         :child [h-box
+                                                 :size "none"
+                                                 :gap "2px"
+                                                 :children (map-indexed example-panel examples)]]]])]])]]))
 
 (defn build-symbol-ui
-  "Builds the UI for a single symbol. Will be either a link with popup or
-  a simple `<span>`."
+  "Builds the UI for a single symbol. Will be a button."
   [symbol popover-position]
   (if-let [symbol (get-symbol-doc-map (str symbol))]
     (let [showing? (reagent/atom false)]
       [popover-anchor-wrapper
        :showing? showing?
        :position popover-position
-       :anchor [hyperlink
+       :anchor [button
                 :label (:name symbol)
                 :attr {:on-mouse-over (handler-fn (reset! showing? true))
                        :on-mouse-out  (handler-fn (reset! showing? false))}
-                :class "api-panel-keyword api-panel-symbol"]
+                :class "btn-default"
+                ;; :style {:display "inline-flex"}
+                ;; :href "" ; add url to documentation
+                ;; :target "_blank"
+                ]
        :popover [symbol-popover showing? popover-position symbol]])
-    [:span.api-panel-symbol (str symbol)]))
-
-(defn build-topics-ui
-  "Builds the UI for the provided topics in the form of a table."
-  [topics popover-position]
-  [:table.api-panel-topics-table
-   (for [topic topics]
-     [:tr.api-panel-topics-table-tr
-      [:td.api-panel-topic (:title topic)]
-      [:td.api-panel-topics-table-td-symbols
-       (map #(build-symbol-ui % popover-position) (:symbols topic))]])])
+    [button
+     :label (str symbol)
+     :class "btn-default"]))
 
 (defn build-section-ui
   "Builds the UI for a section."
   [section popover-position]
-  [:div
-   [:h1.api-panel-section-title (:title section)]
-   (build-topics-ui (:topics section) popover-position)])
+  [v-box
+   :size "1 1 auto"
+   :gap "10px"
+   :children [[title
+               :label (:title section)
+               :level :level3
+               :class "api-panel-section-title"]
+              [h-box
+               :size "0 1 auto"
+               :gap "10px"
+               ;; :height "40px"
+               :children [[v-box
+                           :size "1 0 auto"
+                           :children (for [topic (:topics section)]
+                                       [title
+                                        :label (:title topic)
+                                        :level :level4
+                                        :class "api-panel-topic"])]
+                          [v-box
+                           :size "1 1 auto"
+                           :children [(for [topic (:topics section)]
+                                        [h-box
+                                         :size "none"
+                                         :gap "2px"
+                                         :class "wrap"
+                                         :children (for [symbol (:symbols topic)]
+                                                     [build-symbol-ui symbol popover-position])])]]]]]])
 
 (defn build-api-panel-ui
-  "Builds the UI for the api panel. Expects the numer of columns in which place the sections 
+  "Builds the UI for the api panel. Expects the numer of columns in which place the sections
   of the tutorial and the sections themselves. `cols` must be a divisor of 12."
   [cols sections]
-  (let [bootstrap-class-nr (quot 12 cols)
-        secs (count sections) ; all sections - not partitioned yet
+  (let [secs (count sections)
         secs-per-col (quot secs cols)
         partitioned-sections (partition-all (if (zero? (rem secs cols))
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
-    [:div.row
-     ;; we keep the indexes because we want to align the popover correctly
-     (for [[col-index sections] (map-indexed vector partitioned-sections)
-           :let [c (count sections)]]
-       [:div.api-panel-column {:class (str "col-md-" bootstrap-class-nr) }
-        (for [[sec-index section] (map-indexed vector sections)
-              :let [vertical    (if (and (>= c 2) (< sec-index (dec c))) "below" "above")
-                    horiziontal (if (< col-index (quot cols 2)) "right" "left")
-                    position (keyword (str vertical \- horiziontal))]]
-          (build-section-ui section position))])]))
+    [scroller
+     :scroll :auto
+     :child [h-box
+             :size "0 1 50%"
+             :gap "10px"
+             :children (for [[col-index sections] (map-indexed vector partitioned-sections)
+                             :let [sections-count (count sections)]]
+                         [v-box
+                          :size "1 1 auto"
+                          :gap "10px"
+                          :children (for [[sec-index section] (map-indexed vector sections)
+                                         :let [vertical    (if (and (>= sections-count 2) (< sec-index (dec sections-count))) "below" "above")
+                                               horiziontal (if (< col-index (quot cols 2)) "right" "left")
+                                               position (keyword (str vertical \- horiziontal))]]
+                                      [build-section-ui section position])])]]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
-
