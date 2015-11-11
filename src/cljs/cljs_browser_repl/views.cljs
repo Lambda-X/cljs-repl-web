@@ -190,7 +190,15 @@
                :gap "2px"
                :children [[button
                            :label    [:i.material-icons (str "looks_" (utils/number->word (inc example-index)))]
-                           :disabled? true]]]
+                           :disabled? true]
+                          ;; <img src="kiwi.svg" alt="Kiwi standing on oval">
+                          [button
+                           :label [:img {:class "api-panel-button-send-repl"
+                                         :src "styles/images/cljs.svg"
+                                         :alt "Send to the REPL!"}]
+                           :tooltip "Load the example in the REPL"
+                           :tooltip-position :above-right
+                           :disabled? (not (app/console-created? :cljs-console))]]]
               [box
                :size "none"
                :width "100%"

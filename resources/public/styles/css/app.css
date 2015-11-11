@@ -80,3 +80,12 @@
 .api-panel-signature {
     font-family: monospace;
 }
+
+.api-panel-button-send-repl {
+    width: 26px;
+    height:29px;
+}
+
+.api-panel-button-send-repl:hover {
+    fill: #ace63c;
+}
