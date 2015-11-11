@@ -169,7 +169,7 @@
   "Builds a table for the provided signatures of a symbol."
   [signatures]
   [v-box
-   :size "none"
+   :size "0 0 auto"
    :gap "2px"
    :children [(for [s signatures]
                 [label
@@ -221,25 +221,26 @@
      :showing? showing?
      :position @popover-position
      :on-cancel (handler-fn (reset! showing? false))
-     :width (str popover-width)
-     :height (str popover-height)
+     :style {:max-height (str popover-height)
+             :max-width (str popover-width)}
      :backdrop-opacity 0.1
      :close-button? false
      :title name
      :body [(fn []
               [scroller
-               :height (str (- popover-height 50))
-               :v-scroll :on
-               :h-scroll :off
+               :size "1 1 auto"
+               :max-width (str popover-width)
+               :max-height (str (- popover-height 50))
+               :scroll :auto
                :child [v-box
-                       :size "none"
-                       :gap "4px"
+                       :size "1 1 auto"
+                       :gap "8px"
                        :width (str popover-content-width)
                        :children [(when (not-empty sign)
                                     [build-signatures-ui sign])
                                   (when (not-empty desc)
                                     [v-box
-                                     :size "0 1 auto"
+                                     :size "0 0 auto"
                                      :gap "4px"
                                      :children [[label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]]
                                     ;; we can use `dangerouslySetInnerHTML` or construct the edn from
@@ -249,7 +250,7 @@
                                     )
                                   (when (not-empty related)
                                     [v-box
-                                     :size "0 1 auto"
+                                     :size "0 0 auto"
                                      :gap "4px"
                                      :children [[title
                                                  :label "Related"
@@ -299,7 +300,8 @@
        :popover [symbol-popover showing? popover-position symbol]])
     [button
      :label (str symbol)
-     :class "btn-default"]))
+     :class "btn-default"
+     :disabled? true]))
 
 (defn build-section-ui
   "Builds the UI for a section."
@@ -316,6 +318,7 @@
                :gap "10px"
                :children [[v-box
                            :size "1 0 auto"
+                           :gap "2px"
                            :children (for [topic (:topics section)]
                                        [title
                                         :label (:title topic)
@@ -323,6 +326,7 @@
                                         :class "api-panel-topic"])]
                           [v-box
                            :size "1 1 auto"
+                           :gap "2px"
                            :children [(for [topic (:topics section)]
                                         [h-box
                                          :size "none"
