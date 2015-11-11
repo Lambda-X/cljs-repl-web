@@ -9,7 +9,8 @@
                  [timothypratley/reanimated "0.1.1"]
                  [cljs-ajax "0.5.1"]
                  [endophile "0.1.2"]
-                 [markdown-clj "0.9.78"]]
+                 [markdown-clj "0.9.78"]
+                 [hickory "0.5.4"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-codox "0.9.0"]

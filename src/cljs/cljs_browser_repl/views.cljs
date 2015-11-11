@@ -5,6 +5,7 @@
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller]]
             [re-com.util :refer [px]]
+            [hickory.core :as hickory]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
             [cljs-browser-repl.console :as console]
@@ -12,6 +13,8 @@
             [cljs-browser-repl.cljs-api :as api]
             [cljs-browser-repl.cljs-api.utils :as api-utils]
             [cljs-browser-repl.views.utils :as utils]))
+
+;; (set! re-com.box/debug true)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Reagent helpers ;;;
@@ -182,19 +185,16 @@
    :size "none"
    :gap "2px"
    :justify :center
-   :children [[box
-               :size "0 1 auto"
-               :min-width "26px"
-               :child [utils/material-icon-button
-                       :material-icon-name (str "looks_" (utils/number->word (inc example-index)))
-                       :on-click #()
-                       :tooltip "Load the example in the REPL"
-                       :tooltip-position :below-center
-                       :disabled? (not (app/console-created? :cljs-console))]]
+   :children [[h-box
+               :size "1 1 auto"
+               :gap "2px"
+               :children [[button
+                           :label    [:i.material-icons (str "looks_" (utils/number->word (inc example-index)))]
+                           :disabled? true]]]
               [box
                :size "none"
                :width "100%"
-               :child [:div {:dangerouslySetInnerHTML {:__html (:html example-map)}}]]]])
+               :child [label :label (map hickory/as-hiccup (hickory/parse-fragment (:html example-map)))]]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
@@ -230,39 +230,43 @@
                        :children [(when (not-empty sign)
                                     [build-signatures-ui sign])
                                   (when (not-empty desc)
+                                    [v-box
+                                     :size "0 1 auto"
+                                     :gap "4px"
+                                     :children [[label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]]
                                     ;; we can use `dangerouslySetInnerHTML` or construct the edn from
                                     ;; the html string (using eg. hickory)
                                     ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
-                                    [box
-                                     :size "none"
-                                     :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
-                                  (when (not-empty examples)
-                                    [v-box
-                                     :size "0 1 auto"
-                                     :children [[title
-                                                 :label "Examples"
-                                                 :level :level4
-                                                 :class "api-panel-popup-section-title"]
-                                                [h-box
-                                                 :size "0 1 auto"
-                                                 :gap "2px"
-                                                 :children (map-indexed example-panel examples)]]])
+                                    ;; AR - hickory performs better in flexbox container calculation
+                                    )
                                   (when (not-empty related)
                                     [v-box
                                      :size "0 1 auto"
+                                     :gap "4px"
                                      :children [[title
                                                  :label "Related"
                                                  :level :level4
                                                  :class "api-panel-popup-section-title"]
-                                                ;; [label :label (utils/strip-namespace "cljs.core/max")]
                                                 [h-box
                                                  :size "0 0 auto"
-                                                 :gap "2px"
+                                                 :gap "4px"
                                                  :children (for [rel related]
                                                              [hyperlink-href
                                                               :label (utils/strip-namespace rel)
                                                               :href (utils/symbol->clojuredocs-url rel)
-                                                              :target "_blank"])]]])]]])]]))
+                                                              :target "_blank"])]]])
+                                  (when (not-empty examples)
+                                    [v-box
+                                     :size "0 1 auto"
+                                     :children [[gap :size "4px"]
+                                                [title
+                                                 :label "Examples"
+                                                 :level :level4
+                                                 :class "api-panel-popup-section-title"]
+                                                [h-box
+                                                 :size "0 0 auto"
+                                                 :gap "2px"
+                                                 :children (map-indexed example-panel examples)]]])]]])]]))
 
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
