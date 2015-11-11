@@ -236,36 +236,33 @@
                                     [box
                                      :size "none"
                                      :child [:div {:dangerouslySetInnerHTML {:__html desc}}]])
+                                  (when (not-empty examples)
+                                    [v-box
+                                     :size "0 1 auto"
+                                     :children [[title
+                                                 :label "Examples"
+                                                 :level :level4
+                                                 :class "api-panel-popup-section-title"]
+                                                [h-box
+                                                 :size "0 1 auto"
+                                                 :gap "2px"
+                                                 :children (map-indexed example-panel examples)]]])
                                   (when (not-empty related)
                                     [v-box
-                                     :size "0 0 auto"
+                                     :size "0 1 auto"
                                      :children [[title
                                                  :label "Related"
                                                  :level :level4
-                                                 :class "api-panel-related-title"]
+                                                 :class "api-panel-popup-section-title"]
                                                 ;; [label :label (utils/strip-namespace "cljs.core/max")]
                                                 [h-box
-                                                 :size "none"
+                                                 :size "0 0 auto"
                                                  :gap "2px"
                                                  :children (for [rel related]
                                                              [hyperlink-href
                                                               :label (utils/strip-namespace rel)
                                                               :href (utils/symbol->clojuredocs-url rel)
-                                                              :target "_blank"])]]])
-                                  (when (not-empty examples)
-                                    [v-box
-                                     :size "none"
-                                     :children [[title
-                                                 :label "Examples"
-                                                 :level :level4
-                                                 :class "api-panel-popup-section-title"]
-                                                [scroller
-                                                 :h-scroll :auto
-                                                 :v-scroll :off
-                                                 :child [h-box
-                                                         :size "none"
-                                                         :gap "2px"
-                                                         :children (map-indexed example-panel examples)]]]])]]])]]))
+                                                              :target "_blank"])]]])]]])]]))
 
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
