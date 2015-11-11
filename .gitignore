@@ -16,3 +16,4 @@ figwheel_server.log
 resources/**/compiled/
 out/
 *.orig
+.projectile

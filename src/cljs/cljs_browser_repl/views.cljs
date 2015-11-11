@@ -1,16 +1,24 @@
 (ns cljs-browser-repl.views
+  (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
-                                 popover-content-wrapper popover-anchor-wrapper]]
+                                 popover-content-wrapper popover-anchor-wrapper hyperlink-href
+                                 popover-tooltip title label scroller]]
             [re-com.util :refer [px]]
+            [hickory.core :as hickory]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
             [cljs-browser-repl.console :as console]
-            [cljs-browser-repl.console.cljs :as cljs]))
+            [cljs-browser-repl.console.cljs :as cljs]
+            [cljs-browser-repl.cljs-api :as api]
+            [cljs-browser-repl.cljs-api.utils :as api-utils]
+            [cljs-browser-repl.views.utils :as utils]))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Reagent helpers  s ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (set! re-com.box/debug true)
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;; Reagent helpers ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn cljs-console-did-mount
   [console-opts]
@@ -47,6 +55,10 @@
     (reagent/create-class {:display-name "cljs-console-component"
                            :reagent-render cljs-console-render
                            :component-did-mount #(cljs-console-did-mount console-opts)})))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;      Buttons       ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn gist-login-popover-dialog-body
   [showing? auth-data ok-fn cancel-fn]
@@ -121,10 +133,11 @@
                 :disabled? (not (app/console-created? :cljs-console))]
      :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
 
-(defn cljs-button-components []
+(defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
    To place them in a layout, call the function (it does not return a
    component)."
+  []
   [v-box
    :gap "4px"
    :children [[md-icon-button
@@ -143,4 +156,204 @@
                :disabled? (not (app/console-created? :cljs-console))]
               [gist-login-popover-dialog]]])
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;  API panel section  ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn get-symbol-doc-map
+  "Returns the doc map for the symbol from the `cljs-api-edn` parsed  map."
+  [symbol]
+  (get-in api/cljs-api-edn [:symbols symbol]))
+
+(defn build-signatures-ui
+  "Builds a table for the provided signatures of a symbol."
+  [signatures]
+  [v-box
+   :size "0 0 auto"
+   :gap "2px"
+   :children [(for [s signatures]
+                [label
+                 :label s
+                 :class "api-panel-signature"])]])
+
+(defn example-panel
+  "Build the example panel, accepts a list of {:html ... :string ...}
+  maps."
+  [example-index example-map]
+  {:pre [(:string example-map) (:html example-map)]}
+  [v-box
+   :size "none"
+   :gap "2px"
+   :justify :center
+   :children [[h-box
+               :size "1 1 auto"
+               :gap "2px"
+               :children [[button
+                           :label    [:i.material-icons (str "looks_" (utils/number->word (inc example-index)))]
+                           :disabled? true]
+                          ;; <img src="kiwi.svg" alt="Kiwi standing on oval">
+                          [button
+                           :label [:img {:class "api-panel-button-send-repl"
+                                         :src "styles/images/cljs.svg"
+                                         :alt "Send to the REPL!"}]
+                           :tooltip "Load the example in the REPL"
+                           :tooltip-position :above-right
+                           :disabled? (not (app/console-created? :cljs-console))]]]
+              [box
+               :size "none"
+               :width "100%"
+               :child [label :label (map hickory/as-hiccup (hickory/parse-fragment (:html example-map)))]]]])
+
+(defn symbol-popover
+  "A popover's body in which details of the given symbol will be shown."
+  [showing? popover-position sym-doc-map]
+  (let [{name :name
+         desc :description-html
+         examples-htmls :examples-htmls
+         examples-strings :examples-strings
+         sign :signature
+         related :related} sym-doc-map
+        examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)
+        popover-width  400
+        popover-height 400
+        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+    [popover-content-wrapper
+     :showing? showing?
+     :position @popover-position
+     :on-cancel (handler-fn (reset! showing? false))
+     :style {:max-height (str popover-height)
+             :max-width (str popover-width)}
+     :backdrop-opacity 0.1
+     :close-button? false
+     :title name
+     :body [(fn []
+              [scroller
+               :size "1 1 auto"
+               :max-width (str popover-width)
+               :max-height (str (- popover-height 50))
+               :scroll :auto
+               :child [v-box
+                       :size "1 1 auto"
+                       :gap "8px"
+                       :width (str popover-content-width)
+                       :children [(when (not-empty sign)
+                                    [build-signatures-ui sign])
+                                  (when (not-empty desc)
+                                    [v-box
+                                     :size "0 0 auto"
+                                     :gap "4px"
+                                     :children [[label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]]
+                                    ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+                                    ;; the html string (using eg. hickory)
+                                    ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+                                    ;; AR - hickory performs better in flexbox container calculation
+                                    )
+                                  (when (not-empty related)
+                                    [v-box
+                                     :size "0 0 auto"
+                                     :gap "4px"
+                                     :children [[title
+                                                 :label "Related"
+                                                 :level :level4
+                                                 :class "api-panel-popup-section-title"]
+                                                [h-box
+                                                 :size "0 0 auto"
+                                                 :gap "4px"
+                                                 :children (for [rel related]
+                                                             [hyperlink-href
+                                                              :label (utils/strip-namespace rel)
+                                                              :href (utils/symbol->clojuredocs-url rel)
+                                                              :target "_blank"])]]])
+                                  (when (not-empty examples)
+                                    [v-box
+                                     :size "0 1 auto"
+                                     :children [[gap :size "4px"]
+                                                [title
+                                                 :label "Examples"
+                                                 :level :level4
+                                                 :class "api-panel-popup-section-title"]
+                                                [h-box
+                                                 :size "0 0 auto"
+                                                 :gap "2px"
+                                                 :children (map-indexed example-panel examples)]]])]]])]]))
+
+(defn build-symbol-ui
+  "Builds the UI for a single symbol. Will be a button."
+  [symbol]
+  (if-let [symbol (get-symbol-doc-map (str symbol))]
+    (let [showing? (reagent/atom false)
+          popover-position (reagent/atom :below-center)]
+      [popover-anchor-wrapper
+       :showing? showing?
+       ;; we initialize the position but it does not matter because we will
+       ;; recalculate it, but we have to specify an initial value
+       :position :below-center
+       ;; we use `:input` instead of `button` because button's `on-click` accepts
+       ;; a parametless function and we need the mouse click coordinates
+       :anchor [:input {:type "button"
+                        :class "btn btn-default"
+                        :value (:name symbol)
+                        :on-click #(do
+                                     (reset! popover-position
+                                             (utils/calculate-popover-position [(.-clientX %) (.-clientY %)]))
+                                     (reset! showing? true))}]
+       :popover [symbol-popover showing? popover-position symbol]])
+    [button
+     :label (str symbol)
+     :class "btn-default"
+     :disabled? true]))
+
+(defn build-section-ui
+  "Builds the UI for a section."
+  [section]
+  [v-box
+   :size "1 1 auto"
+   :gap "10px"
+   :children [[title
+               :label (:title section)
+               :level :level3
+               :class "api-panel-section-title"]
+              [h-box
+               :size "0 1 auto"
+               :gap "10px"
+               :children [[v-box
+                           :size "1 0 auto"
+                           :gap "2px"
+                           :children (for [topic (:topics section)]
+                                       [title
+                                        :label (:title topic)
+                                        :level :level4
+                                        :class "api-panel-topic"])]
+                          [v-box
+                           :size "1 1 auto"
+                           :gap "2px"
+                           :children [(for [topic (:topics section)]
+                                        [h-box
+                                         :size "none"
+                                         :gap "2px"
+                                         :style {:flex-flow "wrap"}
+                                         :class "wrap"
+                                         :children (for [symbol (:symbols topic)]
+                                                     [build-symbol-ui symbol])])]]]]]])
+
+(defn build-api-panel-ui
+  "Builds the UI for the api panel. Expects the numer of columns in which place the sections
+  of the tutorial and the sections themselves. `cols` must be a divisor of 12."
+  [cols sections]
+  (let [secs (count sections)
+        secs-per-col (quot secs cols)
+        partitioned-sections (partition-all (if (zero? (rem secs cols))
+                                              secs-per-col
+                                              (inc secs-per-col)) sections)]
+    [h-box
+     :size "0 1 50%"
+     :gap "10px"
+     :children (for [sections partitioned-sections]
+                 [v-box
+                  :size "1 1 auto"
+                  :gap "10px"
+                  :children (for [section sections]
+                              [build-section-ui section])])]))
+
+(defn api-panel []
+  [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])

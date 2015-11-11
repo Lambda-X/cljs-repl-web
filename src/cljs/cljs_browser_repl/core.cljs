@@ -20,18 +20,19 @@
    [v-box
     :class "app-main"
     :size   "1 1 auto"
-    :gap    "20px"
+    :gap    "10px"
     :align  :stretch
     :children [[h-box
                 :size "1 1 auto"
                 :gap "10px"
                 :children [[gap :size "20px"]
-                           [views/cljs-button-components]
+                           [views/cljs-buttons]
                            [box
                             :size "1"
                             :style {:overflow "hidden"}
                             :child [views/cljs-console-component]]]]
-               [line :size "2px"]]]])
+               [line :size "2px"]
+               [views/api-panel]]]])
 
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")
