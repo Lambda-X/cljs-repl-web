@@ -171,16 +171,74 @@
   [v-box
    :size "0 0 auto"
    :gap "2px"
-   :children [(for [s signatures]
+   :children [[title
+               :label "Signatures"
+               :level :level4
+               :class "api-panel-popup-section-title"]
+              (for [s signatures]
                 [label
                  :label s
                  :class "api-panel-signature"])]])
 
+(defn build-symbol-description-ui
+  "Builds the UI for the symbol's description in the popover."
+  [sym desc]
+  [v-box
+   :size "0 0 auto"
+   :gap "4px"
+   :children [[h-box
+               :gap      "4px"
+               :children [[title
+                           :label "Docs"
+                           :level :level4
+                           :class "api-panel-popup-section-title"]
+                          [md-icon-button
+                           :md-icon-name "zmdi-info"
+                           :tooltip "See docs online"
+                           :tooltip-position :right-center
+                           :size :smaller
+                           :style {:justify-content :center}
+                           :on-click #(.open js/window (utils/symbol->clojuredocs-url sym) "_blank")]]]
+              ;; we can use `dangerouslySetInnerHTML` or construct the edn from
+              ;; the html string (using eg. hickory)
+              ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
+              ;; AR - hickory performs better in flexbox container calculation)
+              [label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]])
+
+(defn build-related-symbols-ui
+  "Builds the UI for related symbols in the popover."
+  [related]
+  [v-box
+   :size "0 0 auto"
+   :gap "4px"
+   :children [[title
+               :label "Related"
+               :level :level4
+               :class "api-panel-popup-section-title"]
+              [h-box
+               :size "0 0 auto"
+               :gap "4px"
+               :children (for [rel related]
+                           [hyperlink-href
+                            :label (utils/strip-namespace rel)
+                            :href (utils/symbol->clojuredocs-url rel)
+                            :target "_blank"])]]])
+
+(defn build-example-ui
+  "Builds the UI for a single example"
+  [example]
+  [v-box
+   :size "none"
+   :gap "2px"
+   :children [[:pre
+               [:code
+                example]]]])
+
 (defn example-panel
   "Build the example panel, accepts a list of {:html ... :string ...}
   maps."
-  [example-index example-map]
-  {:pre [(:string example-map) (:html example-map)]}
+  [example-index example-string]
+  ;{:pre [(:string example-map) (:html example-map)]}
   [v-box
    :size "none"
    :gap "2px"
@@ -188,35 +246,52 @@
    :children [[h-box
                :size "1 1 auto"
                :gap "2px"
-               :children [[button
-                           :label    [:i.material-icons (str "looks_" (utils/number->word (inc example-index)))]
-                           :disabled? true]
+               :align :center
+               :children [[:i.material-icons (str "looks_" (if (< example-index 2)
+                                                             (utils/number->word (inc example-index)) ; looks_one, looks_two
+                                                             (inc example-index)))] ; looks_3, looks_4, ...
                           ;; <img src="kiwi.svg" alt="Kiwi standing on oval">
+                          [v-box
+                           :size "none"
+                           :width "70%"
+                           :children [(build-example-ui example-string)]]
                           [button
                            :label [:img {:class "api-panel-button-send-repl"
                                          :src "styles/images/cljs.svg"
                                          :alt "Send to the REPL!"}]
                            :tooltip "Load the example in the REPL"
-                           :tooltip-position :above-right
-                           :disabled? (not (app/console-created? :cljs-console))]]]
-              [box
-               :size "none"
-               :width "100%"
-               :child [label :label (map hickory/as-hiccup (hickory/parse-fragment (:html example-map)))]]]])
+                           :tooltip-position :above-left
+                           :disabled? (not (app/console-created? :cljs-console))]]]]])
+
+(defn build-examples-ui
+  "Builds the UI for the symbol's examples."
+  [examples]
+  [v-box
+   :size "0 1 auto"
+   :children [[gap :size "4px"]
+              [title
+               :label "Examples"
+               :level :level4
+               :class "api-panel-popup-section-title"]
+              [v-box
+               :size "0 0 auto"
+               :gap "2px"
+               :children (map-indexed example-panel examples)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
   [showing? popover-position sym-doc-map]
   (let [{name :name
+         full-name :full-name
          desc :description-html
          examples-htmls :examples-htmls
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-        examples (map (fn [html string] {:html html :string string}) examples-htmls examples-strings)
-        popover-width  400
-        popover-height 400
-        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+         examples (flatten examples-strings)
+         popover-width  400
+         popover-height 400
+         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
     [popover-content-wrapper
      :showing? showing?
      :position @popover-position
@@ -239,44 +314,11 @@
                        :children [(when (not-empty sign)
                                     [build-signatures-ui sign])
                                   (when (not-empty desc)
-                                    [v-box
-                                     :size "0 0 auto"
-                                     :gap "4px"
-                                     :children [[label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]]
-                                    ;; we can use `dangerouslySetInnerHTML` or construct the edn from
-                                    ;; the html string (using eg. hickory)
-                                    ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
-                                    ;; AR - hickory performs better in flexbox container calculation
-                                    )
+                                    [build-symbol-description-ui full-name desc])
                                   (when (not-empty related)
-                                    [v-box
-                                     :size "0 0 auto"
-                                     :gap "4px"
-                                     :children [[title
-                                                 :label "Related"
-                                                 :level :level4
-                                                 :class "api-panel-popup-section-title"]
-                                                [h-box
-                                                 :size "0 0 auto"
-                                                 :gap "4px"
-                                                 :children (for [rel related]
-                                                             [hyperlink-href
-                                                              :label (utils/strip-namespace rel)
-                                                              :href (utils/symbol->clojuredocs-url rel)
-                                                              :target "_blank"])]]])
+                                    [build-related-symbols-ui related])
                                   (when (not-empty examples)
-                                    [v-box
-                                     :size "0 1 auto"
-                                     :children [[gap :size "4px"]
-                                                [title
-                                                 :label "Examples"
-                                                 :level :level4
-                                                 :class "api-panel-popup-section-title"]
-                                                [h-box
-                                                 :size "0 0 auto"
-                                                 :gap "2px"
-                                                 :children (map-indexed example-panel examples)]]])]]])]]))
-
+                                    [build-examples-ui examples])]]])]]))
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
