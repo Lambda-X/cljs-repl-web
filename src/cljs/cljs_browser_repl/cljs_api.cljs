@@ -31,15 +31,6 @@
    :full-name "cljs.core/butlast",
    :docstring
    "Return a seq of all but the last item in coll, in linear time"},
-  "read-2-chars"
-  {:ns "cljs.reader",
-   :name "read-2-chars",
-   :signature ["[reader]"],
-   :type "function",
-   :full-name "cljs.reader/read-2-chars",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "PersistentArrayMap.EMPTY"
   {:ns "cljs.core",
    :name "PersistentArrayMap.EMPTY",
@@ -57,27 +48,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "ignore"
-  {:description
-   "Causes the following form to be completely skipped by the reader.  This is a\nmore complete removal than the `comment` macro which yields nil.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">{:foo #&#95;bar 2}\n;;=&gt; {:foo 2}\n</code></pre><p>To comment out the last line of a function without worrying about commenting out the trailing parentheses:</p><pre><code class=\"clj\">&#40;defn foo &#91;&#93;\n  &#40;println &quot;hello&quot;&#41;\n  #&#95;&#40;println &quot;world&quot;&#41;&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "ignore",
-   :type "syntax",
-   :related ["syntax/comment" "cljs.core/comment"],
-   :examples-strings
-   [["{:foo #_bar 2} ;;=> {:foo 2}"
-     "(defn foo []"
-     "  (println \"hello\")"
-     "  #_(println \"world\"))"]],
-   :description-html
-   "<p>Causes the following form to be completely skipped by the reader.  This is a more complete removal than the <code>comment</code> macro which yields nil.</p>",
-   :examples
-   [{:id "f36d7a",
-     :content
-     "```clj\n{:foo #_bar 2}\n;;=> {:foo 2}\n```\n\nTo comment out the last line of a function without worrying about commenting out\nthe trailing parentheses:\n\n```clj\n(defn foo []\n  (println \"hello\")\n  #_(println \"world\"))\n```"}],
-   :full-name "syntax/ignore"},
   "*print-level*"
   {:ns "cljs.core",
    :name "*print-level*",
@@ -117,23 +87,6 @@
    :signature ["[meta v start end __hash]"],
    :type "type",
    :full-name "cljs.core/Subvec",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ICrossPageChannel"
-  {:ns "clojure.browser.net",
-   :name "ICrossPageChannel",
-   :type "protocol",
-   :full-name "clojure.browser.net/ICrossPageChannel",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pprint"
-  {:ns "cljs.pprint",
-   :name "pprint",
-   :signature ["[object]" "[object writer]"],
-   :type "function",
-   :full-name "cljs.pprint/pprint",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -180,15 +133,6 @@
    :full-name "cljs.core/partial",
    :docstring
    "Takes a function f and fewer than the normal arguments to f, and\nreturns a fn that takes a variable number of additional args. When\ncalled, the returned function calls f with args + additional args."},
-  "stop"
-  {:ns "cljs.repl.server",
-   :name "stop",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl.server/stop",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "TaggedLiteral"
   {:ns "cljs.core",
    :name "TaggedLiteral",
@@ -198,68 +142,28 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "NaN"
-  {:description
-   "The IEEE 754 Floating Point representation of NaN (not a number), an undefined\nor unrepresentable value.\n\nTo test for NaN, use the native JavaScript [`js/isNaN`] or the safer [`js/Number.isNaN`].\n\n[`js/isNaN`]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN\n[`js/Number.isNaN`]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN",
-   :examples-htmls
-   ["<pre><code class=\"clj\">NaN\n;;=&gt; NaN\n</code></pre><p>Testing for NaN:</p><pre><code class=\"clj\">&#40;js/Number.isNaN &#40;/ 0 0&#41;&#41;\n;;=&gt; true\n\n&#40;js/Number.isNaN 1&#41;\n;;=&gt; false\n</code></pre><p>Equivalent to the JavaScript symbol:</p><pre><code class=\"clj\">js/NaN\n;;=&gt; NaN\n</code></pre>"],
-   :ns "syntax",
-   :name "NaN",
-   :type "special symbol",
-   :related ["syntax/Infinity" "syntax/nil"],
-   :examples-strings
-   [["NaN ;;=> NaN"
-     "(js/Number.isNaN (/ 0 0)) ;;=> true"
-     "(js/Number.isNaN 1) ;;=> false"
-     "js/NaN ;;=> NaN"]],
-   :description-html
-   "<p>The IEEE 754 Floating Point representation of NaN (not a number), an undefined or unrepresentable value.</p><p>To test for NaN, use the native JavaScript [<code>js/isNaN</code>] or the safer [<code>js/Number.isNaN</code>].</p><p>[<code>js/isNaN</code>]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN [<code>js/Number.isNaN</code>]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN</p>",
-   :examples
-   [{:id "9661ba",
-     :content
-     "```clj\nNaN\n;;=> NaN\n```\n\nTesting for NaN:\n\n```clj\n(js/Number.isNaN (/ 0 0))\n;;=> true\n\n(js/Number.isNaN 1)\n;;=> false\n```\n\nEquivalent to the JavaScript symbol:\n\n```clj\njs/NaN\n;;=> NaN\n```"}],
-   :full-name "syntax/NaN"},
-  "test-var-block"
-  {:ns "cljs.test",
-   :name "test-var-block",
-   :signature ["[v]"],
-   :type "function",
-   :full-name "cljs.test/test-var-block",
-   :docstring
-   "Like test-var, but returns a block for further composition and\nlater execution.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "parse-stacktrace"
-  {:ns "cljs.repl.browser",
-   :name "parse-stacktrace",
-   :signature ["[repl-env st err opts]"],
-   :type "multimethod",
-   :full-name "cljs.repl.browser/parse-stacktrace",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "boolean"
   {:description
-   "Special symbols representing the boolean literals `true` and `false`.\nBoth evaluate to themselves.",
+   "Return `false` if `x` is false or nil.  Otherwise return `true`.  This is the\ntruthiness condition used by `if` expressions.",
    :examples-htmls
-   ["<pre><code class=\"clj\">true\n;;=&gt; true\n\nfalse\n;;=&gt; false\n</code></pre>"],
-   :ns "syntax",
+   ["<pre><code class=\"clj\">&#40;boolean 1&#41;\n;;=&gt; true\n\n&#40;boolean 0&#41;\n;;=&gt; true\n\n&#40;boolean nil&#41;\n;;=&gt; false\n</code></pre>"],
+   :ns "cljs.core",
    :name "boolean",
-   :type "special symbol",
-   :related
-   ["cljs.core/boolean"
-    "special/if"
-    "cljs.core/not"
-    "cljs.core/true?"
-    "cljs.core/false?"],
-   :examples-strings [["true ;;=> true" "false ;;=> false"]],
+   :signature ["[x]"],
+   :type "function",
+   :related ["special/if"],
+   :examples-strings
+   [["(boolean 1) ;;=> true"
+     "(boolean 0) ;;=> true"
+     "(boolean nil) ;;=> false"]],
    :description-html
-   "<p>Special symbols representing the boolean literals <code>true</code> and <code>false</code>. Both evaluate to themselves.</p>",
+   "<p>Return <code>false</code> if <code>x</code> is false or nil.  Otherwise return <code>true</code>.  This is the truthiness condition used by <code>if</code> expressions.</p>",
    :examples
-   [{:id "1afc59",
-     :content "```clj\ntrue\n;;=> true\n\nfalse\n;;=> false\n```"}],
-   :full-name "syntax/boolean"},
+   [{:id "9edf3a",
+     :content
+     "```clj\n(boolean 1)\n;;=> true\n\n(boolean 0)\n;;=> true\n\n(boolean nil)\n;;=> false\n```"}],
+   :full-name "cljs.core/boolean",
+   :docstring "Coerce to boolean"},
   "remove-method"
   {:ns "cljs.core",
    :name "remove-method",
@@ -321,53 +225,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "eval-result"
-  {:ns "cljs.repl.rhino",
-   :name "eval-result",
-   :type "multimethod",
-   :full-name "cljs.repl.rhino/eval-result",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ratio-pattern"
-  {:ns "cljs.reader",
-   :name "ratio-pattern",
-   :type "var",
-   :full-name "cljs.reader/ratio-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "split-lines"
-  {:description "Splits `s` on `\\n` or `\\r\\n`.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "split-lines",
-   :signature ["[s]"],
-   :type "function",
-   :related ["clojure.string/split"],
-   :examples-strings [],
-   :description-html
-   "<p>Splits <code>s</code> on <code>\\n</code> or <code>\\r\\n</code>.</p>",
-   :full-name "clojure.string/split-lines",
-   :docstring "Splits s on \n or \r\n."},
-  "read-meta"
-  {:ns "cljs.reader",
-   :name "read-meta",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-meta",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "register-default-tag-parser!"
-  {:ns "cljs.reader",
-   :name "register-default-tag-parser!",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.reader/register-default-tag-parser!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "map"
   {:description
    "Returns a lazy sequence of applying function `f` to every element of `coll`.\n\nWhen more than one collection is provided, returns a lazy sequence consisting of\nthe result of applying `f` to the set of first items of each `c`, followed by\napplying `f` to the set of second items in each `c`, until any one of the `c`s\nis exhausted. Any remaining items in other `c`s are ignored. Function `f` should\naccept number-of-`c`s arguments.\n\nReturns a transducer when no collection is provided.",
@@ -393,17 +250,6 @@
    :full-name "cljs.core/map",
    :docstring
    "Returns a lazy sequence consisting of the result of applying f to\nthe set of first items of each coll, followed by applying f to the\nset of second items in each coll, until any one of the colls is\nexhausted.  Any remaining items in other colls are ignored. Function\nf should accept number-of-colls arguments. Returns a transducer when\nno collection is provided."},
-  "set-connection"
-  {:ns "cljs.repl.server",
-   :name "set-connection",
-   :signature ["[conn]"],
-   :type "function",
-   :full-name "cljs.repl.server/set-connection",
-   :docstring
-   "Given a new available connection, either use it to deliver the\nconnection which was promised or store the connection for later\nuse.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "select-keys"
   {:description
    "Returns a map containing only those entries in `map` whose key is in `keys`.",
@@ -448,15 +294,6 @@
    :full-name "cljs.core/rseq",
    :docstring
    "Returns, in constant time, a seq of the items in rev (which\ncan be a vector or sorted-map), in reverse order. If rev is empty returns nil"},
-  "file->ns"
-  {:ns "cljs.js",
-   :name "file->ns",
-   :signature ["[file]"],
-   :type "function",
-   :full-name "cljs.js/file->ns",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-int"
   {:ns "cljs.core",
    :name "unchecked-int",
@@ -464,14 +301,6 @@
    :type "function",
    :full-name "cljs.core/unchecked-int",
    :docstring "Coerce to int by stripping decimal places.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IConnection"
-  {:ns "clojure.browser.net",
-   :name "IConnection",
-   :type "protocol",
-   :full-name "clojure.browser.net/IConnection",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -625,27 +454,6 @@
    :full-name "cljs.core/amap",
    :docstring
    "Maps an expression across an array a, using an index named idx, and\nreturn value named ret, initialized to a clone of a, then setting\neach element of ret to the evaluation of expr, returning the new\narray ret."},
-  "*print-right-margin*"
-  {:ns "cljs.pprint",
-   :name "*print-right-margin*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-right-margin*",
-   :docstring
-   "Pretty printing will try to avoid anything going beyond this column.\nSet it to nil to have pprint let the line be arbitrarily long. This will ignore all\nnon-mandatory newlines.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "insert-right"
-  {:ns "clojure.zip",
-   :name "insert-right",
-   :signature ["[loc item]"],
-   :type "function",
-   :full-name "clojure.zip/insert-right",
-   :docstring
-   "Inserts the item as the right sibling of the node at this loc,\nwithout moving",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IChunkedNext"
   {:ns "cljs.core",
    :name "IChunkedNext",
@@ -719,26 +527,6 @@
    :full-name "cljs.core/cond->",
    :docstring
    "Takes an expression and a set of test/form pairs. Threads expr (via ->)\nthrough each form for which the corresponding test\nexpression is true. Note that, unlike cond branching, cond-> threading does\nnot short circuit after the first true test expression."},
-  "rename-keys"
-  {:ns "clojure.set",
-   :name "rename-keys",
-   :signature ["[map kmap]"],
-   :type "function",
-   :full-name "clojure.set/rename-keys",
-   :docstring
-   "Returns the map with the keys in kmap renamed to the vals in kmap",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "valid-opts?"
-  {:ns "cljs.js",
-   :name "valid-opts?",
-   :signature ["[x]"],
-   :type "function",
-   :full-name "cljs.js/valid-opts?",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IFn"
   {:ns "cljs.core",
    :name "IFn",
@@ -773,17 +561,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "update-require-spec"
-  {:ns "cljs.repl",
-   :name "update-require-spec",
-   :signature ["[specs & additions]"],
-   :type "function",
-   :full-name "cljs.repl/update-require-spec",
-   :docstring
-   "Given the specification portion of a ns form and require spec additions\nreturn an updated specification.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "js-debugger"
   {:description
    "Creates breakpoint that will stop the debugger if the browser's devtools are\nopen.  Equivalent to `debugger;` in JavaScript.",
@@ -807,18 +584,6 @@
      "```clj\n(defn foo []\n  (println \"HI\")\n  (js-debugger)\n  (println \"WORLD\"))\n\n(foo)\n;; will print \"HI\" then pause JS inside this function\n;; if browser devtools are open.\n```"}],
    :full-name "cljs.core/js-debugger",
    :docstring "Emit JavaScript \"debugger;\" statement."},
-  "compile-file"
-  {:ns "cljs.compiler.api",
-   :name "compile-file",
-   :signature
-   ["[src]" "[src dest]" "[src dest opts]" "[state src dest opts]"],
-   :type "function",
-   :full-name "cljs.compiler.api/compile-file",
-   :docstring
-   "Compiles src to a file of the same name, but with a .js extension,\nin the src file's directory.\n\nWith dest argument, write file to provided location. If the dest\nargument is a file outside the source tree, missing parent\ndirectories will be created. The src file will only be compiled if\nthe dest file has an older modification time.\n\nBoth src and dest may be either a String or a File.\n\nReturns a map containing {:ns .. :provides .. :requires .. :file ..}.\nIf the file was not compiled returns only {:file ...}",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "es6-iterable"
   {:ns "cljs.core",
    :name "es6-iterable",
@@ -843,17 +608,6 @@
    :full-name "cljs.core/not-every?",
    :docstring
    "Returns false if (pred x) is logical true for every x in\ncoll, else true."},
-  "ns-info"
-  {:ns "cljs.repl",
-   :name "ns-info",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.repl/ns-info",
-   :docstring
-   "Given a path to a js source file return the ns info for the corresponding\nClojureScript file if it exists.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "drop-while"
   {:description
    "Returns a lazy sequence of the items in `coll` starting from the first item for\nwhich `(pred item)` returns logical false.\n\nReturns a stateful transducer when no collection is provided.",
@@ -936,15 +690,6 @@
    :type "function",
    :full-name "cljs.core/enable-console-print!",
    :docstring "Set *print-fn* to console.log",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "expose"
-  {:ns "clojure.browser.event",
-   :name "expose",
-   :signature ["[e]"],
-   :type "function",
-   :full-name "clojure.browser.event/expose",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1048,15 +793,6 @@
    :full-name "cljs.core/vec",
    :docstring
    "Creates a new vector containing the contents of coll. JavaScript arrays\nwill be aliased and should not be modified."},
-  "throwing-reader"
-  {:ns "cljs.reader",
-   :name "throwing-reader",
-   :signature ["[msg]"],
-   :type "function",
-   :full-name "cljs.reader/throwing-reader",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "as->"
   {:description
    "Binds `name` to `expr`, evaluates the first form in the lexical context of that\nbinding, then binds `name` to that result, repeating for each successive form,\nreturning the result of the last form.\n\nUseful for when you want a threading macro to use different \"places\" at each\nform.",
@@ -1084,17 +820,6 @@
    :full-name "cljs.core/as->",
    :docstring
    "Binds name to expr, evaluates the first form in the lexical context\nof that binding, then binds name to that result, repeating for each\nsuccessive form, returning the result of the last form."},
-  "folder"
-  {:ns "clojure.core.reducers",
-   :name "folder",
-   :signature ["[coll xf]"],
-   :type "function",
-   :full-name "clojure.core.reducers/folder",
-   :docstring
-   "Given a foldable collection, and a transformation function xf,\nreturns a foldable collection, where any supplied reducing\nfn will be transformed by xf. xf is a function of reducing fn to\nreducing fn.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "m3-fmix"
   {:ns "cljs.core",
    :name "m3-fmix",
@@ -1117,15 +842,6 @@
    "<p>Returns true if <code>n</code> is an integer, false otherwise.</p>",
    :full-name "cljs.core/integer?",
    :docstring "Returns true if n is an integer."},
-  "dispatch-macros"
-  {:ns "cljs.reader",
-   :name "dispatch-macros",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.reader/dispatch-macros",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "js->clj"
   {:description
    "Recursively transforms JavaScript arrays into ClojureScript vectors, and\nJavaScript objects into ClojureScript maps.\n\nWith option `{:keywordize-keys true}` will convert object fields from strings to\nkeywords.\n\nNote that `js->clj` is not optimized for speed and the [transit.cljs] library is\nrecommended for parsing large amounts of JSON data.\n\n[transit.cljs]:http://swannodette.github.io/2014/07/26/transit--clojurescript/",
@@ -1150,14 +866,6 @@
    :full-name "cljs.core/js->clj",
    :docstring
    "Recursively transforms JavaScript arrays into ClojureScript\nvectors, and JavaScript objects into ClojureScript maps.  With\noption ':keywordize-keys true' will convert object fields from\nstrings to keywords."},
-  "browser-state"
-  {:ns "cljs.repl.browser",
-   :name "browser-state",
-   :type "dynamic var",
-   :full-name "cljs.repl.browser/browser-state",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*print-dup*"
   {:ns "cljs.core",
    :name "*print-dup*",
@@ -1192,17 +900,6 @@
    :full-name "cljs.core/loop",
    :docstring
    "Evaluates the exprs in a lexical context in which the symbols in\nthe binding-forms are bound to their respective init-exprs or parts\ntherein. Acts as a recur target."},
-  "zipper"
-  {:ns "clojure.zip",
-   :name "zipper",
-   :signature ["[branch? children make-node root]"],
-   :type "function",
-   :full-name "clojure.zip/zipper",
-   :docstring
-   "Creates a new zipper structure. \n\nbranch? is a fn that, given a node, returns true if can have\nchildren, even if it currently doesn't.\n\nchildren is a fn that, given a branch node, returns a seq of its\nchildren.\n\nmake-node is a fn that, given an existing node and a seq of\nchildren, returns a new branch node with the supplied children.\nroot is the root node.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IWatchable"
   {:ns "cljs.core",
    :name "IWatchable",
@@ -1231,17 +928,6 @@
      "```clj\n(min 1 2 3 4)\n;; => 1\n```\n\nApply it to a collection:\n\n```clj\n(apply min [1 2 3 4])\n;; => 1\n```"}],
    :full-name "cljs.core/min",
    :docstring "Returns the least of the nums."},
-  "leftmost"
-  {:ns "clojure.zip",
-   :name "leftmost",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/leftmost",
-   :docstring
-   "Returns the loc of the leftmost sibling of the node at this loc, or self",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IMap"
   {:ns "cljs.core",
    :name "IMap",
@@ -1252,18 +938,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "trim"
-  {:description "Removes whitespace from both ends of string.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "trim",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Removes whitespace from both ends of string.</p>",
-   :full-name "clojure.string/trim",
-   :docstring "Removes whitespace from both ends of string."},
   "bit-flip"
   {:description
    "Flip bit at index `n`.  Same as `x ^ (1 << y)` in JavaScript.",
@@ -1285,22 +959,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-flip 2r1111 2)\n;;=> 11\n;; 11 = 2r1011\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-flip 15 2)\n;;=> 11\n```"}],
    :full-name "cljs.core/bit-flip",
    :docstring "Flip bit at index n"},
-  "load-namespace"
-  {:description
-   "Only usable from a REPL.\n\nLoad a namespace and all of its dependencies into the evaluation environment.\nThe environment is responsible for ensuring that each namespace is loaded once\nand only once.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;load-namespace 'clojure.set&#41;\n</code></pre>"],
-   :ns "specialrepl",
-   :name "load-namespace",
-   :signature ["[name]"],
-   :type "special form (repl)",
-   :examples-strings [["(load-namespace 'clojure.set)"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Load a namespace and all of its dependencies into the evaluation environment. The environment is responsible for ensuring that each namespace is loaded once and only once.</p>",
-   :examples
-   [{:id "0b1a1d",
-     :content "```clj\n(load-namespace 'clojure.set)\n```"}],
-   :full-name "specialrepl/load-namespace"},
   "defn"
   {:description
    "Defines a function.\n\n`doc-string?` is an optional documentation string.\n\n`attr-map?` is an optional map of [metadata](http://clojure.org/metadata) to\nattach to the global variable name.\n\n`prepost-map?` is an optional map with optional keys `:pre` and `:post` that\ncontain collections of [pre or post conditions](http://blog.fogus.me/2009/12/21/clojures-pre-and-post/)\nfor the function.\n\n<table class=\"code-tbl-9bef6\">\n  <thead>\n    <tr>\n      <th>Code</th>\n      <th>Expands To</th></tr></thead>\n  <tbody>\n    <tr>\n      <td><pre>\n(defn foo [a b c]\n  (\\* a b c))</pre></td>\n      <td><pre>\n(def foo\n  (fn [a b c]\n    (\\* a b c)))</pre></td></tr></tbody></table>",
@@ -1348,17 +1006,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "rename"
-  {:ns "clojure.set",
-   :name "rename",
-   :signature ["[xrel kmap]"],
-   :type "function",
-   :full-name "clojure.set/rename",
-   :docstring
-   "Returns a rel of the maps in xrel with the keys in kmap renamed to the vals in kmap",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "printf"
   {:ns "cljs.core",
    :name "printf",
@@ -1366,14 +1013,6 @@
    :type "function",
    :full-name "cljs.core/printf",
    :docstring "Prints formatted output, as per format",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ext->mime-type"
-  {:ns "cljs.repl.browser",
-   :name "ext->mime-type",
-   :type "var",
-   :full-name "cljs.repl.browser/ext->mime-type",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1397,15 +1036,6 @@
    :signature ["[ks vs]"],
    :type "function",
    :full-name "cljs.core/HashMap.fromArrays",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "rhino-eval"
-  {:ns "cljs.repl.rhino",
-   :name "rhino-eval",
-   :signature ["[{:keys [scope], :as repl-env} filename line js]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/rhino-eval",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1467,17 +1097,6 @@
    :full-name "cljs.core/=",
    :docstring
    "Equality. Returns true if x equals y, false if not. Compares\nnumbers and collections in a type-independent manner.  Clojure's immutable data\nstructures define -equiv (and thus =) as a value, not an identity,\ncomparison."},
-  "source-fn"
-  {:ns "cljs.repl",
-   :name "source-fn",
-   :signature ["[env x]"],
-   :type "function",
-   :full-name "cljs.repl/source-fn",
-   :docstring
-   "Returns a string of the source code for the given symbol, if it can\nfind it.  This requires that the symbol resolve to a Var defined in\na namespace for which the .clj is in the classpath.  Returns nil if\nit can't find the source.  For most REPL usage, 'source' is more\nconvenient.\n\nExample: (source-fn 'filter)",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "list"
   {:description "Creates a new list containing `items`.",
    :examples-htmls [],
@@ -1497,27 +1116,6 @@
    :type "protocol",
    :full-name "cljs.core/IMeta",
    :docstring "Protocol for accessing the metadata of an object.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "starts-with?"
-  {:ns "clojure.string",
-   :name "starts-with?",
-   :signature ["[s substr]"],
-   :type "function",
-   :full-name "clojure.string/starts-with?",
-   :docstring "True if s starts with substr.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "are"
-  {:ns "cljs.test",
-   :name "are",
-   :signature ["[argv expr & args]"],
-   :type "macro",
-   :full-name "cljs.test/are",
-   :docstring
-   "Checks multiple assertions with a template expression.\nSee clojure.template/do-template for an explanation of\ntemplates.\n\nExample: (are [x y] (= x y)  \n              2 (+ 1 1)\n              4 (* 2 2))\nExpands to: \n         (do (is (= 2 (+ 1 1)))\n             (is (= 4 (* 2 2))))\n\nNote: This breaks some reporting features, such as line numbers.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1545,15 +1143,6 @@
    :full-name "cljs.core/constantly",
    :docstring
    "Returns a function that takes any number of arguments and returns x."},
-  "escape-char"
-  {:ns "cljs.reader",
-   :name "escape-char",
-   :signature ["[buffer reader]"],
-   :type "function",
-   :full-name "cljs.reader/escape-char",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "into-array"
   {:description
    "Returns a new JavaScript array from the elements of `aseq`.",
@@ -1579,40 +1168,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "read-source-map"
-  {:ns "cljs.repl",
-   :name "read-source-map",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.repl/read-source-map",
-   :docstring "Return the source map for the JavaScript source file.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "start-evaluator"
-  {:ns "clojure.browser.repl",
-   :name "start-evaluator",
-   :signature ["[url]"],
-   :type "function",
-   :full-name "clojure.browser.repl/start-evaluator",
-   :docstring "Start the REPL server connection.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-double"
   {:ns "cljs.core",
    :name "unchecked-double",
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-double",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-comment"
-  {:ns "cljs.reader",
-   :name "read-comment",
-   :type "var",
-   :full-name "cljs.reader/read-comment",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1633,47 +1194,6 @@
    :full-name "cljs.core/pr-str-with-opts",
    :docstring
    "Prints a sequence of objects to a string, observing all the\noptions given in opts",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "mark-cljs-ns-for-recompile!"
-  {:ns "cljs.build.api",
-   :name "mark-cljs-ns-for-recompile!",
-   :signature ["[ns-sym]" "[ns-sym output-dir]"],
-   :type "function",
-   :full-name "cljs.build.api/mark-cljs-ns-for-recompile!",
-   :docstring
-   "Backdates a cljs target file so that it the cljs compiler will recompile it.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "right"
-  {:ns "clojure.zip",
-   :name "right",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/right",
-   :docstring
-   "Returns the loc of the right sibling of the node at this loc, or nil",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "char-code"
-  {:ns "cljs.pprint",
-   :name "char-code",
-   :signature ["[c]"],
-   :type "function",
-   :full-name "cljs.pprint/char-code",
-   :docstring "Convert char to int",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-set"
-  {:ns "cljs.reader",
-   :name "read-set",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-set",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1720,15 +1240,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-count 2r1011)\n;;=> 3\n```\n\nSame number in decimal:\n\n```clj\n(bit-count 11)\n;;=> 3\n```"}],
    :full-name "cljs.core/bit-count",
    :docstring "Counts the number of bits set in n"},
-  "debug-prn"
-  {:ns "cljs.js",
-   :name "debug-prn",
-   :signature ["[& args]"],
-   :type "function",
-   :full-name "cljs.js/debug-prn",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*"
   {:description "Returns the product of nums.\n\n`(*)` returns 1.",
    :examples-htmls
@@ -1753,16 +1264,29 @@
    :full-name "cljs.core/*",
    :docstring "Returns the product of nums. (*) returns 1."},
   "next"
-  {:ns "clojure.zip",
+  {:description
+   "Returns a sequence of the items after the first and calls `seq` on its argument.\n\nReturns nil if `coll` is empty.",
+   :examples-htmls
+   ["<pre><code class=\"clj\">&#40;next &#91;1 2 3&#93;&#41;\n;;=&gt; &#40;2 3&#41;\n\n&#40;next &#91;1 2&#93;&#41;\n;;=&gt; &#40;2&#41;\n\n&#40;next &#91;1&#93;&#41;\n;;=&gt; nil\n\n&#40;next &#91;&#93;&#41;\n;;=&gt; nil\n</code></pre>"],
+   :ns "cljs.core",
    :name "next",
-   :signature ["[loc]"],
+   :signature ["[coll]"],
    :type "function",
-   :full-name "clojure.zip/next",
+   :related ["cljs.core/rest" "cljs.core/first" "cljs.core/fnext"],
+   :examples-strings
+   [["(next [1 2 3]) ;;=> (2 3)"
+     "(next [1 2]) ;;=> (2)"
+     "(next [1]) ;;=> nil"
+     "(next []) ;;=> nil"]],
+   :description-html
+   "<p>Returns a sequence of the items after the first and calls <code>seq</code> on its argument.</p><p>Returns nil if <code>coll</code> is empty.</p>",
+   :examples
+   [{:id "7db59a",
+     :content
+     "```clj\n(next [1 2 3])\n;;=> (2 3)\n\n(next [1 2])\n;;=> (2)\n\n(next [1])\n;;=> nil\n\n(next [])\n;;=> nil\n```"}],
+   :full-name "cljs.core/next",
    :docstring
-   "Moves to the next loc in the hierarchy, depth-first. When reaching\nthe end, returns a distinguished loc detectable via end?. If already\nat the end, stays there.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
+   "Returns a seq of the items after the first. Calls seq on its\nargument.  If there are no more items, returns nil"},
   "PersistentHashMap.fromArray"
   {:ns "cljs.core",
    :name "PersistentHashMap.fromArray",
@@ -1794,39 +1318,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-test 2r0100 2)\n;;=> true\n\n(bit-test 2r0100 1)\n;;=> false\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-test 4 2)\n;;=> true\n\n(bit-test 4 1)\n;;=> false\n```"}],
    :full-name "cljs.core/bit-test",
    :docstring "Test bit at index n"},
-  "testing"
-  {:ns "cljs.test",
-   :name "testing",
-   :signature ["[string & body]"],
-   :type "macro",
-   :full-name "cljs.test/testing",
-   :docstring
-   "Adds a new string to the list of testing contexts.  May be nested,\nbut must occur inside a test function (deftest).",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-env"
-  {:ns "cljs.repl.node",
-   :name "repl-env",
-   :signature ["[& {:as options}]"],
-   :type "function",
-   :full-name "cljs.repl.node/repl-env",
-   :docstring
-   "Construct a Node.js evalution environment. Can supply :host and :port.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "cljs-files-in"
-  {:ns "cljs.compiler.api",
-   :name "cljs-files-in",
-   :signature ["[dir]"],
-   :type "function",
-   :full-name "cljs.compiler.api/cljs-files-in",
-   :docstring
-   "Return a sequence of all .cljs and .cljc files in the given directory.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "transduce"
   {:ns "cljs.core",
    :name "transduce",
@@ -1838,27 +1329,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "string"
-  {:description
-   "Create a string.  ClojureScript strings are the same as [JavaScript strings].\n\n[JavaScript strings]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String\n\nStrings may span multiple lines.\n\nStandard escape characters such as `\\\"` are supported, as well as unicode\nescape characters:\n\n| unicode characters  | constraints                                   |\n|---------------------|-----------------------------------------------|\n| `\\uXXXX`            | XXXX must have 4 digits outside 0xD7FF-0xE000 |\n| `\\oXXX`             | XXX is octal between 0 and 0377               |",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&quot;foo&quot;\n;;=&gt; &quot;foo&quot;\n\n&quot;hello\n     world&quot;\n;;=&gt; &quot;hello\\n     world&quot;\n</code></pre><p>Characters can be escaped:</p><pre><code class=\"clj\">&#40;println &quot;foo\\nbar&quot;&#41;\n;; prints:\n;;   foo\n;;   bar\n</code></pre>"],
-   :ns "syntax",
-   :name "string",
-   :type "syntax",
-   :related ["cljs.core/str"],
-   :examples-strings
-   [["\"foo\" ;;=> \"foo\""
-     "\"hello"
-     "     world\" ;;=> \"hello\\n     world\""
-     "(println \"foo\\nbar\") ;; prints: ;;   foo ;;   bar"]],
-   :description-html
-   "<p>Create a string.  ClojureScript strings are the same as [JavaScript strings].</p><p>[JavaScript strings]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String</p><p>Strings may span multiple lines.</p><p>Standard escape characters such as <code>\\&quot;</code> are supported, as well as unicode escape characters:</p><p>| unicode characters  | constraints                                   | |---------------------|-----------------------------------------------| | <code>\\uXXXX</code>            | XXXX must have 4 digits outside 0xD7FF-0xE000 | | <code>\\oXXX</code>             | XXX is octal between 0 and 0377               |</p>",
-   :examples
-   [{:id "eb97ac",
-     :content
-     "```clj\n\"foo\"\n;;=> \"foo\"\n\n\"hello\n     world\"\n;;=> \"hello\\n     world\"\n```\n\nCharacters can be escaped:\n\n```clj\n(println \"foo\\nbar\")\n;; prints:\n;;   foo\n;;   bar\n```"}],
-   :full-name "syntax/string"},
   "keys"
   {:description "Returns a sequence of the keys in `hash-map`.",
    :examples-htmls [],
@@ -1872,50 +1342,12 @@
    "<p>Returns a sequence of the keys in <code>hash-map</code>.</p>",
    :full-name "cljs.core/keys",
    :docstring "Returns a sequence of the map's keys."},
-  "*print-suppress-namespaces*"
-  {:ns "cljs.pprint",
-   :name "*print-suppress-namespaces*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-suppress-namespaces*",
-   :docstring
-   "Don't print namespaces with symbols. This is particularly useful when\npretty printing the results of macro expansions",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "nil-iter"
   {:ns "cljs.core",
    :name "nil-iter",
    :signature ["[]"],
    :type "function",
    :full-name "cljs.core/nil-iter",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-analysis-cache!"
-  {:ns "cljs.js",
-   :name "load-analysis-cache!",
-   :signature ["[state ns cache]"],
-   :type "function",
-   :full-name "cljs.js/load-analysis-cache!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*loaded*"
-  {:ns "cljs.js",
-   :name "*loaded*",
-   :type "var",
-   :full-name "cljs.js/*loaded*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "run-tests-block"
-  {:ns "cljs.test",
-   :name "run-tests-block",
-   :signature ["[env-or-ns & namespaces]"],
-   :type "macro",
-   :full-name "cljs.test/run-tests-block",
-   :docstring
-   "Like test-vars, but returns a block for further composition and\nlater execution.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -1952,17 +1384,6 @@
    :full-name "cljs.core/subvec",
    :docstring
    "Returns a persistent vector of the items in vector from\nstart (inclusive) to end (exclusive).  If end is not supplied,\ndefaults to (count vector). This operation is O(1) and very fast, as\nthe resulting vector shares structure with the original and no\ntrimming is done."},
-  "resolve"
-  {:ns "cljs.analyzer.api",
-   :name "resolve",
-   :signature ["[env sym]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/resolve",
-   :docstring
-   "Given an analysis environment resolve a var. Analogous to\nclojure.core/resolve",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "contains?"
   {:description
    "Returns true if the `coll` contains the lookup key `k`, otherwise returns false.\n\nNote that for numerically indexed collections like vectors and arrays, this\ntests if the numeric key is within the range of indexes.\n\n`contains?` operates in constant or logarithmic time, using `get` to perform\nthe lookup. It will not perform a linear search for a value.  `some` is\nused for this purpose:\n\n```clj\n(some #{value} coll)\n```",
@@ -2045,41 +1466,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "dispatch"
-  {:description
-   "`#` is a prefix character that is called the dispatch macro, because it allows\nthe behavior of the reader to be dispatched to another table, indexed by the\ncharacter following the `#`.\n\nSyntax forms prefixed with `#` are made to bear some similarity to their\noriginal forms:\n\n| original                           | with `#` prefix                                  | relation               |\n|------------------------------------|--------------------------------------------------|------------------------|\n| [doc:syntax/string]                    | [doc:syntax/regex]                                   | string-related         |\n| [doc:syntax/list]                      | [doc:syntax/function]                                | code-related           |\n| [doc:syntax/map]                       | [doc:syntax/set]                                     | lookup-related         |\n| [doc:syntax/quote]                     | [doc:syntax/var]                                     | quote-related          |\n| [doc:syntax/unused]                    | [doc:syntax/ignore]                                  | ignore-related         |\n| [`foo (symbol)`][doc:syntax/symbol]    | [`#foo (tagged literal)`][doc:syntax/tagged-literal] | name-related           |\n| [doc:syntax/predicate]                 | [doc:syntax/cond]                                    | conditional-related    |",
-   :examples-htmls
-   ["<p>The dispatch macro is not usable on its own.  Rather, it dispatches to other syntax forms.</p><p>Regular expression:</p><pre><code class=\"clj\">#&quot;&#91;a-zA-Z0-9&#93;+&quot;\n;;=&gt; #&quot;&#91;a-zA-Z0-9&#93;+&quot;\n</code></pre><p>Set:</p><pre><code class=\"clj\">#{:foo 1 2}\n;;=&gt; #{:foo 1 2}\n</code></pre><p>Function:</p><pre><code class=\"clj\">#&#40;foo 1 2&#41;\n;;=&gt; #&lt;function &#40;&#41;{\n;;   return cljs.user.foo.call&#40;null,&#40;1&#41;,&#40;2&#41;&#41;;\n;;   }&gt;\n</code></pre><p>Var reference:</p><pre><code class=\"clj\">&#40;def a&#41;\n#'a\n;;=&gt; #'cljs.user/a\n</code></pre><p>Ignore form:</p><pre><code class=\"clj\">#&#95;foo\n;; waits for next form since #&#95;foo was ignored\n\n#&#95;123 456\n;;=&gt; 456\n</code></pre><p>Tagged Literals:</p><pre><code class=\"clj\">#queue &#91;1 2 3&#93;\n;;=&gt; #queue &#91;1 2 3&#93;\n\n#js {:foo 1}\n;;=&gt; #js {:foo 1}\n\n#inst &quot;2010-11-12T18:14:15.666-00:00&quot;\n;;=&gt; #inst &quot;2010-11-12T18:14:15.666-00:00&quot;\n</code></pre><p>Reader Conditional:</p><pre><code class=\"clj\">#?&#40;:clj &quot;Clojure&quot; :cljs &quot;ClojureScript&quot;&#41;\n;;=&gt; &quot;ClojureScript&quot;\n</code></pre>"],
-   :ns "syntax",
-   :name "dispatch",
-   :type "syntax",
-   :related
-   ["syntax/regex"
-    "syntax/function"
-    "syntax/set"
-    "syntax/var"
-    "syntax/ignore"
-    "syntax/tagged-literal"
-    "syntax/cond"],
-   :examples-strings
-   [["#\"[a-zA-Z0-9]+\" ;;=> #\"[a-zA-Z0-9]+\""
-     "#{:foo 1 2} ;;=> #{:foo 1 2}"
-     "#(foo 1 2) ;;=> #<function (){ ;;   return cljs.user.foo.call(null,(1),(2)); ;;   }>"
-     "(def a)"
-     "#'a ;;=> #'cljs.user/a"
-     "#_foo ;; waits for next form since #_foo was ignored"
-     "#_123 456 ;;=> 456"
-     "#queue [1 2 3] ;;=> #queue [1 2 3]"
-     "#js {:foo 1} ;;=> #js {:foo 1}"
-     "#inst \"2010-11-12T18:14:15.666-00:00\" ;;=> #inst \"2010-11-12T18:14:15.666-00:00\""
-     "#?(:clj \"Clojure\" :cljs \"ClojureScript\") ;;=> \"ClojureScript\""]],
-   :description-html
-   "<p><code>#</code> is a prefix character that is called the dispatch macro, because it allows the behavior of the reader to be dispatched to another table, indexed by the character following the <code>#</code>.</p><p>Syntax forms prefixed with <code>#</code> are made to bear some similarity to their original forms:</p><p>| original                           | with <code>#</code> prefix                                  | relation               | |------------------------------------|--------------------------------------------------|------------------------| | [doc:syntax/string]                    | [doc:syntax/regex]                                   | string-related         | | [doc:syntax/list]                      | [doc:syntax/function]                                | code-related           | | [doc:syntax/map]                       | [doc:syntax/set]                                     | lookup-related         | | [doc:syntax/quote]                     | [doc:syntax/var]                                     | quote-related          | | [doc:syntax/unused]                    | [doc:syntax/ignore]                                  | ignore-related         | | [<code>foo &#40;symbol&#41;</code>][doc:syntax/symbol]    | [<code>#foo &#40;tagged literal&#41;</code>][doc:syntax/tagged-literal] | name-related           | | [doc:syntax/predicate]                 | [doc:syntax/cond]                                    | conditional-related    |</p>",
-   :examples
-   [{:id "0a1f4c",
-     :content
-     "The dispatch macro is not usable on its own.  Rather, it dispatches to other\nsyntax forms.\n\nRegular expression:\n\n```clj\n#\"[a-zA-Z0-9]+\"\n;;=> #\"[a-zA-Z0-9]+\"\n```\n\nSet:\n\n```clj\n#{:foo 1 2}\n;;=> #{:foo 1 2}\n```\n\nFunction:\n\n```clj\n#(foo 1 2)\n;;=> #<function (){\n;;   return cljs.user.foo.call(null,(1),(2));\n;;   }>\n```\n\nVar reference:\n\n```clj\n(def a)\n#'a\n;;=> #'cljs.user/a\n```\n\nIgnore form:\n\n```clj\n#_foo\n;; waits for next form since #_foo was ignored\n\n#_123 456\n;;=> 456\n```\n\nTagged Literals:\n\n```clj\n#queue [1 2 3]\n;;=> #queue [1 2 3]\n\n#js {:foo 1}\n;;=> #js {:foo 1}\n\n#inst \"2010-11-12T18:14:15.666-00:00\"\n;;=> #inst \"2010-11-12T18:14:15.666-00:00\"\n```\n\nReader Conditional:\n\n```clj\n#?(:clj \"Clojure\" :cljs \"ClojureScript\")\n;;=> \"ClojureScript\"\n```"}],
-   :full-name "syntax/dispatch"},
   "PersistentVector.EMPTY-NODE"
   {:ns "cljs.core",
    :name "PersistentVector.EMPTY-NODE",
@@ -2088,42 +1474,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "js-literal"
-  {:description
-   "Create a literal JavaScript object or array.  Data in the form of a map `{}` or\nvector `[]` must follow the `#js` tag, which will be converted at compile-time\nto a JavaScript object or array, respectively.\n\nThis will not implicitly convert nested data into JavaScript objects or arrays.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#js {:foo 1 bar 2}\n;;=&gt; #js {:foo 1, :bar 2}\n\n#js &#91;1 2 3&#93;\n;;=&gt; #js &#91;1 2 3&#93;\n</code></pre><p>For readability, it is sometimes preferable to use <code>clj-&gt;js</code> rather than nested <code>#js</code> tags.</p><pre><code class=\"clj\">#js {:foo #js {:bar 1}}\n;;=&gt; #js {:foo #js {:bar 1}}\n\n&#40;clj-&gt;js {:foo {:bar 1}}&#41;\n;;=&gt; #js {:foo #js {:bar 1}}\n</code></pre>"],
-   :ns "syntax",
-   :name "js-literal",
-   :type "tagged literal",
-   :related ["cljs.core/js-obj" "cljs.core/array" "cljs.core/clj->js"],
-   :examples-strings
-   [["#js {:foo 1 bar 2} ;;=> #js {:foo 1, :bar 2}"
-     "#js [1 2 3] ;;=> #js [1 2 3]"
-     "#js {:foo #js {:bar 1}} ;;=> #js {:foo #js {:bar 1}}"
-     "(clj->js {:foo {:bar 1}}) ;;=> #js {:foo #js {:bar 1}}"]],
-   :description-html
-   "<p>Create a literal JavaScript object or array.  Data in the form of a map <code>{}</code> or vector <code>&#91;&#93;</code> must follow the <code>#js</code> tag, which will be converted at compile-time to a JavaScript object or array, respectively.</p><p>This will not implicitly convert nested data into JavaScript objects or arrays.</p>",
-   :examples
-   [{:id "05e121",
-     :content
-     "```clj\n#js {:foo 1 bar 2}\n;;=> #js {:foo 1, :bar 2}\n\n#js [1 2 3]\n;;=> #js [1 2 3]\n```\n\nFor readability, it is sometimes preferable to use `clj->js` rather than nested\n`#js` tags.\n\n```clj\n#js {:foo #js {:bar 1}}\n;;=> #js {:foo #js {:bar 1}}\n\n(clj->js {:foo {:bar 1}})\n;;=> #js {:foo #js {:bar 1}}\n```"}],
-   :full-name "syntax/js-literal"},
   "PersistentQueue"
   {:ns "cljs.core",
    :name "PersistentQueue",
    :signature ["[meta count front rear __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentQueue",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "seq->js-array"
-  {:ns "cljs.repl.node",
-   :name "seq->js-array",
-   :signature ["[v]"],
-   :type "function",
-   :full-name "cljs.repl.node/seq->js-array",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2161,73 +1517,6 @@
    :full-name "cljs.core/sorted-map-by",
    :docstring
    "keyval => key val\nReturns a new sorted map with supplied mappings, using the supplied comparator."},
-  "src-file->goog-require"
-  {:ns "cljs.build.api",
-   :name "src-file->goog-require",
-   :signature ["[src]" "[src options]" "[state src options]"],
-   :type "function",
-   :full-name "cljs.build.api/src-file->goog-require",
-   :docstring
-   "Given a ClojureScript or Google Closure style JavaScript source file return\nthe goog.require statement for it.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "replace-node"
-  {:ns "clojure.browser.dom",
-   :name "replace-node",
-   :signature ["[old-node new-node]"],
-   :type "function",
-   :full-name "clojure.browser.dom/replace-node",
-   :docstring
-   "Replace old-node with new-node. old-node can be an element or a\nkeyword which is the id of the node to replace.  new-node can be an\nelement or an html string.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "with-pprint-dispatch"
-  {:ns "cljs.pprint",
-   :name "with-pprint-dispatch",
-   :signature ["[function & body]"],
-   :type "macro",
-   :full-name "cljs.pprint/with-pprint-dispatch",
-   :docstring
-   "Execute body with the pretty print dispatch function bound to function.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "unique-event-id"
-  {:ns "clojure.browser.event",
-   :name "unique-event-id",
-   :signature ["[event-type]"],
-   :type "function",
-   :full-name "clojure.browser.event/unique-event-id",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "Math-namespace"
-  {:description
-   "A special namespace for direct access to the native JavaScript [Math library].\n\n`Math/foo` => `js/Math.foo`\n\n[Math library]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math",
-   :examples-htmls
-   ["<p>Math constants:</p><pre><code class=\"clj\">Math/E\n;;=&gt; 2.718281828459045\n\nMath/PI\n;;=&gt; 3.141592653589793\n\nMath/SQRT2\n;;=&gt; 1.4142135623730951\n</code></pre><p>Math functions:</p><pre><code class=\"clj\">&#40;Math/cos 0&#41;\n;;=&gt; 1\n\n&#40;Math/atan2 1 0&#41;\n;;=&gt; 1.5707963267948966\n\n&#40;Math/log Math/E&#41;\n;;=&gt; 1\n\n&#40;Math/pow 2 5&#41;\n;;=&gt; 32\n\n&#40;Math/pow Math/E &#40;Math/log 1&#41;&#41;\n;;=&gt; 1\n</code></pre>"],
-   :ns "syntax",
-   :name "Math-namespace",
-   :type "special namespace",
-   :related ["syntax/js-namespace"],
-   :examples-strings
-   [["Math/E ;;=> 2.718281828459045"
-     "Math/PI ;;=> 3.141592653589793"
-     "Math/SQRT2 ;;=> 1.4142135623730951"
-     "(Math/cos 0) ;;=> 1"
-     "(Math/atan2 1 0) ;;=> 1.5707963267948966"
-     "(Math/log Math/E) ;;=> 1"
-     "(Math/pow 2 5) ;;=> 32"
-     "(Math/pow Math/E (Math/log 1)) ;;=> 1"]],
-   :description-html
-   "<p>A special namespace for direct access to the native JavaScript [Math library].</p><p><code>Math/foo</code> => <code>js/Math.foo</code></p><p>[Math library]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math</p>",
-   :examples
-   [{:id "9cfeb0",
-     :content
-     "Math constants:\n\n```clj\nMath/E\n;;=> 2.718281828459045\n\nMath/PI\n;;=> 3.141592653589793\n\nMath/SQRT2\n;;=> 1.4142135623730951\n```\n\nMath functions:\n\n```clj\n(Math/cos 0)\n;;=> 1\n\n(Math/atan2 1 0)\n;;=> 1.5707963267948966\n\n(Math/log Math/E)\n;;=> 1\n\n(Math/pow 2 5)\n;;=> 32\n\n(Math/pow Math/E (Math/log 1))\n;;=> 1\n```"}],
-   :full-name "syntax/Math-namespace"},
   "keep"
   {:description
    "Returns a lazy sequence of the non-nil results of `(f item)`. Note, this means\nfalse return values will be included.\n\n`f` must be free of side-effects.\n\nReturns a transducer when no collection is provided.",
@@ -2297,15 +1586,6 @@
    :full-name "cljs.core/declare",
    :docstring
    "defs the supplied var names with no bindings, useful for making forward declarations."},
-  "enable-util-print!"
-  {:ns "cljs.nodejs",
-   :name "enable-util-print!",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.nodejs/enable-util-print!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "when-first"
   {:description
    "With `bindings` as `x`, `xs`, roughly the same as `(when (seq xs) (let [x (first\nxs)] body))` but `xs` is evaluated only once.",
@@ -2329,42 +1609,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "index"
-  {:ns "clojure.set",
-   :name "index",
-   :signature ["[xrel ks]"],
-   :type "function",
-   :full-name "clojure.set/index",
-   :docstring
-   "Returns a map of the distinct values of ks in the xrel mapped to a\nset of the maps in xrel with the corresponding values of ks.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IMultiFn"
   {:ns "cljs.core",
    :name "IMultiFn",
    :type "protocol",
    :full-name "cljs.core/IMultiFn",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "handle-post"
-  {:ns "cljs.repl.browser",
-   :name "handle-post",
-   :signature ["[m _ _]"],
-   :type "multimethod",
-   :full-name "cljs.repl.browser/handle-post",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "mapped-stacktrace"
-  {:ns "cljs.repl",
-   :name "mapped-stacktrace",
-   :signature ["[stacktrace]" "[stacktrace opts]"],
-   :type "function",
-   :full-name "cljs.repl/mapped-stacktrace",
-   :docstring
-   "Given a vector representing the canonicalized JavaScript stacktrace\nreturn the ClojureScript stacktrace. The canonical stacktrace must be\nin the form:\n\n [{:file <string>\n   :function <string>\n   :line <integer>\n   :column <integer>}*]\n\n:file must be a URL path (without protocol) relative to :output-dir or a\nidentifier delimited by angle brackets. The returned mapped stacktrace will\nalso contain :url entries to the original sources if it can be determined\nfrom the classpath.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2378,30 +1627,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "auto-gensym"
-  {:description
-   "(Only intended for use in a [doc:syntax/syntax-quote].)\n\n``foo#` => `foo__135__auto__`\n\nAuto-generates a unique symbol with the given prefix, particularly one that\nwill not shadow any existing symbol in its resulting scope.  This is intended\nas a convenience for creating hygienic macros without calling\n[doc:cljs.core/gensym] directly.\n\nEvery symbol matching a unique `foo#` symbol within a syntax quoted form will\nbe replaced with the same generated symbol.\n\n``(foo# foo#)` => `(foo__138__auto__ foo__138__auto__)`\n\nNamespace-qualified symbols `foo/bar#` are not replaced.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">`foo#\n;;=&gt; foo&#95;&#95;142&#95;&#95;auto&#95;&#95;\n</code></pre><p>Namespace-qualified symbols are left alone.</p><pre><code class=\"clj\">`foo/bar#\n;;=&gt; foo/bar#\n</code></pre>"
-    "<p>Create safe local bindings:</p><pre><code class=\"clj\">`&#40;let &#91;x# 1&#93;\n   &#40;+ x# 2&#41;&#41;\n;;=&gt; &#40;cljs.user/let &#91;x&#95;&#95;146&#95;&#95;auto&#95;&#95; 1&#93; &#40;cljs.user/+ x&#95;&#95;146&#95;&#95;auto&#95;&#95; 2&#41;&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "auto-gensym",
-   :type "special character",
-   :related ["cljs.core/gensym" "syntax/syntax-quote"],
-   :examples-strings
-   [["`foo# ;;=> foo__142__auto__" "`foo/bar# ;;=> foo/bar#"]
-    ["`(let [x# 1]"
-     "   (+ x# 2)) ;;=> (cljs.user/let [x__146__auto__ 1] (cljs.user/+ x__146__auto__ 2))"]],
-   :description-html
-   "<p>(Only intended for use in a [doc:syntax/syntax-quote].)</p><p>``foo#<code> =&gt; </code>foo<b>135</b>auto__`</p><p>Auto-generates a unique symbol with the given prefix, particularly one that will not shadow any existing symbol in its resulting scope.  This is intended as a convenience for creating hygienic macros without calling [doc:cljs.core/gensym] directly.</p><p>Every symbol matching a unique <code>foo#</code> symbol within a syntax quoted form will be replaced with the same generated symbol.</p><p>``(foo# foo#)<code> =&gt; </code>(foo<b>138</b>auto<b> foo</b>138<b>auto</b>)`</p><p>Namespace-qualified symbols <code>foo/bar#</code> are not replaced.</p>",
-   :examples
-   [{:id "432cda",
-     :content
-     "```clj\n`foo#\n;;=> foo__142__auto__\n```\n\nNamespace-qualified symbols are left alone.\n\n```clj\n`foo/bar#\n;;=> foo/bar#\n```"}
-    {:id "cd51e7",
-     :content
-     "Create safe local bindings:\n\n```clj\n`(let [x# 1]\n   (+ x# 2))\n;;=> (cljs.user/let [x__146__auto__ 1] (cljs.user/+ x__146__auto__ 2))\n```"}],
-   :full-name "syntax/auto-gensym"},
   "nthnext"
   {:description
    "Returns the `n`th `next` of `coll`.\n\nReturns `(seq coll)` when `n` is 0.",
@@ -2459,35 +1684,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "up"
-  {:ns "clojure.zip",
-   :name "up",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/up",
-   :docstring
-   "Returns the loc of the parent of the node at this loc, or nil if at\nthe top",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "comma"
-  {:description
-   "A comma is treated as whitespace when appearing outside a string.\n\nThis is mainly used to help delineate elements in a collection when necessary.\n\nCommas are used when printing maps in the REPL:\n\n```clj\n{:foo 1, :bar 2, :bar 3}\n```",
-   :ns "syntax",
-   :name "comma",
-   :type "special character",
-   :examples
-   [{:id "68e4a0",
-     :content
-     "```clj\n[1, 2, 3, 4]\n;;=> [1 2 3 4]\n\n{:foo :bar :baz :quux}\n;;=> {:foo :bar, :baz :quux}\n```"}],
-   :full-name "syntax/comma",
-   :description-html
-   "<p>A comma is treated as whitespace when appearing outside a string.</p><p>This is mainly used to help delineate elements in a collection when necessary.</p><p>Commas are used when printing maps in the REPL:</p><pre><code class=\"clj\">{:foo 1, :bar 2, :bar 3}\n</code></pre>",
-   :examples-strings
-   [["[1, 2, 3, 4] ;;=> [1 2 3 4]"
-     "{:foo :bar :baz :quux} ;;=> {:foo :bar, :baz :quux}"]],
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#91;1, 2, 3, 4&#93;\n;;=&gt; &#91;1 2 3 4&#93;\n\n{:foo :bar :baz :quux}\n;;=&gt; {:foo :bar, :baz :quux}\n</code></pre>"]},
   "disj!"
   {:ns "cljs.core",
    :name "disj!",
@@ -2499,59 +1695,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "setf"
-  {:ns "cljs.pprint",
-   :name "setf",
-   :signature ["[sym new-val]"],
-   :type "macro",
-   :full-name "cljs.pprint/setf",
-   :docstring "Set the value of the field SYM to NEW-VAL",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "PersistentArrayMap.fromArrays"
   {:ns "cljs.core",
    :name "PersistentArrayMap.fromArrays",
    :signature ["[ks vs]"],
    :type "function",
    :full-name "cljs.core/PersistentArrayMap.fromArrays",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-stream"
-  {:ns "cljs.repl",
-   :name "load-stream",
-   :signature ["[repl-env filename res]"],
-   :type "function",
-   :full-name "cljs.repl/load-stream",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "arg"
-  {:description
-   "Special vars for accessing implicit function arguments.\n\nOnly usable inside [doc:syntax/function].\n\n- `%` or `%1` for first argument.\n- `%2`, `%3` and so on for subsequent arguments\n- `%&` for the rest of the arguments after the highest individually referenced argument",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;map #&#40;&#42; 2 %&#41; &#91;1 2 3&#93;&#41;\n;;=&gt; &#40;2 4 6&#41;\n\n&#40;def f #&#40;println %1 %2 %&amp;&#41;&#41;\n&#40;f 1 2 3 4 5&#41;\n;; prints: 1 2 &#40;3 4 5&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "arg",
-   :type "syntax",
-   :related ["syntax/function"],
-   :examples-strings
-   [["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
-     "(def f #(println %1 %2 %&))"
-     "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]],
-   :description-html
-   "<p>Special vars for accessing implicit function arguments.</p><p>Only usable inside [doc:syntax/function].</p><ul><li><code>%</code> or <code>%1</code> for first argument.</li><li><code>%2</code>, <code>%3</code> and so on for subsequent arguments</li><li><code>%&amp;</code> for the rest of the arguments after the highest individually referenced argument</li></ul>",
-   :examples
-   [{:id "d17825",
-     :content
-     "```clj\n(map #(* 2 %) [1 2 3])\n;;=> (2 4 6)\n\n(def f #(println %1 %2 %&))\n(f 1 2 3 4 5)\n;; prints: 1 2 (3 4 5)\n```"}],
-   :full-name "syntax/arg"},
-  "*default-data-reader-fn*"
-  {:ns "cljs.reader",
-   :name "*default-data-reader-fn*",
-   :type "dynamic var",
-   :full-name "cljs.reader/*default-data-reader-fn*",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2579,14 +1728,6 @@
    "<p>Returns the value at index <code>i</code> of a JavaScript array.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 3&#93;&#41;\n&#40;aget a 0&#41;\n;;=&gt; 1\n</code></pre><p>Retrieve nested elements with the additional <code>idxs</code> arguments.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 #js &#91;3 4&#93;&#93;&#41;\n&#40;aget a 2 0&#41;\n;;=&gt; 3\n</code></pre><p>For JavaScript objects, use [<code>goog.object/get</code>] or the multi-arity [<code>goog.object/getValueByKeys</code>].</p><pre><code class=\"clj\">&#40;require 'goog.object&#41;\n&#40;def obj #js {:foo #js {:bar 2}}&#41;\n\n&#40;goog.object/get obj &quot;foo&quot;&#41;\n;;=&gt; #js {:bar 2} \n\n&#40;goog.object/getValueByKeys obj &quot;foo&quot; &quot;bar&quot;&#41;\n;;=&gt; 2\n</code></pre><p>[<code>goog.object/get</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#get [<code>goog.object/getValueByKeys</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#getValueByKeys</p>",
    :full-name "cljs.core/aget",
    :docstring "Returns the value at the index."},
-  "IParseErrorMessage"
-  {:ns "cljs.repl",
-   :name "IParseErrorMessage",
-   :type "protocol",
-   :full-name "cljs.repl/IParseErrorMessage",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "find"
   {:description
    "Returns the map entry for key `k`, or nil if `k` is not found.",
@@ -2602,31 +1743,11 @@
    :full-name "cljs.core/find",
    :docstring
    "Returns the map entry for key, or nil if key not present."},
-  "src-file->target-file"
-  {:ns "cljs.build.api",
-   :name "src-file->target-file",
-   :signature ["[src]" "[src opts]" "[state src opts]"],
-   :type "function",
-   :full-name "cljs.build.api/src-file->target-file",
-   :docstring
-   "Given a ClojureScript source file return the target file. May optionally\nprovide build options with :output-dir specified.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "m3-C2"
   {:ns "cljs.core",
    :name "m3-C2",
    :type "var",
    :full-name "cljs.core/m3-C2",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "fire-listeners"
-  {:ns "clojure.browser.event",
-   :name "fire-listeners",
-   :signature ["[obj type capture event]"],
-   :type "function",
-   :full-name "clojure.browser.event/fire-listeners",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2682,24 +1803,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "read-token"
-  {:ns "cljs.reader",
-   :name "read-token",
-   :signature ["[rdr initch]"],
-   :type "function",
-   :full-name "cljs.reader/read-token",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "StringPushbackReader"
-  {:ns "cljs.reader",
-   :name "StringPushbackReader",
-   :signature ["[s buffer idx]"],
-   :type "type",
-   :full-name "cljs.reader/StringPushbackReader",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "bit-shift-right-zero-fill"
   {:ns "cljs.core",
    :name "bit-shift-right-zero-fill",
@@ -2707,15 +1810,6 @@
    :type "function/macro",
    :full-name "cljs.core/bit-shift-right-zero-fill",
    :docstring "DEPRECATED: Bitwise shift right with zero fill",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-js-file"
-  {:ns "cljs.repl.nashorn",
-   :name "load-js-file",
-   :signature ["[engine file]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/load-js-file",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2758,17 +1852,6 @@
    :full-name "cljs.core/mix-collection-hash",
    :docstring
    "Mix final collection hash for ordered or unordered collections.\nhash-basis is the combined collection hash, count is the number\nof elements included in the basis. Note this is the hash code\nconsistent with =, different from .hashCode.\nSee http://clojure.org/data_structures#hash for full algorithms.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-pretty-writer"
-  {:ns "cljs.pprint",
-   :name "get-pretty-writer",
-   :signature ["[writer]"],
-   :type "function",
-   :full-name "cljs.pprint/get-pretty-writer",
-   :docstring
-   "Returns the IWriter passed in wrapped in a pretty writer proxy, unless it's\nalready a pretty writer. Generally, it is unnecessary to call this function, since pprint,\nwrite, and cl-format all call it if they need to. However if you want the state to be\npreserved across calls, you will want to wrap them with this.\n\nFor example, when you want to generate column-aware output with multiple calls to cl-format,\ndo it like in this example:\n\n    (defn print-table [aseq column-width]\n      (binding [*out* (get-pretty-writer *out*)]\n        (doseq [row aseq]\n          (doseq [col row]\n            (cl-format true \"~4D~7,vT\" col column-width))\n          (prn))))\n\nNow when you run:\n\n    user> (print-table (map #(vector % (* % %) (* % % %)) (range 1 11)) 8)\n\nIt prints a table of squares and cubes for the numbers from 1 to 10:\n\n       1      1       1\n       2      4       8\n       3      9      27\n       4     16      64\n       5     25     125\n       6     36     216\n       7     49     343\n       8     64     512\n       9     81     729\n      10    100    1000",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -2816,15 +1899,6 @@
    :full-name "cljs.core/js-obj",
    :docstring
    "Create JavaSript object from an even number arguments representing\ninterleaved keys and values."},
-  "prefix"
-  {:ns "cljs.js",
-   :name "prefix",
-   :signature ["[s pre]"],
-   :type "function",
-   :full-name "cljs.js/prefix",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "assoc!"
   {:description
    "assoc(iate) on transient collection\n\nWhen applied to a transient map, adds mapping of key(s) to val(s).\n\nWhen applied to a transient vector, sets the val at index.  Note - index must\nbe <= (count vector).\n\nReturns coll.",
@@ -2874,17 +1948,6 @@
      "```clj\n(def a #js {:foo 1 :bar 2})\n(js-delete a \"foo\")\n\na\n;;=> #js {:bar 2}\n```"}],
    :full-name "cljs.core/js-delete",
    :docstring "Delete a property from a JavaScript object."},
-  "goog-dep-string"
-  {:ns "cljs.build.api",
-   :name "goog-dep-string",
-   :signature ["[opts ijs]"],
-   :type "function",
-   :full-name "cljs.build.api/goog-dep-string",
-   :docstring
-   "Given compiler options and a IJavaScript instance return the corresponding\ngoog.addDependency string",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "object?"
   {:description
    "Returns true if `x` is a JavaScript object, false otherwise.",
@@ -2936,33 +1999,6 @@
    "<p>Returns true if <code>x</code> is a vector, false otherwise.</p>",
    :full-name "cljs.core/vector?",
    :docstring "Return true if x satisfies IVector"},
-  "PrettyFlush"
-  {:ns "cljs.pprint",
-   :name "PrettyFlush",
-   :type "protocol",
-   :full-name "cljs.pprint/PrettyFlush",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "analyze-file"
-  {:ns "cljs.analyzer.api",
-   :name "analyze-file",
-   :signature ["[f]" "[f opts]" "[state f opts]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/analyze-file",
-   :docstring
-   "Given a java.io.File, java.net.URL or a string identifying a resource on the\nclasspath attempt to analyze it.\n\nThis function side-effects the ambient compilation environment\n`cljs.env/*compiler*` to aggregate analysis information. opts argument is\ncompiler options, if :cache-analysis true will cache analysis to\n\":output-dir/some/ns/foo.cljs.cache.edn\". This function does not return a\nmeaningful value.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "unicode-2-pattern"
-  {:ns "cljs.reader",
-   :name "unicode-2-pattern",
-   :type "var",
-   :full-name "cljs.reader/unicode-2-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "remove-watch"
   {:description
    "Removes a watch function identified by `key` from atom `a`.  The function must\nhave originally been set by `add-watch`.",
@@ -3021,16 +2057,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-or 2r1100 2r1010)\n;;=> 14\n;; 14 = 2r1110\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-or 12 10)\n;;=> 14\n```"}],
    :full-name "cljs.core/bit-or",
    :docstring "Bitwise or"},
-  "set-properties"
-  {:ns "clojure.browser.dom",
-   :name "set-properties",
-   :signature ["[e m]"],
-   :type "function",
-   :full-name "clojure.browser.dom/set-properties",
-   :docstring "Set properties on an element",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "reduced"
   {:ns "cljs.core",
    :name "reduced",
@@ -3048,24 +2074,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/ES6SetEntriesIterator",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "total-listener-count"
-  {:ns "clojure.browser.event",
-   :name "total-listener-count",
-   :signature ["[]"],
-   :type "function",
-   :full-name "clojure.browser.event/total-listener-count",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "remove-all"
-  {:ns "clojure.browser.event",
-   :name "remove-all",
-   :signature ["[opt_obj opt_type opt_capt]"],
-   :type "function",
-   :full-name "clojure.browser.event/remove-all",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3093,41 +2101,6 @@
    "<p>Returns true if <code>x</code> is logical false, false otherwise.</p>",
    :full-name "cljs.core/not",
    :docstring "Returns true if x is logical false, false otherwise."},
-  "platform-path"
-  {:ns "cljs.repl.node",
-   :name "platform-path",
-   :signature ["[v]"],
-   :type "function",
-   :full-name "cljs.repl.node/platform-path",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "unreadable"
-  {:description
-   "A proper definition for something that cannot be read.\n\nWhen certain values cannot be printed to a REPL using some literal syntax form,\nit wraps a description of its value in a form defined as unreadable, `#<>`.  A\nreader error will be thrown if this value is fed back into the REPL.\n\nFor example, `(atom 42)` will print `#<Atom: 42>` when evaluated in a REPL.\nThis communicates a human-readable form that is not intended to be reproduce\nits value.\n\nOftentimes, evaluating JavaScript objects in a REPL will print the result\nof its `.toString` method inside the unreadable form `#<>`.",
-   :ns "syntax",
-   :name "unreadable",
-   :type "syntax",
-   :examples
-   [{:id "e0a6cd",
-     :content
-     "Unreadable forms will throw an exception when read:\n\n```clj\n#<foo>\n;; clojure.lang.ExceptionInfo: Unreadable form\n```\n\nYou can create an unreadable form for a custom type:\n\n```clj\n(deftype Foo [])\n(Foo.)\n;;=> #<[object Object]>\n\n(deftype Foo [x]\n  Object\n  (toString [_]\n    (str \"Foo: \" x)))\n(Foo. 1)\n;;=> #<Foo: 1>\n```\n\nSome examples of unreadable JavaScript values:\n\n```clj\nMath/sin\n;;=> #<function sin() { [native code] }>\n\njs/console\n;;=> #<[object Object]>\n```"}],
-   :full-name "syntax/unreadable",
-   :description-html
-   "<p>A proper definition for something that cannot be read.</p><p>When certain values cannot be printed to a REPL using some literal syntax form, it wraps a description of its value in a form defined as unreadable, <code>#&lt;&gt;</code>.  A reader error will be thrown if this value is fed back into the REPL.</p><p>For example, <code>&#40;atom 42&#41;</code> will print <code>#&lt;Atom: 42&gt;</code> when evaluated in a REPL. This communicates a human-readable form that is not intended to be reproduce its value.</p><p>Oftentimes, evaluating JavaScript objects in a REPL will print the result of its <code>.toString</code> method inside the unreadable form <code>#&lt;&gt;</code>.</p>",
-   :examples-strings
-   [["#<foo> ;; clojure.lang.ExceptionInfo: Unreadable form"
-     "(deftype Foo [])"
-     "(Foo.) ;;=> #<[object Object]>"
-     "(deftype Foo [x]"
-     "  Object"
-     "  (toString [_]"
-     "    (str \"Foo: \" x)))"
-     "(Foo. 1) ;;=> #<Foo: 1>"
-     "Math/sin ;;=> #<function sin() { [native code] }>"
-     "js/console ;;=> #<[object Object]>"]],
-   :examples-htmls
-   ["<p>Unreadable forms will throw an exception when read:</p><pre><code class=\"clj\">#&lt;foo&gt;\n;; clojure.lang.ExceptionInfo: Unreadable form\n</code></pre><p>You can create an unreadable form for a custom type:</p><pre><code class=\"clj\">&#40;deftype Foo &#91;&#93;&#41;\n&#40;Foo.&#41;\n;;=&gt; #&lt;&#91;object Object&#93;&gt;\n\n&#40;deftype Foo &#91;x&#93;\n  Object\n  &#40;toString &#91;&#95;&#93;\n    &#40;str &quot;Foo: &quot; x&#41;&#41;&#41;\n&#40;Foo. 1&#41;\n;;=&gt; #&lt;Foo: 1&gt;\n</code></pre><p>Some examples of unreadable JavaScript values:</p><pre><code class=\"clj\">Math/sin\n;;=&gt; #&lt;function sin&#40;&#41; { &#91;native code&#93; }&gt;\n\njs/console\n;;=&gt; #&lt;&#91;object Object&#93;&gt;\n</code></pre>"]},
   "longs"
   {:ns "cljs.core",
    :name "longs",
@@ -3154,17 +2127,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "bootstrap"
-  {:ns "clojure.browser.repl",
-   :name "bootstrap",
-   :signature ["[]"],
-   :type "function",
-   :full-name "clojure.browser.repl/bootstrap",
-   :docstring
-   "Reusable browser REPL bootstrapping. Patches the essential functions\nin goog.base to support re-loading of namespaces after page load.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "reductions"
   {:description
    "Returns a lazy sequence of the intermediate values of the reduction (as per\n`reduce`) of `coll` by `f`, starting with `init`.",
@@ -3180,17 +2142,6 @@
    :full-name "cljs.core/reductions",
    :docstring
    "Returns a lazy seq of the intermediate values of the reduction (as\nper reduce) of coll by f, starting with init."},
-  "append-child"
-  {:ns "clojure.zip",
-   :name "append-child",
-   :signature ["[loc item]"],
-   :type "function",
-   :full-name "clojure.zip/append-child",
-   :docstring
-   "Inserts the item as the rightmost child of the node at this loc,\nwithout moving",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "is_proto_"
   {:ns "cljs.core",
    :name "is_proto_",
@@ -3209,14 +2160,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "handlers"
-  {:ns "cljs.repl.server",
-   :name "handlers",
-   :type "var",
-   :full-name "cljs.repl.server/handlers",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "doall"
   {:description
    "Forces evaluation of a lazy sequence. Often used to see the effects of a\nsequence produced via functions that have side effects.\n\n`doall` walks through the successive `next`s of the sequence, returning the head\nand causing the entire sequence to reside in memory at one time.",
@@ -3232,15 +2175,6 @@
    :full-name "cljs.core/doall",
    :docstring
    "When lazy sequences are produced via functions that have side\neffects, any effects other than those needed to produce the first\nelement in the seq do not occur until the seq is consumed. doall can\nbe used to force any effects. Walks through the successive nexts of\nthe seq, retains the head and returns it, thus causing the entire\nseq to reside in memory at one time."},
-  "repl-quit-prompt"
-  {:ns "cljs.repl",
-   :name "repl-quit-prompt",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl/repl-quit-prompt",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "if-let"
   {:description
    "When `test` is logical true, evaluates `then` with the value of `test` bound to\n`x`. Otherwise, evaluates `else` with no bindings.\n\n`else` defaults to nil.",
@@ -3264,17 +2198,6 @@
    :full-name "cljs.core/pop!",
    :docstring
    "Removes the last item from a transient vector. If\nthe collection is empty, throws an exception. Returns coll",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "skip-line"
-  {:ns "cljs.reader",
-   :name "skip-line",
-   :signature ["[reader _]"],
-   :type "function",
-   :full-name "cljs.reader/skip-line",
-   :docstring
-   "Advances the reader to the end of a line. Returns the reader",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3317,30 +2240,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "js-src->cljs-src"
-  {:ns "cljs.repl",
-   :name "js-src->cljs-src",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.repl/js-src->cljs-src",
-   :docstring
-   "Map a JavaScript output file back to the original ClojureScript source\nfile (.cljs or .cljc).",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "string-hash-cache-count"
   {:ns "cljs.core",
    :name "string-hash-cache-count",
    :type "var",
    :full-name "cljs.core/string-hash-cache-count",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IGetError"
-  {:ns "cljs.repl",
-   :name "IGetError",
-   :type "protocol",
-   :full-name "cljs.repl/IGetError",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3412,20 +2316,6 @@
    "<p>Returns true if <code>coll</code> implements the <code>ISequential</code> protocol, false otherwise.</p><p>Lists and vectors are sequential.</p>",
    :full-name "cljs.core/sequential?",
    :docstring "Returns true if coll satisfies ISequential"},
-  "superset?"
-  {:description
-   "Returns true if `a` is a superset of `b`, false otherwise.\n\nIn other words, returns true if `a` contains all the elements of `b`.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "superset?",
-   :signature ["[a b]"],
-   :type "function",
-   :related ["cljs.core/set" "cljs.core/set?" "clojure.set/subset?"],
-   :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>a</code> is a superset of <code>b</code>, false otherwise.</p><p>In other words, returns true if <code>a</code> contains all the elements of <code>b</code>.</p>",
-   :full-name "clojure.set/superset?",
-   :docstring "Is set1 a superset of set2?"},
   "get-validator"
   {:description "Returns the validator function for atom `a`.",
    :examples-htmls [],
@@ -3439,15 +2329,6 @@
    "<p>Returns the validator function for atom <code>a</code>.</p>",
    :full-name "cljs.core/get-validator",
    :docstring "Gets the validator-fn for a var/ref/agent/atom."},
-  "merge-spec"
-  {:ns "cljs.repl",
-   :name "merge-spec",
-   :signature ["[[lib & {:as aindex}] [_ & {:as bindex}]]"],
-   :type "function",
-   :full-name "cljs.repl/merge-spec",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "pr-with-opts"
   {:ns "cljs.core",
    :name "pr-with-opts",
@@ -3459,14 +2340,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "repl-special-doc-map"
-  {:ns "cljs.repl",
-   :name "repl-special-doc-map",
-   :type "var",
-   :full-name "cljs.repl/repl-special-doc-map",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "replicate"
   {:ns "cljs.core",
    :name "replicate",
@@ -3474,15 +2347,6 @@
    :type "function",
    :full-name "cljs.core/replicate",
    :docstring "Returns a lazy seq of n xs.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-current-env"
-  {:ns "cljs.test",
-   :name "get-current-env",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.test/get-current-env",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3561,24 +2425,16 @@
    :docstring
    "'Updates' a value in a nested associative structure, where ks is a\nsequence of keys and f is a function that will take the old value\nand any supplied args and return the new value, and returns a new\nnested structure.  If any levels do not exist, hash-maps will be\ncreated."},
   "var"
-  {:description
-   "`#'foo` is sugar for [`(var foo)`][doc:special/var].\n\nAccesses the var attached to the given symbol.",
-   :examples-htmls
-   ["<p>Access the metadata of a var:</p><pre><code class=\"clj\">&#40;def x 123&#41;\n&#40;meta #'x&#41;\n;;=&gt; {:arglists &#40;&#41;, :test nil, :name x, :column 1, :line 1, :file &quot;&lt;cljs repl&gt;&quot;, :doc nil, :ns cljs.user}\n</code></pre>"],
-   :ns "syntax",
+  {:ns "special",
    :name "var",
-   :type "syntax",
-   :related ["special/var"],
-   :examples-strings
-   [["(def x 123)"
-     "(meta #'x) ;;=> {:arglists (), :test nil, :name x, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"]],
-   :description-html
-   "<p><code>#'foo</code> is sugar for [<code>&#40;var foo&#41;</code>][doc:special/var].</p><p>Accesses the var attached to the given symbol.</p>",
-   :examples
-   [{:id "673ef6",
-     :content
-     "Access the metadata of a var:\n\n```clj\n(def x 123)\n(meta #'x)\n;;=> {:arglists (), :test nil, :name x, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}\n```"}],
-   :full-name "syntax/var"},
+   :signature ["[symbol]"],
+   :type "special form",
+   :full-name "special/var",
+   :docstring
+   "The symbol must resolve to a var, and the Var object\nitself (not its value) is returned. The reader macro #'x expands to (var x).",
+   :description-html nil,
+   :examples-strings [],
+   :examples-htmls []},
   "RedNode"
   {:ns "cljs.core",
    :name "RedNode",
@@ -3603,28 +2459,6 @@
    :full-name "cljs.core/hash-map",
    :docstring
    "keyval => key val\nReturns a new hash map with supplied mappings."},
-  "in-cljs-user"
-  {:ns "cljs.analyzer.api",
-   :name "in-cljs-user",
-   :signature ["[env & body]"],
-   :type "macro",
-   :full-name "cljs.analyzer.api/in-cljs-user",
-   :docstring
-   "Binds cljs.analyzer/*cljs-ns* to 'cljs.user and uses the given compilation\nenvironment atom and runs body.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "compose-fixtures"
-  {:ns "cljs.test",
-   :name "compose-fixtures",
-   :signature ["[f1 f2]"],
-   :type "function",
-   :full-name "cljs.test/compose-fixtures",
-   :docstring
-   "Composes two fixture functions, creating a new fixture function\nthat combines their behavior.\n\nNOTE: Incompatible with map fixtures.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "try"
   {:ns "cljs.core",
    :name "try",
@@ -3680,14 +2514,6 @@
    :signature ["[ns [& vars]]"],
    :type "macro",
    :full-name "cljs.core/import-macros",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "CollFold"
-  {:ns "clojure.core.reducers",
-   :name "CollFold",
-   :type "protocol",
-   :full-name "clojure.core.reducers/CollFold",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3761,40 +2587,6 @@
    :full-name "cljs.core/vswap!",
    :docstring
    "Non-atomically swaps the value of the volatile as if:\n(apply f current-value-of-vol args). Returns the value that\nwas swapped in."},
-  "dot"
-  {:description
-   "Dots can be used inside symbols. Its meaning depends on its position in the symbol:\n\n- `.` (by itself), `.-foo`, `.foo` all refer to the interop [`. (special form)`][doc:special/.].\n- `foo.` is constructor sugar, meaning [`(new foo)`][doc:special/new].\n- `(ns foo.bar)` and `foo.bar/baz` means that `foo.bar` is a nested namespace.\n- `foo/bar.baz` or `bar.baz` means `bar.baz` is nested JS property access (__not allowed in clojure__).",
-   :examples-htmls
-   ["<p>For interop:</p><pre><code class=\"clj\">&#40;def obj #js {:age 28, :greet #&#40;str &quot;Hi &quot; %&#41;}&#41;\n\n&#40;. obj greet &quot;Bob&quot;&#41;\n;;=&gt; &quot;Hi Bob&quot;\n\n&#40;.greet obj &quot;Bob&quot;&#41;\n;;=&gt; &quot;Hi Bob&quot;\n\n&#40;. obj -age&#41;\n;;=&gt; 28\n\n&#40;.-age obj&#41;\n;;=&gt; 28\n</code></pre><p>For constructor:</p><pre><code class=\"clj\">&#40;deftype Foo &#91;x&#93;\n   Object\n   &#40;toString &#91;&#95;&#93; &#40;str &quot;Foo:&quot; x&#41;&#41;&#41;\n\n&#40;Foo. 1&#41;\n;;=&gt; #&lt;Foo: 1&gt;\n\n&#40;new Foo 1&#41;\n;;=&gt; #&lt;Foo: 1&gt;\n</code></pre><p>For nested namespaces:</p><pre><code class=\"clj\">&#40;ns example.nested.core&#41;\n&#40;def foo 1&#41;\nexample.nested.core/foo\n;;=&gt; 1\n</code></pre><p>For nested JS properties.  The following pairs are equivalent:</p><pre><code class=\"clj\">&#40;js/console.log &quot;HELLO&quot;&#41;\n;; &quot;HELLO&quot;\n\n&#40;.log js/console &quot;HELLO&quot;&#41;\n;; &quot;HELLO&quot;\n</code></pre><pre><code class=\"clj\">cljs.core/PersistentQueue.EMPTY\n;;=&gt; #queue &#91;&#93;\n\n&#40;.-EMPTY cljs.core/PersistentQueue&#41;\n;;=&gt; #queue &#91;&#93;\n</code></pre>"],
-   :ns "syntax",
-   :name "dot",
-   :type "special character",
-   :related ["syntax/symbol" "syntax/namespace"],
-   :examples-strings
-   [["(def obj #js {:age 28, :greet #(str \"Hi \" %)})"
-     "(. obj greet \"Bob\") ;;=> \"Hi Bob\""
-     "(.greet obj \"Bob\") ;;=> \"Hi Bob\""
-     "(. obj -age) ;;=> 28"
-     "(.-age obj) ;;=> 28"
-     "(deftype Foo [x]"
-     "   Object"
-     "   (toString [_] (str \"Foo:\" x)))"
-     "(Foo. 1) ;;=> #<Foo: 1>"
-     "(new Foo 1) ;;=> #<Foo: 1>"
-     "(ns example.nested.core)"
-     "(def foo 1)"
-     "example.nested.core/foo ;;=> 1"
-     "(js/console.log \"HELLO\") ;; \"HELLO\""
-     "(.log js/console \"HELLO\") ;; \"HELLO\""
-     "cljs.core/PersistentQueue.EMPTY ;;=> #queue []"
-     "(.-EMPTY cljs.core/PersistentQueue) ;;=> #queue []"]],
-   :description-html
-   "<p>Dots can be used inside symbols. Its meaning depends on its position in the symbol:</p><ul><li><code>.</code> (by itself), <code>.-foo</code>, <code>.foo</code> all refer to the interop [<code>. &#40;special form&#41;</code>][doc:special/.].</li><li><code>foo.</code> is constructor sugar, meaning [<code>&#40;new foo&#41;</code>][doc:special/new].</li><li><code>&#40;ns foo.bar&#41;</code> and <code>foo.bar/baz</code> means that <code>foo.bar</code> is a nested namespace.</li><li><code>foo/bar.baz</code> or <code>bar.baz</code> means <code>bar.baz</code> is nested JS property access (<b>not allowed in clojure</b>).</li></ul>",
-   :examples
-   [{:id "61a0a1",
-     :content
-     "For interop:\n\n```clj\n(def obj #js {:age 28, :greet #(str \"Hi \" %)})\n\n(. obj greet \"Bob\")\n;;=> \"Hi Bob\"\n\n(.greet obj \"Bob\")\n;;=> \"Hi Bob\"\n\n(. obj -age)\n;;=> 28\n\n(.-age obj)\n;;=> 28\n```\n\nFor constructor:\n\n```clj\n(deftype Foo [x]\n   Object\n   (toString [_] (str \"Foo:\" x)))\n\n(Foo. 1)\n;;=> #<Foo: 1>\n\n(new Foo 1)\n;;=> #<Foo: 1>\n```\n\nFor nested namespaces:\n\n```clj\n(ns example.nested.core)\n(def foo 1)\nexample.nested.core/foo\n;;=> 1\n```\n\nFor nested JS properties.  The following pairs are equivalent:\n\n```clj\n(js/console.log \"HELLO\")\n;; \"HELLO\"\n\n(.log js/console \"HELLO\")\n;; \"HELLO\"\n```\n\n```clj\ncljs.core/PersistentQueue.EMPTY\n;;=> #queue []\n\n(.-EMPTY cljs.core/PersistentQueue)\n;;=> #queue []\n```"}],
-   :full-name "syntax/dot"},
   "rand"
   {:description
    "Returns a random floating point number between 0 inclusive and `n` exclusive.\n\n`n` defaults to 1.",
@@ -3852,15 +2644,6 @@
    :full-name "cljs.core/simple-benchmark",
    :docstring
    "Runs expr iterations times in the context of a let expression with\nthe given bindings, then prints out the bindings and the expr\nfollowed by number of iterations and total time. The optional\nargument print-fn, defaulting to println, sets function used to\nprint the result. expr's string representation will be produced\nusing pr-str in any case.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "has-listener"
-  {:ns "clojure.browser.event",
-   :name "has-listener",
-   :signature ["[obj opt_type opt_capture]"],
-   :type "function",
-   :full-name "clojure.browser.event/has-listener",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -3962,17 +2745,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "analyze-source"
-  {:ns "cljs.repl",
-   :name "analyze-source",
-   :signature ["[src-dir]" "[src-dir opts]"],
-   :type "function",
-   :full-name "cljs.repl/analyze-source",
-   :docstring
-   "Given a source directory, analyzes all .cljs files. Used to populate\n(:cljs.analyzer/namespaces compiler-env) so as to support code reflection.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "TransientArrayMap"
   {:ns "cljs.core",
    :name "TransientArrayMap",
@@ -3982,31 +2754,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "js-namespace"
-  {:description
-   "A special namespace used for accessing any symbol defined\nin JavaScript's global scope.",
-   :examples-htmls
-   ["<p>The following examples are run from a browser REPL.</p><p>Get the JavaScript global <code>document</code> object:</p><pre><code class=\"clj\">js/document\n;;=&gt; #&lt;&#91;object HTMLDocument&#93;&gt;\n</code></pre><p>Display an alert:</p><pre><code class=\"clj\">&#40;js/alert &quot;Hello World&quot;&#41;\n;; displays alert popup\n</code></pre><p>Log to console:</p><pre><code class=\"clj\">&#40;js/console.log &quot;Hello World&quot;&#41;\n;; displays in developer console\n</code></pre><p>Create a JavaScript date object:</p><pre><code class=\"clj\">&#40;js/Date.&#41;\n;;=&gt; #inst &quot;2015-07-14T00:25:33.881-00:00&quot;\n</code></pre>"],
-   :ns "syntax",
-   :name "js-namespace",
-   :type "special namespace",
-   :related
-   ["syntax/Math-namespace"
-    "special/."
-    "cljs.core/aget"
-    "cljs.core/aset"],
-   :examples-strings
-   [["js/document ;;=> #<[object HTMLDocument]>"
-     "(js/alert \"Hello World\") ;; displays alert popup"
-     "(js/console.log \"Hello World\") ;; displays in developer console"
-     "(js/Date.) ;;=> #inst \"2015-07-14T00:25:33.881-00:00\""]],
-   :description-html
-   "<p>A special namespace used for accessing any symbol defined in JavaScript's global scope.</p>",
-   :examples
-   [{:id "06f234",
-     :content
-     "The following examples are run from a browser REPL.\n\nGet the JavaScript global `document` object:\n\n```clj\njs/document\n;;=> #<[object HTMLDocument]>\n```\n\nDisplay an alert:\n\n```clj\n(js/alert \"Hello World\")\n;; displays alert popup\n```\n\nLog to console:\n\n```clj\n(js/console.log \"Hello World\")\n;; displays in developer console\n```\n\nCreate a JavaScript date object:\n\n```clj\n(js/Date.)\n;;=> #inst \"2015-07-14T00:25:33.881-00:00\"\n```"}],
-   :full-name "syntax/js-namespace"},
   "every?"
   {:description
    "Returns true if `(pred x)` is logical true for every `x` in `coll`, else false.",
@@ -4031,53 +2778,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "is"
-  {:ns "cljs.test",
-   :name "is",
-   :signature ["[form]" "[form msg]"],
-   :type "macro",
-   :full-name "cljs.test/is",
-   :docstring
-   "Generic assertion macro.  'form' is any predicate test.\n'msg' is an optional message to attach to the assertion.\n\nExample: (is (= 4 (+ 2 2)) \"Two plus two should be 4\")\n\nSpecial forms:\n\n(is (thrown? c body)) checks that an instance of c is thrown from\nbody, fails if not; then returns the thing thrown.\n\n(is (thrown-with-msg? c re body)) checks that an instance of c is\nthrown AND that the message on the exception matches (with\nre-find) the regular expression re.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "print-map"
   {:ns "cljs.core",
    :name "print-map",
    :signature ["[m print-one writer opts]"],
    :type "function",
    :full-name "cljs.core/print-map",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-string"
-  {:ns "cljs.reader",
-   :name "read-string",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.reader/read-string",
-   :docstring "Reads one object from the string s",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "close-socket"
-  {:ns "cljs.repl.node",
-   :name "close-socket",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.repl.node/close-socket",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns-publics"
-  {:ns "cljs.analyzer.api",
-   :name "ns-publics",
-   :signature ["[ns]" "[state ns]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/ns-publics",
-   :docstring
-   "Given a namespace return all the public var analysis maps. Analagous to\nclojure.core/ns-publics but returns var analysis maps not vars.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4098,16 +2804,6 @@
    :signature ["[meta]"],
    :type "type",
    :full-name "cljs.core/EmptyList",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "js-eval"
-  {:ns "cljs.js",
-   :name "js-eval",
-   :signature ["[{:keys [source], :as resource}]"],
-   :type "function",
-   :full-name "cljs.js/js-eval",
-   :docstring "A default JavaScript evaluation function.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4199,15 +2895,6 @@
    :full-name "cljs.core/repeat",
    :docstring
    "Returns a lazy (infinite!, or length n if supplied) sequence of xs."},
-  "parse-timestamp"
-  {:ns "cljs.reader",
-   :name "parse-timestamp",
-   :signature ["[ts]"],
-   :type "function",
-   :full-name "cljs.reader/parse-timestamp",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*print-fn*"
   {:ns "cljs.core",
    :name "*print-fn*",
@@ -4237,23 +2924,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "process"
-  {:ns "cljs.nodejs",
-   :name "process",
-   :type "var",
-   :full-name "cljs.nodejs/process",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "canonicalize-specs"
-  {:ns "cljs.repl",
-   :name "canonicalize-specs",
-   :signature ["[specs]"],
-   :type "function",
-   :full-name "cljs.repl/canonicalize-specs",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "dissoc!"
   {:ns "cljs.core",
    :name "dissoc!",
@@ -4262,26 +2932,6 @@
    :full-name "cljs.core/dissoc!",
    :docstring
    "Returns a transient map that doesn't contain a mapping for key(s).",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "push-back-reader"
-  {:ns "cljs.reader",
-   :name "push-back-reader",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.reader/push-back-reader",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "mapped-line-and-column"
-  {:ns "cljs.repl",
-   :name "mapped-line-and-column",
-   :signature ["[source-map line column]"],
-   :type "function",
-   :full-name "cljs.repl/mapped-line-and-column",
-   :docstring
-   "Given a cljs.source-map source map data structure map a generated line\nand column back to the original line and column.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4294,26 +2944,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "all-listeners"
-  {:ns "clojure.browser.event",
-   :name "all-listeners",
-   :signature ["[obj type capture]"],
-   :type "function",
-   :full-name "clojure.browser.event/all-listeners",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "children"
-  {:ns "clojure.zip",
-   :name "children",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/children",
-   :docstring
-   "Returns a seq of the children of node at loc, which must be a branch",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "methods"
   {:ns "cljs.core",
    :name "methods",
@@ -4322,17 +2952,6 @@
    :full-name "cljs.core/methods",
    :docstring
    "Given a multimethod, returns a map of dispatch values -> dispatch fns",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "project"
-  {:ns "clojure.set",
-   :name "project",
-   :signature ["[xrel ks]"],
-   :type "function",
-   :full-name "clojure.set/project",
-   :docstring
-   "Returns a rel of the elements of xrel with only the keys in ks",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4352,15 +2971,6 @@
    :name "*assert*",
    :type "dynamic var",
    :full-name "cljs.core/*assert*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "not-implemented"
-  {:ns "cljs.reader",
-   :name "not-implemented",
-   :signature ["[rdr ch]"],
-   :type "function",
-   :full-name "cljs.reader/not-implemented",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4439,24 +3049,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "unlisten"
-  {:ns "clojure.browser.event",
-   :name "unlisten",
-   :signature ["[src type fn]" "[src type fn capture?]"],
-   :type "function",
-   :full-name "clojure.browser.event/unlisten",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-vector"
-  {:ns "cljs.reader",
-   :name "read-vector",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-vector",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "iterate"
   {:description
    "Returns a lazy sequence of `x`, `(f x)`, `(f (f x))` etc.\n\n`f` must be free of side-effects.",
@@ -4473,48 +3065,6 @@
    :full-name "cljs.core/iterate",
    :docstring
    "Returns a lazy sequence of x, (f x), (f (f x)) etc. f must be free of side-effects"},
-  "find-doc"
-  {:description
-   "Prints documentation for any var whose documentation or name\ncontains a match for `re-string-or-pattern`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;find-doc &quot;some&quot;&#41;\n;; Prints: &#40;docs truncated&#41;\n;; - IPrintWriter &#40;docstring match&#41;\n;; - contains? &#40;docstring match&#41;\n;; - gensym &#40;docstring match&#41;\n;; - cljs.core/if-some\n;; - some\n;; - cljs.core/some-&gt;\n;; - cljs.core/some-&gt;&gt;\n;; - some-fn\n;; - some?\n;; - trampoline &#40;docstring match&#41;\n;; - cljs.core/when-some\n;; - cljs.core/while &#40;docstring match&#41;\n;;\n;;=&gt; nil\n</code></pre>"],
-   :ns "cljs.repl",
-   :name "find-doc",
-   :signature ["[re-string-or-pattern]"],
-   :type "macro",
-   :related ["cljs.repl/doc"],
-   :examples-strings
-   [["(find-doc \"some\") ;; Prints: (docs truncated) ;; - IPrintWriter (docstring match) ;; - contains? (docstring match) ;; - gensym (docstring match) ;; - cljs.core/if-some ;; - some ;; - cljs.core/some-> ;; - cljs.core/some->> ;; - some-fn ;; - some? ;; - trampoline (docstring match) ;; - cljs.core/when-some ;; - cljs.core/while (docstring match) ;; ;;=> nil"]],
-   :description-html
-   "<p>Prints documentation for any var whose documentation or name contains a match for <code>re-string-or-pattern</code>.</p>",
-   :examples
-   [{:id "50ec43",
-     :content
-     "```clj\n(find-doc \"some\")\n;; Prints: (docs truncated)\n;; - IPrintWriter (docstring match)\n;; - contains? (docstring match)\n;; - gensym (docstring match)\n;; - cljs.core/if-some\n;; - some\n;; - cljs.core/some->\n;; - cljs.core/some->>\n;; - some-fn\n;; - some?\n;; - trampoline (docstring match)\n;; - cljs.core/when-some\n;; - cljs.core/while (docstring match)\n;;\n;;=> nil\n```"}],
-   :full-name "cljs.repl/find-doc",
-   :docstring
-   "Prints documentation for any var whose documentation or name\ncontains a match for re-string-or-pattern"},
-  "test-vars"
-  {:ns "cljs.test",
-   :name "test-vars",
-   :signature ["[vars]"],
-   :type "function",
-   :full-name "cljs.test/test-vars",
-   :docstring
-   "Groups vars by their namespace and runs test-vars on them with\nappropriate fixtures assuming they are present in the current\ntesting environment.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "node-eval"
-  {:ns "cljs.repl.node",
-   :name "node-eval",
-   :signature ["[repl-env js]"],
-   :type "function",
-   :full-name "cljs.repl.node/node-eval",
-   :docstring "Evaluate a JavaScript string in the Node REPL process.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "force"
   {:ns "cljs.core",
    :name "force",
@@ -4526,17 +3076,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "lower-case"
-  {:description "Converts string to all lower-case.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "lower-case",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html "<p>Converts string to all lower-case.</p>",
-   :full-name "clojure.string/lower-case",
-   :docstring "Converts string to all lower-case."},
   "PersistentHashMap.EMPTY"
   {:ns "cljs.core",
    :name "PersistentHashMap.EMPTY",
@@ -4554,20 +3093,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "replace-first"
-  {:description
-   "Replaces the first instance of `match` with `replacement` in `s`.\n\nThe options for match / replacement are:\n\n| match  | replacement |\n|--------|-------------|\n| string | string      |\n| regex  | string      |\n| regex  | function    |",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "replace-first",
-   :signature ["[s match replacement]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Replaces the first instance of <code>match</code> with <code>replacement</code> in <code>s</code>.</p><p>The options for match / replacement are:</p><p>| match  | replacement | |--------|-------------| | string | string      | | regex  | string      | | regex  | function    |</p>",
-   :full-name "clojure.string/replace-first",
-   :docstring
-   "Replaces the first instance of match with replacement in s.\nmatch/replacement can be:\n\nstring / string\npattern / (string or function of match)."},
   "copy-arguments"
   {:ns "cljs.core",
    :name "copy-arguments",
@@ -4586,22 +3111,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "union"
-  {:description "Return a set that is the union of the input sets.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "union",
-   :signature ["[]" "[s1]" "[s1 s2]" "[s1 s2 & sets]"],
-   :type "function",
-   :related
-   ["clojure.set/intersection"
-    "clojure.set/difference"
-    "clojure.set/superset?"],
-   :examples-strings [],
-   :description-html
-   "<p>Return a set that is the union of the input sets.</p>",
-   :full-name "clojure.set/union",
-   :docstring "Return a set that is the union of the input sets"},
   "persistent!"
   {:ns "cljs.core",
    :name "persistent!",
@@ -4701,38 +3210,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "path"
-  {:ns "clojure.zip",
-   :name "path",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/path",
-   :docstring "Returns a seq of nodes leading to this loc",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "write-out"
-  {:ns "cljs.pprint",
-   :name "write-out",
-   :signature ["[object]"],
-   :type "function",
-   :full-name "cljs.pprint/write-out",
-   :docstring
-   "Write an object to *out* subject to the current bindings of the printer control\nvariables. Use the kw-args argument to override individual variables for this call (and\nany recursive calls).\n\n*out* must be a PrettyWriter if pretty printing is enabled. This is the responsibility\nof the caller.\n\nThis method is primarily intended for use by pretty print dispatch functions that\nalready know that the pretty printer will have set up their environment appropriately.\nNormal library clients should use the standard \"write\" interface. ",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "run-tests"
-  {:ns "cljs.test",
-   :name "run-tests",
-   :signature ["[]" "[env-or-ns]" "[env-or-ns & namespaces]"],
-   :type "macro",
-   :full-name "cljs.test/run-tests",
-   :docstring
-   "Runs all tests in the given namespaces; prints results.\nDefaults to current namespace if none given. Does not return a meaningful\nvalue due to the possiblity of asynchronous execution. To detect test\ncompletion add a :end-run-tests method case to the cljs.test/report\nmultimethod.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ISet"
   {:ns "cljs.core",
    :name "ISet",
@@ -4772,64 +3249,12 @@
    :full-name "cljs.core/lazy-cat",
    :docstring
    "Expands to code which yields a lazy sequence of the concatenation\nof the supplied colls.  Each coll expr is not evaluated until it is\nneeded. \n\n(lazy-cat xs ys zs) === (concat (lazy-seq xs) (lazy-seq ys) (lazy-seq zs))"},
-  "destructure-map"
-  {:description
-   "A helpful shorthand for binding names to values inside a map.\n\nThe destructure map can be a map from a symbol to a lookup value:\n\n```clj\n(let [ {a :foo}   ;; <-- destructure map\n       {:foo 1} ]\n  a)\n;;=> 1\n```\n\nThe destructure map can bind multiple names:\n\n```clj\n(let [ {a :foo, b :bar}   ;; <-- destructure map\n       {:foo 1, :bar 2} ]\n  (println a b))\n;; 1 2\n```\n\nUse this convenient alternative if names match the keys:\n\n```clj\n(let [ {:keys [foo bar]}   ;; <-- destructure map\n       {:foo 1, :bar 2} ]\n  (println foo bar))\n;; 1 2\n```\n\nDifferent key types are supported using `:keys`, `:strs`, or `:syms`, which\nmap to the manual destructuring forms below:\n\n- `{:keys [foo]}` -> `{foo :foo }`\n- `{:strs [foo]}` -> `{foo \"foo\"}`\n- `{:syms [foo]}` -> `{foo 'foo }`\n\nUse `:as foo` to name the original value:\n\n```clj\n(let [ {:keys [foo bar] :as whole}\n       {:foo 1, :bar 2} ]\n  whole)\n;;=> {:foo 1, :bar 2}\n```\n\nUse `:or {}` to provide default values if missing:\n\n```clj\n(let [ {:keys [foo bar] :or {bar 0} }\n       {:foo 1} ]\n  (println foo bar))\n;; 1 0\n```\n\nUse the special destructuring map in place of any local name binding in the\nfollowing forms:\n\n- `(let [...])`\n- `(fn [...])`\n- `(loop [...])`\n\nDestructure maps can be nested, even in place of names in [destructure\nvectors][doc:syntax/destructure-vector].",
-   :examples-htmls
-   ["<p>Use in place of function arguments:</p><pre><code class=\"clj\">&#40;defn print-point\n  &#91;{:keys &#91;x y z&#93;}&#93;\n  &#40;println x y z&#41;&#41;\n\n&#40;print-point {:x 1, :y 2, :z 3}&#41;\n;; 1 2 3\n</code></pre>"
-    "<p>A non-vector sequence can be destructured as a map:</p><pre><code class=\"clj\">&#40;let &#91;{:keys &#91;a b&#93;} '&#40;:a 1 :b 2&#41;&#93;\n  &#40;println a b&#41;&#41;\n;; 1 2\n</code></pre>"],
-   :ns "syntax",
-   :name "destructure-map",
-   :type "binding",
-   :related ["syntax/destructure-vector"],
-   :examples-strings
-   [["(defn print-point"
-     "  [{:keys [x y z]}]"
-     "  (println x y z))"
-     "(print-point {:x 1, :y 2, :z 3}) ;; 1 2 3"]
-    ["(let [{:keys [a b]} '(:a 1 :b 2)]" "  (println a b)) ;; 1 2"]],
-   :description-html
-   "<p>A helpful shorthand for binding names to values inside a map.</p><p>The destructure map can be a map from a symbol to a lookup value:</p><pre><code class=\"clj\">&#40;let &#91; {a :foo}   ;; &lt;-- destructure map\n       {:foo 1} &#93;\n  a&#41;\n;;=&gt; 1\n</code></pre><p>The destructure map can bind multiple names:</p><pre><code class=\"clj\">&#40;let &#91; {a :foo, b :bar}   ;; &lt;-- destructure map\n       {:foo 1, :bar 2} &#93;\n  &#40;println a b&#41;&#41;\n;; 1 2\n</code></pre><p>Use this convenient alternative if names match the keys:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93;}   ;; &lt;-- destructure map\n       {:foo 1, :bar 2} &#93;\n  &#40;println foo bar&#41;&#41;\n;; 1 2\n</code></pre><p>Different key types are supported using <code>:keys</code>, <code>:strs</code>, or <code>:syms</code>, which map to the manual destructuring forms below:</p><ul><li><code>{:keys &#91;foo&#93;}</code> -> <code>{foo :foo }</code></li><li><code>{:strs &#91;foo&#93;}</code> -> <code>{foo &quot;foo&quot;}</code></li><li><code>{:syms &#91;foo&#93;}</code> -> <code>{foo 'foo }</code></li></ul><p>Use <code>:as foo</code> to name the original value:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93; :as whole}\n       {:foo 1, :bar 2} &#93;\n  whole&#41;\n;;=&gt; {:foo 1, :bar 2}\n</code></pre><p>Use <code>:or {}</code> to provide default values if missing:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93; :or {bar 0} }\n       {:foo 1} &#93;\n  &#40;println foo bar&#41;&#41;\n;; 1 0\n</code></pre><p>Use the special destructuring map in place of any local name binding in the following forms:</p><ul><li><code>&#40;let &#91;...&#93;&#41;</code></li><li><code>&#40;fn &#91;...&#93;&#41;</code></li><li><code>&#40;loop &#91;...&#93;&#41;</code></li></ul><p>Destructure maps can be nested, even in place of names in [destructure vectors][doc:syntax/destructure-vector].</p>",
-   :examples
-   [{:id "0d56ee",
-     :content
-     "Use in place of function arguments:\n\n```clj\n(defn print-point\n  [{:keys [x y z]}]\n  (println x y z))\n\n(print-point {:x 1, :y 2, :z 3})\n;; 1 2 3\n```"}
-    {:id "7a51df",
-     :content
-     "A non-vector sequence can be destructured as a map:\n\n```clj\n(let [{:keys [a b]} '(:a 1 :b 2)]\n  (println a b))\n;; 1 2\n```"}],
-   :full-name "syntax/destructure-map"},
-  "clear-env!"
-  {:ns "cljs.test",
-   :name "clear-env!",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.test/clear-env!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "print-meta?"
   {:ns "cljs.core",
    :name "print-meta?",
    :signature ["[opts obj]"],
    :type "function",
    :full-name "cljs.core/print-meta?",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-request"
-  {:ns "cljs.repl.server",
-   :name "read-request",
-   :signature ["[rdr]"],
-   :type "function",
-   :full-name "cljs.repl.server/read-request",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "print-queue"
-  {:ns "clojure.browser.repl",
-   :name "print-queue",
-   :type "var",
-   :full-name "clojure.browser.repl/print-queue",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4860,17 +3285,6 @@
    :full-name "special/new",
    :docstring
    "The args, if any, are evaluated from left to right, and\npassed to the JavaScript constructor. The constructed object is\nreturned.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "seq-zip"
-  {:ns "clojure.zip",
-   :name "seq-zip",
-   :signature ["[root]"],
-   :type "function",
-   :full-name "clojure.zip/seq-zip",
-   :docstring
-   "Returns a zipper for nested sequences, given a root sequence",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -4932,57 +3346,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "evaluate-javascript"
-  {:ns "clojure.browser.repl",
-   :name "evaluate-javascript",
-   :signature ["[conn block]"],
-   :type "function",
-   :full-name "clojure.browser.repl/evaluate-javascript",
-   :docstring
-   "Process a single block of JavaScript received from the server",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "regex"
-  {:description
-   "Signifies a regular expression. Represented as native [JavaScript regular expressions].\n\n[JavaScript regular expressions]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions\n\nAn inline modifier can be included at the beginning of the regex:\n\n|  modifier          | ClojureScript | JavaScript |\n|--------------------|---------------|------------|\n|  global match      | N/A           | `/foo/g`   |\n|  case-insensitive  | `#\"(?i)foo\"`  | `/foo/i`   |\n|  multi-line        | `#\"(?m)f.*o\"` | `/f.*o/m`  |\n\nGlobal matches (i.e. multiple matches per line) can be achieved using `re-seq`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#&quot;foo&quot;\n;;=&gt; #&quot;foo&quot;\n\n&#40;re-seq #&quot;foo&quot; &quot;FOO BAR foo bar&quot;&#41;\n;;=&gt; &#40;&quot;foo&quot;&#41;\n</code></pre><p>Case-insensitive matching:</p><pre><code class=\"clj\">#&quot;&#40;?i&#41;foo&quot;\n;;=&gt; #&quot;foo&quot;\n\n&#40;re-seq #&quot;&#40;?i&#41;foo&quot; &quot;FOO BAR foo bar&quot;&#41;\n;;=&gt; &#40;&quot;FOO&quot; &quot;foo&quot;&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "regex",
-   :type "syntax",
-   :related
-   ["cljs.core/re-pattern"
-    "cljs.core/re-find"
-    "cljs.core/re-seq"
-    "cljs.core/re-matches"],
-   :examples-strings
-   [["#\"foo\" ;;=> #\"foo\""
-     "(re-seq #\"foo\" \"FOO BAR foo bar\") ;;=> (\"foo\")"
-     "#\"(?i)foo\" ;;=> #\"foo\""
-     "(re-seq #\"(?i)foo\" \"FOO BAR foo bar\") ;;=> (\"FOO\" \"foo\")"]],
-   :description-html
-   "<p>Signifies a regular expression. Represented as native [JavaScript regular expressions].</p><p>[JavaScript regular expressions]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions</p><p>An inline modifier can be included at the beginning of the regex:</p><p>|  modifier          | ClojureScript | JavaScript | |--------------------|---------------|------------| |  global match      | N/A           | <code>/foo/g</code>   | |  case-insensitive  | <code>#&quot;&#40;?i&#41;foo&quot;</code>  | <code>/foo/i</code>   | |  multi-line        | <code>#&quot;&#40;?m&#41;f.&#42;o&quot;</code> | <code>/f.&#42;o/m</code>  |</p><p>Global matches (i.e. multiple matches per line) can be achieved using <code>re-seq</code>.</p>",
-   :examples
-   [{:id "dacf80",
-     :content
-     "```clj\n#\"foo\"\n;;=> #\"foo\"\n\n(re-seq #\"foo\" \"FOO BAR foo bar\")\n;;=> (\"foo\")\n```\n\nCase-insensitive matching:\n\n```clj\n#\"(?i)foo\"\n;;=> #\"foo\"\n\n(re-seq #\"(?i)foo\" \"FOO BAR foo bar\")\n;;=> (\"FOO\" \"foo\")\n```"}],
-   :full-name "syntax/regex"},
   "BlackNode"
   {:ns "cljs.core",
    :name "BlackNode",
    :signature ["[key val left right __hash]"],
    :type "type",
    :full-name "cljs.core/BlackNode",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "listen-once"
-  {:ns "clojure.browser.event",
-   :name "listen-once",
-   :signature ["[src type fn]" "[src type fn capture?]"],
-   :type "function",
-   :full-name "clojure.browser.event/listen-once",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5005,17 +3374,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "run-all-tests"
-  {:ns "cljs.test",
-   :name "run-all-tests",
-   :signature ["[]" "[re]" "[re env]"],
-   :type "macro",
-   :full-name "cljs.test/run-all-tests",
-   :docstring
-   "Runs all tests in all namespaces; prints results.\nOptional argument is a regular expression; only namespaces with\nnames matching the regular expression (with re-matches) will be\ntested.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ICounted"
   {:ns "cljs.core",
    :name "ICounted",
@@ -5026,39 +3384,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "map-invert"
-  {:ns "clojure.set",
-   :name "map-invert",
-   :signature ["[m]"],
-   :type "function",
-   :full-name "clojure.set/map-invert",
-   :docstring "Returns the map with the vals mapped to the keys.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "require"
-  {:ns "cljs.nodejs",
-   :name "require",
-   :type "var",
-   :full-name "cljs.nodejs/require",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*loaded-libs*"
   {:ns "cljs.core",
    :name "*loaded-libs*",
    :type "dynamic var",
    :full-name "cljs.core/*loaded-libs*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "remove-ns"
-  {:ns "cljs.analyzer.api",
-   :name "remove-ns",
-   :signature ["[ns]" "[state ns]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/remove-ns",
-   :docstring "Removes the namespace named by the symbol.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5087,31 +3417,6 @@
    :full-name "cljs.core/compare-and-set!",
    :docstring
    "Atomically sets the value of atom to newval if and only if the\ncurrent value of the atom is equal to oldval. Returns true if\nset happened, else false."},
-  "inst-literal"
-  {:description
-   "An instant in time, using a [RFC-3339] formatted string. Creates a JavaScript [Date] object.\n\nThe format is `#inst \"yyyy-mm-ddThh:mm:ss\"`, where:\n\n- `yyyy-mm-dd` = date\n- `hh:mm:ss` = time (optional)\n\nAppend `Z` to denote UTC, or `-hh:mm` to denote exact UTC offset.\n\n[Date]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date\n[RFC-3339]:http://www.ietf.org/rfc/rfc3339.txt",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#inst &quot;1985-04-12&quot;\n;;=&gt; #inst &quot;1985-04-12T00:00:00.000-00:00&quot;\n\n#inst &quot;1985-04-12T23:20:50.52Z&quot;\n;;=&gt; #inst &quot;1985-04-12T23:20:50.520-00:00&quot;\n</code></pre><p>Dates can be tested for order, as native JavaScript Dates can:</p><pre><code class=\"clj\">&#40;def a #inst &quot;2005-01-20&quot;&#41;\n&#40;def b #inst &quot;2005-01-21&quot;&#41;\n\n&#40;&lt; a b&#41;\n;;=&gt; true\n</code></pre><p>Dates can be tested for equality, unlike JavaScript Dates.  (ClojureScript extends <code>js/Date</code> type with <code>IEquiv</code> protocol to allow this.)</p><pre><code class=\"clj\">&#40;def a #inst &quot;2012-06-13&quot;&#41;\n&#40;def b #inst &quot;2012-06-13&quot;&#41;\n\n&#40;= a b&#41;\n;;=&gt; true\n</code></pre>"],
-   :ns "syntax",
-   :name "inst-literal",
-   :type "tagged literal",
-   :related ["cljs.core/time" "syntax/tagged-literal"],
-   :examples-strings
-   [["#inst \"1985-04-12\" ;;=> #inst \"1985-04-12T00:00:00.000-00:00\""
-     "#inst \"1985-04-12T23:20:50.52Z\" ;;=> #inst \"1985-04-12T23:20:50.520-00:00\""
-     "(def a #inst \"2005-01-20\")"
-     "(def b #inst \"2005-01-21\")"
-     "(< a b) ;;=> true"
-     "(def a #inst \"2012-06-13\")"
-     "(def b #inst \"2012-06-13\")"
-     "(= a b) ;;=> true"]],
-   :description-html
-   "<p>An instant in time, using a [RFC-3339] formatted string. Creates a JavaScript [Date] object.</p><p>The format is <code>#inst &quot;yyyy-mm-ddThh:mm:ss&quot;</code>, where:</p><ul><li><code>yyyy-mm-dd</code> = date</li><li><code>hh:mm:ss</code> = time (optional)</li></ul><p>Append <code>Z</code> to denote UTC, or <code>-hh:mm</code> to denote exact UTC offset.</p><p>[Date]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date [RFC-3339]:http://www.ietf.org/rfc/rfc3339.txt</p>",
-   :examples
-   [{:id "47d8ee",
-     :content
-     "```clj\n#inst \"1985-04-12\"\n;;=> #inst \"1985-04-12T00:00:00.000-00:00\"\n\n#inst \"1985-04-12T23:20:50.52Z\"\n;;=> #inst \"1985-04-12T23:20:50.520-00:00\"\n```\n\nDates can be tested for order, as native JavaScript Dates can:\n\n```clj\n(def a #inst \"2005-01-20\")\n(def b #inst \"2005-01-21\")\n\n(< a b)\n;;=> true\n```\n\nDates can be tested for equality, unlike JavaScript Dates.  (ClojureScript\nextends `js/Date` type with `IEquiv` protocol to allow this.)\n\n```clj\n(def a #inst \"2012-06-13\")\n(def b #inst \"2012-06-13\")\n\n(= a b)\n;;=> true\n```"}],
-   :full-name "syntax/inst-literal"},
   "set!"
   {:description
    "Sets `js-var` to `val` using the JavaScript `=` operator.",
@@ -5147,15 +3452,6 @@
    :full-name "cljs.core/comp",
    :docstring
    "Takes a set of functions and returns a fn that is the composition\nof those fns.  The returned fn takes a variable number of args,\napplies the rightmost of fns to the args, the next\nfn (right-to-left) to the result, etc."},
-  "repl-prompt"
-  {:ns "cljs.repl",
-   :name "repl-prompt",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl/repl-prompt",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "partition"
   {:description
    "Returns a lazy sequence of lists of `n` items each, at offsets `step` apart.\n\nIf `step` is not supplied, defaults to `n`, i.e. the partitions do not overlap.\n\nIf a `pad` collection is supplied, its elements will be used as necessary to\ncomplete the last partition up to `n` items.\n\nReturns a partition with less than `n` items if there are not enough padding\nelements.",
@@ -5191,15 +3487,6 @@
    :full-name "cljs.core/fn",
    :docstring
    "params => positional-params* , or positional-params* & next-param\npositional-param => binding-form\nnext-param => binding-form\nname => symbol\n\nDefines a function"},
-  "self-require?"
-  {:ns "cljs.repl",
-   :name "self-require?",
-   :signature ["[specs]"],
-   :type "function",
-   :full-name "cljs.repl/self-require?",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "flush"
   {:ns "cljs.core",
    :name "flush",
@@ -5217,24 +3504,6 @@
    :full-name "cljs.core/tagged-literal?",
    :docstring
    "Return true if the value is the data representation of a tagged literal",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "compile-client-js"
-  {:ns "cljs.repl.browser",
-   :name "compile-client-js",
-   :signature ["[opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/compile-client-js",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "send-static"
-  {:ns "cljs.repl.browser",
-   :name "send-static",
-   :signature ["[{path :path, :as request} conn opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/send-static",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5274,35 +3543,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "reducer"
-  {:ns "clojure.core.reducers",
-   :name "reducer",
-   :signature ["[coll xf]"],
-   :type "function",
-   :full-name "clojure.core.reducers/reducer",
-   :docstring
-   "Given a reducible collection, and a transformation function xf,\nreturns a reducible collection, where any supplied reducing\nfn will be transformed by xf. xf is a function of reducing fn to\nreducing fn.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "impure"
-  {:description
-   "A naming convention for impure functions (unenforced).\n\nImpure functions are those that have side-effects on some state.\n\nSome impure functions which use this convention:\n\n- [doc:special/set!]\n- [doc:cljs.core/swap!]\n- [doc:cljs.core/conj!]\n- [doc:cljs.core/specify!]",
-   :examples-htmls
-   ["<p>The following causes a side-effect in the state of <code>a</code>:</p><pre><code class=\"clj\">&#40;def a &#40;atom 1&#41;&#41;\n@a\n;;=&gt; 1\n\n&#40;reset! a 2&#41;\n@a\n;;=&gt; 2\n</code></pre>"],
-   :ns "syntax",
-   :name "impure",
-   :type "convention",
-   :related ["syntax/predicate"],
-   :examples-strings
-   [["(def a (atom 1))" "@a ;;=> 1" "(reset! a 2)" "@a ;;=> 2"]],
-   :description-html
-   "<p>A naming convention for impure functions (unenforced).</p><p>Impure functions are those that have side-effects on some state.</p><p>Some impure functions which use this convention:</p><ul><li>[doc:special/set!]</li><li>[doc:cljs.core/swap!]</li><li>[doc:cljs.core/conj!]</li><li>[doc:cljs.core/specify!]</li></ul>",
-   :examples
-   [{:id "c1dbc0",
-     :content
-     "The following causes a side-effect in the state of `a`:\n\n```clj\n(def a (atom 1))\n@a\n;;=> 1\n\n(reset! a 2)\n@a\n;;=> 2\n```"}],
-   :full-name "syntax/impure"},
   "cloneable?"
   {:ns "cljs.core",
    :name "cloneable?",
@@ -5340,34 +3580,6 @@
    "<p>Returns a random permutation of <code>coll</code>.</p>",
    :full-name "cljs.core/shuffle",
    :docstring "Return a random permutation of coll"},
-  "send-print"
-  {:ns "clojure.browser.repl",
-   :name "send-print",
-   :signature ["[url data]" "[url data n]"],
-   :type "function",
-   :full-name "clojure.browser.repl/send-print",
-   :docstring
-   "Send data to be printed in the REPL. If there is an error, try again\nup to 10 times.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IPrettyFlush"
-  {:ns "cljs.pprint",
-   :name "IPrettyFlush",
-   :type "protocol",
-   :full-name "cljs.pprint/IPrettyFlush",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "handle-reflect-query"
-  {:ns "cljs.repl.reflect",
-   :name "handle-reflect-query",
-   :signature ["[[param _] & _]"],
-   :type "multimethod",
-   :full-name "cljs.repl.reflect/handle-reflect-query",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "deftype*"
   {:ns "special",
    :name "deftype*",
@@ -5405,18 +3617,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-xor 2r1100 2r1010)\n;;=> 6\n;; 6 = 2r0110\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-xor 12 10)\n;;=> 6\n```"}],
    :full-name "cljs.core/bit-xor",
    :docstring "Bitwise exclusive or"},
-  "parse-ns"
-  {:ns "cljs.analyzer.api",
-   :name "parse-ns",
-   :signature
-   ["[src]" "[src opts]" "[src dest opts]" "[state src dest opts]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/parse-ns",
-   :docstring
-   "Helper for parsing only the essential namespace information from a\nClojureScript source file and returning a cljs.closure/IJavaScript compatible\nmap _not_ a namespace AST node.\n\nBy default does not load macros or perform any analysis of dependencies. If\nopts parameter provided :analyze-deps and :load-macros keys their values will\nbe used for *analyze-deps* and *load-macros* bindings respectively. This\nfunction does _not_ side-effect the ambient compilation environment unless\nrequested via opts where :restore is false.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "defrecord"
   {:ns "cljs.core",
    :name "defrecord",
@@ -5428,33 +3628,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "diff"
-  {:ns "clojure.data",
-   :name "diff",
-   :signature ["[a b]"],
-   :type "function",
-   :full-name "clojure.data/diff",
-   :docstring
-   "Recursively compares a and b, returning a tuple of\n[things-only-in-a things-only-in-b things-in-both].\nComparison rules:\n\n* For equal a and b, return [nil nil a].\n* Maps are subdiffed where keys match and values differ.\n* Sets are never subdiffed.\n* All sequential things are treated as associative collections\n  by their indexes, with results returned as vectors.\n* Everything else (including strings!) is treated as\n  an atom and compared for equality.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read"
-  {:ns "cljs.reader",
-   :name "read",
-   :signature ["[reader eof-is-error sentinel is-recursive]"],
-   :type "function",
-   :full-name "cljs.reader/read",
-   :docstring
-   "Reads the first object from a PushbackReader. Returns the object read.\nIf EOF, throws if eof-is-error is true. Otherwise returns sentinel.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*out*"
-  {:ns "cljs.pprint",
+  {:ns "cljs.core",
    :name "*out*",
    :type "dynamic var",
-   :full-name "cljs.pprint/*out*",
+   :full-name "cljs.core/*out*",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5466,58 +3644,6 @@
    :full-name "cljs.core/eduction",
    :docstring
    "Returns a reducible/iterable application of the transducers\nto the items in coll. Transducers are applied in order as if\ncombined with comp. Note that these applications will be\nperformed every time reduce/iterator is called.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*print-miser-width*"
-  {:ns "cljs.pprint",
-   :name "*print-miser-width*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-miser-width*",
-   :docstring
-   "The column at which to enter miser style. Depending on the dispatch table,\nmiser style add newlines in more places to try to keep lines short allowing for further\nlevels of nesting.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "rhino-setup"
-  {:ns "cljs.repl.rhino",
-   :name "rhino-setup",
-   :signature ["[repl-env opts]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/rhino-setup",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pprint-tab"
-  {:ns "cljs.pprint",
-   :name "pprint-tab",
-   :signature ["[kind colnum colinc]"],
-   :type "function",
-   :full-name "cljs.pprint/pprint-tab",
-   :docstring
-   "Tab at this point in the pretty printing stream. kind specifies whether the tab\nis :line, :section, :line-relative, or :section-relative.\n\nColnum and colinc specify the target column and the increment to move the target\nforward if the output is already past the original target.\n\nThis function is intended for use when writing custom dispatch functions.\n\nOutput is sent to *out* which must be a pretty printing writer.\n\nTHIS FUNCTION IS NOT YET IMPLEMENTED.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "last-index-of"
-  {:ns "clojure.string",
-   :name "last-index-of",
-   :signature ["[s value]" "[s value from-index]"],
-   :type "function",
-   :full-name "clojure.string/last-index-of",
-   :docstring
-   "Return last index of value (string or char) in s, optionally\nsearching backward from from-index or nil if not found.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "root"
-  {:ns "clojure.zip",
-   :name "root",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/root",
-   :docstring
-   "zips all the way up and returns the root node, reflecting any\nchanges.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5555,15 +3681,6 @@
    :full-name "cljs.core/with-meta",
    :docstring
    "Returns an object of the same type and value as obj, with\nmap m as its metadata."},
-  "insert-at"
-  {:ns "clojure.browser.dom",
-   :name "insert-at",
-   :signature ["[parent child index]"],
-   :type "function",
-   :full-name "clojure.browser.dom/insert-at",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "catch"
   {:description
    "`catch` should be used inside of a `try` expression.\n\n`exception-type` should be the type of exception thrown (usually `js/Error` or\n`js/Object`). When there is a match, the thrown exception will be bound to\n`name` inside of `expr*` and `expr*` will be evaluated and returned as the value\nof the `try` expression.\n\nSince JavaScript allows you to throw anything, `exception-type` can be set to\n`:default` to catch all types of exceptions.",
@@ -5586,15 +3703,6 @@
    :type "function",
    :full-name "cljs.core/prn-str-with-opts",
    :docstring "Same as pr-str-with-opts followed by (newline)",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "send-repl-client-page"
-  {:ns "cljs.repl.browser",
-   :name "send-repl-client-page",
-   :signature ["[request conn opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/send-repl-client-page",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5623,100 +3731,31 @@
    :full-name "cljs.core/aclone",
    :docstring
    "Returns a javascript array, cloned from the passed in array"},
-  "async?"
-  {:ns "cljs.test",
-   :name "async?",
-   :signature ["[x]"],
-   :type "function",
-   :full-name "cljs.test/async?",
-   :docstring "Returns whether x implements IAsyncTest.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "unquote-splicing"
-  {:description
-   "(Only intended for use in Clojure macros, which can be used from but not\nwritten in ClojureScript.)\n\nIntended for use inside a [doc:syntax/syntax-quote].\n\nForces evaluation of the following form and expands its children into the\nparent form.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;def foo '&#91;a b c&#93;&#41;\n`&#40;&#126;@foo&#41;\n;;=&gt; &#40;a b c&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "unquote-splicing",
-   :type "syntax",
-   :related ["syntax/syntax-quote" "syntax/unquote"],
-   :examples-strings [["(def foo '[a b c])" "`(~@foo) ;;=> (a b c)"]],
-   :description-html
-   "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Intended for use inside a [doc:syntax/syntax-quote].</p><p>Forces evaluation of the following form and expands its children into the parent form.</p>",
-   :examples
-   [{:id "e6f73d",
-     :content
-     "```clj\n(def foo '[a b c])\n`(~@foo)\n;;=> (a b c)\n```"}],
-   :full-name "syntax/unquote-splicing"},
-  "empty-env"
-  {:ns "cljs.test",
-   :name "empty-env",
-   :signature ["[]" "[reporter]"],
-   :type "function",
-   :full-name "cljs.test/empty-env",
-   :docstring
-   "Generates a testing environment with a reporter.\n(empty-env) - uses the :cljs.test/default reporter.\n(empty-env :cljs.test/pprint) - pretty prints all data structures. \n(empty-env reporter) - uses a reporter of your choosing.\n\nTo create your own reporter see cljs.test/report",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "block"
-  {:ns "cljs.test",
-   :name "block",
-   :signature ["[fns]"],
-   :type "function",
-   :full-name "cljs.test/block",
-   :docstring
-   "Tag a seq of fns to be picked up by run-block as injected\ncontinuation.  See run-block.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "take"
-  {:ns "clojure.core.reducers",
+  {:description
+   "Returns a lazy sequence of the first `n` items in `coll`. Returns all the items\nif there are fewer than `n`.\n\nReturns a stateful transducer when no collection is provided.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "take",
    :signature ["[n]" "[n coll]"],
    :type "function",
-   :full-name "clojure.core.reducers/take",
-   :docstring "Ends the reduction of coll after consuming n values.",
-   :description-html nil,
+   :related
+   ["cljs.core/drop"
+    "cljs.core/take-while"
+    "cljs.core/take-last"
+    "cljs.core/take-nth"],
    :examples-strings [],
-   :examples-htmls []},
-  "start-server"
-  {:ns "cljs.repl.browser",
-   :name "start-server",
-   :signature ["[opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/start-server",
-   :docstring "Start the server on the specified port.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p>Returns a lazy sequence of the first <code>n</code> items in <code>coll</code>. Returns all the items if there are fewer than <code>n</code>.</p><p>Returns a stateful transducer when no collection is provided.</p>",
+   :full-name "cljs.core/take",
+   :docstring
+   "Returns a lazy sequence of the first n items in coll, or all items if\nthere are fewer than n.  Returns a stateful transducer when\nno collection is provided."},
   "ValSeq"
   {:ns "cljs.core",
    :name "ValSeq",
    :signature ["[mseq _meta]"],
    :type "type",
    :full-name "cljs.core/ValSeq",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "EventType"
-  {:ns "clojure.browser.event",
-   :name "EventType",
-   :type "protocol",
-   :full-name "clojure.browser.event/EventType",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "print-length-loop"
-  {:ns "cljs.pprint",
-   :name "print-length-loop",
-   :signature ["[bindings & body]"],
-   :type "macro",
-   :full-name "cljs.pprint/print-length-loop",
-   :docstring
-   "A version of loop that iterates at most *print-length* times. This is designed\nfor use in pretty-printer dispatch functions.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5732,27 +3771,32 @@
    :examples-htmls []},
   "rest"
   {:description
-   "A concept for binding the rest of the values of some sequence to a name.  See\n[doc:syntax/destructure-vector] or [doc:cljs.core/fn] for exact usage details in their\nrespective contexts.",
-   :ns "syntax",
-   :name "rest",
-   :type "special character",
-   :examples
-   [{:id "ebd356",
-     :content
-     "Binding `c` to the rest of the function arguments:\n\n```clj\n(defn foo\n  [a b & c]\n  c)\n(foo 1 2 3 4)\n;;=> (3 4)\n```\n\nBinding `c` to the rest of the destructured values:\n\n```clj\n(let [[a b & c]\n      [1 2 3 4]]\n  c)\n;;=> (3 4)\n```"}],
-   :full-name "syntax/rest",
-   :description-html
-   "<p>A concept for binding the rest of the values of some sequence to a name.  See [doc:syntax/destructure-vector] or [doc:cljs.core/fn] for exact usage details in their respective contexts.</p>",
-   :examples-strings
-   [["(defn foo"
-     "  [a b & c]"
-     "  c)"
-     "(foo 1 2 3 4) ;;=> (3 4)"
-     "(let [[a b & c]"
-     "      [1 2 3 4]]"
-     "  c) ;;=> (3 4)"]],
+   "Returns a possibly empty sequence of the items after the first item.\n\nCalls `seq` on its argument.",
    :examples-htmls
-   ["<p>Binding <code>c</code> to the rest of the function arguments:</p><pre><code class=\"clj\">&#40;defn foo\n  &#91;a b &amp; c&#93;\n  c&#41;\n&#40;foo 1 2 3 4&#41;\n;;=&gt; &#40;3 4&#41;\n</code></pre><p>Binding <code>c</code> to the rest of the destructured values:</p><pre><code class=\"clj\">&#40;let &#91;&#91;a b &amp; c&#93;\n      &#91;1 2 3 4&#93;&#93;\n  c&#41;\n;;=&gt; &#40;3 4&#41;\n</code></pre>"]},
+   ["<pre><code class=\"clj\">&#40;rest &#91;1 2 3&#93;&#41;\n;;=&gt; &#40;2 3&#41;\n\n&#40;rest &#91;1 2&#93;&#41;\n;;=&gt; &#40;2&#41;\n\n&#40;rest &#91;1&#93;&#41;\n;;=&gt; &#40;&#41;\n\n&#40;rest &#91;&#93;&#41;\n;;=&gt; &#40;&#41;\n</code></pre>"],
+   :ns "cljs.core",
+   :name "rest",
+   :signature ["[coll]"],
+   :type "function",
+   :related
+   ["cljs.core/next"
+    "cljs.core/first"
+    "cljs.core/drop"
+    "cljs.core/pop"],
+   :examples-strings
+   [["(rest [1 2 3]) ;;=> (2 3)"
+     "(rest [1 2]) ;;=> (2)"
+     "(rest [1]) ;;=> ()"
+     "(rest []) ;;=> ()"]],
+   :description-html
+   "<p>Returns a possibly empty sequence of the items after the first item.</p><p>Calls <code>seq</code> on its argument.</p>",
+   :examples
+   [{:id "0869af",
+     :content
+     "```clj\n(rest [1 2 3])\n;;=> (2 3)\n\n(rest [1 2])\n;;=> (2)\n\n(rest [1])\n;;=> ()\n\n(rest [])\n;;=> ()\n```"}],
+   :full-name "cljs.core/rest",
+   :docstring
+   "Returns a possibly empty seq of the items after the first. Calls seq on its\nargument."},
   "unsafe-cast"
   {:ns "cljs.core",
    :name "unsafe-cast",
@@ -5761,26 +3805,6 @@
    :full-name "cljs.core/unsafe-cast",
    :docstring
    "EXPERIMENTAL: Subject to change. Unsafely cast a value to a different type.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pprint-newline"
-  {:ns "cljs.pprint",
-   :name "pprint-newline",
-   :signature ["[kind]"],
-   :type "function",
-   :full-name "cljs.pprint/pprint-newline",
-   :docstring
-   "Print a conditional newline to a pretty printing stream. kind specifies if the\nnewline is :linear, :miser, :fill, or :mandatory.\n\nThis function is intended for use when writing custom dispatch functions.\n\nOutput is sent to *out* which must be a pretty printing writer.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*print-base*"
-  {:ns "cljs.pprint",
-   :name "*print-base*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-base*",
-   :docstring "The base to use for printing integers and rationals.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -5798,25 +3822,6 @@
    "<p>Returns true if <code>x</code> and <code>y</code> are the same object, false otherwise.</p>",
    :full-name "cljs.core/identical?",
    :docstring "Tests if 2 arguments are the same object"},
-  "PushbackReader"
-  {:ns "cljs.reader",
-   :name "PushbackReader",
-   :type "protocol",
-   :full-name "cljs.reader/PushbackReader",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns->relpath"
-  {:ns "cljs.js",
-   :name "ns->relpath",
-   :signature ["[ns-sym]"],
-   :type "function",
-   :full-name "cljs.js/ns->relpath",
-   :docstring
-   "Given a namespace as a symbol return the relative path sans extension",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "volatile?"
   {:examples-htmls [],
    :ns "cljs.core",
@@ -5965,27 +3970,6 @@
    :full-name "cljs.core/dorun",
    :docstring
    "When lazy sequences are produced via functions that have side\neffects, any effects other than those needed to produce the first\nelement in the seq do not occur until the seq is consumed. dorun can\nbe used to force any effects. Walks through the successive nexts of\nthe seq, does not retain the head and returns nil."},
-  "ns-resolve"
-  {:ns "cljs.analyzer.api",
-   :name "ns-resolve",
-   :signature ["[ns sym]" "[state ns sym]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/ns-resolve",
-   :docstring
-   "Given a namespace and a symbol return the corresponding var analysis map.\nAnalagous to clojure.core/ns-resolve but returns var analysis map not Var.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "parse-file"
-  {:ns "cljs.repl.browser",
-   :name "parse-file",
-   :signature
-   ["[{:keys [host host-port port], :as repl-env} file {:keys [asset-path], :as opts}]"],
-   :type "function",
-   :full-name "cljs.repl.browser/parse-file",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "empty?"
   {:description
    "Returns true if `coll` has no items - same as `(not (seq coll))`.\n\nPlease use the idiom `(seq x)` rather than `(not (empty? x))`.",
@@ -6001,15 +3985,6 @@
    :full-name "cljs.core/empty?",
    :docstring
    "Returns true if coll has no items - same as (not (seq coll)).\nPlease use the idiom (seq x) rather than (not (empty? x))"},
-  "file-and-line"
-  {:ns "cljs.test",
-   :name "file-and-line",
-   :signature ["[exception depth]"],
-   :type "function",
-   :full-name "cljs.test/file-and-line",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "short"
   {:ns "cljs.core",
    :name "short",
@@ -6026,26 +4001,6 @@
    :type "function",
    :full-name "cljs.core/to-array",
    :docstring "Naive impl of to-array as a start.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "getf"
-  {:ns "cljs.pprint",
-   :name "getf",
-   :signature ["[sym]"],
-   :type "macro",
-   :full-name "cljs.pprint/getf",
-   :docstring
-   "Get the value of the field a named by the argument (which should be a keyword).",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "merge-require"
-  {:ns "cljs.repl",
-   :name "merge-require",
-   :signature ["[requires [lib :as spec]]"],
-   :type "function",
-   :full-name "cljs.repl/merge-require",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -6079,42 +4034,6 @@
      "```clj\n(array? #js [1 2 3])\n;;=> true\n\n(array? [1 2 3])\n;;=> false\n\n(array? \"hi\")\n;;=> false\n```"}],
    :full-name "cljs.core/array?",
    :docstring "Returns true if x is a JavaScript array."},
-  "ordering"
-  {:ns "cljs.repl.browser",
-   :name "ordering",
-   :type "dynamic var",
-   :full-name "cljs.repl.browser/ordering",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "shebang"
-  {:description
-   "Equivalent to [doc:syntax/comment].\n\nThis is intended to allow executable ClojureScript files under Unix by allowing\nthe first line of the file to have a [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix)).",
-   :ns "syntax",
-   :name "shebang",
-   :type "syntax",
-   :examples
-   [{:id "de569a",
-     :content
-     "```clj\n#!/bin/cljs\n;; waits for another form since #!/bin/cljs was ignored.\n\n123 #! this is ignored\n;;=> 123\n```"}],
-   :full-name "syntax/shebang",
-   :description-html
-   "<p>Equivalent to [doc:syntax/comment].</p><p>This is intended to allow executable ClojureScript files under Unix by allowing the first line of the file to have a <a href='https://en.wikipedia.org/wiki/Shebang_(Unix'>shebang line</a>).</p>",
-   :examples-strings
-   [["#!/bin/cljs ;; waits for another form since #!/bin/cljs was ignored."
-     "123 #! this is ignored ;;=> 123"]],
-   :examples-htmls
-   ["<pre><code class=\"clj\">#!/bin/cljs\n;; waits for another form since #!/bin/cljs was ignored.\n\n123 #! this is ignored\n;;=&gt; 123\n</code></pre>"]},
-  "xhr-connection"
-  {:ns "clojure.browser.net",
-   :name "xhr-connection",
-   :signature ["[]"],
-   :type "function",
-   :full-name "clojure.browser.net/xhr-connection",
-   :docstring "Returns an XhrIo connection",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "cons"
   {:description
    "Returns a new sequence where `x` is the first element and `coll` is the rest.",
@@ -6139,15 +4058,6 @@
    :full-name "cljs.core/cons",
    :docstring
    "Returns a new seq where x is the first element and seq is the rest."},
-  "EqualityPartition"
-  {:ns "clojure.data",
-   :name "EqualityPartition",
-   :type "protocol",
-   :full-name "clojure.data/EqualityPartition",
-   :docstring "Implementation detail. Subject to change.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "swap!"
   {:description
    "Atomically swaps the value of atom to be: `(apply f current-value-of-atom\nargs)`\n\nNote that `f` may be called multiple times, and thus should be free of side\neffects.\n\nReturns the value that was swapped in.",
@@ -6178,43 +4088,12 @@
    :full-name "cljs.core/rand-int",
    :docstring
    "Returns a random integer between 0 (inclusive) and n (exclusive)."},
-  "read-4-chars"
-  {:ns "cljs.reader",
-   :name "read-4-chars",
-   :signature ["[reader]"],
-   :type "function",
-   :full-name "cljs.reader/read-4-chars",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "hash-keyword"
   {:ns "cljs.core",
    :name "hash-keyword",
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/hash-keyword",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "watch"
-  {:ns "cljs.build.api",
-   :name "watch",
-   :signature
-   ["[source opts]"
-    "[source opts compiler-env]"
-    "[source opts compiler-env stop]"],
-   :type "function",
-   :full-name "cljs.build.api/watch",
-   :docstring
-   "Given a source which can be compiled, watch it for changes to produce.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IParseStacktrace"
-  {:ns "cljs.repl",
-   :name "IParseStacktrace",
-   :type "protocol",
-   :full-name "cljs.repl/IParseStacktrace",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -6296,15 +4175,6 @@
    :full-name "cljs.core/re-find",
    :docstring
    "Returns the first regex match, if any, of s to re, using\nre.exec(s). Returns a vector, containing first the matching\nsubstring, then any capturing groups if the regular expression contains\ncapturing groups."},
-  "log"
-  {:ns "clojure.browser.dom",
-   :name "log",
-   :signature ["[& args]"],
-   :type "function",
-   :full-name "clojure.browser.dom/log",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "not-any?"
   {:description
    "Returns false if `(pred x)` is logical true for any `x` in `coll`, else true.",
@@ -6320,26 +4190,6 @@
    :full-name "cljs.core/not-any?",
    :docstring
    "Returns false if (pred x) is logical true for any x in coll,\nelse true."},
-  "async"
-  {:ns "cljs.test",
-   :name "async",
-   :signature ["[done & body]"],
-   :type "macro",
-   :full-name "cljs.test/async",
-   :docstring
-   "Wraps body as a CPS function that can be returned from a test to\ncontinue asynchronously.  Binds done to a function that must be\ninvoked once and from an async context after any assertions.\n\n(deftest example-with-timeout\n  (async done\n    (js/setTimeout (fn []\n                     ;; make assertions in async context...\n                     (done) ;; ...then call done\n                     )\n                   0)))",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "escape-char-map"
-  {:ns "cljs.reader",
-   :name "escape-char-map",
-   :signature ["[c]"],
-   :type "function",
-   :full-name "cljs.reader/escape-char-map",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "SetEntriesIterator"
   {:ns "cljs.core",
    :name "SetEntriesIterator",
@@ -6453,16 +4303,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "*load-fn*"
-  {:ns "cljs.js",
-   :name "*load-fn*",
-   :type "dynamic var",
-   :full-name "cljs.js/*load-fn*",
-   :docstring
-   "Each runtime environment provides a different way to load a library.\nWhatever function *load-fn* is bound to will be passed two arguments - a\nmap and a callback function: The map will have the following keys:\n\n:name   - the name of the library (a symbol)\n:macros - modifier signaling a macros namespace load\n:path   - munged relative library path (a string)\n\nIt is up to the implementor to correctly resolve the corresponding .cljs,\n.cljc, or .js resource (the order must be respected). If :macros is true\nresolution should only consider .clj or .cljc resources (the order must be\nrespected). Upon resolution the callback should be invoked with a map\ncontaining the following keys:\n\n:lang       - the language, :clj or :js\n:source     - the source of the library (a string)\n:cache      - optional, if a :clj namespace has been precompiled to :js, can\n              give an analysis cache for faster loads.\n:source-map - optional, if a :clj namespace has been precompiled to :js, can\n              give a V3 source map JSON\n\nIf the resource could not be resolved, the callback should be invoked with\nnil.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ArrayIter"
   {:ns "cljs.core",
    :name "ArrayIter",
@@ -6490,17 +4330,6 @@
    :full-name "cljs.core/partition-by",
    :docstring
    "Applies f to each value in coll, splitting it each time f returns a\nnew value.  Returns a lazy seq of partitions.  Returns a stateful\ntransducer when no collection is provided."},
-  "join-fixtures"
-  {:ns "cljs.test",
-   :name "join-fixtures",
-   :signature ["[fixtures]"],
-   :type "function",
-   :full-name "cljs.test/join-fixtures",
-   :docstring
-   "Composes a collection of fixtures, in order.  Always returns a valid\nfixture function, even if the collection is empty.\n\nNOTE: Incompatible with map fixtures.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ChunkedCons"
   {:ns "cljs.core",
    :name "ChunkedCons",
@@ -6569,15 +4398,6 @@
    :full-name "cljs.core/areduce",
    :docstring
    "Reduces an expression across an array a, using an index named idx,\nand return value named ret, initialized to init, setting ret to the\nevaluation of expr at each step, returning ret."},
-  "stop-server"
-  {:ns "cljs.repl.browser",
-   :name "stop-server",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl.browser/stop-server",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "transient"
   {:ns "cljs.core",
    :name "transient",
@@ -6638,21 +4458,6 @@
    :full-name "cljs.core/sorted-map",
    :docstring
    "keyval => key val\nReturns a new sorted map with supplied mappings."},
-  "analyze"
-  {:ns "cljs.analyzer.api",
-   :name "analyze",
-   :signature
-   ["[env form]"
-    "[env form name]"
-    "[env form name opts]"
-    "[state env form name opts]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/analyze",
-   :docstring
-   "Given an environment, a map containing {:locals (mapping of names to bindings), :context\n(one of :statement, :expr, :return), :ns (a symbol naming the\ncompilation ns)}, and form, returns an expression object (a map\ncontaining at least :form, :op and :env keys). If expr has any (immediately)\nnested exprs, must have :children [exprs...] entry. This will\nfacilitate code walking without knowing the details of the op set.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ES6Iterator"
   {:ns "cljs.core",
    :name "ES6Iterator",
@@ -6668,66 +4473,6 @@
    :signature ["[meta start end step __hash]"],
    :type "type",
    :full-name "cljs.core/Range",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "print-mapped-stacktrace"
-  {:ns "cljs.repl",
-   :name "print-mapped-stacktrace",
-   :signature ["[stacktrace]" "[stacktrace opts]"],
-   :type "function",
-   :full-name "cljs.repl/print-mapped-stacktrace",
-   :docstring
-   "Given a vector representing the canonicalized JavaScript stacktrace\nprint the ClojureScript stacktrace. See mapped-stacktrace.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "eval-resource"
-  {:ns "cljs.repl.nashorn",
-   :name "eval-resource",
-   :signature ["[engine path debug]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/eval-resource",
-   :docstring "Evaluate a file on the classpath in the engine.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "subset?"
-  {:description
-   "Returns true if `a` is a subset of `b`, false otherwise.\n\nIn other words, returns true if all the elements of `a` can be found in `b`.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "subset?",
-   :signature ["[a b]"],
-   :type "function",
-   :related ["cljs.core/set" "cljs.core/set?" "clojure.set/superset?"],
-   :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>a</code> is a subset of <code>b</code>, false otherwise.</p><p>In other words, returns true if all the elements of <code>a</code> can be found in <code>b</code>.</p>",
-   :full-name "clojure.set/subset?",
-   :docstring "Is set1 a subset of set2?"},
-  "escape"
-  {:description
-   "Return a new string, using `cmap` to escape each character `ch` from `s` as follows:\n\nIf `(cmap ch)` is nil, append ch to the new string.\n\nIf `(cmap ch)` is non-nil, append `(str (cmap ch))` instead.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "escape",
-   :signature ["[s cmap]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Return a new string, using <code>cmap</code> to escape each character <code>ch</code> from <code>s</code> as follows:</p><p>If <code>&#40;cmap ch&#41;</code> is nil, append ch to the new string.</p><p>If <code>&#40;cmap ch&#41;</code> is non-nil, append <code>&#40;str &#40;cmap ch&#41;&#41;</code> instead.</p>",
-   :full-name "clojure.string/escape",
-   :docstring
-   "Return a new string, using cmap to escape each character ch\nfrom s as follows:\n\nIf (cmap ch) is nil, append ch to the new string.\nIf (cmap ch) is non-nil, append (str (cmap ch)) instead."},
-  "skip-whitespace"
-  {:ns "cljs.repl",
-   :name "skip-whitespace",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.repl/skip-whitespace",
-   :docstring
-   "Skips whitespace characters on stream s. Returns :line-start, :stream-end,\nor :body to indicate the relative location of the next character on s.\nInterprets comma as whitespace and semicolon as comment to end of line.\nDoes not interpret #! as comment to end of line because only one\ncharacter of lookahead is available. The stream must either be an\ninstance of LineNumberingPushbackReader or duplicate its behavior of both\nsupporting .unread and collapsing all of CR, LF, and CRLF to a single\n\\newline.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -6760,15 +4505,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "element"
-  {:ns "clojure.browser.dom",
-   :name "element",
-   :signature ["[tag-or-text]" "[tag & children]"],
-   :type "function",
-   :full-name "clojure.browser.dom/element",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "distinct"
   {:description
    "Returns a lazy sequence of the elements of `coll` with duplicates removed.",
@@ -6793,17 +4529,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "get-js-index"
-  {:ns "cljs.analyzer.api",
-   :name "get-js-index",
-   :signature ["[]" "[state]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/get-js-index",
-   :docstring
-   "Return the currently computed Google Closure js dependency index from the\ncompiler state.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "symbol-identical?"
   {:ns "cljs.core",
    :name "symbol-identical?",
@@ -6815,33 +4540,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "ends-with?"
-  {:ns "clojure.string",
-   :name "ends-with?",
-   :signature ["[s substr]"],
-   :type "function",
-   :full-name "clojure.string/ends-with?",
-   :docstring "True if s ends with substr.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "in-ns"
-  {:description
-   "Only usable from a REPL.\n\nChanges to the namespace `name`, creating it if needed.\n\nSets `*cljs-ns*` to the namespace `name`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;in-ns 'foo.core&#41;\n</code></pre>"],
-   :ns "specialrepl",
-   :name "in-ns",
-   :signature ["[name]"],
-   :type "special form (repl)",
-   :examples-strings [["(in-ns 'foo.core)"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Changes to the namespace <code>name</code>, creating it if needed.</p><p>Sets <code>&#42;cljs-ns&#42;</code> to the namespace <code>name</code>.</p>",
-   :examples
-   [{:id "e81eb3", :content "```clj\n(in-ns 'foo.core)\n```"}],
-   :full-name "specialrepl/in-ns",
-   :docstring
-   "Sets *cljs-ns* to the namespace named by the symbol, creating it if needed."},
   "ISequential"
   {:ns "cljs.core",
    :name "ISequential",
@@ -6871,14 +4569,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "IWebSocket"
-  {:ns "clojure.browser.net",
-   :name "IWebSocket",
-   :type "protocol",
-   :full-name "clojure.browser.net/IWebSocket",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "parents"
   {:ns "cljs.core",
    :name "parents",
@@ -6896,40 +4586,6 @@
    :signature ["[arr no-clone no-check]"],
    :type "function",
    :full-name "cljs.core/PersistentArrayMap.fromArray",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "Infinity"
-  {:description
-   "The IEEE 754 Floating Point representations of infinity.\n\n`Infinity` = `+Infinity` = positive infinity\n\n`-Infinity` = negative infinity",
-   :examples-htmls
-   ["<pre><code class=\"clj\">Infinity\n;;=&gt; Infinity\n\n+Infinity\n;;=&gt; Infinity\n\n-Infinity\n;;=&gt; -Infinity\n</code></pre><p>Math with infinities:</p><pre><code class=\"clj\">&#40;/ 1 0&#41;\n;;=&gt; Infinity\n\n&#40;Math/log 0&#41;\n;;=&gt; -Infinity\n\n&#40;&#42; 0 Infinity&#41;\n;;=&gt; NaN\n</code></pre><p>They are equivalent to the JavaScript symbols:</p><pre><code class=\"clj\">js/Infinity\n;;=&gt; Infinity\n\njs/-Infinity\n;;=&gt; -Infinity\n</code></pre>"],
-   :ns "syntax",
-   :name "Infinity",
-   :type "special symbol",
-   :related ["syntax/number" "syntax/NaN"],
-   :examples-strings
-   [["Infinity ;;=> Infinity"
-     "+Infinity ;;=> Infinity"
-     "-Infinity ;;=> -Infinity"
-     "(/ 1 0) ;;=> Infinity"
-     "(Math/log 0) ;;=> -Infinity"
-     "(* 0 Infinity) ;;=> NaN"
-     "js/Infinity ;;=> Infinity"
-     "js/-Infinity ;;=> -Infinity"]],
-   :description-html
-   "<p>The IEEE 754 Floating Point representations of infinity.</p><p><code>Infinity</code> = <code>+Infinity</code> = positive infinity</p><p><code>-Infinity</code> = negative infinity</p>",
-   :examples
-   [{:id "463fd4",
-     :content
-     "```clj\nInfinity\n;;=> Infinity\n\n+Infinity\n;;=> Infinity\n\n-Infinity\n;;=> -Infinity\n```\n\nMath with infinities:\n\n```clj\n(/ 1 0)\n;;=> Infinity\n\n(Math/log 0)\n;;=> -Infinity\n\n(* 0 Infinity)\n;;=> NaN\n```\n\nThey are equivalent to the JavaScript symbols:\n\n```clj\njs/Infinity\n;;=> Infinity\n\njs/-Infinity\n;;=> -Infinity\n```"}],
-   :full-name "syntax/Infinity"},
-  "chrome-st-el->frame"
-  {:ns "cljs.repl.browser",
-   :name "chrome-st-el->frame",
-   :signature ["[repl-env st-el opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/chrome-st-el->frame",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7003,17 +4659,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "connection"
-  {:ns "cljs.repl.server",
-   :name "connection",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl.server/connection",
-   :docstring
-   "Promise to return a connection when one is available. If a\nconnection is not available, store the promise in server/state.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "chunk-buffer"
   {:ns "cljs.core",
    :name "chunk-buffer",
@@ -7033,23 +4678,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "spec-sort"
-  {:ns "cljs.repl",
-   :name "spec-sort",
-   :type "var",
-   :full-name "cljs.repl/spec-sort",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "-main"
-  {:ns "cljs.repl.node",
-   :name "-main",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl.node/-main",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "underive"
   {:ns "cljs.core",
    :name "underive",
@@ -7058,17 +4686,6 @@
    :full-name "cljs.core/underive",
    :docstring
    "Removes a parent/child relationship between parent and\ntag. h must be a hierarchy obtained from make-hierarchy, if not\nsupplied defaults to, and modifies, the global hierarchy.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns->source"
-  {:ns "cljs.build.api",
-   :name "ns->source",
-   :signature ["[ns]"],
-   :type "function",
-   :full-name "cljs.build.api/ns->source",
-   :docstring
-   "Given a namespace as a symbol return the corresponding resource if it exists.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7104,29 +4721,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-and-not 2r1100 2r1010)\n;;=> 4\n;; 4 = 2r0100\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-and-not 12 10)\n;;=> 4\n```\n\nSame result using `bit-and` and `bit-not`:\n\n```clj\n(bit-and 12 (bit-not 10))\n;;=> 4\n```"}],
    :full-name "cljs.core/bit-and-not",
    :docstring "Bitwise and"},
-  "pst"
-  {:description
-   "Print Stack Trace for a given exception `e` or the most recent\nexception, stored implicitly by [doc:cljs.core/*e].",
-   :ns "cljs.repl",
-   :name "pst",
-   :signature ["[e]"],
-   :type "macro",
-   :full-name "cljs.repl/pst",
-   :description-html
-   "<p>Print Stack Trace for a given exception <code>e</code> or the most recent exception, stored implicitly by [doc:cljs.core/*e].</p>",
-   :examples-strings [],
-   :examples-htmls []},
-  "index-of"
-  {:ns "clojure.string",
-   :name "index-of",
-   :signature ["[s value]" "[s value from-index]"],
-   :type "function",
-   :full-name "clojure.string/index-of",
-   :docstring
-   "Return index of value (string or char) in s, optionally searching\nforward from from-index or nil if not found.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "map-indexed"
   {:description
    "Returns a lazy sequence consisting of the result of applying `f` to 0 and the\nfirst item of `coll`, followed by applying `f` to 1 and the second item in\n`coll`, etc, until `coll` is exhausted.\n\nFunction `f` should accept 2 arguments, index and item.",
@@ -7166,30 +4760,6 @@
    :full-name "cljs.core/macroexpand-1",
    :docstring
    "If form represents a macro form, returns its expansion,\nelse returns form."},
-  "syntax-quote"
-  {:description
-   "(Only intended for use in Clojure macros, which can be used from but not\nwritten in ClojureScript.)\n\nPrevent evaluation of the following form.\n\nAdds namespace-qualification to any symbols inside the following form by\nresolving them in the current context.\n\nAny non-namespaced symbols ending with `#` are replaced with unique symbols.\nSee [doc:syntax/auto-gensym].",
-   :examples-htmls
-   ["<pre><code class=\"clj\">`foo\n;;=&gt; cljs.user/foo\n\n`foo#\n;;=&gt; foo&#95;&#95;20418&#95;&#95;auto&#95;&#95;\n\n`&#40;def foo 1&#41;\n;;=&gt; &#40;def cljs.user/foo 1&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "syntax-quote",
-   :type "syntax",
-   :related
-   ["syntax/auto-gensym"
-    "syntax/quote"
-    "syntax/unquote"
-    "syntax/unquote-splicing"],
-   :examples-strings
-   [["`foo ;;=> cljs.user/foo"
-     "`foo# ;;=> foo__20418__auto__"
-     "`(def foo 1) ;;=> (def cljs.user/foo 1)"]],
-   :description-html
-   "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Prevent evaluation of the following form.</p><p>Adds namespace-qualification to any symbols inside the following form by resolving them in the current context.</p><p>Any non-namespaced symbols ending with <code>#</code> are replaced with unique symbols. See [doc:syntax/auto-gensym].</p>",
-   :examples
-   [{:id "bffbdf",
-     :content
-     "```clj\n`foo\n;;=> cljs.user/foo\n\n`foo#\n;;=> foo__20418__auto__\n\n`(def foo 1)\n;;=> (def cljs.user/foo 1)\n```"}],
-   :full-name "syntax/syntax-quote"},
   "ChunkedSeq"
   {:ns "cljs.core",
    :name "ChunkedSeq",
@@ -7199,18 +4769,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "triml"
-  {:description "Removes whitespace from the left side of string.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "triml",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Removes whitespace from the left side of string.</p>",
-   :full-name "clojure.string/triml",
-   :docstring "Removes whitespace from the left side of string."},
   "unreduced"
   {:ns "cljs.core",
    :name "unreduced",
@@ -7234,14 +4792,6 @@
    "<p>Returns a vector of <code>&#91;&#40;take n coll&#41; &#40;drop n coll&#41;&#93;</code>.</p>",
    :full-name "cljs.core/split-at",
    :docstring "Returns a vector of [(take n coll) (drop n coll)]"},
-  "IReplEnvOptions"
-  {:ns "cljs.repl",
-   :name "IReplEnvOptions",
-   :type "protocol",
-   :full-name "cljs.repl/IReplEnvOptions",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "counted?"
   {:description
    "Returns true if `x` executes `count` in constant time, false otherwise.\n\nLists, maps, sets, strings, and vectors can be counted in constant time.",
@@ -7258,41 +4808,22 @@
    "Returns true if coll implements count in constant time"},
   "replace"
   {:description
-   "Replaces all instance of `match` with `replacement` in `s`.\n\nThe options for match / replacement are:\n\n| match  | replacement |\n|--------|-------------|\n| string | string      |\n| regex  | string      |\n| regex  | function    |",
+   "Given a map of replacement pairs `smap` and a vector/collection `coll`, returns\na vector/seq with any elements `=` to a key in `smap` replaced with the\ncorresponding val in `smap`.\n\nReturns a transducer when `coll` is not provided.",
    :examples-htmls [],
-   :ns "clojure.string",
+   :ns "cljs.core",
    :name "replace",
-   :signature ["[s match replacement]"],
+   :signature ["[smap]" "[smap coll]"],
    :type "function",
    :related
-   ["cljs.core/subs"
-    "clojure.string/split"
-    "clojure.string/replace-first"],
+   ["cljs.core/map"
+    "clojure.walk/prewalk-replace"
+    "clojure.walk/postwalk-replace"],
    :examples-strings [],
    :description-html
-   "<p>Replaces all instance of <code>match</code> with <code>replacement</code> in <code>s</code>.</p><p>The options for match / replacement are:</p><p>| match  | replacement | |--------|-------------| | string | string      | | regex  | string      | | regex  | function    |</p>",
-   :full-name "clojure.string/replace",
+   "<p>Given a map of replacement pairs <code>smap</code> and a vector/collection <code>coll</code>, returns a vector/seq with any elements <code>=</code> to a key in <code>smap</code> replaced with the corresponding val in <code>smap</code>.</p><p>Returns a transducer when <code>coll</code> is not provided.</p>",
+   :full-name "cljs.core/replace",
    :docstring
-   "Replaces all instance of match with replacement in s.\nmatch/replacement can be:\n\nstring / string\npattern / (string or function of match)."},
-  "float?"
-  {:ns "cljs.pprint",
-   :name "float?",
-   :signature ["[n]"],
-   :type "function",
-   :full-name "cljs.pprint/float?",
-   :docstring "Returns true if n is an float.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-get"
-  {:ns "cljs.repl.server",
-   :name "read-get",
-   :signature ["[line rdr]"],
-   :type "function",
-   :full-name "cljs.repl.server/read-get",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
+   "Given a map of replacement pairs and a vector/collection, returns a\nvector/seq with any elements = a key in smap replaced with the\ncorresponding val in smap.  Returns a transducer when no collection\nis provided."},
   "associative?"
   {:description
    "Returns true if `coll` implements the `IAssociative` protocol, false otherwise.\n\nMaps and vectors are associative.",
@@ -7324,28 +4855,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "test-ns-block"
-  {:ns "cljs.test",
-   :name "test-ns-block",
-   :signature ["[env [quote ns :as form]]"],
-   :type "macro",
-   :full-name "cljs.test/test-ns-block",
-   :docstring
-   "Like test-ns, but returns a block for further composition and\nlater execution.  Does not clear the current env.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "rightmost"
-  {:ns "clojure.zip",
-   :name "rightmost",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/rightmost",
-   :docstring
-   "Returns the loc of the rightmost sibling of the node at this loc, or self",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "uuid"
   {:description
    "Creates a universally unique identifier (UUID) from the given string, using the\n[doc:cljs.core/UUID] type.\n\nThe string has an expected format `8-4-4-12` where the numbers represent the\nnumber of hex digits.  No validation is performed.\n\nTo create a UUID literal (parsed and validated at compile time), use [doc:syntax/uuid-literal].",
@@ -7367,17 +4876,6 @@
      :content
      "```clj\n(uuid \"00000000-0000-0000-0000-000000000000\")\n;;=> #uuid \"00000000-0000-0000-0000-000000000000\"\n\n(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")\n;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n```\n\nNo validation is performed:\n\n```clj\n(uuid \"\")\n;;=> #uuid \"\"\n```"}],
    :full-name "cljs.core/uuid"},
-  "postwalk"
-  {:ns "clojure.walk",
-   :name "postwalk",
-   :signature ["[f form]"],
-   :type "function",
-   :full-name "clojure.walk/postwalk",
-   :docstring
-   "Performs a depth-first, post-order traversal of form.  Calls f on\neach sub-form, uses f's return value in place of the original.\nRecognizes all Clojure data structures. Consumes seqs as with doall.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "cond"
   {:description
    "`clauses` must be an even number of forms, ie: `(cond t1 e1, t2 e2, t3 e3)`.\nEach test `t` is evaluated one at a time. If a test returns logical true, `cond`\nevaluates and returns the corresponding expression `e` and does not evaluate any\nof the other tests or expressions.\n\nIt is idiomatic to provide a default case as the last test pair using the\nkeyword `:else` (a keyword always evaluates to logical true).\n\n`(cond)` returns nil.",
@@ -7419,14 +4917,6 @@
    :full-name "cljs.core/realized?",
    :docstring
    "Returns true if a value has been produced for a delay or lazy sequence."},
-  "*tag-table*"
-  {:ns "cljs.reader",
-   :name "*tag-table*",
-   :type "dynamic var",
-   :full-name "cljs.reader/*tag-table*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "Fn"
   {:ns "cljs.core",
    :name "Fn",
@@ -7453,15 +4943,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "Diff"
-  {:ns "clojure.data",
-   :name "Diff",
-   :type "protocol",
-   :full-name "clojure.data/Diff",
-   :docstring "Implementation detail. Subject to change.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ISorted"
   {:ns "cljs.core",
    :name "ISorted",
@@ -7483,57 +4964,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "preloaded-libs"
-  {:ns "cljs.repl.browser",
-   :name "preloaded-libs",
-   :type "var",
-   :full-name "cljs.repl.browser/preloaded-libs",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-post"
-  {:ns "cljs.repl.browser",
-   :name "read-post",
-   :signature ["[line rdr]"],
-   :type "function",
-   :full-name "cljs.repl.browser/read-post",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "set-value"
-  {:ns "clojure.browser.dom",
-   :name "set-value",
-   :signature ["[e v]"],
-   :type "function",
-   :full-name "clojure.browser.dom/set-value",
-   :docstring "Set the value property for an element.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "insert-child"
-  {:ns "clojure.zip",
-   :name "insert-child",
-   :signature ["[loc item]"],
-   :type "function",
-   :full-name "clojure.zip/insert-child",
-   :docstring
-   "Inserts the item as the leftmost child of the node at this loc,\nwithout moving",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "blank?"
-  {:description
-   "True if `s` is nil, empty, or contains only whitespace.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "blank?",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>True if <code>s</code> is nil, empty, or contains only whitespace.</p>",
-   :full-name "clojure.string/blank?",
-   :docstring "True is s is nil, empty, or contains only whitespace."},
   "ISeq"
   {:ns "cljs.core",
    :name "ISeq",
@@ -7541,17 +4971,6 @@
    :full-name "cljs.core/ISeq",
    :docstring
    "Protocol for collections to provide access to their items as sequences.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "stringify-keys"
-  {:ns "clojure.walk",
-   :name "stringify-keys",
-   :signature ["[m]"],
-   :type "function",
-   :full-name "clojure.walk/stringify-keys",
-   :docstring
-   "Recursively transforms all map keys from keywords to strings.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7563,15 +4982,6 @@
    :full-name "cljs.core/obj-map",
    :docstring
    "keyval => key val\nReturns a new object map with supplied mappings.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "listen"
-  {:ns "clojure.browser.event",
-   :name "listen",
-   :signature ["[src type fn]" "[src type fn capture?]"],
-   :type "function",
-   :full-name "clojure.browser.event/listen",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7603,15 +5013,6 @@
    :full-name "special/if",
    :docstring
    "Evaluates test. If not the singular values nil or false,\nevaluates and yields then, otherwise, evaluates and yields else. If\nelse is not supplied it defaults to nil."},
-  "read-number"
-  {:ns "cljs.reader",
-   :name "read-number",
-   :signature ["[reader initch]"],
-   :type "function",
-   :full-name "cljs.reader/read-number",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "let"
   {:description
    "Binds expressions to symbols and makes those symbols available only within\n`body`.\n\n`bindings` should be a vector with an even number of forms, ie: `[a1 b1, a2 b2,\na3 b3]`. The first item in a pair (the `a`s) should be a symbol that is assigned\nthe evaluation of the second item (the `b`s). These symbols (the `a`s) are then\navailable within `body` (and not outside of `body`).\n\nAnother way to think about this is that the binding symbols in `let` are like\nlocal `def`s that are only available within `let`'s scope.\n\nIn addition to direct symbol binding, `let` supports a destructuring syntax to\n\"break apart\" collections into multiple symbols. This destructuring syntax is\nlike it's own [mini-language] and allows for succinct code.\n\n`let` is a wrapper over one of ClojureScript's [special forms] and is a\nfundamental building block of the language. Many macros rely on `let`s binding\nsyntax and scope rules.\n\n[mini-language]:http://blog.jayfields.com/2010/07/clojure-destructuring.html\n[special forms]:http://clojure.org/special_forms",
@@ -7643,16 +5044,6 @@
    :type "function",
    :full-name "cljs.core/chunked-seq?",
    :docstring "Return true if x is satisfies IChunkedSeq.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*print-radix*"
-  {:ns "cljs.pprint",
-   :name "*print-radix*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-radix*",
-   :docstring
-   "Print a radix specifier in front of integers and rationals. If *print-base* is 2, 8,\nor 16, then the radix specifier used is #b, #o, or #x, respectively. Otherwise the\nradix specifier is in the form #XXr where XX is the decimal value of *print-base* ",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7720,39 +5111,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "character"
-  {:description
-   "A single character string.  Carried over from Clojure for\ncompatibility.  They are represented as single character JavaScript strings.\n\n`\\c` = `\"c\"`\n\n| unicode characters  | constraints                                   |\n|---------------------|-----------------------------------------------|\n| `\\uXXXX`            | XXXX must have 4 digits outside 0xD7FF-0xE000 |\n| `\\oXXX`             | XXX is octal between 0 and 0377               |\n\n| special characters  | result   |\n|---------------------|----------|\n| `\\newline`          | `\"\\n\"`   |\n| `\\space`            | `\" \"`    |\n| `\\tab`              | `\"\\t\"`   |\n| `\\formfeed`         | `\"\\f\"`   |\n| `\\backspace`        | `\"\\b\"`   |\n| `\\return`           | `\"\\r\"`   |",
-   :examples-htmls
-   ["<pre><code class=\"clj\">\\c\n;;=&gt; &quot;c&quot;\n\n\\A\n;;=&gt; &quot;A&quot;\n\n\\newline\n;;=&gt; &quot;\\n&quot;\n\n\\u00a1\n;;=&gt; &quot;¡&quot;\n\n\\o256\n;;=&gt; &quot;®&quot;\n</code></pre>"],
-   :ns "syntax",
-   :name "character",
-   :type "syntax",
-   :related ["syntax/string" "cljs.core/str"],
-   :examples-strings
-   [["\\c ;;=> \"c\""
-     "\\A ;;=> \"A\""
-     "\\newline ;;=> \"\\n\""
-     "\\u00a1 ;;=> \"¡\""
-     "\\o256 ;;=> \"®\""]],
-   :description-html
-   "<p>A single character string.  Carried over from Clojure for compatibility.  They are represented as single character JavaScript strings.</p><p><code>\\c</code> = <code>&quot;c&quot;</code></p><p>| unicode characters  | constraints                                   | |---------------------|-----------------------------------------------| | <code>\\uXXXX</code>            | XXXX must have 4 digits outside 0xD7FF-0xE000 | | <code>\\oXXX</code>             | XXX is octal between 0 and 0377               |</p><p>| special characters  | result   | |---------------------|----------| | <code>\\newline</code>          | <code>&quot;\\n&quot;</code>   | | <code>\\space</code>            | <code>&quot; &quot;</code>    | | <code>\\tab</code>              | <code>&quot;\\t&quot;</code>   | | <code>\\formfeed</code>         | <code>&quot;\\f&quot;</code>   | | <code>\\backspace</code>        | <code>&quot;\\b&quot;</code>   | | <code>\\return</code>           | <code>&quot;\\r&quot;</code>   |</p>",
-   :examples
-   [{:id "495a47",
-     :content
-     "```clj\n\\c\n;;=> \"c\"\n\n\\A\n;;=> \"A\"\n\n\\newline\n;;=> \"\\n\"\n\n\\u00a1\n;;=> \"¡\"\n\n\\o256\n;;=> \"®\"\n```"}],
-   :full-name "syntax/character"},
-  "pprint-indent"
-  {:ns "cljs.pprint",
-   :name "pprint-indent",
-   :signature ["[relative-to n]"],
-   :type "function",
-   :full-name "cljs.pprint/pprint-indent",
-   :docstring
-   "Create an indent at this point in the pretty printing stream. This defines how\nfollowing lines are indented. relative-to can be either :block or :current depending\nwhether the indent should be computed relative to the start of the logical block or\nthe current column position. n is an offset.\n\nThis function is intended for use when writing custom dispatch functions.\n\nOutput is sent to *out* which must be a pretty printing writer.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-inc"
   {:ns "cljs.core",
    :name "unchecked-inc",
@@ -7762,30 +5120,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "earmuffs"
-  {:description
-   "A naming convention for dynamic vars (unenforced).\n\n`(def ^:dynamic *foo* 1)`\n\nDynamic vars are global vars that you intend to temporarily rebind with\n[doc:cljs.core/binding].\n\nNOTE: Sometimes, the core library uses the earmuffs convention for non-dynamic\nspecial global vars (e.g. [doc:cljs.core/*clojurescript-version*],\n[doc:cljs.core/*main-cli-fn*]).",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;def &#94;:dynamic &#42;foo&#42; 1&#41;\n\n&#40;def print-foo &#91;&#93;\n  &#40;println &#42;foo&#42;&#41;&#41;\n\n&#40;print-foo&#41;\n;; 1\n\n&#40;binding &#91;&#42;foo&#42; 2&#93;\n  &#40;print-foo&#41;&#41;\n;; 2\n\n&#40;print-foo&#41;\n;; 1\n</code></pre>"],
-   :ns "syntax",
-   :name "earmuffs",
-   :type "convention",
-   :related ["cljs.core/binding"],
-   :examples-strings
-   [["(def ^:dynamic *foo* 1)"
-     "(def print-foo []"
-     "  (println *foo*))"
-     "(print-foo) ;; 1"
-     "(binding [*foo* 2]"
-     "  (print-foo)) ;; 2"
-     "(print-foo) ;; 1"]],
-   :description-html
-   "<p>A naming convention for dynamic vars (unenforced).</p><p><code>&#40;def &#94;:dynamic &#42;foo&#42; 1&#41;</code></p><p>Dynamic vars are global vars that you intend to temporarily rebind with [doc:cljs.core/binding].</p><p>NOTE: Sometimes, the core library uses the earmuffs convention for non-dynamic special global vars (e.g. [doc:cljs.core/<em>clojurescript-version</em>], [doc:cljs.core/<em>main-cli-fn</em>]).</p>",
-   :examples
-   [{:id "91cf10",
-     :content
-     "```clj\n(def ^:dynamic *foo* 1)\n\n(def print-foo []\n  (println *foo*))\n\n(print-foo)\n;; 1\n\n(binding [*foo* 2]\n  (print-foo))\n;; 2\n\n(print-foo)\n;; 1\n```"}],
-   :full-name "syntax/earmuffs"},
   "List.EMPTY"
   {:ns "cljs.core",
    :name "List.EMPTY",
@@ -7818,60 +5152,12 @@
    "<p>Returns a sequence of the values in <code>hash-map</code>.</p>",
    :full-name "cljs.core/vals",
    :docstring "Returns a sequence of the map's values."},
-  "import"
-  {:description
-   "import-list => (closure-namespace constructor-name-symbols*)\n\nOnly usable from a REPL.\n\nImport Google Closure classes.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;import 'goog.math.Long\n        '&#91;goog.math Vec2 Vec3&#93;\n        '&#91;goog.math Integer&#93;&#41;\n\n&#40;Long. 4 6&#41;\n;;=&gt; #&lt;25769803780&gt;\n\n&#40;Vec2. 1 2&#41;\n;;=&gt; #&lt;&#40;1, 2&#41;&gt;\n\n&#40;Vec3. 1 2 3&#41;\n;;=&gt; #&lt;&#40;1, 2, 3&#41;&gt;\n\n&#40;Integer.fromString &quot;10&quot;&#41;\n;;=&gt; #&lt;10&gt;\n</code></pre>"],
-   :ns "specialrepl",
-   :name "import",
-   :signature ["[& import-symbols-or-lists]"],
-   :type "special form (repl)",
-   :examples-strings
-   [["(import 'goog.math.Long"
-     "        '[goog.math Vec2 Vec3]"
-     "        '[goog.math Integer])"
-     "(Long. 4 6) ;;=> #<25769803780>"
-     "(Vec2. 1 2) ;;=> #<(1, 2)>"
-     "(Vec3. 1 2 3) ;;=> #<(1, 2, 3)>"
-     "(Integer.fromString \"10\") ;;=> #<10>"]],
-   :description-html
-   "<p>import-list => (closure-namespace constructor-name-symbols*)</p><p>Only usable from a REPL.</p><p>Import Google Closure classes.</p>",
-   :examples
-   [{:id "03acc0",
-     :content
-     "```clj\n(import 'goog.math.Long\n        '[goog.math Vec2 Vec3]\n        '[goog.math Integer])\n\n(Long. 4 6)\n;;=> #<25769803780>\n\n(Vec2. 1 2)\n;;=> #<(1, 2)>\n\n(Vec3. 1 2 3)\n;;=> #<(1, 2, 3)>\n\n(Integer.fromString \"10\")\n;;=> #<10>\n```"}],
-   :full-name "specialrepl/import",
-   :docstring
-   "import-list => (closure-namespace constructor-name-symbols*)\n\nFor each name in constructor-name-symbols, adds a mapping from name to the\nconstructor named by closure-namespace to the current namespace. Use :import in the ns\nmacro in preference to calling this directly."},
-  "edit"
-  {:ns "clojure.zip",
-   :name "edit",
-   :signature ["[loc f & args]"],
-   :type "function",
-   :full-name "clojure.zip/edit",
-   :docstring
-   "Replaces the node at this loc with the value of (f node args)",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "seq-iter"
   {:ns "cljs.core",
    :name "seq-iter",
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/seq-iter",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "connect"
-  {:ns "clojure.browser.repl",
-   :name "connect",
-   :signature ["[repl-server-url]"],
-   :type "function",
-   :full-name "clojure.browser.repl/connect",
-   :docstring
-   "Connects to a REPL server from an HTML document. After the\nconnection is made, the REPL will evaluate forms in the context of\nthe document that called this function.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -7941,15 +5227,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "read-string*"
-  {:ns "cljs.reader",
-   :name "read-string*",
-   :signature ["[reader _]"],
-   :type "function",
-   :full-name "cljs.reader/read-string*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "when-let"
   {:description
    "When `test` is logical true, evaluates `body` with the value of `test` bound to\n`x`.",
@@ -7970,17 +5247,6 @@
    :full-name "cljs.core/when-let",
    :docstring
    "bindings => binding-form test\n\nWhen test is true, evaluates body with binding-form bound to the value of test"},
-  "eval"
-  {:ns "cljs.js",
-   :name "eval",
-   :signature ["[state form cb]" "[state form opts cb]"],
-   :type "function",
-   :full-name "cljs.js/eval",
-   :docstring
-   "Evaluate a single ClojureScript form. The parameters:\n\nstate (atom)\n  the compiler state\n\nform (s-expr)\n  the ClojureScript source\n\nopts (map)\n  compilation options.\n\n  :eval - the eval function to invoke, see *eval-fn*\n  :load - library resolution function, see *load-fn*\n\ncb (function)\n  callback, will be invoked with a map. If successful the map will contain\n  a key :value with the result of evalution. If unsuccessful the map will\n  contain a key :error with an ex-info instance describing the cause of\n  failure.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "m3-C1"
   {:ns "cljs.core",
    :name "m3-C1",
@@ -8056,15 +5322,6 @@
    "<p>Returns the opposite of <code>=</code>.</p><p>Same as <code>&#40;not &#40;= x y&#41;&#41;</code></p>",
    :full-name "cljs.core/not=",
    :docstring "Same as (not (= obj1 obj2))"},
-  "send-404"
-  {:ns "cljs.repl.server",
-   :name "send-404",
-   :signature ["[conn path]"],
-   :type "function",
-   :full-name "cljs.repl.server/send-404",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "doto"
   {:ns "cljs.core",
    :name "doto",
@@ -8100,25 +5357,6 @@
    :signature ["[arr i]"],
    :type "type",
    :full-name "cljs.core/IndexedSeqIterator",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "atom?"
-  {:ns "cljs.js",
-   :name "atom?",
-   :signature ["[x]"],
-   :type "function",
-   :full-name "cljs.js/atom?",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "rights"
-  {:ns "clojure.zip",
-   :name "rights",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/rights",
-   :docstring "Returns a seq of the right siblings of this loc",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8182,29 +5420,11 @@
    :full-name "cljs.core/atom",
    :docstring
    "Creates and returns an Atom with an initial value of x and zero or\nmore options (in any order):\n\n:meta metadata-map\n\n:validator validate-fn\n\nIf metadata-map is supplied, it will be come the metadata on the\natom. validate-fn must be nil or a side-effect-free fn of one\nargument, which will be passed the intended new state on any state\nchange. If the new state is unacceptable, the validate-fn should\nreturn false or throw an Error.  If either of these error conditions\noccur, then the value of the atom will not change."},
-  "reader-error"
-  {:ns "cljs.reader",
-   :name "reader-error",
-   :signature ["[rdr & msg]"],
-   :type "function",
-   :full-name "cljs.reader/reader-error",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "Set.EMPTY"
   {:ns "cljs.core",
    :name "Set.EMPTY",
    :type "var",
    :full-name "cljs.core/Set.EMPTY",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-and-clear-env!"
-  {:ns "cljs.test",
-   :name "get-and-clear-env!",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.test/get-and-clear-env!",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8227,15 +5447,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "run-in-order"
-  {:ns "cljs.repl.browser",
-   :name "run-in-order",
-   :signature ["[{:keys [expecting fns]}]"],
-   :type "function",
-   :full-name "cljs.repl.browser/run-in-order",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "vector"
   {:description "Creates a new vector containing `args`.",
    :examples-htmls [],
@@ -8253,50 +5464,6 @@
    "<p>Creates a new vector containing <code>args</code>.</p>",
    :full-name "cljs.core/vector",
    :docstring "Creates a new vector containing the args."},
-  "websocket-connection"
-  {:ns "clojure.browser.net",
-   :name "websocket-connection",
-   :signature
-   ["[]" "[auto-reconnect?]" "[auto-reconnect? next-reconnect-fn]"],
-   :type "function",
-   :full-name "clojure.browser.net/websocket-connection",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-ns"
-  {:ns "cljs.repl.nashorn",
-   :name "load-ns",
-   :signature ["[engine ns]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/load-ns",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "capitalize"
-  {:description
-   "Converts first character of the string to upper-case, all other characters to\nlower-case.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "capitalize",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Converts first character of the string to upper-case, all other characters to lower-case.</p>",
-   :full-name "clojure.string/capitalize",
-   :docstring
-   "Converts first character of the string to upper-case, all other\ncharacters to lower-case."},
-  "no-warn"
-  {:ns "cljs.analyzer.api",
-   :name "no-warn",
-   :signature ["[& body]"],
-   :type "macro",
-   :full-name "cljs.analyzer.api/no-warn",
-   :docstring
-   "Disable analyzer warnings for any analysis executed in body.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "specify"
   {:ns "cljs.core",
    :name "specify",
@@ -8323,49 +5490,21 @@
    :full-name "cljs.core/if-some",
    :docstring
    "bindings => binding-form test\n\nIf test is not nil, evaluates then with binding-form bound to the\nvalue of test, if not, yields else"},
-  "update-current-env!"
-  {:ns "cljs.test",
-   :name "update-current-env!",
-   :signature ["[ks f & args]"],
-   :type "function",
-   :full-name "cljs.test/update-current-env!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "take-while"
-  {:ns "clojure.core.reducers",
+  {:description
+   "Returns a lazy sequence of successive items from `coll` while `(pred item)`\nreturns true. `pred` must be free of side-effects.\n\nReturns a transducer when no collection is provided.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "take-while",
    :signature ["[pred]" "[pred coll]"],
    :type "function",
-   :full-name "clojure.core.reducers/take-while",
-   :docstring
-   "Ends the reduction of coll when (pred val) returns logical false.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "select"
-  {:description
-   "Returns a set of the elements for which `pred` is true.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "select",
-   :signature ["[pred xset]"],
-   :type "function",
-   :related ["cljs.core/filter"],
+   :related ["cljs.core/drop-while" "cljs.core/split-with"],
    :examples-strings [],
    :description-html
-   "<p>Returns a set of the elements for which <code>pred</code> is true.</p>",
-   :full-name "clojure.set/select",
-   :docstring "Returns a set of the elements for which pred is true"},
-  "js-line-and-column"
-  {:ns "cljs.test",
-   :name "js-line-and-column",
-   :signature ["[stack-element]"],
-   :type "function",
-   :full-name "cljs.test/js-line-and-column",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
+   "<p>Returns a lazy sequence of successive items from <code>coll</code> while <code>&#40;pred item&#41;</code> returns true. <code>pred</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
+   :full-name "cljs.core/take-while",
+   :docstring
+   "Returns a lazy sequence of successive items from coll while\n(pred item) returns true. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
   "indexed?"
   {:ns "cljs.core",
    :name "indexed?",
@@ -8391,14 +5530,6 @@
    :signature ["[arr i]"],
    :type "type",
    :full-name "cljs.core/IndexedSeq",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IPrintStacktrace"
-  {:ns "cljs.repl",
-   :name "IPrintStacktrace",
-   :type "protocol",
-   :full-name "cljs.repl/IPrintStacktrace",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8484,27 +5615,6 @@
    "<p>Returns true if <code>x</code> is a list, false otherwise.</p>",
    :full-name "cljs.core/list?",
    :docstring "Returns true if x implements IList"},
-  "emit"
-  {:ns "cljs.compiler.api",
-   :name "emit",
-   :signature ["[ast]" "[state ast]"],
-   :type "function",
-   :full-name "cljs.compiler.api/emit",
-   :docstring
-   "Given an AST node generated by the analyzer emit JavaScript as a string.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "start"
-  {:ns "cljs.repl.server",
-   :name "start",
-   :signature ["[opts]"],
-   :type "function",
-   :full-name "cljs.repl.server/start",
-   :docstring "Start the server on the specified port.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "implements?"
   {:ns "cljs.core",
    :name "implements?",
@@ -8535,17 +5645,6 @@
    :name "Vector.EMPTY",
    :type "var",
    :full-name "cljs.core/Vector.EMPTY",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "prev"
-  {:ns "clojure.zip",
-   :name "prev",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/prev",
-   :docstring
-   "Moves to the previous loc in the hierarchy, depth-first. If already\nat the root, returns nil.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8582,37 +5681,6 @@
    :full-name "cljs.core/case",
    :docstring
    "Takes an expression, and a set of clauses.\n\nEach clause can take the form of either:\n\ntest-constant result-expr\n\n(test-constant1 ... test-constantN)  result-expr\n\nThe test-constants are not evaluated. They must be compile-time\nliterals, and need not be quoted.  If the expression is equal to a\ntest-constant, the corresponding result-expr is returned. A single\ndefault expression can follow the clauses, and its value will be\nreturned if no clause matches. If no default expression is provided\nand no clause matches, an Error is thrown.\n\nUnlike cond and condp, case does a constant-time dispatch, the\nclauses are not considered sequentially.  All manner of constant\nexpressions are acceptable in case, including numbers, strings,\nsymbols, keywords, and (ClojureScript) composites thereof. Note that since\nlists are used to group multiple constants that map to the same\nexpression, a vector can be used to match a list if needed. The\ntest-constants need not be all of the same type."},
-  "maybe-read-tagged-type"
-  {:ns "cljs.reader",
-   :name "maybe-read-tagged-type",
-   :signature ["[rdr initch]"],
-   :type "function",
-   :full-name "cljs.reader/maybe-read-tagged-type",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "constrain-order"
-  {:ns "cljs.repl.browser",
-   :name "constrain-order",
-   :signature ["[order f]"],
-   :type "function",
-   :full-name "cljs.repl.browser/constrain-order",
-   :docstring
-   "Elements to be printed in the REPL will arrive out of order. Ensure\nthat they are printed in the correct order.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "build"
-  {:ns "cljs.build.api",
-   :name "build",
-   :signature ["[source opts]" "[source opts compiler-env]"],
-   :type "function",
-   :full-name "cljs.build.api/build",
-   :docstring
-   "Given a source which can be compiled, produce runnable JavaScript.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "int-array"
   {:ns "cljs.core",
    :name "int-array",
@@ -8624,50 +5692,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "repl-read"
-  {:ns "cljs.repl",
-   :name "repl-read",
-   :signature
-   ["[request-prompt request-exit]"
-    "[request-prompt request-exit opts]"],
-   :type "function",
-   :full-name "cljs.repl/repl-read",
-   :docstring
-   "Default :read hook for repl. Reads from *in* which must either be an\ninstance of LineNumberingPushbackReader or duplicate its behavior of both\nsupporting .unread and collapsing all of CR, LF, and CRLF into a single\n\\newline. repl-read:\n  - skips whitespace, then\n    - returns request-prompt on start of line, or\n    - returns request-exit on end of stream, or\n    - reads an object from the input stream, then\n      - skips the next input character if it's end of line, then\n      - returns the object.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "compile-str"
-  {:ns "cljs.js",
-   :name "compile-str",
-   :signature
-   ["[state source cb]"
-    "[state source name cb]"
-    "[state source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/compile-str",
-   :docstring
-   "Compile ClojureScript source into JavaScript. The parameters:\n\nstate (atom)\n  the compiler state\n\nsource (string)\n  the ClojureScript source\n\nname (symbol)\n  optional, the name of the source\n\nopts (map)\n  compilation options.\n\n  :load       - library resolution function, see *load-fn*\n  :source-map - set to true to generate inline source map information\n\ncb (function)\n  callback, will be invoked with a map. If successful the map will contain\n  a key :value with the compilation result (string). If unsuccessful the map\n  will contain a key :error with an ex-info instance describing the cause\n  of failure.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "HashSetIter"
   {:ns "cljs.core",
    :name "HashSetIter",
    :signature ["[iter]"],
    :type "type",
    :full-name "cljs.core/HashSetIter",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pp"
-  {:ns "cljs.pprint",
-   :name "pp",
-   :signature ["[]"],
-   :type "macro",
-   :full-name "cljs.pprint/pp",
-   :docstring
-   "A convenience macro that pretty prints the last thing output. This is\nexactly equivalent to (pprint *1).",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8690,52 +5720,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "split"
-  {:description
-   "Splits string on a regular expression. Optional argument limit is the maximum\nnumber of splits. Not lazy. Returns vector of the splits.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "split",
-   :signature ["[s re]" "[s re limit]"],
-   :type "function",
-   :related
-   ["cljs.core/subs"
-    "clojure.string/replace"
-    "clojure.string/split-lines"],
-   :examples-strings [],
-   :description-html
-   "<p>Splits string on a regular expression. Optional argument limit is the maximum number of splits. Not lazy. Returns vector of the splits.</p>",
-   :full-name "clojure.string/split",
-   :docstring
-   "Splits string on a regular expression. Optional argument limit is\nthe maximum number of splits. Not lazy. Returns vector of the splits."},
-  "event-types"
-  {:ns "clojure.browser.net",
-   :name "event-types",
-   :type "var",
-   :full-name "clojure.browser.net/event-types",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "cljs-ns-dependents"
-  {:ns "cljs.build.api",
-   :name "cljs-ns-dependents",
-   :signature ["[ns]" "[state ns]"],
-   :type "function",
-   :full-name "cljs.build.api/cljs-ns-dependents",
-   :docstring
-   "Given a namespace symbol return a seq of all dependent\nnamespaces sorted in dependency order. Will include\ntransient dependents.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "firefox-st-el->frame"
-  {:ns "cljs.repl.browser",
-   :name "firefox-st-el->frame",
-   :signature ["[repl-env st-el opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/firefox-st-el->frame",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ExceptionInfo"
   {:ns "cljs.core",
    :name "ExceptionInfo",
@@ -8746,33 +5730,16 @@
    :examples-strings [],
    :examples-htmls []},
   "keyword"
-  {:description
-   "A keyword is a string-like datatype that evaluates to itself.  Keywords are often used\nas enums or keys for maps.  Keywords should not start with a number.\n\nKeywords can have an optional namespace. For example, `:foo/bar`. This is useful\nfor functions in a namespace to prevent key collisions on a globally accessible\nmap.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">:foo\n;;=&gt; :foo\n\n:a/foo\n;;=&gt; :a/foo\n</code></pre>"
-    "<p>A keyword is also callable for retrieving values from a map:</p><pre><code class=\"clj\">&#40;def m {:foo 1}&#41;\n&#40;:foo m&#41;\n;;=&gt; 1\n\n&#40;def things &#91;{:foo 1 :bar 2}\n             {:foo 3 :bar 4}\n             {:foo 5 :bar 6}&#93;&#41;\n&#40;map :foo things&#41;\n;;=&gt; &#40;1 3 5&#41;\n</code></pre>"],
-   :ns "syntax",
+  {:ns "cljs.core",
    :name "keyword",
-   :type "syntax",
-   :related
-   ["syntax/keyword-qualify" "cljs.core/keyword" "cljs.core/keyword?"],
-   :examples-strings
-   [[":foo ;;=> :foo" ":a/foo ;;=> :a/foo"]
-    ["(def m {:foo 1})"
-     "(:foo m) ;;=> 1"
-     "(def things [{:foo 1 :bar 2}"
-     "             {:foo 3 :bar 4}"
-     "             {:foo 5 :bar 6}])"
-     "(map :foo things) ;;=> (1 3 5)"]],
-   :description-html
-   "<p>A keyword is a string-like datatype that evaluates to itself.  Keywords are often used as enums or keys for maps.  Keywords should not start with a number.</p><p>Keywords can have an optional namespace. For example, <code>:foo/bar</code>. This is useful for functions in a namespace to prevent key collisions on a globally accessible map.</p>",
-   :examples
-   [{:id "e5fdbe",
-     :content "```clj\n:foo\n;;=> :foo\n\n:a/foo\n;;=> :a/foo\n```"}
-    {:id "9765fe",
-     :content
-     "A keyword is also callable for retrieving values from a map:\n\n```clj\n(def m {:foo 1})\n(:foo m)\n;;=> 1\n\n(def things [{:foo 1 :bar 2}\n             {:foo 3 :bar 4}\n             {:foo 5 :bar 6}])\n(map :foo things)\n;;=> (1 3 5)\n```"}],
-   :full-name "syntax/keyword"},
+   :signature ["[name]" "[ns name]"],
+   :type "function",
+   :full-name "cljs.core/keyword",
+   :docstring
+   "Returns a Keyword with the given namespace and name.  Do not use :\nin the keyword strings, it will be added automatically.",
+   :description-html nil,
+   :examples-strings [],
+   :examples-htmls []},
   "pr-str"
   {:ns "cljs.core",
    :name "pr-str",
@@ -8785,38 +5752,20 @@
    :examples-strings [],
    :examples-htmls []},
   "remove"
-  {:ns "clojure.zip",
+  {:description
+   "Returns a lazy sequence of the items in `coll` for which `(pred item)` returns\nfalse.\n\n`pred` must be free of side-effects.\n\nReturns a transducer when no collection is provided.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "remove",
-   :signature ["[loc]"],
+   :signature ["[pred]" "[pred coll]"],
    :type "function",
-   :full-name "clojure.zip/remove",
+   :related ["cljs.core/filter"],
+   :examples-strings [],
+   :description-html
+   "<p>Returns a lazy sequence of the items in <code>coll</code> for which <code>&#40;pred item&#41;</code> returns false.</p><p><code>pred</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
+   :full-name "cljs.core/remove",
    :docstring
-   "Removes the node at loc, returning the loc that would have preceded\nit in a depth-first walk.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "fold"
-  {:ns "clojure.core.reducers",
-   :name "fold",
-   :signature
-   ["[reducef coll]"
-    "[combinef reducef coll]"
-    "[n combinef reducef coll]"],
-   :type "function",
-   :full-name "clojure.core.reducers/fold",
-   :docstring
-   "Reduces a collection using a (potentially parallel) reduce-combine\nstrategy. The collection is partitioned into groups of approximately\nn (default 512), each of which is reduced with reducef (with a seed\nvalue obtained by calling (combinef) with no arguments). The results\nof these reductions are then reduced with combinef (default\nreducef). combinef must be associative, and, when called with no\narguments, (combinef) must produce its identity element. These\noperations may be performed in parallel, but the results will\npreserve order.\n\nNote: Performing operations in parallel is currently not implemented.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "bootjs"
-  {:ns "cljs.repl.rhino",
-   :name "bootjs",
-   :type "var",
-   :full-name "cljs.repl.rhino/bootjs",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
+   "Returns a lazy sequence of the items in coll for which\n(pred item) returns false. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
   "delay?"
   {:ns "cljs.core",
    :name "delay?",
@@ -8824,17 +5773,6 @@
    :type "function",
    :full-name "cljs.core/delay?",
    :docstring "returns true if x is a Delay created with delay",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "fresh-line"
-  {:ns "cljs.pprint",
-   :name "fresh-line",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.pprint/fresh-line",
-   :docstring
-   "Make a newline if *out* is not already at the beginning of the line. If *out* is\nnot a pretty writer (which keeps track of columns), this function always outputs a newline.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8855,20 +5793,6 @@
    :signature ["[obj name]"],
    :type "type",
    :full-name "cljs.core/Namespace",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "evaluate-form"
-  {:ns "cljs.repl",
-   :name "evaluate-form",
-   :signature
-   ["[repl-env env filename form]"
-    "[repl-env env filename form wrap]"
-    "[repl-env env filename form wrap opts]"],
-   :type "function",
-   :full-name "cljs.repl/evaluate-form",
-   :docstring
-   "Evaluate a ClojureScript form in the JavaScript environment. Returns a\nstring which is the ClojureScript return value. This string may or may\nnot be readable by the Clojure reader.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -8896,43 +5820,6 @@
    :full-name "cljs.core/interleave",
    :docstring
    "Returns a lazy seq of the first item in each coll, then the second etc."},
-  "server-state"
-  {:ns "cljs.repl.browser",
-   :name "server-state",
-   :type "var",
-   :full-name "cljs.repl.browser/server-state",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-caught"
-  {:ns "cljs.repl",
-   :name "repl-caught",
-   :signature ["[e repl-env opts]"],
-   :type "function",
-   :full-name "cljs.repl/repl-caught",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "html->dom"
-  {:ns "clojure.browser.dom",
-   :name "html->dom",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "clojure.browser.dom/html->dom",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "prewalk-replace"
-  {:ns "clojure.walk",
-   :name "prewalk-replace",
-   :signature ["[smap form]"],
-   :type "function",
-   :full-name "clojure.walk/prewalk-replace",
-   :docstring
-   "Recursively transforms form by replacing keys in smap with their\nvalues.  Like clojure/replace but works on any data structure.  Does\nreplacement at the root of the tree first.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "map?"
   {:description "Returns true if `x` is a map, false otherwise.",
    :examples-htmls [],
@@ -8946,15 +5833,6 @@
    "<p>Returns true if <code>x</code> is a map, false otherwise.</p>",
    :full-name "cljs.core/map?",
    :docstring "Return true if x satisfies IMap"},
-  "setup"
-  {:ns "cljs.repl.node",
-   :name "setup",
-   :signature ["[repl-env]" "[repl-env opts]"],
-   :type "function",
-   :full-name "cljs.repl.node/setup",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "bit-not"
   {:description "Bitwise complement.  Same as `~x` in JavaScript.",
    :examples-htmls
@@ -8973,15 +5851,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-not 2r1100)\n;;=> -13\n```\n\nSame numbers in decimal:\n\n```clj\n(bit-not 12)\n;;=> -13\n```"}],
    :full-name "cljs.core/bit-not",
    :docstring "Bitwise complement"},
-  "firefox-clean-function"
-  {:ns "cljs.repl.browser",
-   :name "firefox-clean-function",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.repl.browser/firefox-clean-function",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "rand-nth"
   {:description
    "Returns a random element from a sequential collection `coll`.\n\nHas the same performance characteristics as `nth`.",
@@ -8997,47 +5866,6 @@
    :full-name "cljs.core/rand-nth",
    :docstring
    "Return a random element of the (sequential) collection. Will have\nthe same performance characteristics as nth for the given\ncollection."},
-  "dump-core"
-  {:ns "cljs.js",
-   :name "dump-core",
-   :signature ["[]"],
-   :type "macro",
-   :full-name "cljs.js/dump-core",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "number"
-  {:description
-   "ClojureScript numbers are the same as [JavaScript numbers],\ndouble-precision 64-bit format IEEE 754.\n\n[JavaScript numbers]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates#Numbers\n\nAvailable formats listed below. Decimal points are not allowed when specifying\na custom base.\n\n- decimal `123` `1.23`\n- exponent `12e3` `1.2e3` `1.2e-3`\n- hexadecimal `0x123`\n- octal `0123`\n- binary `2r0110`\n- arbitrary `NrXXX` where `(<= 2 N 36)` and `X` is in `[0-9,A-Z]`",
-   :examples-htmls
-   ["<pre><code class=\"clj\">123\n;;=&gt; 123\n\n123.45\n;;=&gt; 123.45\n</code></pre><p>Scientific notation;</p><pre><code class=\"clj\">12e3\n;;=&gt; 12000\n\n1.2e-3\n;;=&gt; 0.0012\n</code></pre><p>Standard hex and octal notations:</p><pre><code class=\"clj\">0x1f\n;;=&gt; 31\n\n010\n;;=&gt; 8\n</code></pre><p>Radix notation for using up to base 36.</p><pre><code class=\"clj\">2r10111\n;;=&gt; 23\n\n8r32\n;;=&gt; 26\n\n16rFF\n;;=&gt; 255\n\n36rZ\n;;=&gt; 35\n</code></pre>"],
-   :ns "syntax",
-   :name "number",
-   :type "syntax",
-   :related
-   ["syntax/Infinity"
-    "syntax/NaN"
-    "cljs.core/number?"
-    "cljs.core/integer?"
-    "cljs.core/int"],
-   :examples-strings
-   [["123 ;;=> 123"
-     "123.45 ;;=> 123.45"
-     "12e3 ;;=> 12000"
-     "1.2e-3 ;;=> 0.0012"
-     "0x1f ;;=> 31"
-     "010 ;;=> 8"
-     "2r10111 ;;=> 23"
-     "8r32 ;;=> 26"
-     "16rFF ;;=> 255"
-     "36rZ ;;=> 35"]],
-   :description-html
-   "<p>ClojureScript numbers are the same as [JavaScript numbers], double-precision 64-bit format IEEE 754.</p><p>[JavaScript numbers]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers<i>and</i>dates#Numbers</p><p>Available formats listed below. Decimal points are not allowed when specifying a custom base.</p><ul><li>decimal <code>123</code> <code>1.23</code></li><li>exponent <code>12e3</code> <code>1.2e3</code> <code>1.2e-3</code></li><li>hexadecimal <code>0x123</code></li><li>octal <code>0123</code></li><li>binary <code>2r0110</code></li><li>arbitrary <code>NrXXX</code> where <code>&#40;&lt;= 2 N 36&#41;</code> and <code>X</code> is in <code>&#91;0-9,A-Z&#93;</code></li></ul>",
-   :examples
-   [{:id "f96060",
-     :content
-     "```clj\n123\n;;=> 123\n\n123.45\n;;=> 123.45\n```\n\nScientific notation;\n\n```clj\n12e3\n;;=> 12000\n\n1.2e-3\n;;=> 0.0012\n```\n\nStandard hex and octal notations:\n\n```clj\n0x1f\n;;=> 31\n\n010\n;;=> 8\n```\n\nRadix notation for using up to base 36.\n\n```clj\n2r10111\n;;=> 23\n\n8r32\n;;=> 26\n\n16rFF\n;;=> 255\n\n36rZ\n;;=> 35\n```"}],
-   :full-name "syntax/number"},
   "PersistentTreeMap"
   {:ns "cljs.core",
    :name "PersistentTreeMap",
@@ -9090,36 +5918,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "append!"
-  {:ns "clojure.core.reducers",
-   :name "append!",
-   :signature ["[acc x]"],
-   :type "function",
-   :full-name "clojure.core.reducers/append!",
-   :docstring ".adds x to acc and returns acc",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "walk"
-  {:ns "clojure.walk",
-   :name "walk",
-   :signature ["[inner outer form]"],
-   :type "function",
-   :full-name "clojure.walk/walk",
-   :docstring
-   "Traverses form, an arbitrary data structure.  inner and outer are\nfunctions.  Applies inner to each element of form, building up a\ndata structure of the same type, then applies outer to the result.\nRecognizes all Clojure data structures. Consumes seqs as with doall.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "js-filename"
-  {:ns "cljs.test",
-   :name "js-filename",
-   :signature ["[stack-element]"],
-   :type "function",
-   :full-name "cljs.test/js-filename",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "entries-iterator"
   {:ns "cljs.core",
    :name "entries-iterator",
@@ -9162,16 +5960,20 @@
    :docstring
    "Returns a lazy sequence of lists like partition, but may include\npartitions with fewer than n items at the end.  Returns a stateful\ntransducer when no collection is provided."},
   "mapcat"
-  {:ns "clojure.core.reducers",
+  {:description
+   "Returns the result of applying `concat` to the result of applying `map` to `f`\nand `colls`.\n\nFunction `f` should return a collection.\n\nReturns a transducer when no collections are provided.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "mapcat",
-   :signature ["[f]" "[f coll]"],
+   :signature ["[f]" "[f & colls]"],
    :type "function",
-   :full-name "clojure.core.reducers/mapcat",
-   :docstring
-   "Applies f to every value in the reduction of coll, concatenating the result\n  colls of (f val). Foldable.",
-   :description-html nil,
+   :related ["cljs.core/map" "cljs.core/concat"],
    :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p>Returns the result of applying <code>concat</code> to the result of applying <code>map</code> to <code>f</code> and <code>colls</code>.</p><p>Function <code>f</code> should return a collection.</p><p>Returns a transducer when no collections are provided.</p>",
+   :full-name "cljs.core/mapcat",
+   :docstring
+   "Returns the result of applying concat to the result of applying map\nto f and colls.  Thus function f should return a collection. Returns\na transducer when no collections are provided"},
   "*unchecked-if*"
   {:ns "cljs.core",
    :name "*unchecked-if*",
@@ -9235,34 +6037,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "testing-contexts-str"
-  {:ns "cljs.test",
-   :name "testing-contexts-str",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.test/testing-contexts-str",
-   :docstring
-   "Returns a string representation of the current test context. Joins\nstrings in *testing-contexts* with spaces.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*cljs-verbose*"
-  {:ns "cljs.repl",
-   :name "*cljs-verbose*",
-   :type "dynamic var",
-   :full-name "cljs.repl/*cljs-verbose*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-listener"
-  {:ns "clojure.browser.event",
-   :name "get-listener",
-   :signature ["[src type listener opt_capt opt_handler]"],
-   :type "function",
-   :full-name "clojure.browser.event/get-listener",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "goog-define"
   {:ns "cljs.core",
    :name "goog-define",
@@ -9292,15 +6066,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "eval*"
-  {:ns "cljs.js",
-   :name "eval*",
-   :signature ["[bound-vars form opts cb]"],
-   :type "function",
-   :full-name "cljs.js/eval*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IChunk"
   {:ns "cljs.core",
    :name "IChunk",
@@ -9317,50 +6082,6 @@
    :type "function",
    :full-name "cljs.core/prn",
    :docstring "Same as pr followed by (newline).",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "dir"
-  {:description
-   "Prints a sorted directory of public vars in a namespace `ns`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;require 'clojure.set&#41;\n\n&#40;dir clojure.set&#41;\n;; Prints:\n;;  difference\n;;  index\n;;  intersection\n;;  join\n;;  map-invert\n;;  project\n;;  rename\n;;  rename-keys\n;;  select\n;;  subset?\n;;  superset?\n;;  union\n;;\n;;=&gt; nil\n</code></pre>"],
-   :ns "cljs.repl",
-   :name "dir",
-   :signature ["[ns]"],
-   :type "macro",
-   :related ["cljs.repl/find-doc" "cljs.repl/apropos"],
-   :examples-strings
-   [["(require 'clojure.set)"
-     "(dir clojure.set) ;; Prints: ;;  difference ;;  index ;;  intersection ;;  join ;;  map-invert ;;  project ;;  rename ;;  rename-keys ;;  select ;;  subset? ;;  superset? ;;  union ;; ;;=> nil"]],
-   :description-html
-   "<p>Prints a sorted directory of public vars in a namespace <code>ns</code>.</p>",
-   :examples
-   [{:id "9bf2b0",
-     :content
-     "```clj\n(require 'clojure.set)\n\n(dir clojure.set)\n;; Prints:\n;;  difference\n;;  index\n;;  intersection\n;;  join\n;;  map-invert\n;;  project\n;;  rename\n;;  rename-keys\n;;  select\n;;  subset?\n;;  superset?\n;;  union\n;;\n;;=> nil\n```"}],
-   :full-name "cljs.repl/dir",
-   :docstring
-   "Prints a sorted directory of public vars in a namespace"},
-  "analyze-deps"
-  {:ns "cljs.js",
-   :name "analyze-deps",
-   :signature
-   ["[bound-vars ana-env lib deps cb]"
-    "[bound-vars ana-env lib deps opts cb]"],
-   :type "function",
-   :full-name "cljs.js/analyze-deps",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns->location"
-  {:ns "cljs.build.api",
-   :name "ns->location",
-   :signature ["[ns]" "[ns compiler-env]"],
-   :type "function",
-   :full-name "cljs.build.api/ns->location",
-   :docstring
-   "Given a namespace and compilation environment return the relative path and\nuri of the corresponding source regardless of the source language extension:\n.cljs, .cljc, .js. Returns a map containing :relative-path a string, and\n:uri a URL.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9406,16 +6127,20 @@
    :examples-strings [],
    :examples-htmls []},
   "filter"
-  {:ns "clojure.core.reducers",
+  {:description
+   "Returns a lazy sequence of the non-nil results of `(f item)`. Note, this means\nfalse return values will be included.\n\n`f` must be free of side-effects.\n\nReturns a transducer when no collection is provided.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "filter",
-   :signature ["[pred]" "[pred coll]"],
+   :signature ["[f]" "[f coll]"],
    :type "function",
-   :full-name "clojure.core.reducers/filter",
-   :docstring
-   "Retains values in the reduction of coll for which (pred val)\n  returns logical true. Foldable.",
-   :description-html nil,
+   :related ["cljs.core/remove" "cljs.core/keep"],
    :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p>Returns a lazy sequence of the non-nil results of <code>&#40;f item&#41;</code>. Note, this means false return values will be included.</p><p><code>f</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
+   :full-name "cljs.core/filter",
+   :docstring
+   "Returns a lazy sequence of the items in coll for which\n(pred item) returns true. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
   "take-last"
   {:description
    "Returns a sequence of the last `n` items in `coll`.\n\nDepending on the type of collection, `take-last` may be no faster than linear\ntime. For vectors, please use `subvec`.",
@@ -9468,24 +6193,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "read-literal"
-  {:ns "cljs.reader",
-   :name "read-literal",
-   :signature ["[rdr ch]"],
-   :type "function",
-   :full-name "cljs.reader/read-literal",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-regex"
-  {:ns "cljs.reader",
-   :name "read-regex",
-   :signature ["[rdr ch]"],
-   :type "function",
-   :full-name "cljs.reader/read-regex",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "symbol"
   {:ns "cljs.core",
    :name "symbol",
@@ -9503,17 +6210,6 @@
    :full-name "cljs.core/time",
    :docstring
    "Evaluates expr and prints the time it took. Returns the value of expr.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "add-dependencies"
-  {:ns "cljs.build.api",
-   :name "add-dependencies",
-   :signature ["[opts & ijss]"],
-   :type "function",
-   :full-name "cljs.build.api/add-dependencies",
-   :docstring
-   "Given one or more IJavaScript objects in dependency order, produce\na new sequence of IJavaScript objects which includes the input list\nplus all dependencies in dependency order.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9601,45 +6297,6 @@
    :description-html "<p>Bitwise shift right with zero fill</p>",
    :full-name "cljs.core/unsigned-bit-shift-right",
    :docstring "Bitwise shift right with zero fill"},
-  "read-past"
-  {:ns "cljs.reader",
-   :name "read-past",
-   :signature ["[pred rdr]"],
-   :type "function",
-   :full-name "cljs.reader/read-past",
-   :docstring
-   "Read until first character that doesn't match pred, returning\nchar.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "intersection"
-  {:description
-   "Return a set that is the intersection of the input sets.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "intersection",
-   :signature ["[s1]" "[s1 s2]" "[s1 s2 & sets]"],
-   :type "function",
-   :related
-   ["clojure.set/union"
-    "clojure.set/difference"
-    "clojure.set/superset?"
-    "clojure.set/project"],
-   :examples-strings [],
-   :description-html
-   "<p>Return a set that is the intersection of the input sets.</p>",
-   :full-name "clojure.set/intersection",
-   :docstring
-   "Return a set that is the intersection of the input sets"},
-  "load-javascript"
-  {:ns "cljs.repl.rhino",
-   :name "load-javascript",
-   :signature ["[repl-env ns url]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/load-javascript",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "RSeq"
   {:ns "cljs.core",
    :name "RSeq",
@@ -9660,32 +6317,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "send-result"
-  {:ns "clojure.browser.repl",
-   :name "send-result",
-   :signature ["[connection url data]"],
-   :type "function",
-   :full-name "clojure.browser.repl/send-result",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "INamed"
   {:ns "cljs.core",
    :name "INamed",
    :type "protocol",
    :full-name "cljs.core/INamed",
    :docstring "Protocol for adding a name.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "monoid"
-  {:ns "clojure.core.reducers",
-   :name "monoid",
-   :signature ["[op ctor]"],
-   :type "function",
-   :full-name "clojure.core.reducers/monoid",
-   :docstring
-   "Builds a combining fn out of the supplied operator and identity\nconstructor. op must be associative and ctor called with no args\nmust return an identity value for it.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9734,82 +6371,11 @@
    :full-name "cljs.core/when",
    :docstring
    "Evaluates test. If logical true, evaluates body in an implicit do."},
-  "keyword-qualify"
-  {:description
-   "Keywords starting with `::` will evaluate to regular keywords with a namespace qualification.\nThe namespace will resolve to either of the following:\n\n- current namespace if none is specified\n- given namespace if it exists\n- full namespace if the given one is an alias\n- reader error if given namespace doesn't exist",
-   :examples-htmls
-   ["<p>If we are in the <code>user</code> namespace:</p><pre><code class=\"clj\">::foo\n;;=&gt; :user/foo\n</code></pre><p>We can use namespace aliases:</p><pre><code class=\"clj\">&#40;require '&#91;example.util :as util&#93;&#41;\n\n::util/foo\n;;=&gt; :example.util/foo\n</code></pre><p>Existing namespaces will resolve normally:</p><pre><code class=\"clj\">::cljs.core/foo\n;;=&gt; :cljs.core/foo\n</code></pre><p>Non-existing namespaces will throw a reader exception:</p><pre><code class=\"clj\">::foo/bar\n;; clojure.lang.ExceptionInfo: Invalid token: ::foo/bar {:type :reader-exception, ...\n</code></pre>"],
-   :ns "syntax",
-   :name "keyword-qualify",
-   :type "syntax",
-   :related
-   ["syntax/keyword" "cljs.core/keyword" "cljs.core/keyword?"],
-   :examples-strings
-   [["::foo ;;=> :user/foo"
-     "(require '[example.util :as util])"
-     "::util/foo ;;=> :example.util/foo"
-     "::cljs.core/foo ;;=> :cljs.core/foo"
-     "::foo/bar ;; clojure.lang.ExceptionInfo: Invalid token: ::foo/bar {:type :reader-exception, ..."]],
-   :description-html
-   "<p>Keywords starting with <code>::</code> will evaluate to regular keywords with a namespace qualification. The namespace will resolve to either of the following:</p><ul><li>current namespace if none is specified</li><li>given namespace if it exists</li><li>full namespace if the given one is an alias</li><li>reader error if given namespace doesn't exist</li></ul>",
-   :examples
-   [{:id "b0a135",
-     :content
-     "If we are in the `user` namespace:\n\n```clj\n::foo\n;;=> :user/foo\n```\n\nWe can use namespace aliases:\n\n```clj\n(require '[example.util :as util])\n\n::util/foo\n;;=> :example.util/foo\n```\n\nExisting namespaces will resolve normally:\n\n```clj\n::cljs.core/foo\n;;=> :cljs.core/foo\n```\n\nNon-existing namespaces will throw a reader exception:\n\n```clj\n::foo/bar\n;; clojure.lang.ExceptionInfo: Invalid token: ::foo/bar {:type :reader-exception, ...\n```"}],
-   :full-name "syntax/keyword-qualify"},
   "let*"
   {:ns "special",
    :name "let*",
    :type "special form",
    :full-name "special/let*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "vector-zip"
-  {:ns "clojure.zip",
-   :name "vector-zip",
-   :signature ["[root]"],
-   :type "function",
-   :full-name "clojure.zip/vector-zip",
-   :docstring
-   "Returns a zipper for nested vectors, given a root vector",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-discard"
-  {:ns "cljs.reader",
-   :name "read-discard",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-discard",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "register-tag-parser!"
-  {:ns "cljs.reader",
-   :name "register-tag-parser!",
-   :signature ["[tag f]"],
-   :type "function",
-   :full-name "cljs.reader/register-tag-parser!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "insert-left"
-  {:ns "clojure.zip",
-   :name "insert-left",
-   :signature ["[loc item]"],
-   :type "function",
-   :full-name "clojure.zip/insert-left",
-   :docstring
-   "Inserts the item as the left sibling of the node at this loc,\nwithout moving",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*repl-opts*"
-  {:ns "cljs.repl",
-   :name "*repl-opts*",
-   :type "dynamic var",
-   :full-name "cljs.repl/*repl-opts*",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9819,33 +6385,6 @@
    :signature ["[stepper]"],
    :type "function",
    :full-name "cljs.core/lazy-transformer",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "desugar-meta"
-  {:ns "cljs.reader",
-   :name "desugar-meta",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.reader/desugar-meta",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "make-unicode-char"
-  {:ns "cljs.reader",
-   :name "make-unicode-char",
-   :signature ["[code-str]"],
-   :type "function",
-   :full-name "cljs.reader/make-unicode-char",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-element"
-  {:ns "clojure.browser.dom",
-   :name "get-element",
-   :signature ["[id]"],
-   :type "function",
-   :full-name "clojure.browser.dom/get-element",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9859,17 +6398,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "xml-zip"
-  {:ns "clojure.zip",
-   :name "xml-zip",
-   :signature ["[root]"],
-   :type "function",
-   :full-name "clojure.zip/xml-zip",
-   :docstring
-   "Returns a zipper for xml elements (as from xml/parse),\ngiven a root element",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "symbol?"
   {:ns "cljs.core",
    :name "symbol?",
@@ -9877,51 +6405,6 @@
    :type "function/macro",
    :full-name "cljs.core/symbol?",
    :docstring "Return true if x is a Symbol",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "compile"
-  {:ns "cljs.js",
-   :name "compile",
-   :signature
-   ["[state source cb]"
-    "[state source name cb]"
-    "[state source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/compile",
-   :docstring
-   "Compile ClojureScript source into JavaScript. The parameters:\n\nstate (atom)\n  the compiler state\n\nsource (string)\n  the ClojureScript source\n\nname (symbol)\n  optional, the name of the source\n\nopts (map)\n  compilation options.\n\n  :load       - library resolution function, see *load-fn*\n  :source-map - set to true to generate inline source map information\n\ncb (function)\n  callback, will be invoked with a map. If successful the map will contain\n  a key :value with the compilation result (string). If unsuccessful the map\n  will contain a key :error with an ex-info instance describing the cause\n  of failure.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-client-js"
-  {:ns "cljs.repl.browser",
-   :name "repl-client-js",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.repl.browser/repl-client-js",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-file"
-  {:ns "cljs.repl.rhino",
-   :name "load-file",
-   :signature ["[repl-env opts src]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/load-file",
-   :docstring
-   "Load a JavaScript. This is needed to load JavaScript files before the Rhino\nenvironment is bootstrapped. After bootstrapping load-javascript will be\nused.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl"
-  {:ns "cljs.repl",
-   :name "repl",
-   :signature ["[repl-env & opts]"],
-   :type "function",
-   :full-name "cljs.repl/repl",
-   :docstring
-   "Generic, reusable, read-eval-print loop. By default, reads from *in* using\na c.t.r.reader-types/source-logging-push-back-reader,\nwrites to *out*, and prints exception summaries to *err*. If you use the\ndefault :read hook, *in* must either be an instance of\nc.t.r.reader-types/PushbackReader or duplicate its behavior of both supporting\nunread and collapsing CR, LF, and CRLF into a single \\newline. Options\nare sequential keyword-value pairs. The first argument is the JavaScript\nevaluation environment, the second argument is an extended version of the\nstandard ClojureScript compiler options. In addition to ClojureScript compiler\nbuild options it also take a set of options similar to clojure.main/repl with\nadjustments for ClojureScript evalution and compilation model:\n\nAvailable clojure.main/repl style options and their defaults:\n\n   - :init, function of no arguments, initialization hook called with\n     bindings for set!-able vars in place.\n     default: #()\n\n   - :need-prompt, function of no arguments, called before each\n     read-eval-print except the first, the user will be prompted if it\n     returns true.\n     default: #(if (c.t.r.readers-types/indexing-reader? *in*)\n                 (== (c.t.r.reader-types/get-column-number *in*) 1)\n                 (identity true))\n\n   - :prompt, function of no arguments, prompts for more input.\n     default: repl-prompt\n\n   - :flush, function of no arguments, flushes output\n     default: flush\n\n   - :read, function of two arguments, reads from *in*:\n       - returns its first argument to request a fresh prompt\n         - depending on need-prompt, this may cause the repl to prompt\n           before reading again\n       - returns its second argument to request an exit from the repl\n       - else returns the next object read from the input stream\n     default: repl-read\n\n   - :eval, function of one argument, returns the evaluation of its\n     argument. The eval function must take repl-env, the JavaScript evaluation\n     environment, env, the ClojureScript analysis environment, the form\n     and opts, the standard ClojureScript REPL/compiler options.\n     default: eval\n\n   - :print, function of one argument, prints its argument to the output\n     default: println\n\n   - :caught, function of three arguments, a throwable, called when\n     read, eval, or print throws an exception or error default. The second\n     argument is the JavaScript evaluation environment this permits context\n     sensitive handling if necessary. The third argument is opts, the standard\n     ClojureScript REPL/compiler options. In the case of errors or exception\n     in the JavaScript target, these will be thrown as\n     clojure.lang.IExceptionInfo instances.\n     default: repl-caught\n\n   - :reader, the c.t.r reader to use.\n     default: c.t.r.reader-types/source-logging-push-back-reader\n\n   - :print-no-newline, print without a newline.\n     default: print\n\n   - :source-map-inline, whether inline source maps should be enabled. Most\n     useful in browser context. Implies using a fresh reader for each form.\n     default: true",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -9961,50 +6444,6 @@
    :full-name "cljs.core/subseq",
    :docstring
    "sc must be a sorted collection, test(s) one of <, <=, > or\n>=. Returns a seq of those entries with keys ek for\nwhich (test (.. sc comparator (compare ek key)) 0) is true"},
-  "send-and-close"
-  {:ns "cljs.repl.server",
-   :name "send-and-close",
-   :signature
-   ["[conn status form]"
-    "[conn status form content-type]"
-    "[conn status form content-type encoding]"],
-   :type "function",
-   :full-name "cljs.repl.server/send-and-close",
-   :docstring
-   "Use the passed connection to send a form to the browser. Send a\nproper HTTP response.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "function"
-  {:description
-   "Shorthand for creating an anonymous function:\n\n`#(...)` = `(fn [args] (...))`\n\nUse the following to access the implicit function arguments:\n\n- `%` or `%1` for first argument.\n- `%2`, `%3` and so on for subsequent arguments\n- `%&` for the rest of the arguments after the highest individually referenced argument\n\nNote that `#(1)` does not create a function that returns `1`, for the same\nreason that `(1)` does evaluate to `1`.\n\n`#()` forms cannot be nested, since this would create an ambiguity between the\nautomatically assigned `%` argument names.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;map #&#40;&#42; 2 %&#41; &#91;1 2 3&#93;&#41;\n;;=&gt; &#40;2 4 6&#41;\n\n&#40;def f #&#40;println %1 %2 %&amp;&#41;&#41;\n&#40;f 1 2 3 4 5&#41;\n;; prints: 1 2 &#40;3 4 5&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "function",
-   :type "syntax",
-   :related
-   ["syntax/arg" "cljs.core/fn" "cljs.core/defn" "cljs.core/partial"],
-   :examples-strings
-   [["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
-     "(def f #(println %1 %2 %&))"
-     "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]],
-   :description-html
-   "<p>Shorthand for creating an anonymous function:</p><p><code>#&#40;...&#41;</code> = <code>&#40;fn &#91;args&#93; &#40;...&#41;&#41;</code></p><p>Use the following to access the implicit function arguments:</p><ul><li><code>%</code> or <code>%1</code> for first argument.</li><li><code>%2</code>, <code>%3</code> and so on for subsequent arguments</li><li><code>%&amp;</code> for the rest of the arguments after the highest individually referenced argument</li></ul><p>Note that <code>#&#40;1&#41;</code> does not create a function that returns <code>1</code>, for the same reason that <code>&#40;1&#41;</code> does evaluate to <code>1</code>.</p><p><code>#&#40;&#41;</code> forms cannot be nested, since this would create an ambiguity between the automatically assigned <code>%</code> argument names.</p>",
-   :examples
-   [{:id "6a87de",
-     :content
-     "```clj\n(map #(* 2 %) [1 2 3])\n;;=> (2 4 6)\n\n(def f #(println %1 %2 %&))\n(f 1 2 3 4 5)\n;; prints: 1 2 (3 4 5)\n```"}],
-   :full-name "syntax/function"},
-  "*print-pretty*"
-  {:ns "cljs.pprint",
-   :name "*print-pretty*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-pretty*",
-   :docstring "Bind to true if you want write to use pretty printing",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "reset!"
   {:description
    "Sets the value of atom `a` to `new-value` without regard for the current value.\n\nReturns `new-value`.",
@@ -10021,63 +6460,6 @@
    :full-name "cljs.core/reset!",
    :docstring
    "Sets the value of atom to newval without regard for the\ncurrent value. Returns newval."},
-  "add-implicit-options"
-  {:ns "cljs.build.api",
-   :name "add-implicit-options",
-   :signature ["[opts]"],
-   :type "function",
-   :full-name "cljs.build.api/add-implicit-options",
-   :docstring
-   "Given a valid map of build options add any standard implicit options. For\nexample :optimizations :none implies :cache-analysis true and :source-map\ntrue.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "empty-state"
-  {:ns "cljs.analyzer.api",
-   :name "empty-state",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/empty-state",
-   :docstring "Creates an empty compilation state Atom<Map>.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "default-special-fns"
-  {:ns "cljs.repl",
-   :name "default-special-fns",
-   :type "var",
-   :full-name "cljs.repl/default-special-fns",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "es"
-  {:ns "cljs.repl.browser",
-   :name "es",
-   :type "dynamic var",
-   :full-name "cljs.repl.browser/es",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-dispatch"
-  {:ns "cljs.reader",
-   :name "read-dispatch",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-dispatch",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "all-ns"
-  {:ns "cljs.analyzer.api",
-   :name "all-ns",
-   :signature ["[]" "[state]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/all-ns",
-   :docstring
-   "Return all namespaces. Analagous to clojure.core/all-ns but\nreturns symbols identifying namespaces not Namespace instances.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "pr-seq-writer"
   {:ns "cljs.core",
    :name "pr-seq-writer",
@@ -10093,16 +6475,6 @@
    :signature ["[meta cnt arr __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentArrayMap",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "warning-enabled?"
-  {:ns "cljs.analyzer.api",
-   :name "warning-enabled?",
-   :signature ["[warning-type]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/warning-enabled?",
-   :docstring "Test if the given warning-type is enabled.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -10135,15 +6507,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "read-list"
-  {:ns "cljs.reader",
-   :name "read-list",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-list",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "neg?"
   {:description "Returns true if `n` is less than 0, false otherwise.",
    :examples-htmls [],
@@ -10165,58 +6528,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "parse-js-ns"
-  {:ns "cljs.build.api",
-   :name "parse-js-ns",
-   :signature ["[f]"],
-   :type "function",
-   :full-name "cljs.build.api/parse-js-ns",
-   :docstring
-   "Given a Google Closure style JavaScript file or resource return the namespace\ninformation for the given file. Only returns the value extracted from the\nfirst provide statement.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "PersistentHashSet"
   {:ns "cljs.core",
    :name "PersistentHashSet",
    :signature ["[meta hash-map __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentHashSet",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "compile-root"
-  {:ns "cljs.compiler.api",
-   :name "compile-root",
-   :signature
-   ["[src-dir]"
-    "[src-dir target-dir]"
-    "[src-dir target-dir opts]"
-    "[state src-dir target-dir opts]"],
-   :type "function",
-   :full-name "cljs.compiler.api/compile-root",
-   :docstring
-   "Looks recursively in src-dir for .cljs files and compiles them to\n.js files. If target-dir is provided, output will go into this\ndirectory mirroring the source directory structure. Returns a list\nof maps containing information about each file which was compiled\nin dependency order.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "postwalk-replace"
-  {:ns "clojure.walk",
-   :name "postwalk-replace",
-   :signature ["[smap form]"],
-   :type "function",
-   :full-name "clojure.walk/postwalk-replace",
-   :docstring
-   "Recursively transforms form by replacing keys in smap with their\nvalues.  Like clojure/replace but works on any data structure.  Does\nreplacement at the leaves of the tree first.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-raw-string*"
-  {:ns "cljs.reader",
-   :name "read-raw-string*",
-   :signature ["[reader _]"],
-   :type "function",
-   :full-name "cljs.reader/read-raw-string*",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -10232,34 +6549,12 @@
    "<p>Returns true if <code>x</code> is a string, false otherwise.</p>",
    :full-name "cljs.core/string?",
    :docstring "Returns true if x is a JavaScript string."},
-  "dispatch-on"
-  {:ns "cljs.repl.server",
-   :name "dispatch-on",
-   :signature ["[method pred handler]" "[method {:as m}]"],
-   :type "function",
-   :full-name "cljs.repl.server/dispatch-on",
-   :docstring
-   "Registers a handler to be dispatched based on a request method and a\npredicate.\n\npred should be a function that accepts an options map, a connection,\nand a request map and returns a boolean value based on whether or not\nthat request should be dispatched to the related handler.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "m3-mix-H1"
   {:ns "cljs.core",
    :name "m3-mix-H1",
    :signature ["[h1 k1]"],
    :type "function",
    :full-name "cljs.core/m3-mix-H1",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "default-warning-handler"
-  {:ns "cljs.analyzer.api",
-   :name "default-warning-handler",
-   :signature ["[warning-type env extra]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/default-warning-handler",
-   :docstring
-   "The default warning handler.\n\nOutputs the warning messages to *err*.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -10277,17 +6572,6 @@
    "<p>Returns true if <code>coll</code> implements the <code>ISorted</code> protocol, false otherwise.</p><p>Sorted maps and sorted sets implement <code>ISorted</code>.</p>",
    :full-name "cljs.core/sorted?",
    :docstring "Returns true if coll satisfies ISorted"},
-  "successful?"
-  {:ns "cljs.test",
-   :name "successful?",
-   :signature ["[summary]"],
-   :type "function",
-   :full-name "cljs.test/successful?",
-   :docstring
-   "Returns true if the given test summary indicates all tests\nwere successful, false otherwise.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "->"
   {:description
    "The thread-first macro \"threads\" an expression through several forms as the\nsecond item in a list.\n\nInserts `x` as the second item in the first form, making a list of it if it is\nnot a list already. If there are more forms, inserts the first form as the\nsecond item in second form, etc.\n\n<table class=\"code-tbl-9bef6\">\n  <thead>\n    <tr>\n      <th>Code</th>\n      <th>Expands To</th></tr></thead>\n  <tbody>\n    <tr>\n      <td><pre>\n(-> x\n  (a b c)\n  d\n  (x y z))</pre></td>\n      <td><pre>\n(x (d (a x b c)) y z)</pre></td></tr></tbody></table>",
@@ -10338,15 +6622,6 @@
    :full-name "cljs.core/->",
    :docstring
    "Threads the expr through the forms. Inserts x as the\nsecond item in the first form, making a list of it if it is not a\nlist already. If there are more forms, inserts the first form as the\nsecond item in second form, etc."},
-  "do-report"
-  {:ns "cljs.test",
-   :name "do-report",
-   :signature ["[m]"],
-   :type "function",
-   :full-name "cljs.test/do-report",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "set-validator!"
   {:description
    "Sets a validator function for atom `a`.\n\n`fn` must be nil or a side-effect-free function of one argument, which will be\npassed the intended new state on any state change. `fn` should return false or\nthrow an Error if the new state is unacceptable.\n\nIf the current value of `a` is unacceptable to `fn` when `set-validator!` is\ncalled, an Error will be thrown and the validator will not be set.\n\n`(set-validator! my-atom nil)` will remove the validator from `my-atom`.",
@@ -10412,25 +6687,6 @@
    :full-name "cljs.core/hash-set",
    :docstring
    "Returns a new hash set with supplied keys.  Any equal keys are\nhandled as if by repeated uses of conj."},
-  "order"
-  {:ns "clojure.browser.repl",
-   :name "order",
-   :type "var",
-   :full-name "clojure.browser.repl/order",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "test-all-vars"
-  {:ns "cljs.test",
-   :name "test-all-vars",
-   :signature ["[[quote ns :as form]]"],
-   :type "macro",
-   :full-name "cljs.test/test-all-vars",
-   :docstring
-   "Calls test-vars on every var with :test metadata interned in the\nnamespace, with fixtures.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "set?"
   {:description "Returns true if `x` is a set, false otherwise.",
    :examples-htmls [],
@@ -10444,16 +6700,6 @@
    "<p>Returns true if <code>x</code> is a set, false otherwise.</p>",
    :full-name "cljs.core/set?",
    :docstring "Returns true if x satisfies ISet"},
-  "parse-headers"
-  {:ns "cljs.repl.browser",
-   :name "parse-headers",
-   :signature ["[header-lines]"],
-   :type "function",
-   :full-name "cljs.repl.browser/parse-headers",
-   :docstring "Parse the headers of an HTTP POST request.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "defmethod"
   {:ns "cljs.core",
    :name "defmethod",
@@ -10480,16 +6726,6 @@
    :full-name "cljs.core/group-by",
    :docstring
    "Returns a map of the elements of coll keyed by the result of\nf on each element. The value at each key will be a vector of the\ncorresponding elements, in the order they appeared in coll."},
-  "get-value"
-  {:ns "clojure.browser.dom",
-   :name "get-value",
-   :signature ["[e]"],
-   :type "function",
-   :full-name "clojure.browser.dom/get-value",
-   :docstring "Get the value of an element.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "deref"
   {:description
    "Returns the current value of atom `x`.\n\nThe `@` reader macro is often used instead of `deref`. `@foo` is the same thing\nas `(deref foo)`.",
@@ -10511,16 +6747,6 @@
    :signature ["[nil-val root-iter seen]"],
    :type "type",
    :full-name "cljs.core/HashMapIter",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*eval-fn*"
-  {:ns "cljs.js",
-   :name "*eval-fn*",
-   :type "dynamic var",
-   :full-name "cljs.js/*eval-fn*",
-   :docstring
-   "Each runtime environment provides various ways to eval JavaScript\nsource. Whatever function *eval-fn* is bound to will be passed a map\ncontaining the following keys:\n\n:source - the source of the library (string)\n:name   - used to unique identify the script (symbol)\n:cache  - if the source was originally ClojureScript, will be given the\n          analysis cache.\n\nThe result of evaluation should be the return value.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -10575,17 +6801,6 @@
    :full-name "cljs.core/some->>",
    :docstring
    "When expr is not nil, threads it into the first form (via ->>),\nand when that result is not nil, through the next etc"},
-  "skip-if-eol"
-  {:ns "cljs.repl",
-   :name "skip-if-eol",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.repl/skip-if-eol",
-   :docstring
-   "If the next character on stream s is a newline, skips it, otherwise\nleaves the stream untouched. Returns :line-start, :stream-end, or :body\nto indicate the relative location of the next character on s. The stream\nmust either be an instance of LineNumberingPushbackReader or duplicate\nits behavior of both supporting .unread and collapsing all of CR, LF, and\nCRLF to a single \\newline.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "not-empty"
   {:description "Returns nil if `coll` is empty, else returns `coll`.",
    :examples-htmls [],
@@ -10604,15 +6819,6 @@
    :name "fn*",
    :type "special form",
    :full-name "special/fn*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-ua-product"
-  {:ns "clojure.browser.repl",
-   :name "get-ua-product",
-   :signature ["[]"],
-   :type "function",
-   :full-name "clojure.browser.repl/get-ua-product",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -10698,27 +6904,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "unused"
-  {:description
-   "`_` is a valid symbol name that indicates an unused or disregarded value.\nThis is not enforced by the compiler.\n\nFor example, create a function whose first two arguments are ignored:\n\n```clj\n(fn [_ _ a]\n  (println a))\n```\n\nIgnore the first and third value of a [destructured][doc:syntax/destructure-vector] sequence:\n\n```clj\n(let [ [_ a b _ c]\n       [1 2 3 4 5] ]\n  (println a b c))\n;; 2 3 5\n```\n\nIgnore return values of debug statements in a [doc:cljs.core/let] block:\n\n```clj\n(let [a 1\n      _ (println a)\n      b (+ a 2)\n      _ (println b)\n      c (+ b 3)]\n  ...)\n```\n\nMultiple `_`'s can be used in each of the previous examples because duplicate\nnames will shadow those previously occurring.  Thus, `_` actually holds the\nvalue of its last binding, but using it should be strictly avoided to prevent\nconfusion.  This is the only encouraged use-case for duplicating parameter\nnames.",
-   :ns "syntax",
-   :name "unused",
-   :type "convention",
-   :examples
-   [{:id "705f5e",
-     :content
-     "It is common to use `_` to ignore all but the latest value of a changing atom\ninside an [doc:cljs.core/add-watch] callback:\n\n```clj\n(def a (atom 1))\n\n(add-watch a :foo\n  (fn [_ _ _ s]\n    (println s)))\n\n(reset! a 2)\n;; 2\n```"}],
-   :full-name "syntax/unused",
-   :description-html
-   "<p><code>&#95;</code> is a valid symbol name that indicates an unused or disregarded value. This is not enforced by the compiler.</p><p>For example, create a function whose first two arguments are ignored:</p><pre><code class=\"clj\">&#40;fn &#91;&#95; &#95; a&#93;\n  &#40;println a&#41;&#41;\n</code></pre><p>Ignore the first and third value of a [destructured][doc:syntax/destructure-vector] sequence:</p><pre><code class=\"clj\">&#40;let &#91; &#91;&#95; a b &#95; c&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  &#40;println a b c&#41;&#41;\n;; 2 3 5\n</code></pre><p>Ignore return values of debug statements in a [doc:cljs.core/let] block:</p><pre><code class=\"clj\">&#40;let &#91;a 1\n      &#95; &#40;println a&#41;\n      b &#40;+ a 2&#41;\n      &#95; &#40;println b&#41;\n      c &#40;+ b 3&#41;&#93;\n  ...&#41;\n</code></pre><p>Multiple <code>&#95;</code>'s can be used in each of the previous examples because duplicate names will shadow those previously occurring.  Thus, <code>&#95;</code> actually holds the value of its last binding, but using it should be strictly avoided to prevent confusion.  This is the only encouraged use-case for duplicating parameter names.</p>",
-   :examples-strings
-   [["(def a (atom 1))"
-     "(add-watch a :foo"
-     "  (fn [_ _ _ s]"
-     "    (println s)))"
-     "(reset! a 2) ;; 2"]],
-   :examples-htmls
-   ["<p>It is common to use <code>&#95;</code> to ignore all but the latest value of a changing atom inside an [doc:cljs.core/add-watch] callback:</p><pre><code class=\"clj\">&#40;def a &#40;atom 1&#41;&#41;\n\n&#40;add-watch a :foo\n  &#40;fn &#91;&#95; &#95; &#95; s&#93;\n    &#40;println s&#41;&#41;&#41;\n\n&#40;reset! a 2&#41;\n;; 2\n</code></pre>"]},
   "HashMap"
   {:ns "cljs.core",
    :name "HashMap",
@@ -10728,64 +6913,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "test-var"
-  {:ns "cljs.test",
-   :name "test-var",
-   :signature ["[v]"],
-   :type "function",
-   :full-name "cljs.test/test-var",
-   :docstring
-   "If v has a function in its :test metadata, calls that function,\nadd v to :testing-vars property of env.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IEval"
-  {:ns "cljs.repl.rhino",
-   :name "IEval",
-   :type "protocol",
-   :full-name "cljs.repl.rhino/IEval",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-symbol"
-  {:ns "cljs.reader",
-   :name "read-symbol",
-   :signature ["[reader initch]"],
-   :type "function",
-   :full-name "cljs.reader/read-symbol",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-delimited-list"
-  {:ns "cljs.reader",
-   :name "read-delimited-list",
-   :signature ["[delim rdr recursive?]"],
-   :type "function",
-   :full-name "cljs.reader/read-delimited-list",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "source"
-  {:description
-   "Prints the source code for the given symbol `name`, if it can find it.  This\nrequires that the symbol resolve to a Var defined in a namespace for which the\n.cljs is in the classpath.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;source comment&#41;\n;; Prints:\n;; &#40;defmacro comment\n;;   &quot;Ignores body, yields nil&quot;\n;;   {:added &quot;1.0&quot;}\n;;   &#91;&amp; body&#93;&#41;\n;;\n;;=&gt; nil\n</code></pre>"],
-   :ns "cljs.repl",
-   :name "source",
-   :signature ["[name]"],
-   :type "macro",
-   :related ["cljs.repl/doc"],
-   :examples-strings
-   [["(source comment) ;; Prints: ;; (defmacro comment ;;   \"Ignores body, yields nil\" ;;   {:added \"1.0\"} ;;   [& body]) ;; ;;=> nil"]],
-   :description-html
-   "<p>Prints the source code for the given symbol <code>name</code>, if it can find it.  This requires that the symbol resolve to a Var defined in a namespace for which the .cljs is in the classpath.</p>",
-   :examples
-   [{:id "94c94c",
-     :content
-     "```clj\n(source comment)\n;; Prints:\n;; (defmacro comment\n;;   \"Ignores body, yields nil\"\n;;   {:added \"1.0\"}\n;;   [& body])\n;;\n;;=> nil\n```"}],
-   :full-name "cljs.repl/source",
-   :docstring
-   "Prints the source code for the given symbol, if it can find it.\nThis requires that the symbol resolve to a Var defined in a\nnamespace for which the .cljs is in the classpath.\n\nExample: (source filter)"},
   "<"
   {:description
    "Returns true if each successive number argument is greater than the previous\none, false otherwise.",
@@ -10810,15 +6937,6 @@
    :full-name "cljs.core/<",
    :docstring
    "Returns non-nil if nums are in monotonically increasing order,\notherwise false."},
-  "wrap-error"
-  {:ns "cljs.js",
-   :name "wrap-error",
-   :signature ["[ex]"],
-   :type "function",
-   :full-name "cljs.js/wrap-error",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "pos?"
   {:description
    "Returns true if `n` is greater than 0, false otherwise.",
@@ -10833,17 +6951,6 @@
    "<p>Returns true if <code>n</code> is greater than 0, false otherwise.</p>",
    :full-name "cljs.core/pos?",
    :docstring "Returns true if num is greater than zero, else false"},
-  "down"
-  {:ns "clojure.zip",
-   :name "down",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/down",
-   :docstring
-   "Returns the loc of the leftmost child of the node at this loc, or\nnil if no children",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "type"
   {:ns "cljs.core",
    :name "type",
@@ -10854,27 +6961,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "require-macros"
-  {:description
-   "Only usable from a REPL.\n\nThis is a way for ClojureScript to load macros from Clojure files.\nThe usage is similar to the `require` form.\n\nThere is a nicer alternative if the Clojure macros file has the same name as a\nClojureScript file in the same directory, which is a common pattern.  In this\ncase, you can just use the `:include-macros` or `:refer-macros` flag of the\n`require` form.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;require-macros '&#91;cljs.core.async.macros :refer &#91;go&#93;&#93;&#41;\n</code></pre>"],
-   :ns "specialrepl",
-   :name "require-macros",
-   :signature ["[& args]"],
-   :type "special form (repl)",
-   :related ["specialrepl/require"],
-   :examples-strings
-   [["(require-macros '[cljs.core.async.macros :refer [go]])"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>This is a way for ClojureScript to load macros from Clojure files. The usage is similar to the <code>require</code> form.</p><p>There is a nicer alternative if the Clojure macros file has the same name as a ClojureScript file in the same directory, which is a common pattern.  In this case, you can just use the <code>:include-macros</code> or <code>:refer-macros</code> flag of the <code>require</code> form.</p>",
-   :examples
-   [{:id "e34cf4",
-     :content
-     "```clj\n(require-macros '[cljs.core.async.macros :refer [go]])\n```"}],
-   :full-name "specialrepl/require-macros",
-   :docstring
-   "Similar to the require REPL special function but\n only for macros."},
   "HashCollisionNode"
   {:ns "cljs.core",
    :name "HashCollisionNode",
@@ -10893,47 +6979,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "deftest"
-  {:ns "cljs.test",
-   :name "deftest",
-   :signature ["[name & body]"],
-   :type "macro",
-   :full-name "cljs.test/deftest",
-   :docstring
-   "Defines a test function with no arguments.  Test functions may call\nother tests, so tests may be composed.  If you compose tests, you\nshould also define a function named test-ns-hook; run-tests will\ncall test-ns-hook instead of testing all vars.\n\nNote: Actually, the test body goes in the :test metadata on the var,\nand the real function (the value of the var) calls test-var on\nitself.\n\nWhen cljs.analyzer/*load-tests* is false, deftest is ignored.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "requires-compilation?"
-  {:ns "cljs.compiler.api",
-   :name "requires-compilation?",
-   :signature ["[src dest]" "[src dest opts]" "[state src dest opts]"],
-   :type "function",
-   :full-name "cljs.compiler.api/requires-compilation?",
-   :docstring "Return true if the src file requires compilation.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "deregister-default-tag-parser!"
-  {:ns "cljs.reader",
-   :name "deregister-default-tag-parser!",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.reader/deregister-default-tag-parser!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "keywordize-keys"
-  {:ns "clojure.walk",
-   :name "keywordize-keys",
-   :signature ["[m]"],
-   :type "function",
-   :full-name "clojure.walk/keywordize-keys",
-   :docstring
-   "Recursively transforms all map keys from strings to keywords.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-substract-int"
   {:ns "cljs.core",
    :name "unchecked-substract-int",
@@ -10942,24 +6987,6 @@
    :full-name "cljs.core/unchecked-substract-int",
    :docstring
    "If no ys are supplied, returns the negation of x, else subtracts\nthe ys from x and returns the result.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "goog-require"
-  {:ns "cljs.repl.rhino",
-   :name "goog-require",
-   :signature ["[repl-env opts rule]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/goog-require",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "macro-terminating?"
-  {:ns "cljs.reader",
-   :name "macro-terminating?",
-   :signature ["[ch]"],
-   :type "function",
-   :full-name "cljs.reader/macro-terminating?",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11069,40 +7096,6 @@
    :full-name "cljs.core/make-array",
    :docstring
    "Construct a JavaScript array of specified size. Accepts ignored type\nargument for compatibility with Clojure."},
-  "eval-str"
-  {:ns "cljs.js",
-   :name "eval-str",
-   :signature
-   ["[state source cb]"
-    "[state source name cb]"
-    "[state source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/eval-str",
-   :docstring
-   "Evalute ClojureScript source given as a string. The parameters:\n\nstate (atom)\n  the compiler state\n\nsource (string)\n  the ClojureScript source\n\nname (symbol)\n  optional, the name of the source\n\nopts (map)\n  compilation options.\n\n  :eval         - eval function to invoke, see *eval-fn*\n  :load         - library resolution function, see *load-fn*\n  :source-map   - set to true to generate inline source map information\n  :cache-source - optional, a function to run side-effects with the\n                  compilation result prior to actual evalution. This function\n                  takes two arguments, the first is the eval map, the source\n                  will be under :source. The second argument is a callback of\n                  one argument. If an error occurs an :error key should be\n                  supplied.\n\ncb (function)\n  callback, will be invoked with a map. If succesful the map will contain\n  a :value key with the result of evaluation and :ns the current namespace.\n  If unsuccessful will contain a :error key with an ex-info instance describing\n  the cause of failure.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "try-expr"
-  {:ns "cljs.test",
-   :name "try-expr",
-   :signature ["[msg form]"],
-   :type "macro",
-   :full-name "cljs.test/try-expr",
-   :docstring
-   "Used by the 'is' macro to catch unexpected exceptions.\nYou don't call this.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-macros"
-  {:ns "cljs.js",
-   :name "load-macros",
-   :signature ["[bound-vars k macros reload reloads opts cb]"],
-   :type "function",
-   :full-name "cljs.js/load-macros",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "alter-meta!"
   {:description
    "Alter the metadata of `data` to be `(apply f its-current-meta args)`.\n\nMetadata of vars cannot be altered since they are statically determined at compile-time.",
@@ -11131,16 +7124,6 @@
    :full-name "cljs.core/alter-meta!",
    :docstring
    "Atomically sets the metadata for a namespace/var/ref/agent/atom to be:\n\n(apply f its-current-meta args)\n\nf must be free of side-effects"},
-  "foldcat"
-  {:ns "clojure.core.reducers",
-   :name "foldcat",
-   :signature ["[coll]"],
-   :type "function",
-   :full-name "clojure.core.reducers/foldcat",
-   :docstring "Equivalent to (fold cat append! coll)",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "es6-set-entries-iterator"
   {:ns "cljs.core",
    :name "es6-set-entries-iterator",
@@ -11188,52 +7171,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "analyze*"
-  {:ns "cljs.js",
-   :name "analyze*",
-   :signature ["[bound-vars source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/analyze*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pprint-logical-block"
-  {:ns "cljs.pprint",
-   :name "pprint-logical-block",
-   :signature ["[& args]"],
-   :type "macro",
-   :full-name "cljs.pprint/pprint-logical-block",
-   :docstring
-   "Execute the body as a pretty printing logical block with output to *out* which\nmust be a pretty printing writer. When used from pprint or cl-format, this can be\nassumed.\n\nThis function is intended for use when writing custom dispatch functions.\n\nBefore the body, the caller can optionally specify options: :prefix, :per-line-prefix\nand :suffix.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "loaded-libs"
-  {:ns "cljs.repl.browser",
-   :name "loaded-libs",
-   :type "var",
-   :full-name "cljs.repl.browser/loaded-libs",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-print"
-  {:ns "clojure.browser.repl",
-   :name "repl-print",
-   :signature ["[data]"],
-   :type "function",
-   :full-name "clojure.browser.repl/repl-print",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "decorate-specs"
-  {:ns "cljs.repl",
-   :name "decorate-specs",
-   :signature ["[specs]"],
-   :type "function",
-   :full-name "cljs.repl/decorate-specs",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "List"
   {:ns "cljs.core",
    :name "List",
@@ -11261,49 +7198,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "prewalk"
-  {:ns "clojure.walk",
-   :name "prewalk",
-   :signature ["[f form]"],
-   :type "function",
-   :full-name "clojure.walk/prewalk",
-   :docstring "Like postwalk, but does pre-order traversal.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns-side-effects"
-  {:ns "cljs.js",
-   :name "ns-side-effects",
-   :signature
-   ["[bound-vars ana-env ast opts cb]"
-    "[load bound-vars ana-env {:keys [op], :as ast} opts cb]"],
-   :type "function",
-   :full-name "cljs.js/ns-side-effects",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "set-text"
-  {:ns "clojure.browser.dom",
-   :name "set-text",
-   :signature ["[e s]"],
-   :type "function",
-   :full-name "clojure.browser.dom/set-text",
-   :docstring
-   "Set the text content for the passed element returning the\nelement. If a keyword is passed in the place of e, the element with\nthat id will be used and returned.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "send-for-eval"
-  {:ns "cljs.repl.browser",
-   :name "send-for-eval",
-   :signature ["[form return-value-fn]" "[conn form return-value-fn]"],
-   :type "function",
-   :full-name "cljs.repl.browser/send-for-eval",
-   :docstring
-   "Given a form and a return value function, send the form to the\nbrowser for evaluation. The return value function will be called\nwhen the return value is received.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "clj->js"
   {:description
    "Recursively transforms ClojureScript values to JavaScript.\n\n| ClojureScript |        | JavaScript |         |\n|---------------|--------|------------|---------|\n| Set           | `#{}`  | Array      | `[]`    |\n| Vector        | `[]`   | Array      | `[]`    |\n| List          | `()`   | Array      | `[]`    |\n| Keyword       | `:foo` | String     | `\"foo\"` |\n| Symbol        | `bar`  | String     | `\"bar\"` |\n| Map           | `{}`   | Object     | `{}`    |",
@@ -11327,30 +7221,6 @@
    :full-name "cljs.core/clj->js",
    :docstring
    "Recursively transforms ClojureScript values to JavaScript.\nsets/vectors/lists become Arrays, Keywords and Symbol become Strings,\nMaps become Objects. Arbitrary keys are encoded to by key->js."},
-  "state"
-  {:ns "cljs.repl.server",
-   :name "state",
-   :type "dynamic var",
-   :full-name "cljs.repl.server/state",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-filename"
-  {:ns "cljs.repl.nashorn",
-   :name "repl-filename",
-   :type "var",
-   :full-name "cljs.repl.nashorn/repl-filename",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*current-env*"
-  {:ns "cljs.test",
-   :name "*current-env*",
-   :type "dynamic var",
-   :full-name "cljs.test/*current-env*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "double"
   {:ns "cljs.core",
    :name "double",
@@ -11370,25 +7240,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "cond-splicing"
-  {:description
-   "(Only allowed in `.cljc` files or the REPL)\n\nLike [doc:syntax/cond], except:\n\n- each conditional value must be a sequence,\n- the selected sequence is spliced into the parent form,\n- and it must have a parent form to be spliced into (not top level).\n\n`(def #?@(:cljs [foo 1])` is read as `(def foo 1)`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">'&#40;def #?@&#40;:cljs &#91;a 1&#93;\n          :clj  &#91;b 2&#93;&#41;&#41;\n;;=&gt; &#40;def a 1&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "cond-splicing",
-   :type "syntax",
-   :related ["syntax/cond"],
-   :examples-strings
-   [["'(def #?@(:cljs [a 1]"
-     "          :clj  [b 2])) ;;=> (def a 1)"]],
-   :description-html
-   "<p>(Only allowed in <code>.cljc</code> files or the REPL)</p><p>Like [doc:syntax/cond], except:</p><ul><li>each conditional value must be a sequence,</li><li>the selected sequence is spliced into the parent form,</li><li>and it must have a parent form to be spliced into (not top level).</li></ul><p><code>&#40;def #?@&#40;:cljs &#91;foo 1&#93;&#41;</code> is read as <code>&#40;def foo 1&#41;</code>.</p>",
-   :examples
-   [{:id "9d0020",
-     :content
-     "```clj\n'(def #?@(:cljs [a 1]\n          :clj  [b 2]))\n;;=> (def a 1)\n```"}],
-   :full-name "syntax/cond-splicing"},
   "unchecked-multiply"
   {:ns "cljs.core",
    :name "unchecked-multiply",
@@ -11407,17 +7258,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "print-table"
-  {:ns "cljs.pprint",
-   :name "print-table",
-   :signature ["[ks rows]" "[rows]"],
-   :type "function",
-   :full-name "cljs.pprint/print-table",
-   :docstring
-   "Prints a collection of maps in a textual table. Prints table headings\nks, and then a line of output for each row, corresponding to the keys\nin ks. If ks are not specified, use the keys of the first item in rows.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IChunkedSeq"
   {:ns "cljs.core",
    :name "IChunkedSeq",
@@ -11425,24 +7265,6 @@
    :full-name "cljs.core/IChunkedSeq",
    :docstring
    "Protocol for accessing a collection as sequential chunks.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "mime-type->encoding"
-  {:ns "cljs.repl.browser",
-   :name "mime-type->encoding",
-   :type "var",
-   :full-name "cljs.repl.browser/mime-type->encoding",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "with-core-cljs"
-  {:ns "cljs.compiler.api",
-   :name "with-core-cljs",
-   :signature ["[]" "[opts]" "[opts body]" "[state opts body]"],
-   :type "function",
-   :full-name "cljs.compiler.api/with-core-cljs",
-   :docstring "Ensure that core.cljs has been loaded.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11461,39 +7283,13 @@
    :docstring
    "Returns a lazy sequence of the nodes in a tree, via a depth-first walk.\n branch? must be a fn of one arg that returns true if passed a node\n that can have children (but may not).  children must be a fn of one\n arg that returns a sequence of the children. Will only be called on\n nodes for which branch? returns true. Root is the root node of the\ntree."},
   "meta"
-  {:description
-   "Attaches metadata to the following form.  Metadata can only be attached to a\nsymbol or collection.\n\nMetadata will assume the following transformations depending on its type:\n\n- keyword `^:foo` => `^{:foo true}`\n- string `^\"foo\"` => `^{:tag \"foo\"}`\n- symbol `^foo` => `^{:tag <value of foo>}`",
-   :examples-htmls
-   ["<p>Attach metadata to a collection:</p><pre><code class=\"clj\">&#94;:foo &#91;1 2 3&#93;\n;;=&gt; &#91;1 2 3&#93;\n</code></pre><p>View the resulting metadata:</p><pre><code class=\"clj\">&#40;meta &#94;:foo &#91;1 2 3&#93;&#41;\n;;=&gt; {:foo true}\n\n&#40;meta &#94;{:foo &quot;bar&quot;} &#91;1 2 3&#93;&#41;\n;;=&gt; {:foo &quot;bar&quot;}\n\n&#40;meta &#94;&quot;foo&quot; &#91;1 2 3&#93;&#41;\n;;=&gt; {:tag &quot;foo&quot;}\n\n&#40;def foo 1&#41;\n&#40;meta &#94;foo &#91;1 2 3&#93;&#41;\n;;=&gt; {:tag 1}\n</code></pre><p>Chain metadata:</p><pre><code class=\"clj\">&#40;meta &#94;:foo &#94;&quot;foo&quot; &#91;1 2 3&#93;&#41;\n;;=&gt; {:foo true, :tag &quot;foo&quot;}\n</code></pre>"],
-   :ns "syntax",
+  {:ns "cljs.core",
    :name "meta",
-   :type "syntax",
-   :related
-   ["cljs.core/meta"
-    "cljs.core/with-meta"
-    "cljs.core/vary-meta"
-    "cljs.core/alter-meta!"],
-   :examples-strings
-   [["^:foo [1 2 3] ;;=> [1 2 3]"
-     "(meta ^:foo [1 2 3]) ;;=> {:foo true}"
-     "(meta ^{:foo \"bar\"} [1 2 3]) ;;=> {:foo \"bar\"}"
-     "(meta ^\"foo\" [1 2 3]) ;;=> {:tag \"foo\"}"
-     "(def foo 1)"
-     "(meta ^foo [1 2 3]) ;;=> {:tag 1}"
-     "(meta ^:foo ^\"foo\" [1 2 3]) ;;=> {:foo true, :tag \"foo\"}"]],
-   :description-html
-   "<p>Attaches metadata to the following form.  Metadata can only be attached to a symbol or collection.</p><p>Metadata will assume the following transformations depending on its type:</p><ul><li>keyword <code>&#94;:foo</code> => <code>&#94;{:foo true}</code></li><li>string <code>&#94;&quot;foo&quot;</code> => <code>&#94;{:tag &quot;foo&quot;}</code></li><li>symbol <code>&#94;foo</code> => <code>&#94;{:tag &lt;value of foo&gt;}</code></li></ul>",
-   :examples
-   [{:id "5b8fec",
-     :content
-     "Attach metadata to a collection:\n\n```clj\n^:foo [1 2 3]\n;;=> [1 2 3]\n```\n\nView the resulting metadata:\n\n```clj\n(meta ^:foo [1 2 3])\n;;=> {:foo true}\n\n(meta ^{:foo \"bar\"} [1 2 3])\n;;=> {:foo \"bar\"}\n\n(meta ^\"foo\" [1 2 3])\n;;=> {:tag \"foo\"}\n\n(def foo 1)\n(meta ^foo [1 2 3])\n;;=> {:tag 1}\n```\n\nChain metadata:\n\n```clj\n(meta ^:foo ^\"foo\" [1 2 3])\n;;=> {:foo true, :tag \"foo\"}\n```"}],
-   :full-name "syntax/meta"},
-  "load-source-map!"
-  {:ns "cljs.js",
-   :name "load-source-map!",
-   :signature ["[state ns sm-json]"],
+   :signature ["[o]"],
    :type "function",
-   :full-name "cljs.js/load-source-map!",
+   :full-name "cljs.core/meta",
+   :docstring
+   "Returns the metadata of obj, returns nil if there is no metadata.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11503,69 +7299,6 @@
    :signature ["[x init]"],
    :type "macro",
    :full-name "cljs.core/defonce",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "load-queue"
-  {:ns "clojure.browser.repl",
-   :name "load-queue",
-   :type "var",
-   :full-name "clojure.browser.repl/load-queue",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "wrap-message"
-  {:ns "clojure.browser.repl",
-   :name "wrap-message",
-   :signature ["[t data]"],
-   :type "function",
-   :full-name "clojure.browser.repl/wrap-message",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "float-pattern"
-  {:ns "cljs.reader",
-   :name "float-pattern",
-   :type "var",
-   :full-name "cljs.reader/float-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "append"
-  {:ns "clojure.browser.dom",
-   :name "append",
-   :signature ["[parent & children]"],
-   :type "function",
-   :full-name "clojure.browser.dom/append",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "join"
-  {:ns "clojure.set",
-   :name "join",
-   :signature ["[xrel yrel]" "[xrel yrel km]"],
-   :type "function",
-   :full-name "clojure.set/join",
-   :docstring
-   "When passed 2 rels, returns the rel corresponding to the natural\njoin. When passed an additional keymap, joins on the corresponding\nkeys.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "click-element"
-  {:ns "clojure.browser.dom",
-   :name "click-element",
-   :signature ["[e]"],
-   :type "function",
-   :full-name "clojure.browser.dom/click-element",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "handle-connection"
-  {:ns "cljs.repl.browser",
-   :name "handle-connection",
-   :signature ["[opts conn]"],
-   :type "function",
-   :full-name "cljs.repl.browser/handle-connection",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11589,17 +7322,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "upper-case"
-  {:description "Converts string to all upper-case.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "upper-case",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html "<p>Converts string to all upper-case.</p>",
-   :full-name "clojure.string/upper-case",
-   :docstring "Converts string to all upper-case."},
   "IIndexed"
   {:ns "cljs.core",
    :name "IIndexed",
@@ -11628,63 +7350,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "predicate"
-  {:description
-   "A naming convention for predicate functions (unenforced).\n\nA predicate function is one that returns `true` or `false`, and is presumably\npure (not having any side-effects on state).\n\nSome predicate functions which use this convention:\n\n- [doc:cljs.core/even?]\n- [doc:cljs.core/empty?]\n- [doc:cljs.core/contains?]\n- [doc:cljs.core/nil?]\n\nIt is sometimes used to name boolean values as well, not just predicate functions.",
-   :examples-htmls
-   ["<p>Create a <code>divisible?</code> predicate:</p><pre><code class=\"clj\">&#40;defn divisible? &#91;n factor&#93;\n  &#40;zero? &#40;mod n factor&#41;&#41;&#41;\n\n&#40;divisible? 15 3&#41;\n;;=&gt; true\n\n&#40;divisible? 15 2&#41;\n;;=&gt; false\n\n&#40;filter #&#40;divisible? 15 %&#41; &#40;range 15&#41;&#41;\n;;=&gt; &#40;1 3 5&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "predicate",
-   :type "convention",
-   :related ["syntax/impure"],
-   :examples-strings
-   [["(defn divisible? [n factor]"
-     "  (zero? (mod n factor)))"
-     "(divisible? 15 3) ;;=> true"
-     "(divisible? 15 2) ;;=> false"
-     "(filter #(divisible? 15 %) (range 15)) ;;=> (1 3 5)"]],
-   :description-html
-   "<p>A naming convention for predicate functions (unenforced).</p><p>A predicate function is one that returns <code>true</code> or <code>false</code>, and is presumably pure (not having any side-effects on state).</p><p>Some predicate functions which use this convention:</p><ul><li>[doc:cljs.core/even?]</li><li>[doc:cljs.core/empty?]</li><li>[doc:cljs.core/contains?]</li><li>[doc:cljs.core/nil?]</li></ul><p>It is sometimes used to name boolean values as well, not just predicate functions.</p>",
-   :examples
-   [{:id "5a85c7",
-     :content
-     "Create a `divisible?` predicate:\n\n```clj\n(defn divisible? [n factor]\n  (zero? (mod n factor)))\n\n(divisible? 15 3)\n;;=> true\n\n(divisible? 15 2)\n;;=> false\n\n(filter #(divisible? 15 %) (range 15))\n;;=> (1 3 5)\n```"}],
-   :full-name "syntax/predicate"},
-  "source-on-disk"
-  {:ns "cljs.build.api",
-   :name "source-on-disk",
-   :signature ["[opts ijs]"],
-   :type "function",
-   :full-name "cljs.build.api/source-on-disk",
-   :docstring
-   "Ensure that the given IJavaScript exists on disk in the output directory.\nReturn updated IJavaScript with the new location if necessary.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "divide"
   {:ns "cljs.core",
    :name "divide",
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "macro",
    :full-name "cljs.core/divide",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl-env*"
-  {:ns "cljs.repl.node",
-   :name "repl-env*",
-   :signature ["[options]"],
-   :type "function",
-   :full-name "cljs.repl.node/repl-env*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "print-doc"
-  {:ns "clojure.reflect",
-   :name "print-doc",
-   :signature ["[{:keys [name method-params doc]}]"],
-   :type "function",
-   :full-name "clojure.reflect/print-doc",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11709,29 +7380,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "err-out"
-  {:ns "cljs.repl",
-   :name "err-out",
-   :signature ["[& body]"],
-   :type "macro",
-   :full-name "cljs.repl/err-out",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "PersistentVector.EMPTY_NODE"
   {:ns "cljs.core",
    :name "PersistentVector.EMPTY_NODE",
    :type "var",
    :full-name "cljs.core/PersistentVector.EMPTY_NODE",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "parse-file-line-column"
-  {:ns "cljs.repl.browser",
-   :name "parse-file-line-column",
-   :signature ["[flc]"],
-   :type "function",
-   :full-name "cljs.repl.browser/parse-file-line-column",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11741,15 +7394,6 @@
    :signature ["[writer & ss]"],
    :type "function",
    :full-name "cljs.core/write-all",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "wrap-fn"
-  {:ns "cljs.repl.rhino",
-   :name "wrap-fn",
-   :signature ["[form]"],
-   :type "function",
-   :full-name "cljs.repl.rhino/wrap-fn",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11780,15 +7424,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "flush-print-queue!"
-  {:ns "clojure.browser.repl",
-   :name "flush-print-queue!",
-   :signature ["[conn]"],
-   :type "function",
-   :full-name "clojure.browser.repl/flush-print-queue!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "while"
   {:description
    "Repeatedly executes `body` while `test` expression is true. Presumes some\nside-effect will cause `test` to become false or nil.\n\nReturns nil.",
@@ -11804,29 +7439,6 @@
    :full-name "cljs.core/while",
    :docstring
    "Repeatedly executes body while test expression is true. Presumes\nsome side-effect will cause test to become false/nil. Returns nil"},
-  "queue-literal"
-  {:description
-   "Create a persistent queue. The form following `#queue` must be a vector.\n\nQueues are the only core collection type that requires a tagged literal to\ncreate, while the other collections have built-in delimiters `()` `[]` `{}` `#{}`.\n\nSee [doc:cljs.core/PersistentQueue] for data structure details.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#queue &#91;&#93;\n;;=&gt; #queue &#91;&#93;\n\n#queue &#91;1 2 3&#93;\n;;=&gt; #queue &#91;1 2 3&#93;\n</code></pre><p>Some operations:</p><pre><code class=\"clj\">&#40;def q #queue &#91;1 2 3&#93;&#41;\n;;=&gt; #queue &#91;1 2 3&#93;\n\n&#40;conj q 4&#41;\n;;=&gt; #queue &#91;1 2 3 4&#93;\n\n&#40;pop q&#41;\n;;=&gt; #queue &#91;2 3&#93;\n\n&#40;peek q&#41;\n;;=&gt; 1\n</code></pre>"],
-   :ns "syntax",
-   :name "queue-literal",
-   :type "tagged literal",
-   :related ["syntax/list" "syntax/vector" "syntax/map" "syntax/set"],
-   :examples-strings
-   [["#queue [] ;;=> #queue []"
-     "#queue [1 2 3] ;;=> #queue [1 2 3]"
-     "(def q #queue [1 2 3]) ;;=> #queue [1 2 3]"
-     "(conj q 4) ;;=> #queue [1 2 3 4]"
-     "(pop q) ;;=> #queue [2 3]"
-     "(peek q) ;;=> 1"]],
-   :description-html
-   "<p>Create a persistent queue. The form following <code>#queue</code> must be a vector.</p><p>Queues are the only core collection type that requires a tagged literal to create, while the other collections have built-in delimiters <code>&#40;&#41;</code> <code>&#91;&#93;</code> <code>{}</code> <code>#{}</code>.</p><p>See [doc:cljs.core/PersistentQueue] for data structure details.</p>",
-   :examples
-   [{:id "f81c50",
-     :content
-     "```clj\n#queue []\n;;=> #queue []\n\n#queue [1 2 3]\n;;=> #queue [1 2 3]\n```\n\nSome operations:\n\n```clj\n(def q #queue [1 2 3])\n;;=> #queue [1 2 3]\n\n(conj q 4)\n;;=> #queue [1 2 3 4]\n\n(pop q)\n;;=> #queue [2 3]\n\n(peek q)\n;;=> 1\n```"}],
-   :full-name "syntax/queue-literal"},
   "PersistentVector.fromArray"
   {:ns "cljs.core",
    :name "PersistentVector.fromArray",
@@ -11862,17 +7474,6 @@
    :type "function",
    :full-name "cljs.core/reset-meta!",
    :docstring "Atomically resets the metadata for an atom",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "formatter"
-  {:ns "cljs.pprint",
-   :name "formatter",
-   :signature ["[format-in]"],
-   :type "macro",
-   :full-name "cljs.pprint/formatter",
-   :docstring
-   "Makes a function which can directly run format-in. The function is\nfn [stream & args] ... and returns nil unless the stream is nil (meaning\noutput to a string) in which case it returns the resulting string.\n\nformat-in can be either a control string or a previously compiled format.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -11988,35 +7589,12 @@
    :full-name "cljs.core/volatile!",
    :docstring
    "Creates and returns a Volatile with an initial value of val."},
-  "macros"
-  {:ns "cljs.reader",
-   :name "macros",
-   :signature ["[c]"],
-   :type "function",
-   :full-name "cljs.reader/macros",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IAtom"
   {:ns "cljs.core",
    :name "IAtom",
    :type "protocol",
    :full-name "cljs.core/IAtom",
    :docstring "Marker protocol indicating an atom.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "analyze-str"
-  {:ns "cljs.js",
-   :name "analyze-str",
-   :signature
-   ["[state source cb]"
-    "[state source name cb]"
-    "[state source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/analyze-str",
-   :docstring
-   "Analyze ClojureScript source. The compiler state will be populated with\nthe results of analyzes. The parameters:\n\nstate (atom)\n  the compiler state\n\nsource (string)\n  the ClojureScript source\n\nname (symbol)\n  optional, the name of the source\n\nopts (map)\n  compilation options.\n\n:eval - the eval function to invoke, see *eval-fn*\n:load - library resolution function, see *load-fn*\n\ncb (function)\n  callback, will be invoked with a map. If successful the map will contain\n  a key :value, the actual value is not meaningful. If unsuccessful the\n  map will contain a key :error with an ex-info instance describing the cause\n  of failure.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12083,15 +7661,6 @@
    :full-name "cljs.core/memoize",
    :docstring
    "Returns a memoized version of a referentially transparent function. The\nmemoized version of the function keeps a cache of the mapping from arguments\nto results and, when calls with the same arguments are repeated often, has\nhigher performance at the expense of higher memory use."},
-  "unlisten-by-key"
-  {:ns "clojure.browser.event",
-   :name "unlisten-by-key",
-   :signature ["[key]"],
-   :type "function",
-   :full-name "clojure.browser.event/unlisten-by-key",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "array-map"
   {:description
    "Returns a new array map (a map implemented with arrays) with the supplied mappings.\n\n`keyvals` must be an even number of forms.",
@@ -12215,39 +7784,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "test-vars-block"
-  {:ns "cljs.test",
-   :name "test-vars-block",
-   :signature ["[vars]"],
-   :type "function",
-   :full-name "cljs.test/test-vars-block",
-   :docstring
-   "Like test-vars, but returns a block for further composition and\nlater execution.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "uuid-literal"
-  {:description
-   "Creates a universally unique identifier (UUID), using the [doc:cljs.core/UUID] type.\n\nThe format is `#uuid \"8-4-4-4-12\"`, where the numbers represent the number of hex digits.\n\nRepresenting UUIDs with `#uuid` rather than just a plain string has the following benefits:\n\n- the reader will throw an exception on malformed UUIDs\n- its UUID type is preserved and shown when serialized to [edn].\n\nTo create a UUID from an evaluated expression, use [doc:cljs.core/uuid].\n\n[edn]:https://github.com/edn-format/edn",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#uuid &quot;00000000-0000-0000-0000-000000000000&quot;\n;;=&gt; #uuid &quot;00000000-0000-0000-0000-000000000000&quot;\n\n#uuid &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;\n;;=&gt; #uuid &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;\n\n#uuid &quot;asdf&quot;\n;; clojure.lang.ExceptionInfo: Invalid UUID string: asdf\n</code></pre><p>Get as a string:</p><pre><code class=\"clj\">&#40;def foo #uuid &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;&#41;\n&#40;str foo&#41;\n;;=&gt; &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;\n</code></pre>"],
-   :ns "syntax",
-   :name "uuid-literal",
-   :type "tagged literal",
-   :related ["cljs.core/uuid" "cljs.core/random-uuid"],
-   :examples-strings
-   [["#uuid \"00000000-0000-0000-0000-000000000000\" ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
-     "#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
-     "#uuid \"asdf\" ;; clojure.lang.ExceptionInfo: Invalid UUID string: asdf"
-     "(def foo #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")"
-     "(str foo) ;;=> \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]],
-   :description-html
-   "<p>Creates a universally unique identifier (UUID), using the [doc:cljs.core/UUID] type.</p><p>The format is <code>#uuid &quot;8-4-4-4-12&quot;</code>, where the numbers represent the number of hex digits.</p><p>Representing UUIDs with <code>#uuid</code> rather than just a plain string has the following benefits:</p><ul><li>the reader will throw an exception on malformed UUIDs</li><li>its UUID type is preserved and shown when serialized to [edn].</li></ul><p>To create a UUID from an evaluated expression, use [doc:cljs.core/uuid].</p><p>[edn]:https://github.com/edn-format/edn</p>",
-   :examples
-   [{:id "12c0f0",
-     :content
-     "```clj\n#uuid \"00000000-0000-0000-0000-000000000000\"\n;;=> #uuid \"00000000-0000-0000-0000-000000000000\"\n\n#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n\n#uuid \"asdf\"\n;; clojure.lang.ExceptionInfo: Invalid UUID string: asdf\n```\n\nGet as a string:\n\n```clj\n(def foo #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")\n(str foo)\n;;=> \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n```"}],
-   :full-name "syntax/uuid-literal"},
   "defn-"
   {:description
    "Same as `defn`, but adds `{:private true}` metadata to the definition.\n\nNote: `:private` metadata is not currently enforced by the ClojureScript\ncompiler.",
@@ -12262,24 +7798,6 @@
    "<p>Same as <code>defn</code>, but adds <code>{:private true}</code> metadata to the definition.</p><p>Note: <code>:private</code> metadata is not currently enforced by the ClojureScript compiler.</p>",
    :full-name "cljs.core/defn-",
    :docstring "same as defn, yielding non-public def"},
-  "init-engine"
-  {:ns "cljs.repl.nashorn",
-   :name "init-engine",
-   :signature ["[engine output-dir debug]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/init-engine",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "eval-str*"
-  {:ns "cljs.js",
-   :name "eval-str*",
-   :signature ["[bound-vars source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/eval-str*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IVector"
   {:ns "cljs.core",
    :name "IVector",
@@ -12291,37 +7809,33 @@
    :examples-strings [],
    :examples-htmls []},
   "set"
-  {:description "Create a literal set.  Values must be unique.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">#{1 2 3}\n;;=&gt; #{1 2 3}\n</code></pre><p>Duplicate values will cause an error:</p><pre><code class=\"clj\">#{1 1 2 3}\n;; Error: Duplicate key: 1\n</code></pre>"],
-   :ns "syntax",
+  {:description "Returns a set of the distinct elements of `coll`.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "set",
-   :type "syntax",
+   :signature ["[coll]"],
+   :type "function",
    :related
    ["cljs.core/hash-set"
     "cljs.core/sorted-set"
-    "cljs.core/sorted-set-by"],
-   :examples-strings
-   [["#{1 2 3} ;;=> #{1 2 3}"
-     "#{1 1 2 3} ;; Error: Duplicate key: 1"]],
-   :description-html
-   "<p>Create a literal set.  Values must be unique.</p>",
-   :examples
-   [{:id "f11ab6",
-     :content
-     "```clj\n#{1 2 3}\n;;=> #{1 2 3}\n```\n\nDuplicate values will cause an error:\n\n```clj\n#{1 1 2 3}\n;; Error: Duplicate key: 1\n```"}],
-   :full-name "syntax/set"},
-  "inputs"
-  {:ns "cljs.build.api",
-   :name "inputs",
-   :signature ["[& xs]"],
-   :type "function",
-   :full-name "cljs.build.api/inputs",
-   :docstring
-   "Given a list of directories and files, return a compilable object that may\nbe passed to build or watch.",
-   :description-html nil,
+    "cljs.core/conj"
+    "cljs.core/disj"
+    "cljs.core/distinct"
+    "clojure.set/join"
+    "clojure.set/select"
+    "clojure.set/difference"
+    "clojure.set/intersection"
+    "clojure.set/union"
+    "clojure.set/index"
+    "clojure.set/project"
+    "clojure.set/rename"
+    "clojure.set/rename-keys"
+    "clojure.set/map-invert"],
    :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p>Returns a set of the distinct elements of <code>coll</code>.</p>",
+   :full-name "cljs.core/set",
+   :docstring "Returns a set of the distinct elements of coll."},
   "double-array"
   {:ns "cljs.core",
    :name "double-array",
@@ -12371,62 +7885,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "target-file-for-cljs-ns"
-  {:ns "cljs.build.api",
-   :name "target-file-for-cljs-ns",
-   :signature ["[ns-sym]" "[ns-sym output-dir]"],
-   :type "function",
-   :full-name "cljs.build.api/target-file-for-cljs-ns",
-   :docstring
-   "Given an output directory and a clojurescript namespace return the\ncompilation target file for that namespace.\n\nFor example:\n(target-file-from-cljs-ns \"resources/out\" 'example.core) ->\n<File: \"resources/out/example/core.js\">",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "symbol-pattern"
-  {:ns "cljs.reader",
-   :name "symbol-pattern",
-   :type "var",
-   :full-name "cljs.reader/symbol-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "remove-children"
-  {:ns "clojure.browser.dom",
-   :name "remove-children",
-   :signature ["[id]"],
-   :type "function",
-   :full-name "clojure.browser.dom/remove-children",
-   :docstring
-   "Remove all children from the element with the passed id.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-inc-int"
   {:ns "cljs.core",
    :name "unchecked-inc-int",
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-inc-int",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-unmatched-delimiter"
-  {:ns "cljs.reader",
-   :name "read-unmatched-delimiter",
-   :signature ["[rdr ch]"],
-   :type "function",
-   :full-name "cljs.reader/read-unmatched-delimiter",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "end?"
-  {:ns "clojure.zip",
-   :name "end?",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/end?",
-   :docstring
-   "Returns true if loc represents the end of a depth-first walk",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12456,15 +7920,6 @@
    :signature ["[items no-clone]"],
    :type "function",
    :full-name "cljs.core/PersistentHashSet.fromArray",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-unicode-char"
-  {:ns "cljs.reader",
-   :name "read-unicode-char",
-   :signature ["[reader initch]"],
-   :type "function",
-   :full-name "cljs.reader/read-unicode-char",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12520,31 +7975,36 @@
    :examples-strings [],
    :examples-htmls []},
   "macroexpand"
-  {:ns "cljs.repl.reflect",
+  {:description
+   "(only intended as a REPL utility)\n\nIf the given quoted form is a macro call, expand it once, then repeat until a\nsubsequent result is _not_ a macro call.  NOTE: nested forms are _not_ expanded.\n\nSee [doc:cljs.core/macroexpand-1] if you only wish to expand a form once.",
+   :examples-htmls
+   ["<p>See how [doc:cljs.core/when] expands to [doc:special/if]:</p><pre><code class=\"clj\">&#40;macroexpand '&#40;when true :foo&#41;&#41;\n;;=&gt; &#40;if true &#40;do :foo&#41;&#41;\n</code></pre><p>The following goes through three expansion steps, but you can use [doc:cljs.core/macroexpand-1] to do one at a time instead.</p><pre><code class=\"clj\">&#40;macroexpand '&#40;-&gt; 2 inc&#41;&#41;\n;;=&gt; &#40;js&#42; &quot;&#40;&#126;{} + &#126;{}&#41;&quot; 2 1&#41;\n</code></pre><p>Notice how the nested <code>inc</code> form is not expanded:</p><pre><code class=\"clj\">&#40;macroexpand '&#40;inc &#40;inc 2&#41;&#41;&#41;\n;;=&gt; &#40;js&#42; &quot;&#40;&#126;{} + &#126;{}&#41;&quot; &#40;inc 2&#41; 1&#41;\n</code></pre>"],
+   :ns "cljs.core",
    :name "macroexpand",
-   :signature ["[form]"],
-   :type "function",
-   :full-name "cljs.repl.reflect/macroexpand",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "test-all-vars-block"
-  {:ns "cljs.test",
-   :name "test-all-vars-block",
+   :signature ["[quoted]"],
+   :type "macro",
+   :related ["cljs.core/macroexpand-1" "cljs.core/defmacro"],
+   :examples-strings
+   [["(macroexpand '(when true :foo)) ;;=> (if true (do :foo))"
+     "(macroexpand '(-> 2 inc)) ;;=> (js* \"(~{} + ~{})\" 2 1)"
+     "(macroexpand '(inc (inc 2))) ;;=> (js* \"(~{} + ~{})\" (inc 2) 1)"]],
+   :description-html
+   "<p>(only intended as a REPL utility)</p><p>If the given quoted form is a macro call, expand it once, then repeat until a subsequent result is <i>not</i> a macro call.  NOTE: nested forms are <i>not</i> expanded.</p><p>See [doc:cljs.core/macroexpand-1] if you only wish to expand a form once.</p>",
+   :examples
+   [{:id "b773af",
+     :content
+     "See how [doc:cljs.core/when] expands to [doc:special/if]:\n\n```clj\n(macroexpand '(when true :foo))\n;;=> (if true (do :foo))\n```\n\nThe following goes through three expansion steps, but you can use\n[doc:cljs.core/macroexpand-1] to do one at a time instead.\n\n```clj\n(macroexpand '(-> 2 inc))\n;;=> (js* \"(~{} + ~{})\" 2 1)\n```\n\nNotice how the nested `inc` form is not expanded:\n\n```clj\n(macroexpand '(inc (inc 2)))\n;;=> (js* \"(~{} + ~{})\" (inc 2) 1)\n```"}],
+   :full-name "cljs.core/macroexpand",
+   :docstring
+   "Repeatedly calls macroexpand-1 on form until it no longer\nrepresents a macro form, then returns it.  Note neither\nmacroexpand-1 nor macroexpand expand macros in subforms."},
+  "ns-interns"
+  {:ns "cljs.core",
+   :name "ns-interns",
    :signature ["[[quote ns]]"],
    :type "macro",
-   :full-name "cljs.test/test-all-vars-block",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ns-interns"
-  {:ns "cljs.analyzer.api",
-   :name "ns-interns",
-   :signature ["[ns]" "[state ns]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/ns-interns",
+   :full-name "cljs.core/ns-interns",
    :docstring
-   "Given a namespace return all the var analysis maps. Analagous to\nclojure.core/ns-interns but returns var analysis maps not vars.",
+   "Returns a map of the intern mappings for the namespace.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12571,16 +8031,6 @@
    "<p>Sets <code>val</code> at index <code>i</code> in a JavaScript array.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 3&#93;&#41;\n&#40;aset a 0 &quot;foo&quot;&#41;\na\n;;=&gt; #js &#91;&quot;foo&quot; 2 3&#93;\n</code></pre><p>Set nested elements with the additional <code>idxs</code> arguments.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 #js &#91;3 4&#93;&#93;&#41;\n&#40;aset a 2 0 &quot;foo&quot;&#41;\na\n;;=&gt; #js &#91;1 2 #js &#91;&quot;foo&quot; 4&#93;&#93;\n</code></pre><p>For JavaScript objects, use [<code>goog.object/set</code>].</p><p>[<code>goog.object/set</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#set</p><pre><code class=\"clj\">&#40;require 'goog.object&#41;\n&#40;def obj #js {:foo 1}&#41;\n\n&#40;goog.object/set obj &quot;foo&quot; &quot;bar&quot;&#41;\nobj\n;;=&gt; #js {:foo &quot;bar&quot;}\n</code></pre>",
    :full-name "cljs.core/aset",
    :docstring "Sets the value at the index."},
-  "*print-pprint-dispatch*"
-  {:ns "cljs.pprint",
-   :name "*print-pprint-dispatch*",
-   :type "dynamic var",
-   :full-name "cljs.pprint/*print-pprint-dispatch*",
-   :docstring
-   "The pretty print dispatch function. Use with-pprint-dispatch or\nset-pprint-dispatch to modify.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "*print-newline*"
   {:ns "cljs.core",
    :name "*print-newline*",
@@ -12627,15 +8077,6 @@
    "<p>Returns true if <code>x</code> is a sequence, false otherwise.</p><p>All collections can be converted into a sequence using <code>seq</code>.</p>",
    :full-name "cljs.core/seq?",
    :docstring "Return true if s satisfies ISeq"},
-  "with-pretty-writer"
-  {:ns "cljs.pprint",
-   :name "with-pretty-writer",
-   :signature ["[base-writer & body]"],
-   :type "macro",
-   :full-name "cljs.pprint/with-pretty-writer",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "filterv"
   {:description
    "Returns a vector of the items in `coll` for which `(pred item)` returns true.\n\n`pred` must be free of side-effects.",
@@ -12650,25 +8091,6 @@
    :full-name "cljs.core/filterv",
    :docstring
    "Returns a vector of the items in coll for which\n(pred item) returns true. pred must be free of side-effects."},
-  "read-map"
-  {:ns "cljs.reader",
-   :name "read-map",
-   :signature ["[rdr _]"],
-   :type "function",
-   :full-name "cljs.reader/read-map",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "repl*"
-  {:ns "cljs.repl",
-   :name "repl*",
-   :signature
-   ["[repl-env {:keys [init need-prompt quit-prompt prompt flush read eval print caught reader print-no-newline source-map-inline wrap repl-requires compiler-env bind-err], :or {caught repl-caught, quit-prompt repl-quit-prompt, eval eval-cljs, print-no-newline print, flush flush, read repl-read, bind-err true, print println, source-map-inline true, prompt repl-prompt, repl-requires (quote [[cljs.repl :refer-macros [source doc find-doc apropos dir pst]] [cljs.pprint :refer [pprint] :refer-macros [pp]]]), reader (fn* [] (readers/source-logging-push-back-reader (PushbackReader. (io/reader *in*)) 1 \"NO_SOURCE_FILE\")), need-prompt (fn* [] (if (readers/indexing-reader? *in*) (== (readers/get-column-number *in*) 1) (identity true)))}, :as opts}]"],
-   :type "function",
-   :full-name "cljs.repl/repl*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "bit-set"
   {:description
    "Set bit at index `n`.  Same as `x | (1 << y)` in JavaScript.",
@@ -12690,26 +8112,6 @@
      "Bits can be entered using radix notation:\n\n```clj\n(bit-set 2r1100 1)\n;;=> 14\n;; 14 = 2r1110\n```\n\nSame number in decimal:\n\n```clj\n(bit-set 12 1)\n;;=> 14\n```"}],
    :full-name "cljs.core/bit-set",
    :docstring "Set bit at index n"},
-  "unquote"
-  {:description
-   "(Only intended for use in Clojure macros, which can be used from but not\nwritten in ClojureScript.)\n\nIntended for use inside a [doc:syntax/syntax-quote].\n\nForces evaluation of the following form.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;def foo 1&#41;\n`&#126;foo\n;;=&gt; 1\n\n`&#40;def foo &#126;foo&#41;\n;;=&gt; &#40;def cljs.user/foo 1&#41;\n</code></pre>"],
-   :ns "syntax",
-   :name "unquote",
-   :type "syntax",
-   :related ["syntax/syntax-quote" "syntax/unquote-splicing"],
-   :examples-strings
-   [["(def foo 1)"
-     "`~foo ;;=> 1"
-     "`(def foo ~foo) ;;=> (def cljs.user/foo 1)"]],
-   :description-html
-   "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Intended for use inside a [doc:syntax/syntax-quote].</p><p>Forces evaluation of the following form.</p>",
-   :examples
-   [{:id "1ff51e",
-     :content
-     "```clj\n(def foo 1)\n`~foo\n;;=> 1\n\n`(def foo ~foo)\n;;=> (def cljs.user/foo 1)\n```"}],
-   :full-name "syntax/unquote"},
   "quot"
   {:description
    "Returns the quotient of dividing numerator `n` by denominator `d`.\n\nReturns `NaN` when `d` is 0 (divide by 0 error).",
@@ -12724,26 +8126,6 @@
    "<p>Returns the quotient of dividing numerator <code>n</code> by denominator <code>d</code>.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p>",
    :full-name "cljs.core/quot",
    :docstring "quot[ient] of dividing numerator by denominator."},
-  "ns-specs"
-  {:ns "cljs.analyzer.api",
-   :name "ns-specs",
-   :signature ["[ns]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/ns-specs",
-   :docstring
-   "Given a namespace return all the original specs for a namspace as originally\nprovided in the source.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "valid-name?"
-  {:ns "cljs.js",
-   :name "valid-name?",
-   :signature ["[x]"],
-   :type "function",
-   :full-name "cljs.js/valid-name?",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "def"
   {:description
    "Creates a global variable with the name of `symbol` and a namespace of the\ncurrent namespace.\n\nIf `init` is supplied, it is evaluated and the result is assigned to `symbol`.\n\n`doc-string` is an optional documentation string.\n\n`def` is one of ClojureScript's [special forms](http://clojure.org/special_forms)\nand is used by many macros to define common elements (ie: `defn`, `defmacro`,\netc).\n\nSupported metadata:\n\n- `^:private boolean` - make non-accessible from other namespaces\n- `^:dynamic boolean` - make [dynamically bindable][doc:cljs.core/binding] (usually named with [doc:syntax/earmuffs])\n- `^:const boolean` - prevents redef and allows it to be used in [doc:cljs.core/case].\n- `^:jsdoc [\"\"]` - vector of JSDoc Tags for [Google Closure][closure-jsdoc] or [standard][other-jsdoc].\n- `^:test (fn [] (assert ...))` - allows function to be tested with [doc:cljs.core/test].\n- `^:doc \"\"` - doc-string (prefer the use of the `(def symbol doc-string init)`)\n\n[closure-jsdoc]:https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en#tags\n[other-jsdoc]:http://usejsdoc.org/#block-tags\n\nCompiler will also add metadata:\n\n- `:ns`\n- `:name`\n- `:file`\n- `:line`, `:end-line`\n- `:column`, `:end-column`\n- `:source`\n- `:arglists`",
@@ -12774,50 +8156,12 @@
    :full-name "special/def",
    :docstring
    "Creates and interns a global var with the name\nof symbol in the current namespace (*ns*) or locates such a var if\nit already exists.  If init is supplied, it is evaluated, and the\nroot binding of the var is set to the resulting value.  If init is\nnot supplied, the root binding of the var is unaffected."},
-  "set-pprint-dispatch"
-  {:ns "cljs.pprint",
-   :name "set-pprint-dispatch",
-   :signature ["[function]"],
-   :type "function",
-   :full-name "cljs.pprint/set-pprint-dispatch",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "includes?"
-  {:ns "clojure.string",
-   :name "includes?",
-   :signature ["[s substr]"],
-   :type "function",
-   :full-name "clojure.string/includes?",
-   :docstring "True if s includes substr.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "unchecked-byte"
   {:ns "cljs.core",
    :name "unchecked-byte",
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-byte",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "*timeout*"
-  {:ns "clojure.browser.net",
-   :name "*timeout*",
-   :type "var",
-   :full-name "clojure.browser.net/*timeout*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "forms-seq"
-  {:ns "cljs.analyzer.api",
-   :name "forms-seq",
-   :signature ["[rdr]" "[rdr filename]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/forms-seq",
-   :docstring
-   "Seq of Clojure/ClojureScript forms from rdr, a java.io.Reader. Optionally\naccepts a filename argument which will be used in any emitted errors.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12848,43 +8192,27 @@
      "```clj\n(coll? [1 2 3])\n;;=> true\n\n(coll? '(1 2 3))\n;;=> true\n\n(coll? #{1 2 3})\n;;=> true\n\n(coll? {:foo 1 :bar 2})\n;;=> true\n```\n\nNot collections:\n\n```clj\n(coll? \"foo\")\n;;=> false\n\n(coll? 123)\n;;=> false\n\n(coll? nil)\n;;=> false\n```"}],
    :full-name "cljs.core/coll?",
    :docstring "Returns true if x satisfies ICollection"},
-  "report"
-  {:ns "cljs.test",
-   :name "report",
-   :type "multimethod",
-   :full-name "cljs.test/report",
-   :docstring
-   "Generic reporting function, may be overridden to plug in\n   different report formats (e.g., TAP, JUnit).  Assertions such as\n   'is' call 'report' to indicate results.  The argument given to\n   'report' will be a map with a :type key.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "reduce"
-  {:ns "clojure.core.reducers",
+  {:description
+   "`f` should be a function of 2 arguments. If `val` is not supplied, returns the\nresult of applying `f` to the first 2 items in `coll`, then applying `f` to that\nresult and the 3rd item, etc.\n\nIf `coll` contains no items, `f` must accept no arguments as well, and `reduce`\nreturns the result of calling `f` with no arguments.\n\nIf `coll` has only 1 item, it is returned and `f` is not called.\n\nIf `val` is supplied, returns the result of applying `f` to `val` and the first\nitem in `coll`, then applying `f` to that result and the 2nd item, etc.\n\nIf `coll` contains no items, returns `val` and `f` is not called.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "reduce",
-   :signature ["[f coll]" "[f init coll]"],
+   :signature ["[f coll]" "[f val coll]"],
    :type "function",
-   :full-name "clojure.core.reducers/reduce",
-   :docstring
-   "Like core/reduce except:\n  When init is not provided, (f) is used.\n  Maps are reduced with reduce-kv",
-   :description-html nil,
+   :related
+   ["cljs.core/reductions" "cljs.core/apply" "cljs.core/frequencies"],
    :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p><code>f</code> should be a function of 2 arguments. If <code>val</code> is not supplied, returns the result of applying <code>f</code> to the first 2 items in <code>coll</code>, then applying <code>f</code> to that result and the 3rd item, etc.</p><p>If <code>coll</code> contains no items, <code>f</code> must accept no arguments as well, and <code>reduce</code> returns the result of calling <code>f</code> with no arguments.</p><p>If <code>coll</code> has only 1 item, it is returned and <code>f</code> is not called.</p><p>If <code>val</code> is supplied, returns the result of applying <code>f</code> to <code>val</code> and the first item in <code>coll</code>, then applying <code>f</code> to that result and the 2nd item, etc.</p><p>If <code>coll</code> contains no items, returns <code>val</code> and <code>f</code> is not called.</p>",
+   :full-name "cljs.core/reduce",
+   :docstring
+   "f should be a function of 2 arguments. If val is not supplied,\nreturns the result of applying f to the first 2 items in coll, then\napplying f to that result and the 3rd item, etc. If coll contains no\nitems, f must accept no arguments as well, and reduce returns the\nresult of calling f with no arguments.  If coll has only 1 item, it\nis returned and f is not called.  If val is supplied, returns the\nresult of applying f to val and the first item in coll, then\napplying f to that result and the 2nd item, etc. If coll contains no\nitems, returns val and f is not called."},
   "not-native"
   {:ns "cljs.core",
    :name "not-native",
    :type "var",
    :full-name "cljs.core/not-native",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "testing-vars-str"
-  {:ns "cljs.test",
-   :name "testing-vars-str",
-   :signature ["[m]"],
-   :type "function",
-   :full-name "cljs.test/testing-vars-str",
-   :docstring
-   "Returns a string representation of the current test.  Renders names\nin *testing-vars* as a list, then the source file and line of\ncurrent assertion.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -12938,17 +8266,6 @@
    :full-name "cljs.core/*2",
    :docstring
    "bound in a repl thread to the second most recent value printed"},
-  "make-node"
-  {:ns "clojure.zip",
-   :name "make-node",
-   :signature ["[loc node children]"],
-   :type "function",
-   :full-name "clojure.zip/make-node",
-   :docstring
-   "Returns a new branch node, given an existing node and new\nchildren. The loc is only used to supply the constructor.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "re-matches"
   {:description
    "Returns the result of `(re-find re s)` if `re` fully matches `s`.",
@@ -12963,15 +8280,6 @@
    :full-name "cljs.core/re-matches",
    :docstring
    "Returns the result of (re-find re s) if re fully matches s."},
-  "socket"
-  {:ns "cljs.repl.node",
-   :name "socket",
-   :signature ["[host port]"],
-   :type "function",
-   :full-name "cljs.repl.node/socket",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "case*"
   {:ns "special",
    :name "case*",
@@ -12980,89 +8288,20 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "destructure-vector"
-  {:description
-   "A helpful shorthand for destructuring a sequence into multiple names.\n\n```clj\n(let [ [a b c]   ;; <-- destructure vector\n       [1 2 3] ]\n  (println a b c))\n;; 1 2 3\n```\n\nUse `& foo` to name the rest of the items in the sequence:\n\n```clj\n(let [ [a b c & d]\n       [1 2 3 4 5] ]\n  (println a b c d))\n;; 1 2 3 (4 5)\n```\n\nUse `:as foo` to name the original value:\n\n```clj\n(let [ [a b c & d :as whole]\n       [1 2 3 4 5] ]\n  whole)\n;;=> [1 2 3 4 5]\n```\n\nUse the special destructure vector in place of any local name binding in the\nfollowing forms:\n\n- `(let [...])`\n- `(fn [...])`\n- `(loop [...])`\n\nDestructure vectors can be nested, even in place of names in [destructure\nmaps][doc:syntax/destructure-map].",
-   :examples-htmls
-   ["<p>Use destructure vectors in function parameters:</p><pre><code class=\"clj\">&#40;defn foo &#91;&#91;a b&#93; c&#93;\n  &#40;+ a b c&#41;&#41;\n\n&#40;foo &#91;1 2&#93; 3&#41;\n;;=&gt; 6\n</code></pre>"
-    "<p>Destructure vectors can be nested:</p><pre><code class=\"clj\">&#40;let &#91; &#91;&#91;a b&#93; c&#93;\n       &#91;&#91;1 2&#93; 3&#93; &#93;\n  &#40;println a b c&#41;&#41;\n;; 1 2 3\n</code></pre>"],
-   :ns "syntax",
-   :name "destructure-vector",
-   :type "binding",
-   :related ["syntax/destructure-map"],
-   :examples-strings
-   [["(defn foo [[a b] c]" "  (+ a b c))" "(foo [1 2] 3) ;;=> 6"]
-    ["(let [ [[a b] c]"
-     "       [[1 2] 3] ]"
-     "  (println a b c)) ;; 1 2 3"]],
-   :description-html
-   "<p>A helpful shorthand for destructuring a sequence into multiple names.</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c&#93;   ;; &lt;-- destructure vector\n       &#91;1 2 3&#93; &#93;\n  &#40;println a b c&#41;&#41;\n;; 1 2 3\n</code></pre><p>Use <code>&amp; foo</code> to name the rest of the items in the sequence:</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c &amp; d&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  &#40;println a b c d&#41;&#41;\n;; 1 2 3 &#40;4 5&#41;\n</code></pre><p>Use <code>:as foo</code> to name the original value:</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c &amp; d :as whole&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  whole&#41;\n;;=&gt; &#91;1 2 3 4 5&#93;\n</code></pre><p>Use the special destructure vector in place of any local name binding in the following forms:</p><ul><li><code>&#40;let &#91;...&#93;&#41;</code></li><li><code>&#40;fn &#91;...&#93;&#41;</code></li><li><code>&#40;loop &#91;...&#93;&#41;</code></li></ul><p>Destructure vectors can be nested, even in place of names in [destructure maps][doc:syntax/destructure-map].</p>",
-   :examples
-   [{:id "acab87",
-     :content
-     "Use destructure vectors in function parameters:\n\n```clj\n(defn foo [[a b] c]\n  (+ a b c))\n\n(foo [1 2] 3)\n;;=> 6\n```"}
-    {:id "fa4e05",
-     :content
-     "Destructure vectors can be nested:\n\n```clj\n(let [ [[a b] c]\n       [[1 2] 3] ]\n  (println a b c))\n;; 1 2 3\n```"}],
-   :full-name "syntax/destructure-vector"},
-  "apropos"
-  {:description
-   "Given a regular expression or stringable thing, return a seq of all\npublic definitions in all currently-loaded namespaces that match the\n`str-or-pattern`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;apropos &quot;some&quot;&#41;\n;;=&gt; &#40;cljs.core/if-some\n;;    cljs.core/some\n;;    cljs.core/some-&gt;\n;;    cljs.core/some-&gt;&gt;\n;;    cljs.core/some-fn\n;;    cljs.core/some?\n;;    cljs.core/when-some&#41;\n</code></pre>"],
-   :ns "cljs.repl",
-   :name "apropos",
-   :signature ["[str-or-pattern]"],
-   :type "macro",
-   :related ["cljs.repl/find-doc"],
-   :examples-strings
-   [["(apropos \"some\") ;;=> (cljs.core/if-some ;;    cljs.core/some ;;    cljs.core/some-> ;;    cljs.core/some->> ;;    cljs.core/some-fn ;;    cljs.core/some? ;;    cljs.core/when-some)"]],
-   :description-html
-   "<p>Given a regular expression or stringable thing, return a seq of all public definitions in all currently-loaded namespaces that match the <code>str-or-pattern</code>.</p>",
-   :examples
-   [{:id "aceda4",
-     :content
-     "```clj\n(apropos \"some\")\n;;=> (cljs.core/if-some\n;;    cljs.core/some\n;;    cljs.core/some->\n;;    cljs.core/some->>\n;;    cljs.core/some-fn\n;;    cljs.core/some?\n;;    cljs.core/when-some)\n```"}],
-   :full-name "cljs.repl/apropos",
-   :docstring
-   "Given a regular expression or stringable thing, return a seq of all\npublic definitions in all currently-loaded namespaces that match the\nstr-or-pattern."},
   "flatten"
-  {:ns "clojure.core.reducers",
-   :name "flatten",
-   :signature ["[]" "[coll]"],
-   :type "function",
-   :full-name "clojure.core.reducers/flatten",
-   :docstring
-   "Takes any nested combination of sequential things (lists, vectors,\n  etc.) and returns their contents as a single, flat foldable\n  collection.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "Cat"
-  {:ns "clojure.core.reducers",
-   :name "Cat",
-   :signature ["[cnt left right]"],
-   :type "type",
-   :full-name "clojure.core.reducers/Cat",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "nil"
   {:description
-   "`nil` is a representation of nothing.\n\nIt is common for operations to safely handle `nil` without\ncausing exceptions.\n\nExpressions evaluate to `nil` if there is no value to return.",
-   :ns "syntax",
-   :name "nil",
-   :type "special symbol",
-   :examples
-   [{:id "17b92a",
-     :content
-     "```clj\nnil\n;;=> nil\n```\n\n`nil` can sometimes mean \"not found\":\n\n```clj\n(:foo {})\n;;=> nil\n```\n\n`nil` can also mean that the operation didn't make sense:\n\n```clj\n(:foo nil)\n;;=> nil\n```"}],
-   :full-name "syntax/nil",
+   "Takes any nested combination of sequential things (lists, vectors, etc.) and\nreturns their contents as a single, flat sequence.\n\n`(flatten nil)` returns nil.",
+   :examples-htmls [],
+   :ns "cljs.core",
+   :name "flatten",
+   :signature ["[x]"],
+   :type "function",
+   :examples-strings [],
    :description-html
-   "<p><code>nil</code> is a representation of nothing.</p><p>It is common for operations to safely handle <code>nil</code> without causing exceptions.</p><p>Expressions evaluate to <code>nil</code> if there is no value to return.</p>",
-   :examples-strings
-   [["nil ;;=> nil" "(:foo {}) ;;=> nil" "(:foo nil) ;;=> nil"]],
-   :examples-htmls
-   ["<pre><code class=\"clj\">nil\n;;=&gt; nil\n</code></pre><p><code>nil</code> can sometimes mean \"not found\":</p><pre><code class=\"clj\">&#40;:foo {}&#41;\n;;=&gt; nil\n</code></pre><p><code>nil</code> can also mean that the operation didn't make sense:</p><pre><code class=\"clj\">&#40;:foo nil&#41;\n;;=&gt; nil\n</code></pre>"]},
+   "<p>Takes any nested combination of sequential things (lists, vectors, etc.) and returns their contents as a single, flat sequence.</p><p><code>&#40;flatten nil&#41;</code> returns nil.</p>",
+   :full-name "cljs.core/flatten",
+   :docstring
+   "Takes any nested combination of sequential things (lists, vectors,\netc.) and returns their contents as a single, flat sequence.\n(flatten nil) returns nil."},
   "nnext"
   {:description "Same as `(next (next coll))`.",
    :examples-htmls [],
@@ -13095,49 +8334,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "test-ns"
-  {:ns "cljs.test",
-   :name "test-ns",
-   :signature ["[ns]" "[env [quote ns :as form]]"],
-   :type "macro",
-   :full-name "cljs.test/test-ns",
-   :docstring
-   "If the namespace defines a function named test-ns-hook, calls that.\nOtherwise, calls test-all-vars on the namespace.  'ns' is a\nnamespace object or a symbol.\n\nInternally binds *report-counters* to a ref initialized to\n*initial-report-counters*.  ",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "xpc-config-fields"
-  {:ns "clojure.browser.net",
-   :name "xpc-config-fields",
-   :type "var",
-   :full-name "clojure.browser.net/xpc-config-fields",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "deregister-tag-parser!"
-  {:ns "cljs.reader",
-   :name "deregister-tag-parser!",
-   :signature ["[tag]"],
-   :type "function",
-   :full-name "cljs.reader/deregister-tag-parser!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "multi-stepper"
   {:ns "cljs.core",
    :name "multi-stepper",
    :signature ["[xform iters]" "[xform iters nexts]"],
    :type "function",
    :full-name "cljs.core/multi-stepper",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "create-client-js-file"
-  {:ns "cljs.repl.browser",
-   :name "create-client-js-file",
-   :signature ["[opts file-path]"],
-   :type "function",
-   :full-name "cljs.repl.browser/create-client-js-file",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -13261,15 +8463,6 @@
      "```clj\n(comment 123)\n;;=> nil\n\n(comment\n  (foo 1 2 3)\n  (bar \"hello\"))\n;;=> nil\n```\n\nInner forms must still be syntactically correct:\n\n```clj\n(comment [1 2 3]])\n;; Error: Unmatched delimiter ]\n\n(comment a : b)\n;; Error: Invalid token :\n```"}],
    :full-name "cljs.core/comment",
    :docstring "Ignores body, yields nil"},
-  "compile*"
-  {:ns "cljs.js",
-   :name "compile*",
-   :signature ["[bound-vars source name opts cb]"],
-   :type "function",
-   :full-name "cljs.js/compile*",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "recur"
   {:ns "special",
    :name "recur",
@@ -13281,46 +8474,12 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "parse-and-validate-timestamp"
-  {:ns "cljs.reader",
-   :name "parse-and-validate-timestamp",
-   :signature ["[s]"],
-   :type "function",
-   :full-name "cljs.reader/parse-and-validate-timestamp",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-url-string"
-  {:ns "cljs.repl.reflect",
-   :name "read-url-string",
-   :type "var",
-   :full-name "cljs.repl.reflect/read-url-string",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "Vector.fromArray"
   {:ns "cljs.core",
    :name "Vector.fromArray",
    :signature ["[xs]"],
    :type "function",
    :full-name "cljs.core/Vector.fromArray",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IEventType"
-  {:ns "clojure.browser.event",
-   :name "IEventType",
-   :type "protocol",
-   :full-name "clojure.browser.event/IEventType",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "safari-st-el->frame"
-  {:ns "cljs.repl.browser",
-   :name "safari-st-el->frame",
-   :signature ["[repl-env st-el opts]"],
-   :type "function",
-   :full-name "cljs.repl.browser/safari-st-el->frame",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -13343,29 +8502,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "wrapping-reader"
-  {:ns "cljs.reader",
-   :name "wrapping-reader",
-   :signature ["[sym]"],
-   :type "function",
-   :full-name "cljs.reader/wrapping-reader",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ObjMap.HASHMAP_THRESHOLD"
   {:ns "cljs.core",
    :name "ObjMap.HASHMAP_THRESHOLD",
    :type "var",
    :full-name "cljs.core/ObjMap.HASHMAP_THRESHOLD",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "with-state"
-  {:ns "cljs.js",
-   :name "with-state",
-   :signature ["[state & body]"],
-   :type "macro",
-   :full-name "cljs.js/with-state",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -13422,32 +8563,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "unicode-4-pattern"
-  {:ns "cljs.reader",
-   :name "unicode-4-pattern",
-   :type "var",
-   :full-name "cljs.reader/unicode-4-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "current-repl-env"
-  {:ns "cljs.repl.rhino",
-   :name "current-repl-env",
-   :type "var",
-   :full-name "cljs.repl.rhino/current-repl-env",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "branch?"
-  {:ns "clojure.zip",
-   :name "branch?",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/branch?",
-   :docstring "Returns true if the node at loc is a branch",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "nfirst"
   {:description "Same as `(next (first coll))`.",
    :examples-htmls
@@ -13470,25 +8585,6 @@
      "```clj\n(nfirst [[1 2 3] [4 5]])\n;;=> (2 3)\n\n(nfirst [[1 2] [3 4]])\n;;=> (2)\n\n(nfirst [[1] [2 3]])\n;;=> nil\n\n(nfirst [[] [1 2]])\n;;=> nil\n```"}],
    :full-name "cljs.core/nfirst",
    :docstring "Same as (next (first x))"},
-  "sm-data"
-  {:ns "cljs.js",
-   :name "sm-data",
-   :signature ["[]"],
-   :type "function",
-   :full-name "cljs.js/sm-data",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "get-options"
-  {:ns "cljs.analyzer.api",
-   :name "get-options",
-   :signature ["[]" "[state]"],
-   :type "function",
-   :full-name "cljs.analyzer.api/get-options",
-   :docstring "Return the compiler options from compiler state.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "prefer-method"
   {:ns "cljs.core",
    :name "prefer-method",
@@ -13497,35 +8593,6 @@
    :full-name "cljs.core/prefer-method",
    :docstring
    "Causes the multimethod to prefer matches of dispatch-val-x over dispatch-val-y\nwhen there is a conflict",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "parse-param"
-  {:ns "cljs.repl.reflect",
-   :name "parse-param",
-   :signature ["[path]"],
-   :type "function",
-   :full-name "cljs.repl.reflect/parse-param",
-   :docstring
-   "Parses the query parameter of a path of the form \"/reflect?var=foo\"\ninto the vector [\"var\" \"foo\"].",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "dispatch-event"
-  {:ns "clojure.browser.event",
-   :name "dispatch-event",
-   :signature ["[src event]"],
-   :type "function",
-   :full-name "clojure.browser.event/dispatch-event",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-headers"
-  {:ns "cljs.repl.server",
-   :name "read-headers",
-   :signature ["[rdr]"],
-   :type "function",
-   :full-name "cljs.repl.server/read-headers",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -13554,16 +8621,6 @@
    :full-name "cljs.core/assoc-in",
    :docstring
    "Associates a value in a nested associative structure, where ks is a\nsequence of keys and v is the new value and returns a new nested structure.\nIf any levels do not exist, hash-maps will be created."},
-  "code-dispatch"
-  {:ns "cljs.pprint",
-   :name "code-dispatch",
-   :type "multimethod",
-   :full-name "cljs.pprint/code-dispatch",
-   :docstring
-   "The pretty print dispatch function for pretty printing Clojure code.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "js-reserved"
   {:ns "cljs.core",
    :name "js-reserved",
@@ -13616,15 +8673,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "write"
-  {:ns "cljs.repl.node",
-   :name "write",
-   :signature ["[out js]"],
-   :type "function",
-   :full-name "cljs.repl.node/write",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "mapv"
   {:description
    "Returns a vector consisting of the result of applying `f` to the set of first\nitems of each coll, followed by applying `f` to the set of second items in each\ncoll, until any one of the colls is exhausted. Any remaining items in other\ncolls are ignored.\n\nFunction `f` should accept number-of-colls arguments.",
@@ -13664,64 +8712,11 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "IJavaScriptEnv"
-  {:ns "cljs.repl",
-   :name "IJavaScriptEnv",
-   :type "protocol",
-   :full-name "cljs.repl/IJavaScriptEnv",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "int-pattern"
-  {:ns "cljs.reader",
-   :name "int-pattern",
-   :type "var",
-   :full-name "cljs.reader/int-pattern",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "pprint-set"
-  {:ns "cljs.pprint",
-   :name "pprint-set",
-   :type "var",
-   :full-name "cljs.pprint/pprint-set",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "IEncodeClojure"
   {:ns "cljs.core",
    :name "IEncodeClojure",
    :type "protocol",
    :full-name "cljs.core/IEncodeClojure",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "bootstrap-repl"
-  {:ns "cljs.repl.nashorn",
-   :name "bootstrap-repl",
-   :signature ["[engine output-dir opts]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/bootstrap-repl",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "server-loop"
-  {:ns "cljs.repl.browser",
-   :name "server-loop",
-   :signature ["[opts server-socket]"],
-   :type "function",
-   :full-name "cljs.repl.browser/server-loop",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "formatter-out"
-  {:ns "cljs.pprint",
-   :name "formatter-out",
-   :signature ["[format-in]"],
-   :type "macro",
-   :full-name "cljs.pprint/formatter-out",
-   :docstring
-   "Makes a function which can directly run format-in. The function is\nfn [& args] ... and returns nil. This version of the formatter macro is\ndesigned to be used with *out* set to an appropriate Writer. In particular,\nthis is meant to be used as part of a pretty printer dispatch method.\n\nformat-in can be either a control string or a previously compiled format.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -13749,17 +8744,6 @@
    :full-name "cljs.core/when-not",
    :docstring
    "Evaluates test. If logical false, evaluates body in an implicit do."},
-  "browser-eval"
-  {:ns "cljs.repl.browser",
-   :name "browser-eval",
-   :signature ["[form]"],
-   :type "function",
-   :full-name "cljs.repl.browser/browser-eval",
-   :docstring
-   "Given a string of JavaScript, evaluate it in the browser and return a map representing the\nresult of the evaluation. The map will contain the keys :type and :value. :type can be\n:success, :exception, or :error. :success means that the JavaScript was evaluated without\nexception and :value will contain the return value of the evaluation. :exception means that\nthere was an exception in the browser while evaluating the JavaScript and :value will\ncontain the error message. :error means that some other error has occured.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "dec"
   {:description "Returns a number one less than `x`.",
    :examples-htmls [],
@@ -13773,20 +8757,6 @@
    "<p>Returns a number one less than <code>x</code>.</p>",
    :full-name "cljs.core/dec",
    :docstring "Returns a number one less than num."},
-  "trim-newline"
-  {:description
-   "Removes all trailing newline `\\n` or return `\\r` characters from string.\n\nSimilar to Perl's chomp.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "trim-newline",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Removes all trailing newline <code>\\n</code> or return <code>\\r</code> characters from string.</p><p>Similar to Perl's chomp.</p>",
-   :full-name "clojure.string/trim-newline",
-   :docstring
-   "Removes all trailing newline \\n or return \\r characters from\nstring.  Similar to Perl's chomp."},
   "disj"
   {:description
    "disj(oin). Returns a new set of the same (hashed/sorted) type, that does not\ncontain key(s).",
@@ -13813,25 +8783,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "difference"
-  {:description
-   "Return a set that is the first set without elements of the remaining sets.",
-   :examples-htmls [],
-   :ns "clojure.set",
-   :name "difference",
-   :signature ["[s1]" "[s1 s2]" "[s1 s2 & sets]"],
-   :type "function",
-   :related
-   ["clojure.set/union"
-    "clojure.set/intersection"
-    "clojure.set/superset?"
-    "clojure.set/project"],
-   :examples-strings [],
-   :description-html
-   "<p>Return a set that is the first set without elements of the remaining sets.</p>",
-   :full-name "clojure.set/difference",
-   :docstring
-   "Return a set that is the first set without elements of the remaining sets"},
   "=="
   {:description
    "This is an equality check for numbers of different types that was carried over from Clojure,\nto allow compatibility when converting code to ClojureScript.\n\nSince there is only a single number type in JavaScript, 64-bit floating point, there is no\nreason to use the `==` operator in ClojureScript.\n\nBehavior on non-number arguments is undefined.",
@@ -13852,17 +8803,6 @@
    :full-name "cljs.core/==",
    :docstring
    "Returns non-nil if nums all have the equivalent\nvalue, otherwise false. Behavior on non nums is\nundefined."},
-  "load-deps"
-  {:ns "cljs.js",
-   :name "load-deps",
-   :signature
-   ["[bound-vars ana-env lib deps cb]"
-    "[bound-vars ana-env lib deps opts cb]"],
-   :type "function",
-   :full-name "cljs.js/load-deps",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "get"
   {:description
    "Returns the value mapped to key `k`.\n\nReturns `not-found` or nil if `k` is not present in `o`.",
@@ -13878,16 +8818,6 @@
    :full-name "cljs.core/get",
    :docstring
    "Returns the value mapped to key, not-found or nil if key not present."},
-  "append-source-map"
-  {:ns "cljs.js",
-   :name "append-source-map",
-   :signature
-   ["[state name source sb sm-data {:keys [output-dir asset-path], :as opts}]"],
-   :type "function",
-   :full-name "cljs.js/append-source-map",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ex-cause"
   {:ns "cljs.core",
    :name "ex-cause",
@@ -13964,39 +8894,6 @@
    :type "type",
    :full-name "cljs.core/BitmapIndexedNode",
    :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "cljs-dependents-for-macro-namespaces"
-  {:ns "cljs.build.api",
-   :name "cljs-dependents-for-macro-namespaces",
-   :signature ["[namespaces]" "[state namespaces]"],
-   :type "function",
-   :full-name "cljs.build.api/cljs-dependents-for-macro-namespaces",
-   :docstring
-   "Takes a list of Clojure (.clj) namespaces that define macros and\nreturns a list ClojureScript (.cljs) namespaces that depend on those macro\nnamespaces.\n\nFor example where example.macros is defined in the clojure file\n\"example/macros.clj\" and both 'example.core and 'example.util are\nClojureScript namespaces that require and use the macros from\n'example.macros :\n(cljs-dependents-for-macro-namespaces 'example.macros) ->\n('example.core 'example.util)",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "lefts"
-  {:ns "clojure.zip",
-   :name "lefts",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/lefts",
-   :docstring "Returns a seq of the left siblings of this loc",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "whitespace"
-  {:description
-   "The amount of whitespace between syntax forms does not affect syntax\ncorrectness.  Elements are free to be aligned as desired.\n\nIndentation is conventionally two spaces, no tab characters.\n[More indentation conventions here](https://github.com/bbatsov/clojure-style-guide#source-code-layout--organization)\n\nWhitespace around collection delimiters is not required:\n\n```clj\n(a(b(c)))\n```\n\n```clj\n#js[1 2 3]\n#inst\"2015-10-12\"\n```\n\nA [comma][doc:syntax/comma] is considered whitespace:\n\n```clj\n[1, 2, 3]\n{:foo 1, :bar 2}\n```",
-   :ns "syntax",
-   :name "whitespace",
-   :type "special character",
-   :related ["syntax/comma"],
-   :full-name "syntax/whitespace",
-   :description-html
-   "<p>The amount of whitespace between syntax forms does not affect syntax correctness.  Elements are free to be aligned as desired.</p><p>Indentation is conventionally two spaces, no tab characters. <a href='https://github.com/bbatsov/clojure-style-guide#source-code-layout--organization'>More indentation conventions here</a></p><p>Whitespace around collection delimiters is not required:</p><pre><code class=\"clj\">&#40;a&#40;b&#40;c&#41;&#41;&#41;\n</code></pre><pre><code class=\"clj\">#js&#91;1 2 3&#93;\n#inst&quot;2015-10-12&quot;\n</code></pre><p>A [comma][doc:syntax/comma] is considered whitespace:</p><pre><code class=\"clj\">&#91;1, 2, 3&#93;\n{:foo 1, :bar 2}\n</code></pre>",
    :examples-strings [],
    :examples-htmls []},
   "+"
@@ -14134,14 +9031,6 @@
    :full-name "cljs.core/array",
    :docstring
    "Creates a new javascript array.\n@param {...*} var_args"},
-  "xpc-connection"
-  {:ns "clojure.browser.repl",
-   :name "xpc-connection",
-   :type "var",
-   :full-name "clojure.browser.repl/xpc-connection",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ICloneable"
   {:ns "cljs.core",
    :name "ICloneable",
@@ -14229,23 +9118,14 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "add-in-order"
-  {:ns "cljs.repl.browser",
-   :name "add-in-order",
-   :signature ["[{:keys [expecting fns]} order f]"],
-   :type "function",
-   :full-name "cljs.repl.browser/add-in-order",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "cat"
-  {:ns "clojure.core.reducers",
+  {:ns "cljs.core",
    :name "cat",
-   :signature ["[]" "[ctor]" "[left right]"],
+   :signature ["[rf]"],
    :type "function",
-   :full-name "clojure.core.reducers/cat",
+   :full-name "cljs.core/cat",
    :docstring
-   "A high-performance combining fn that yields the catenation of the\nreduced values. The result is reducible, foldable, seqable and\ncounted, providing the identity collections are reducible, seqable\nand counted. The single argument version will build a combining fn\nwith the supplied identity constructor. Tests for identity\nwith (zero? (count x)). See also foldcat.",
+   "A transducer which concatenates the contents of each input, which must be a\ncollection, into the reduction.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -14255,24 +9135,6 @@
    :signature ["[sc test key]"],
    :type "function",
    :full-name "cljs.core/mk-bound-fn",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "handle-get"
-  {:ns "cljs.repl.browser",
-   :name "handle-get",
-   :signature ["[opts conn request]"],
-   :type "function",
-   :full-name "cljs.repl.browser/handle-get",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-keyword"
-  {:ns "cljs.reader",
-   :name "read-keyword",
-   :signature ["[reader initch]"],
-   :type "function",
-   :full-name "cljs.reader/read-keyword",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -14297,26 +9159,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "with-read-known"
-  {:ns "cljs.repl",
-   :name "with-read-known",
-   :signature ["[& body]"],
-   :type "macro",
-   :full-name "cljs.repl/with-read-known",
-   :docstring
-   "Evaluates body with *read-eval* set to a \"known\" value,\ni.e. substituting true for :unknown if necessary.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "create-engine"
-  {:ns "cljs.repl.nashorn",
-   :name "create-engine",
-   :signature ["[]" "[{:keys [code-cache], :or {code-cache true}}]"],
-   :type "function",
-   :full-name "cljs.repl.nashorn/create-engine",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "js*"
   {:ns "special",
    :name "js*",
@@ -14331,17 +9173,6 @@
    :signature ["[xform coll]"],
    :type "type",
    :full-name "cljs.core/Eduction",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "run-block"
-  {:ns "cljs.test",
-   :name "run-block",
-   :signature ["[fns]"],
-   :type "function",
-   :full-name "cljs.test/run-block",
-   :docstring
-   "Invoke all functions in fns with no arguments. A fn can optionally\nreturn\n\nan async test - is invoked with a continuation running left fns\n\na seq of fns tagged per block - are invoked immediately after fn",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -14365,37 +9196,18 @@
    :examples-htmls []},
   "tagged-literal"
   {:description
-   "A tagged literal is a way to tag another core syntax literal to represent a\nsingle, new literal.\n\n- `#foo []`\n- `#foo {}`\n- `#foo \"bar\"`\n- `#foo 123`\n- ...\n\nIf a [symbol][doc:syntax/symbol] is prefixed by `#`, that symbol is considered a\n__tag__ for the following form.  Together they represent a new value.  Real\nexamples:\n\n- `#js {:foo 1}`, map -> JavaScript object\n- `#inst \"2015-01-12\"` string -> Date\n\nIn these examples, the values `{:foo 1}` and `\"2015-01-12\"` are read normally,\nbut are further interpretted by their registered tag handlers to produce new\nvalues: a JavaScript object and Date, respectively.\n\nThese tagged literals are the \"extensible\" part of extensible data notation\n([edn]), with ClojureScript being a superset of edn.\n\n[edn]:https://github.com/edn-format/edn#tagged-elements\n\nClojureScript supports the following tagged literals:\n\n- [doc:syntax/inst-literal]\n- [doc:syntax/uuid-literal]\n- [doc:syntax/js-literal]\n- [doc:syntax/queue-literal]",
-   :examples-htmls
-   ["<p>(Tagged literals are printed as themselves, just like core syntax literals.)</p><p>literal JavaScript object:</p><pre><code class=\"clj\">#js {:foo 1}\n;;=&gt; #js {:foo 1}\n\n&#40;def foo 1&#41;\n#js {:foo foo}\n;;=&gt; #js {:foo 1}\n</code></pre><p>literal queue:</p><pre><code class=\"clj\">#queue &#91;1 2 3&#93;\n;;=&gt; #queue &#91;1 2 3&#93;\n\n&#40;conj #queue &#91;1 2 3&#93; 4&#41;\n;;=&gt; #queue &#91;1 2 3 4&#93;\n</code></pre><p>literal instant of time (date):</p><pre><code class=\"clj\">#inst &quot;2014-10-13&quot;\n;;=&gt; #inst &quot;2014-10-13T00:00:00.000-00:00&quot;\n</code></pre><p>literal UUID:</p><pre><code class=\"clj\">#uuid &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;\n;;=&gt; #uuid &quot;97bda55b-6175-4c39-9e04-7c0205c709dc&quot;\n</code></pre>"],
-   :ns "syntax",
+   "Internal use only.  Create tagged literals with their [syntax form][doc:syntax/tagged-literal] instead.",
+   :examples-htmls [],
+   :ns "cljs.core",
    :name "tagged-literal",
-   :type "syntax",
-   :related ["syntax/dispatch"],
-   :examples-strings
-   [["#js {:foo 1} ;;=> #js {:foo 1}"
-     "(def foo 1)"
-     "#js {:foo foo} ;;=> #js {:foo 1}"
-     "#queue [1 2 3] ;;=> #queue [1 2 3]"
-     "(conj #queue [1 2 3] 4) ;;=> #queue [1 2 3 4]"
-     "#inst \"2014-10-13\" ;;=> #inst \"2014-10-13T00:00:00.000-00:00\""
-     "#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]],
-   :description-html
-   "<p>A tagged literal is a way to tag another core syntax literal to represent a single, new literal.</p><ul><li><code>#foo &#91;&#93;</code></li><li><code>#foo {}</code></li><li><code>#foo &quot;bar&quot;</code></li><li><code>#foo 123</code></li><li>...</li></ul><p>If a [symbol][doc:syntax/symbol] is prefixed by <code>#</code>, that symbol is considered a <b>tag</b> for the following form.  Together they represent a new value.  Real examples:</p><ul><li><code>#js {:foo 1}</code>, map -> JavaScript object</li><li><code>#inst &quot;2015-01-12&quot;</code> string -> Date</li></ul><p>In these examples, the values <code>{:foo 1}</code> and <code>&quot;2015-01-12&quot;</code> are read normally, but are further interpretted by their registered tag handlers to produce new values: a JavaScript object and Date, respectively.</p><p>These tagged literals are the \"extensible\" part of extensible data notation ([edn]), with ClojureScript being a superset of edn.</p><p>[edn]:https://github.com/edn-format/edn#tagged-elements</p><p>ClojureScript supports the following tagged literals:</p><ul><li>[doc:syntax/inst-literal]</li><li>[doc:syntax/uuid-literal]</li><li>[doc:syntax/js-literal]</li><li>[doc:syntax/queue-literal]</li></ul>",
-   :examples
-   [{:id "e84f6a",
-     :content
-     "(Tagged literals are printed as themselves, just like core syntax literals.)\n\nliteral JavaScript object:\n\n```clj\n#js {:foo 1}\n;;=> #js {:foo 1}\n\n(def foo 1)\n#js {:foo foo}\n;;=> #js {:foo 1}\n```\n\nliteral queue:\n\n```clj\n#queue [1 2 3]\n;;=> #queue [1 2 3]\n\n(conj #queue [1 2 3] 4)\n;;=> #queue [1 2 3 4]\n```\n\nliteral instant of time (date):\n\n```clj\n#inst \"2014-10-13\"\n;;=> #inst \"2014-10-13T00:00:00.000-00:00\"\n```\n\nliteral UUID:\n\n```clj\n#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\"\n```"}],
-   :full-name "syntax/tagged-literal"},
-  "use-fixtures"
-  {:ns "cljs.test",
-   :name "use-fixtures",
-   :signature ["[type & fns]"],
-   :type "macro",
-   :full-name "cljs.test/use-fixtures",
-   :description-html nil,
+   :signature ["[tag form]"],
+   :type "function",
    :examples-strings [],
-   :examples-htmls []},
+   :description-html
+   "<p>Internal use only.  Create tagged literals with their [syntax form][doc:syntax/tagged-literal] instead.</p>",
+   :full-name "cljs.core/tagged-literal",
+   :docstring
+   "Construct a data representation of a tagged literal from a\ntag symbol and a form."},
   "load-file*"
   {:ns "cljs.core",
    :name "load-file*",
@@ -14405,27 +9217,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "doc"
-  {:description
-   "Prints documentation for the var or special form with the name `name`.",
-   :examples-htmls
-   ["<pre><code class=\"clj\">&#40;doc map&#41;\n;; Prints:\n;;  -------------------------\n;;  cljs.core/map\n;;  &#91;f coll&#93;\n;;    Returns a lazy sequence consisting of the result of applying f to\n;;    the set of first items of each coll, followed by applying f to the\n;;    set of second items in each coll, until any one of the colls is\n;;    exhausted.  Any remaining items in other colls are ignored. Function\n;;    f should accept number-of-colls arguments. Returns a transducer when\n;;    no collection is provided.\n;;\n;;=&gt; nil\n</code></pre>"],
-   :ns "cljs.repl",
-   :name "doc",
-   :signature ["[name]"],
-   :type "macro",
-   :related ["cljs.repl/find-doc" "cljs.core/meta" "special/var"],
-   :examples-strings
-   [["(doc map) ;; Prints: ;;  ------------------------- ;;  cljs.core/map ;;  [f coll] ;;    Returns a lazy sequence consisting of the result of applying f to ;;    the set of first items of each coll, followed by applying f to the ;;    set of second items in each coll, until any one of the colls is ;;    exhausted.  Any remaining items in other colls are ignored. Function ;;    f should accept number-of-colls arguments. Returns a transducer when ;;    no collection is provided. ;; ;;=> nil"]],
-   :description-html
-   "<p>Prints documentation for the var or special form with the name <code>name</code>.</p>",
-   :examples
-   [{:id "4d2768",
-     :content
-     "```clj\n(doc map)\n;; Prints:\n;;  -------------------------\n;;  cljs.core/map\n;;  [f coll]\n;;    Returns a lazy sequence consisting of the result of applying f to\n;;    the set of first items of each coll, followed by applying f to the\n;;    set of second items in each coll, until any one of the colls is\n;;    exhausted.  Any remaining items in other colls are ignored. Function\n;;    f should accept number-of-colls arguments. Returns a transducer when\n;;    no collection is provided.\n;;\n;;=> nil\n```"}],
-   :full-name "cljs.repl/doc",
-   :docstring
-   "Prints documentation for a var or special form given its name"},
   "vreset!"
   {:examples-htmls [],
    :ns "cljs.core",
@@ -14460,26 +9251,6 @@
    "<p>Returns true if <code>coll</code> implements the <code>IReversible</code> protocol, false otherwise.</p><p>Vectors, sorted maps, and sorted sets implement <code>IReversible</code>.</p>",
    :full-name "cljs.core/reversible?",
    :docstring "Returns true if coll satisfies? IReversible."},
-  "left"
-  {:ns "clojure.zip",
-   :name "left",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/left",
-   :docstring
-   "Returns the loc of the left sibling of the node at this loc, or nil",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "set-env!"
-  {:ns "cljs.test",
-   :name "set-env!",
-   :signature ["[new-env]"],
-   :type "function",
-   :full-name "cljs.test/set-env!",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "assert"
   {:description
    "Evaluates expression `expr` and throws an exception if it does not evaluate to\nlogical true.  Exception will include `message` if given.\n\nReturns `nil`.",
@@ -14526,18 +9297,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "trimr"
-  {:description "Removes whitespace from the right side of string.",
-   :examples-htmls [],
-   :ns "clojure.string",
-   :name "trimr",
-   :signature ["[s]"],
-   :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Removes whitespace from the right side of string.</p>",
-   :full-name "clojure.string/trimr",
-   :docstring "Removes whitespace from the right side of string."},
   "prefers"
   {:ns "cljs.core",
    :name "prefers",
@@ -14546,14 +9305,6 @@
    :full-name "cljs.core/prefers",
    :docstring
    "Given a multimethod, returns a map of preferred value -> set of other values",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "special-doc-map"
-  {:ns "cljs.repl",
-   :name "special-doc-map",
-   :type "var",
-   :full-name "cljs.repl/special-doc-map",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -14623,37 +9374,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "simple-dispatch"
-  {:ns "cljs.pprint",
-   :name "simple-dispatch",
-   :type "multimethod",
-   :full-name "cljs.pprint/simple-dispatch",
-   :docstring
-   "The pretty print dispatch function for simple data structure format.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "output-unoptimized"
-  {:ns "cljs.build.api",
-   :name "output-unoptimized",
-   :signature ["[opts & sources]"],
-   :type "function",
-   :full-name "cljs.build.api/output-unoptimized",
-   :docstring
-   "Ensure that all JavaScript source files are on disk (not in jars),\nwrite the goog deps file including only the libraries that are being\nused and write the deps file for the current project.\n\nThe deps file for the current project will include third-party\nlibraries.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "node"
-  {:ns "clojure.zip",
-   :name "node",
-   :signature ["[loc]"],
-   :type "function",
-   :full-name "clojure.zip/node",
-   :docstring "Returns the node at loc",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "ArrayList"
   {:ns "cljs.core",
    :name "ArrayList",
@@ -14671,14 +9391,6 @@
    :full-name "cljs.core/test",
    :docstring
    "test [v] finds fn at key :test in var metadata and calls it,\npresuming failure will throw exception",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "stacktrace"
-  {:ns "cljs.repl.rhino",
-   :name "stacktrace",
-   :type "multimethod",
-   :full-name "cljs.repl.rhino/stacktrace",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -14705,23 +9417,6 @@
    :description-html
    "<p>A type representing a universally unique identifier ([UUID]).</p><p>Use [doc:cljs.core/uuid] or [doc:syntax/uuid-literal] to create one.</p><p>[UUID]:https://en.wikipedia.org/wiki/Universally<i>unique</i>identifier</p>",
    :full-name "cljs.core/UUID"},
-  "DOMBuilder"
-  {:ns "clojure.browser.dom",
-   :name "DOMBuilder",
-   :type "protocol",
-   :full-name "clojure.browser.dom/DOMBuilder",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "read-response"
-  {:ns "cljs.repl.node",
-   :name "read-response",
-   :signature ["[in]"],
-   :type "function",
-   :full-name "cljs.repl.node/read-response",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "format"
   {:ns "cljs.core",
    :name "format",
@@ -14761,26 +9456,6 @@
    :full-name "special/ns",
    :docstring
    "You must currently use the ns form only with the following caveats\n\n  * You must use the :only form of :use\n  * :require supports :as and :refer\n    - both options can be skipped\n    - in this case a symbol can be used as a libspec directly\n      - that is, (:require lib.foo) and (:require [lib.foo]) are both\n        supported and mean the same thing\n    - prefix lists are not supported\n  * The only option for :refer-clojure is :exclude\n  * :import is available for importing Google Closure classes\n    - ClojureScript types and records should be brought in with :use\n      or :require :refer, not :import ed\n  * Macros are written in Clojure, and are referenced via the new\n    :require-macros / :use-macros options to ns\n    - :require-macros and :use-macros support the same forms that\n      :require and :use do\n\nImplicit macro loading: If a namespace is required or used, and that\nnamespace itself requires or uses macros from its own namespace, then\nthe macros will be implicitly required or used using the same\nspecifications. This oftentimes leads to simplified library usage,\nsuch that the consuming namespace need not be concerned about\nexplicitly distinguishing between whether certain vars are functions\nor macros.\n\nInline macro specification: As a convenience, :require can be given\neither :include-macros true or :refer-macros [syms...]. Both desugar\ninto forms which explicitly load the matching Clojure file containing\nmacros. (This works independently of whether the namespace being\nrequired internally requires or uses its own macros.) For example:\n\n(ns testme.core\n(:require [foo.core :as foo :refer [foo-fn] :include-macros true]\n          [woz.core :as woz :refer [woz-fn] :refer-macros [app jx]]))\n\nis sugar for\n\n(ns testme.core\n(:require [foo.core :as foo :refer [foo-fn]]\n          [woz.core :as woz :refer [woz-fn]])\n(:require-macros [foo.core :as foo]\n                 [woz.core :as woz :refer [app jx]]))"},
-  "log-obj"
-  {:ns "clojure.browser.dom",
-   :name "log-obj",
-   :signature ["[obj]"],
-   :type "function",
-   :full-name "clojure.browser.dom/log-obj",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "cl-format"
-  {:ns "cljs.pprint",
-   :name "cl-format",
-   :signature ["[writer format-in & args]"],
-   :type "function",
-   :full-name "cljs.pprint/cl-format",
-   :docstring
-   "An implementation of a Common Lisp compatible format function. cl-format formats its\narguments to an output stream or string based on the format control string given. It\nsupports sophisticated formatting of structured data.\n\nWriter satisfies IWriter, true to output via *print-fn* or nil to output\nto a string, format-in is the format control string and the remaining arguments\nare the data to be formatted.\n\nThe format control string is a string to be output with embedded 'format directives'\ndescribing how to format the various arguments passed in.\n\nIf writer is nil, cl-format returns the formatted result string. Otherwise, cl-format\nreturns nil.\n\nFor example:\n (let [results [46 38 22]]\n        (cl-format true \"There ~[are~;is~:;are~]~:* ~d result~:p: ~{~d~^, ~}~%\"\n                   (count results) results))\n\nPrints via *print-fn*:\n There are 3 results: 46, 38, 22\n\nDetailed documentation on format control strings is available in the \"Common Lisp the\nLanguage, 2nd edition\", Chapter 22 (available online at:\nhttp://www.cs.cmu.edu/afs/cs.cmu.edu/project/ai-repository/ai/html/cltl/clm/node200.html#SECTION002633000000000000000)\nand in the Common Lisp HyperSpec at\nhttp://www.lispworks.com/documentation/HyperSpec/Body/22_c.htm",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "PersistentArrayMap.HASHMAP-THRESHOLD"
   {:ns "cljs.core",
    :name "PersistentArrayMap.HASHMAP-THRESHOLD",
@@ -14990,50 +9665,12 @@
    :full-name "cljs.core/defmacro",
    :docstring
    "Like defn, but the resulting function name is declared as a\nmacro and will be used as a macro by the compiler when it is\ncalled."},
-  "IParseError"
-  {:ns "cljs.repl",
-   :name "IParseError",
-   :type "protocol",
-   :full-name "cljs.repl/IParseError",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "NodeIterator"
   {:ns "cljs.core",
    :name "NodeIterator",
    :signature ["[arr i next-entry next-iter]"],
    :type "type",
    :full-name "cljs.core/NodeIterator",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "special-symbols"
-  {:ns "cljs.reader",
-   :name "special-symbols",
-   :signature ["[t not-found]"],
-   :type "function",
-   :full-name "cljs.reader/special-symbols",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "inc-report-counter!"
-  {:ns "cljs.test",
-   :name "inc-report-counter!",
-   :signature ["[name]"],
-   :type "function",
-   :full-name "cljs.test/inc-report-counter!",
-   :docstring
-   "Increments the named counter in *report-counters*, a ref to a map.\nDoes nothing if *report-counters* is nil.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "ensure-element"
-  {:ns "clojure.browser.dom",
-   :name "ensure-element",
-   :signature ["[e]"],
-   :type "function",
-   :full-name "clojure.browser.dom/ensure-element",
-   :docstring "Coerce the argument to a dom element if possible.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
@@ -15091,15 +9728,6 @@
    :description-html nil,
    :examples-strings [],
    :examples-htmls []},
-  "validate-unicode-escape"
-  {:ns "cljs.reader",
-   :name "validate-unicode-escape",
-   :signature ["[unicode-pattern reader escape-char unicode-str]"],
-   :type "function",
-   :full-name "cljs.reader/validate-unicode-escape",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
   "fnext"
   {:description "Same as `(first (next coll))`",
    :examples-htmls
@@ -15130,16 +9758,6 @@
    :full-name "cljs.core/with-out-str",
    :docstring
    "Evaluates exprs in a context in which *print-fn* is bound to .append\non a fresh StringBuffer.  Returns the string created by any nested\nprinting calls.",
-   :description-html nil,
-   :examples-strings [],
-   :examples-htmls []},
-  "IAsyncTest"
-  {:ns "cljs.test",
-   :name "IAsyncTest",
-   :type "protocol",
-   :full-name "cljs.test/IAsyncTest",
-   :docstring
-   "Marker protocol denoting CPS function to begin asynchronous\n  testing.",
    :description-html nil,
    :examples-strings [],
    :examples-htmls []}},

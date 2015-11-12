@@ -17,6 +17,8 @@
 (def api-symbol-keywords #{:full-name :ns :name :type :docstring
                            :signature :description :examples :related})
 
+(def selected-namespaces #{"cljs.core" "special"})
+
 (defn filter-kv
   "Given an associative collection, return a map that contains the key
   sequences in input, filtering out the rest"
@@ -120,7 +122,8 @@
   keys (in the form of a req of keyseq)"
   [cljs-api-edn]
   (let [filtered-map (filter-kv api-edn-keyseqs cljs-api-edn)
-        symbol-name-map (into {} (api-symbols->name-map (:symbols cljs-api-edn)))]
+        selected-symbols (filter #(selected-namespaces (-> % second :ns)) (:symbols cljs-api-edn))
+        symbol-name-map (into {} (api-symbols->name-map selected-symbols))]
     (assoc filtered-map
            :symbols (reduce (fn [symbol-map [symbol-k symbol-v]]
                               (assoc symbol-map symbol-k (-> symbol-v
