@@ -234,7 +234,7 @@
    :children [[label
                :style {:width "100%"}
                :label (utils/html-string->hiccup (:html example-map)
-                                                       :style {:margin "0"})]]])
+                                                 :style {:margin "0"})]]])
 
 (defn example-number-icon
   "From https://github.com/Day8/re-com/blob/master/src/re_com/buttons.cljs"
