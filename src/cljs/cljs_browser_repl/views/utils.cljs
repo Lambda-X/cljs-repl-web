@@ -2,8 +2,11 @@
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [cljs.pprint :as pprint]
             [clojure.string :as string]
+            [clojure.walk :as walk]
             [reagent.core :as reagent]
-            [re-com.core :refer [popover-tooltip]]))
+            [re-com.core :refer [popover-tooltip]]
+            [hickory.core :as hickory]
+            [goog.string :as gstring]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 
@@ -81,3 +84,32 @@
                     (< x h-threshold-cent) "center"
                     :else "left")]
     (keyword (str v-position \- h-position))))
+
+(defn unescape-html
+  "Walk a given Hiccup form and remove all pure whitespace."
+  [hiccup]
+  (walk/prewalk
+   (fn [form]
+     (if (string? form)
+       (goog.string/unescapeEntities form)
+       form))
+   hiccup))
+
+(defn trim-strings
+  "Walk a given Hiccup form and remove all pure whitespace."
+  [hiccup]
+  (walk/prewalk
+   (fn [form]
+     (if (string? form)
+       (string/trim form)
+       form))
+   hiccup))
+
+(defn html-string->hiccup
+  "Convert the string to hiccup vector, filling up class style and attr
+  if present on the initial :div"
+  [html-string & {:keys [class style attr]}]
+  (into [:div (merge {:class class
+                      :style style}
+                     attr)]
+        (map (comp trim-strings unescape-html hickory/as-hiccup) (hickory/parse-fragment html-string))))

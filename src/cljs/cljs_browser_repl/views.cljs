@@ -5,7 +5,6 @@
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller]]
             [re-com.util :refer [px]]
-            [hickory.core :as hickory]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
             [cljs-browser-repl.console :as console]
@@ -203,7 +202,7 @@
               ;; the html string (using eg. hickory)
               ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
               ;; AR - hickory performs better in flexbox container calculation)
-              [label :label (map hickory/as-hiccup (hickory/parse-fragment desc))]]])
+              [label :label (utils/html-string->hiccup desc)]]])
 
 (defn build-related-symbols-ui
   "Builds the UI for related symbols in the popover."
@@ -230,9 +229,11 @@
   [v-box
    :size "none"
    :gap "2px"
-   :children [[:pre {:style {:margin "0"}}
-               [:code
-                example]]]])
+   :children [[label :label (utils/html-string->hiccup (:html example)
+                                                       :style {:margin "0"})]
+              #_[:pre {:style {:margin "0"}}
+                 [:code example]]]])
+
 
 (defn example-panel
   "Build the example panel, accepts a list of {:html ... :string ...}
@@ -254,7 +255,7 @@
                           [v-box
                            :size "none"
                            :width "70%"
-                           :children [(build-example-ui example-string)]]
+                           :children [build-example-ui example-string]]
                           [button
                            :label [:img {:class "api-panel-button-send-repl"
                                          :src "styles/images/cljs.svg"
