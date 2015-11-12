@@ -76,11 +76,13 @@
   [clj-node-seq]
   (let [code-content #(-> % :content first :content first)
         code-nodes (filter #(and (= :pre (:tag %)) (= :code (-> % :content first :tag))) clj-node-seq)]
-    (mapv (comp lift-up-comments      ;; see docstring
-                (partial filterv seq) ;; filter out empty lines
-                s/split-lines         ;; split lines
-                code-content)         ;; fetch content
-          code-nodes)))
+    ;; Thanks Thomas for spotting this!
+    (into [] (flatten
+              (mapv (comp lift-up-comments      ;; see docstring
+                          (partial filterv seq) ;; filter out empty lines
+                          s/split-lines         ;; split lines
+                          code-content)         ;; fetch content
+                    code-nodes)))))
 
 (defn assoc-example-strings
   "Note, needs the value of the symbol map, aka the map containing
