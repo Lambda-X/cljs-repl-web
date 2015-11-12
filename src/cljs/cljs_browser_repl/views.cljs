@@ -230,7 +230,7 @@
   [v-box
    :size "none"
    :gap "2px"
-   :children [[:pre
+   :children [[:pre {:style {:margin "0"}}
                [:code
                 example]]]])
 
