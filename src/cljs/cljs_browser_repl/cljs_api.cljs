@@ -18,10 +18,10 @@
     "cljs.core/drop-last"
     "cljs.core/take-last"],
    :examples-strings
-   [[["(butlast [1 2 3]) ;;=> (1 2)"
-      "(butlast [1 2]) ;;=> (1)"
-      "(butlast [1]) ;;=> nil"
-      "(butlast []) ;;=> nil"]]],
+   [["(butlast [1 2 3]) ;;=> (1 2)"
+     "(butlast [1 2]) ;;=> (1)"
+     "(butlast [1]) ;;=> nil"
+     "(butlast []) ;;=> nil"]],
    :description-html
    "<p>Returns a sequence of all but the last item in <code>s</code>.</p><p><code>butlast</code> runs in linear time.</p>",
    :examples
@@ -67,10 +67,10 @@
    :type "syntax",
    :related ["syntax/comment" "cljs.core/comment"],
    :examples-strings
-   [[["{:foo #_bar 2} ;;=> {:foo 2}"]
-     ["(defn foo []"
-      "  (println \"hello\")"
-      "  #_(println \"world\"))"]]],
+   [["{:foo #_bar 2} ;;=> {:foo 2}"
+     "(defn foo []"
+     "  (println \"hello\")"
+     "  #_(println \"world\"))"]],
    :description-html
    "<p>Causes the following form to be completely skipped by the reader.  This is a more complete removal than the <code>comment</code> macro which yields nil.</p>",
    :examples
@@ -148,9 +148,9 @@
    :type "function/macro",
    :related ["cljs.core/mod"],
    :examples-strings
-   [[["(js-mod -5 3) ;;=> -2"
-      "(js-mod 5 3) ;;=> 2"
-      "(js-mod 5 0) ;;=> NaN"]]],
+   [["(js-mod -5 3) ;;=> -2"
+     "(js-mod 5 3) ;;=> 2"
+     "(js-mod 5 0) ;;=> NaN"]],
    :description-html
    "<p>Returns the modulus of dividing numerator <code>n</code> by denominator <code>d</code>, with JavaScript's original behavior for negative numbers.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p><p>Equivalent to <code>x % y</code> in JavaScript.</p>",
    :examples
@@ -208,10 +208,10 @@
    :type "special symbol",
    :related ["syntax/Infinity" "syntax/nil"],
    :examples-strings
-   [[["NaN ;;=> NaN"]
-     ["(js/Number.isNaN (/ 0 0)) ;;=> true"
-      "(js/Number.isNaN 1) ;;=> false"]
-     ["js/NaN ;;=> NaN"]]],
+   [["NaN ;;=> NaN"
+     "(js/Number.isNaN (/ 0 0)) ;;=> true"
+     "(js/Number.isNaN 1) ;;=> false"
+     "js/NaN ;;=> NaN"]],
    :description-html
    "<p>The IEEE 754 Floating Point representation of NaN (not a number), an undefined or unrepresentable value.</p><p>To test for NaN, use the native JavaScript [<code>js/isNaN</code>] or the safer [<code>js/Number.isNaN</code>].</p><p>[<code>js/isNaN</code>]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN [<code>js/Number.isNaN</code>]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN</p>",
    :examples
@@ -253,7 +253,7 @@
     "cljs.core/not"
     "cljs.core/true?"
     "cljs.core/false?"],
-   :examples-strings [[["true ;;=> true" "false ;;=> false"]]],
+   :examples-strings [["true ;;=> true" "false ;;=> false"]],
    :description-html
    "<p>Special symbols representing the boolean literals <code>true</code> and <code>false</code>. Both evaluate to themselves.</p>",
    :examples
@@ -489,11 +489,11 @@
     "cljs.core/sorted-set-by"
     "cljs.core/sorted-map-by"],
    :examples-strings
-   [[["(compare 10 12) ;;=> -1"
-      "(compare 12 10) ;;=> 1"
-      "(compare 10 10) ;;=> 0"
-      "(compare 10 nil) ;;=>  1"
-      "(compare 10 (list 1 2 3)) ;; Error: compare on non-nil objects of different types"]]],
+   [["(compare 10 12) ;;=> -1"
+     "(compare 12 10) ;;=> 1"
+     "(compare 10 10) ;;=> 0"
+     "(compare 10 nil) ;;=>  1"
+     "(compare 10 (list 1 2 3)) ;; Error: compare on non-nil objects of different types"]],
    :description-html
    "<p>Comparator.</p><p>Returns a negative number, zero, or a positive number when <code>x</code> is logically \"less than\", \"equal to\", or \"greater than\" <code>y</code>.</p><p>Uses <code>IComparable</code> if available and <code>google.array.defaultCompare</code> for objects of the same type. nil is treated as a special case and is always less than any other object.</p>",
    :examples
@@ -550,12 +550,12 @@
    :type "macro",
    :related ["cljs.core/let"],
    :examples-strings
-   [[["(def ^:dynamic *foo* 1)"
-      "(defn do-something []"
-      "  (println *foo*))"
-      "(binding [*foo* 2]"
-      "  (do-something)) ;;=> prints 2"
-      "*foo* ;;=> 1"]]],
+   [["(def ^:dynamic *foo* 1)"
+     "(defn do-something []"
+     "  (println *foo*))"
+     "(binding [*foo* 2]"
+     "  (do-something)) ;;=> prints 2"
+     "*foo* ;;=> 1"]],
    :description-html
    "<p>binding => var-symbol init-expr</p><p>Creates new bindings for the (already-existing) vars, with the supplied initial values, executes the exprs in an implicit <code>do</code>, then re-establishes the bindings that existed before.</p><p>The new bindings are made in parallel (unlike <code>let</code>); all init-exprs are evaluated before the vars are bound to their new values.</p>",
    :examples
@@ -606,13 +606,13 @@
    :type "macro",
    :related ["cljs.core/map"],
    :examples-strings
-   [[["(def a #js [1 2 3])"
-      "(amap a i ret (* 10 (aget a i))) ;;=> #js [10 20 30]"]]
-    [["(def a #js [1 2 3])"
-      "(amap a i ret (+ (if (pos? i)"
-      "                   (aget ret (dec i))"
-      "                   0)"
-      "                 (* 10 (aget a i)))) ;;=> #js [10 30 60]"]]],
+   [["(def a #js [1 2 3])"
+     "(amap a i ret (* 10 (aget a i))) ;;=> #js [10 20 30]"]
+    ["(def a #js [1 2 3])"
+     "(amap a i ret (+ (if (pos? i)"
+     "                   (aget ret (dec i))"
+     "                   0)"
+     "                 (* 10 (aget a i)))) ;;=> #js [10 30 60]"]],
    :description-html
    "<p>For quickly creating a new JavaScript array by mapping an expression <code>expr</code> across a JavaScript array <code>a</code>.  The expression can use <code>ret</code> as the current result, which is initialized to <code>a</code>.  It can also use <code>idx</code> to get the current index.</p>",
    :examples
@@ -706,10 +706,10 @@
     "cljs.core/cond->>"
     "cljs.core/cond"],
    :examples-strings
-   [[["(def a 12)"
-      "(cond-> a"
-      "  (> a 10) (str \" is greater than 10\")"
-      "  (< a 20) (str \" and less than 20\")) ;;=> \"12 is greater than 10 and less than 20\""]]],
+   [["(def a 12)"
+     "(cond-> a"
+     "  (> a 10) (str \" is greater than 10\")"
+     "  (< a 20) (str \" and less than 20\")) ;;=> \"12 is greater than 10 and less than 20\""]],
    :description-html
    "<p>Takes an expression and a set of test/form pairs. Threads <code>expr</code> (via <code>-&gt;</code>) through each form for which the corresponding test expression is true.</p><p>Note that, unlike <code>cond</code> branching, <code>cond-&gt;</code> threading does not short circuit after the first true test expression.</p>",
    :examples
@@ -794,11 +794,11 @@
    :signature ["[]"],
    :type "macro",
    :examples-strings
-   [[["(defn foo []"
-      "  (println \"HI\")"
-      "  (js-debugger)"
-      "  (println \"WORLD\"))"
-      "(foo) ;; will print \"HI\" then pause JS inside this function ;; if browser devtools are open."]]],
+   [["(defn foo []"
+     "  (println \"HI\")"
+     "  (js-debugger)"
+     "  (println \"WORLD\"))"
+     "(foo) ;; will print \"HI\" then pause JS inside this function ;; if browser devtools are open."]],
    :description-html
    "<p>Creates breakpoint that will stop the debugger if the browser's devtools are open.  Equivalent to <code>debugger;</code> in JavaScript.</p>",
    :examples
@@ -881,14 +881,14 @@
    :type "function",
    :related ["cljs.core/first" "cljs.core/pop" "cljs.core/conj"],
    :examples-strings
-   [[["(peek [1 2 3]) ;;=> 3"
-      "(peek [1 2]) ;;=> 2"
-      "(peek [1]) ;;=> 1"
-      "(peek []) ;;=> nil"]]
-    [["(peek '(1 2 3)) ;;=> 1"
-      "(peek '(1 2)) ;;=> 1"
-      "(peek '(1)) ;;=> 1"
-      "(peek '()) ;;=> nil"]]],
+   [["(peek [1 2 3]) ;;=> 3"
+     "(peek [1 2]) ;;=> 2"
+     "(peek [1]) ;;=> 1"
+     "(peek []) ;;=> nil"]
+    ["(peek '(1 2 3)) ;;=> 1"
+     "(peek '(1 2)) ;;=> 1"
+     "(peek '(1)) ;;=> 1"
+     "(peek '()) ;;=> nil"]],
    :description-html
    "<p>Returns the first element of a list; same as <code>first</code>.</p><p>Returns the last element of a vector, and much more efficient than using <code>last</code>.</p><p>Returns nil if <code>coll</code> is empty.</p>",
    :examples
@@ -967,10 +967,10 @@
    :type "var",
    :related ["cljs.core/*1" "cljs.core/*2" "cljs.core/*3"],
    :examples-strings
-   [[["(defn cause-error []"
-      "  (throw \"Error: something went wrong\"))"
-      "(cause-error) ;; Error: something went wrong"
-      "*e ;;=> \"Error: something went wrong\""]]],
+   [["(defn cause-error []"
+     "  (throw \"Error: something went wrong\"))"
+     "(cause-error) ;; Error: something went wrong"
+     "*e ;;=> \"Error: something went wrong\""]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Holds the result of the last exception.</p>",
    :examples
@@ -1074,7 +1074,7 @@
     "cljs.core/some->"
     "cljs.core/some->>"],
    :examples-strings
-   [[["(as-> [1 2 3 4] x" "  (reduce + x)" "  (/ x 2)) ;;=> 5"]]],
+   [["(as-> [1 2 3 4] x" "  (reduce + x)" "  (/ x 2)) ;;=> 5"]],
    :description-html
    "<p>Binds <code>name</code> to <code>expr</code>, evaluates the first form in the lexical context of that binding, then binds <code>name</code> to that result, repeating for each successive form, returning the result of the last form.</p><p>Useful for when you want a threading macro to use different \"places\" at each form.</p>",
    :examples
@@ -1137,10 +1137,10 @@
    :type "function",
    :related ["cljs.core/clj->js"],
    :examples-strings
-   [[["(def json \"{\\\"foo\\\": 1, \\\"bar\\\": 2, \\\"baz\\\": [1,2,3]}\")"
-      "(def a (.parse js/JSON json)) ;;=> #js {:foo 1, :bar 2, :baz #js [1 2 3]}"]
-     ["(js->clj a) ;;=> {\"foo\" 1, \"bar\" 2, \"baz\" [1 2 3]}"
-      "(js->clj a :keywordize-keys true) ;;=> {:foo 1, :bar 2, :baz [1 2 3]}"]]],
+   [["(def json \"{\\\"foo\\\": 1, \\\"bar\\\": 2, \\\"baz\\\": [1,2,3]}\")"
+     "(def a (.parse js/JSON json)) ;;=> #js {:foo 1, :bar 2, :baz #js [1 2 3]}"
+     "(js->clj a) ;;=> {\"foo\" 1, \"bar\" 2, \"baz\" [1 2 3]}"
+     "(js->clj a :keywordize-keys true) ;;=> {:foo 1, :bar 2, :baz [1 2 3]}"]],
    :description-html
    "<p>Recursively transforms JavaScript arrays into ClojureScript vectors, and JavaScript objects into ClojureScript maps.</p><p>With option <code>{:keywordize-keys true}</code> will convert object fields from strings to keywords.</p><p>Note that <code>js-&gt;clj</code> is not optimized for speed and the [transit.cljs] library is recommended for parsing large amounts of JSON data.</p><p>[transit.cljs]:http://swannodette.github.io/2014/07/26/transit--clojurescript/</p>",
    :examples
@@ -1179,10 +1179,10 @@
    :type "macro",
    :related ["special/recur"],
    :examples-strings
-   [[["(loop [x 0]"
-      "  (when (< x 10)"
-      "    (println x)"
-      "    (recur (+ x 2)))) ;; Prints: ;; 0 ;; 2 ;; 4 ;; 6 ;; 8 ;; ;;=> nil"]]],
+   [["(loop [x 0]"
+     "  (when (< x 10)"
+     "    (println x)"
+     "    (recur (+ x 2)))) ;; Prints: ;; 0 ;; 2 ;; 4 ;; 6 ;; 8 ;; ;;=> nil"]],
    :description-html
    "<p>Evaluates the <code>body-exprs</code> in a lexical context in which the symbols in the binding-forms are bound to their respective init-exprs, just like a <code>let</code> form. Acts as a <code>recur</code> target, which will allow tail-call optimization.</p>",
    :examples
@@ -1223,7 +1223,7 @@
    :type "function/macro",
    :related ["cljs.core/max" "cljs.core/min-key"],
    :examples-strings
-   [[["(min 1 2 3 4) ;; => 1"] ["(apply min [1 2 3 4]) ;; => 1"]]],
+   [["(min 1 2 3 4) ;; => 1" "(apply min [1 2 3 4]) ;; => 1"]],
    :description-html "<p>Returns the least number argument.</p>",
    :examples
    [{:id "ab2de5",
@@ -1275,8 +1275,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-clear"],
    :examples-strings
-   [[["(bit-flip 2r1111 2) ;;=> 11 ;; 11 = 2r1011"]
-     ["(bit-flip 15 2) ;;=> 11"]]],
+   [["(bit-flip 2r1111 2) ;;=> 11 ;; 11 = 2r1011"
+     "(bit-flip 15 2) ;;=> 11"]],
    :description-html
    "<p>Flip bit at index <code>n</code>.  Same as <code>x &#94; &#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
    :examples
@@ -1294,7 +1294,7 @@
    :name "load-namespace",
    :signature ["[name]"],
    :type "special form (repl)",
-   :examples-strings [[["(load-namespace 'clojure.set)"]]],
+   :examples-strings [["(load-namespace 'clojure.set)"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Load a namespace and all of its dependencies into the evaluation environment. The environment is responsible for ensuring that each namespace is loaded once and only once.</p>",
    :examples
@@ -1433,25 +1433,25 @@
    :type "function",
    :related ["cljs.core/==" "cljs.core/not=" "cljs.core/identical?"],
    :examples-strings
-   [[["(= 1) ;;=> true"
-      "(= 1 1) ;;=> true"
-      "(= 1 2) ;;=> false"
-      "(= 1 1 1) ;;=> true"
-      "(= 1 1 2) ;;=> false"]]
-    [["(= '(1 2) [1 2]) ;;=> true"]
-     ["(def a #js [1 2])"
-      "(def b #js [1 2])"
-      "(= a b) ;;=> false"
-      "(= (seq a) (seq b)) ;;=> true"]]
-    [["(def a {:foo {:bar \"baz\"}})"
-      "(def b {:foo {:bar \"baz\"}})"
-      "(= a b) ;;=> true"
-      "(= [a b] [a b]) ;=> true"]
-     ["(def a #js {:foo #js {:bar \"baz\"}})"
-      "(def b #js {:foo #js {:bar \"baz\"}})"
-      "(= a b) ;;=> false"
-      "(= (js->clj a)"
-      "   (js->clj b)) ;;=> true"]]],
+   [["(= 1) ;;=> true"
+     "(= 1 1) ;;=> true"
+     "(= 1 2) ;;=> false"
+     "(= 1 1 1) ;;=> true"
+     "(= 1 1 2) ;;=> false"]
+    ["(= '(1 2) [1 2]) ;;=> true"
+     "(def a #js [1 2])"
+     "(def b #js [1 2])"
+     "(= a b) ;;=> false"
+     "(= (seq a) (seq b)) ;;=> true"]
+    ["(def a {:foo {:bar \"baz\"}})"
+     "(def b {:foo {:bar \"baz\"}})"
+     "(= a b) ;;=> true"
+     "(= [a b] [a b]) ;=> true"
+     "(def a #js {:foo #js {:bar \"baz\"}})"
+     "(def b #js {:foo #js {:bar \"baz\"}})"
+     "(= a b) ;;=> false"
+     "(= (js->clj a)"
+     "   (js->clj b)) ;;=> true"]],
    :description-html
    "<p>Returns true if the value of <code>x</code> equals the value of <code>y</code>, false otherwise.</p><p><code>=</code> is a value comparison, not an identity comparison.</p><p>All collections can be tested for value, regardless of \"depth\".</p>",
    :examples
@@ -1532,10 +1532,10 @@
    :type "function",
    :related ["cljs.core/repeatedly"],
    :examples-strings
-   [[["(def ten (constantly 10))"
-      "(ten \"hi\") ;;=> 10"
-      "(ten 123) ;;=> 10"
-      "(ten :whatever) ;;=> 10"]]],
+   [["(def ten (constantly 10))"
+     "(ten \"hi\") ;;=> 10"
+     "(ten 123) ;;=> 10"
+     "(ten :whatever) ;;=> 10"]],
    :description-html
    "<p>Returns a function that takes any number of arguments and always returns <code>x</code>.</p>",
    :examples
@@ -1711,7 +1711,7 @@
    :signature ["[x]"],
    :type "function",
    :examples-strings
-   [[["(bit-count 2r1011) ;;=> 3"] ["(bit-count 11) ;;=> 3"]]],
+   [["(bit-count 2r1011) ;;=> 3" "(bit-count 11) ;;=> 3"]],
    :description-html
    "<p>Counts the number of bits set in <code>x</code>.</p>",
    :examples
@@ -1739,11 +1739,11 @@
    :type "function/macro",
    :related ["cljs.core/+" "cljs.core//"],
    :examples-strings
-   [[[" ;; there is an implicit 1"
-      "(*) ;;=> 1 ;; the implicit 1 comes into play"
-      "(* 6) ;;=> 6"
-      "(* 2 3) ;;=> 6"
-      "(* 2 3 4) ;;=> 24"]]],
+   [[" ;; there is an implicit 1"
+     "(*) ;;=> 1 ;; the implicit 1 comes into play"
+     "(* 6) ;;=> 6"
+     "(* 2 3) ;;=> 6"
+     "(* 2 3 4) ;;=> 24"]],
    :description-html
    "<p>Returns the product of nums.</p><p><code>&#40;&#42;&#41;</code> returns 1.</p>",
    :examples
@@ -1782,8 +1782,10 @@
    :signature ["[x n]"],
    :type "function/macro",
    :examples-strings
-   [[["(bit-test 2r0100 2) ;;=> true" "(bit-test 2r0100 1) ;;=> false"]
-     ["(bit-test 4 2) ;;=> true" "(bit-test 4 1) ;;=> false"]]],
+   [["(bit-test 2r0100 2) ;;=> true"
+     "(bit-test 2r0100 1) ;;=> false"
+     "(bit-test 4 2) ;;=> true"
+     "(bit-test 4 1) ;;=> false"]],
    :description-html
    "<p>Test bit at index <code>n</code>. Returns <code>true</code> if 1, and <code>false</code> if 0. Same as <code>&#40;x &amp; &#40;1 &lt;&lt; y&#41;&#41; != 0</code> in JavaScript.</p>",
    :examples
@@ -1846,10 +1848,10 @@
    :type "syntax",
    :related ["cljs.core/str"],
    :examples-strings
-   [[["\"foo\" ;;=> \"foo\""
-      "\"hello"
-      "     world\" ;;=> \"hello\\n     world\""]
-     ["(println \"foo\\nbar\") ;; prints: ;;   foo ;;   bar"]]],
+   [["\"foo\" ;;=> \"foo\""
+     "\"hello"
+     "     world\" ;;=> \"hello\\n     world\""
+     "(println \"foo\\nbar\") ;; prints: ;;   foo ;;   bar"]],
    :description-html
    "<p>Create a string.  ClojureScript strings are the same as [JavaScript strings].</p><p>[JavaScript strings]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String</p><p>Strings may span multiple lines.</p><p>Standard escape characters such as <code>\\&quot;</code> are supported, as well as unicode escape characters:</p><p>| unicode characters  | constraints                                   | |---------------------|-----------------------------------------------| | <code>\\uXXXX</code>            | XXXX must have 4 digits outside 0xD7FF-0xE000 | | <code>\\oXXX</code>             | XXX is octal between 0 and 0377               |</p>",
    :examples
@@ -1972,14 +1974,14 @@
    :type "function",
    :related ["cljs.core/some" "cljs.core/get"],
    :examples-strings
-   [[["(contains? #{:a :b} :a) ;;=> true"
-      "(contains? {:a 1, :b 2} :a) ;;=> true"
-      "(contains? {:a 1, :b 2} 1) ;;=> false"]
-     ["(contains? [:a :b] :b) ;;=> false"
-      "(contains? [:a :b] 1) ;;=> true"]
-     ["(contains? '(:a :b) :a) ;;=> false"
-      "(contains? '(:a :b) 1) ;;=> false"
-      "(contains? (range 3) 1) ;;=> false"]]],
+   [["(contains? #{:a :b} :a) ;;=> true"
+     "(contains? {:a 1, :b 2} :a) ;;=> true"
+     "(contains? {:a 1, :b 2} 1) ;;=> false"
+     "(contains? [:a :b] :b) ;;=> false"
+     "(contains? [:a :b] 1) ;;=> true"
+     "(contains? '(:a :b) :a) ;;=> false"
+     "(contains? '(:a :b) 1) ;;=> false"
+     "(contains? (range 3) 1) ;;=> false"]],
    :description-html
    "<p>Returns true if the <code>coll</code> contains the lookup key <code>k</code>, otherwise returns false.</p><p>Note that for numerically indexed collections like vectors and arrays, this tests if the numeric key is within the range of indexes.</p><p><code>contains?</code> operates in constant or logarithmic time, using <code>get</code> to perform the lookup. It will not perform a linear search for a value.  <code>some</code> is used for this purpose:</p><pre><code class=\"clj\">&#40;some #{value} coll&#41;\n</code></pre>",
    :examples
@@ -2000,10 +2002,10 @@
    :type "function/macro",
    :related ["cljs.core/<"],
    :examples-strings
-   [[["(<= 1 2) ;;=> true"
-      "(<= 2 2) ;;=> true"
-      "(<= 3 2) ;;=> false"
-      "(<= 2 3 4 5 6) ;;=> true"]]],
+   [["(<= 1 2) ;;=> true"
+     "(<= 2 2) ;;=> true"
+     "(<= 3 2) ;;=> false"
+     "(<= 2 3 4 5 6) ;;=> true"]],
    :description-html
    "<p>Returns true if each successive number argument is greater than or equal to the previous one, false otherwise.</p>",
    :examples
@@ -2060,16 +2062,17 @@
     "syntax/tagged-literal"
     "syntax/cond"],
    :examples-strings
-   [[["#\"[a-zA-Z0-9]+\" ;;=> #\"[a-zA-Z0-9]+\""]
-     ["#{:foo 1 2} ;;=> #{:foo 1 2}"]
-     ["#(foo 1 2) ;;=> #<function (){ ;;   return cljs.user.foo.call(null,(1),(2)); ;;   }>"]
-     ["(def a)" "#'a ;;=> #'cljs.user/a"]
-     ["#_foo ;; waits for next form since #_foo was ignored"
-      "#_123 456 ;;=> 456"]
-     ["#queue [1 2 3] ;;=> #queue [1 2 3]"
-      "#js {:foo 1} ;;=> #js {:foo 1}"
-      "#inst \"2010-11-12T18:14:15.666-00:00\" ;;=> #inst \"2010-11-12T18:14:15.666-00:00\""]
-     ["#?(:clj \"Clojure\" :cljs \"ClojureScript\") ;;=> \"ClojureScript\""]]],
+   [["#\"[a-zA-Z0-9]+\" ;;=> #\"[a-zA-Z0-9]+\""
+     "#{:foo 1 2} ;;=> #{:foo 1 2}"
+     "#(foo 1 2) ;;=> #<function (){ ;;   return cljs.user.foo.call(null,(1),(2)); ;;   }>"
+     "(def a)"
+     "#'a ;;=> #'cljs.user/a"
+     "#_foo ;; waits for next form since #_foo was ignored"
+     "#_123 456 ;;=> 456"
+     "#queue [1 2 3] ;;=> #queue [1 2 3]"
+     "#js {:foo 1} ;;=> #js {:foo 1}"
+     "#inst \"2010-11-12T18:14:15.666-00:00\" ;;=> #inst \"2010-11-12T18:14:15.666-00:00\""
+     "#?(:clj \"Clojure\" :cljs \"ClojureScript\") ;;=> \"ClojureScript\""]],
    :description-html
    "<p><code>#</code> is a prefix character that is called the dispatch macro, because it allows the behavior of the reader to be dispatched to another table, indexed by the character following the <code>#</code>.</p><p>Syntax forms prefixed with <code>#</code> are made to bear some similarity to their original forms:</p><p>| original                           | with <code>#</code> prefix                                  | relation               | |------------------------------------|--------------------------------------------------|------------------------| | [doc:syntax/string]                    | [doc:syntax/regex]                                   | string-related         | | [doc:syntax/list]                      | [doc:syntax/function]                                | code-related           | | [doc:syntax/map]                       | [doc:syntax/set]                                     | lookup-related         | | [doc:syntax/quote]                     | [doc:syntax/var]                                     | quote-related          | | [doc:syntax/unused]                    | [doc:syntax/ignore]                                  | ignore-related         | | [<code>foo &#40;symbol&#41;</code>][doc:syntax/symbol]    | [<code>#foo &#40;tagged literal&#41;</code>][doc:syntax/tagged-literal] | name-related           | | [doc:syntax/predicate]                 | [doc:syntax/cond]                                    | conditional-related    |</p>",
    :examples
@@ -2095,10 +2098,10 @@
    :type "tagged literal",
    :related ["cljs.core/js-obj" "cljs.core/array" "cljs.core/clj->js"],
    :examples-strings
-   [[["#js {:foo 1 bar 2} ;;=> #js {:foo 1, :bar 2}"
-      "#js [1 2 3] ;;=> #js [1 2 3]"]
-     ["#js {:foo #js {:bar 1}} ;;=> #js {:foo #js {:bar 1}}"
-      "(clj->js {:foo {:bar 1}}) ;;=> #js {:foo #js {:bar 1}}"]]],
+   [["#js {:foo 1 bar 2} ;;=> #js {:foo 1, :bar 2}"
+     "#js [1 2 3] ;;=> #js [1 2 3]"
+     "#js {:foo #js {:bar 1}} ;;=> #js {:foo #js {:bar 1}}"
+     "(clj->js {:foo {:bar 1}}) ;;=> #js {:foo #js {:bar 1}}"]],
    :description-html
    "<p>Create a literal JavaScript object or array.  Data in the form of a map <code>{}</code> or vector <code>&#91;&#93;</code> must follow the <code>#js</code> tag, which will be converted at compile-time to a JavaScript object or array, respectively.</p><p>This will not implicitly convert nested data into JavaScript objects or arrays.</p>",
    :examples
@@ -2210,14 +2213,14 @@
    :type "special namespace",
    :related ["syntax/js-namespace"],
    :examples-strings
-   [[["Math/E ;;=> 2.718281828459045"
-      "Math/PI ;;=> 3.141592653589793"
-      "Math/SQRT2 ;;=> 1.4142135623730951"]
-     ["(Math/cos 0) ;;=> 1"
-      "(Math/atan2 1 0) ;;=> 1.5707963267948966"
-      "(Math/log Math/E) ;;=> 1"
-      "(Math/pow 2 5) ;;=> 32"
-      "(Math/pow Math/E (Math/log 1)) ;;=> 1"]]],
+   [["Math/E ;;=> 2.718281828459045"
+     "Math/PI ;;=> 3.141592653589793"
+     "Math/SQRT2 ;;=> 1.4142135623730951"
+     "(Math/cos 0) ;;=> 1"
+     "(Math/atan2 1 0) ;;=> 1.5707963267948966"
+     "(Math/log Math/E) ;;=> 1"
+     "(Math/pow 2 5) ;;=> 32"
+     "(Math/pow Math/E (Math/log 1)) ;;=> 1"]],
    :description-html
    "<p>A special namespace for direct access to the native JavaScript [Math library].</p><p><code>Math/foo</code> => <code>js/Math.foo</code></p><p>[Math library]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math</p>",
    :examples
@@ -2251,7 +2254,7 @@
    :type "function",
    :related ["cljs.core/keys"],
    :examples-strings
-   [[["(js-keys #js {:foo 1 :bar 2}) ;;=> #js [\"foo\" \"bar\"]"]]],
+   [["(js-keys #js {:foo 1 :bar 2}) ;;=> #js [\"foo\" \"bar\"]"]],
    :description-html
    "<p>Returns the keys for the JavaScript object <code>obj</code>.</p>",
    :examples
@@ -2282,9 +2285,9 @@
    :type "macro",
    :related ["special/def"],
    :examples-strings
-   [[["a ;; WARNING: Use of undeclared Var"
-      "(declare a)"
-      "a ;;=> nil"]]],
+   [["a ;; WARNING: Use of undeclared Var"
+     "(declare a)"
+     "a ;;=> nil"]],
    :description-html
    "<p>Uses <code>def</code> to establish symbols of <code>names</code> with no bindings.</p><p>Useful for making forward declarations.</p>",
    :examples
@@ -2386,9 +2389,9 @@
    :type "special character",
    :related ["cljs.core/gensym" "syntax/syntax-quote"],
    :examples-strings
-   [[["`foo# ;;=> foo__142__auto__"] ["`foo/bar# ;;=> foo/bar#"]]
-    [["`(let [x# 1]"
-      "   (+ x# 2)) ;;=> (cljs.user/let [x__146__auto__ 1] (cljs.user/+ x__146__auto__ 2))"]]],
+   [["`foo# ;;=> foo__142__auto__" "`foo/bar# ;;=> foo/bar#"]
+    ["`(let [x# 1]"
+     "   (+ x# 2)) ;;=> (cljs.user/let [x__146__auto__ 1] (cljs.user/+ x__146__auto__ 2))"]],
    :description-html
    "<p>(Only intended for use in a [doc:syntax/syntax-quote].)</p><p>``foo#<code> =&gt; </code>foo<b>135</b>auto__`</p><p>Auto-generates a unique symbol with the given prefix, particularly one that will not shadow any existing symbol in its resulting scope.  This is intended as a convenience for creating hygienic macros without calling [doc:cljs.core/gensym] directly.</p><p>Every symbol matching a unique <code>foo#</code> symbol within a syntax quoted form will be replaced with the same generated symbol.</p><p>``(foo# foo#)<code> =&gt; </code>(foo<b>138</b>auto<b> foo</b>138<b>auto</b>)`</p><p>Namespace-qualified symbols <code>foo/bar#</code> are not replaced.</p>",
    :examples
@@ -2481,8 +2484,8 @@
    :description-html
    "<p>A comma is treated as whitespace when appearing outside a string.</p><p>This is mainly used to help delineate elements in a collection when necessary.</p><p>Commas are used when printing maps in the REPL:</p><pre><code class=\"clj\">{:foo 1, :bar 2, :bar 3}\n</code></pre>",
    :examples-strings
-   [[["[1, 2, 3, 4] ;;=> [1 2 3 4]"
-      "{:foo :bar :baz :quux} ;;=> {:foo :bar, :baz :quux}"]]],
+   [["[1, 2, 3, 4] ;;=> [1 2 3 4]"
+     "{:foo :bar :baz :quux} ;;=> {:foo :bar, :baz :quux}"]],
    :examples-htmls
    ["<pre><code class=\"clj\">&#91;1, 2, 3, 4&#93;\n;;=&gt; &#91;1 2 3 4&#93;\n\n{:foo :bar :baz :quux}\n;;=&gt; {:foo :bar, :baz :quux}\n</code></pre>"]},
   "disj!"
@@ -2534,9 +2537,9 @@
    :type "syntax",
    :related ["syntax/function"],
    :examples-strings
-   [[["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
-      "(def f #(println %1 %2 %&))"
-      "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]]],
+   [["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
+     "(def f #(println %1 %2 %&))"
+     "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]],
    :description-html
    "<p>Special vars for accessing implicit function arguments.</p><p>Only usable inside [doc:syntax/function].</p><ul><li><code>%</code> or <code>%1</code> for first argument.</li><li><code>%2</code>, <code>%3</code> and so on for subsequent arguments</li><li><code>%&amp;</code> for the rest of the arguments after the highest individually referenced argument</li></ul>",
    :examples
@@ -2737,7 +2740,7 @@
    :related
    ["cljs.core/assoc" "cljs.core/disj" "cljs.core/select-keys"],
    :examples-strings
-   [[["(dissoc {:key \"value\" :key2 \"value2\"} :key) ;;=> {:key2 \"value2\"}"]]],
+   [["(dissoc {:key \"value\" :key2 \"value2\"} :key) ;;=> {:key2 \"value2\"}"]],
    :description-html
    "<p>dissoc(iate)</p><p>Returns a new map that does not contain a mapping for key(s).</p><p>Has no effect on the map type (hashed/sorted).</p>",
    :examples
@@ -2803,7 +2806,7 @@
    :related
    ["syntax/js-literal" "cljs.core/array" "cljs.core/clj->js"],
    :examples-strings
-   [[["(js-obj \"foo\" 1 \"bar\" 2) ;;=> #js {:foo 1, :bar 2}"]]],
+   [["(js-obj \"foo\" 1 \"bar\" 2) ;;=> #js {:foo 1, :bar 2}"]],
    :description-html
    "<p>Returns a new JavaScript object using the supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
    :examples
@@ -2833,13 +2836,13 @@
    :type "function",
    :related ["cljs.core/transient" "cljs.core/persistent!"],
    :examples-strings
-   [[["(def tcoll (transient! {}))"
-      "(assoc! tcoll :a 1)"
-      "(assoc! tcoll :b 2)"
-      "tcoll ;;=> #<[object Object]> "
-      "(:a tcoll) ;;=> 1"
-      "(:b tcoll) ;;=> 2"
-      "(def a (persistent! tcoll)) ;;=> {:a 1 :b 2}"]]],
+   [["(def tcoll (transient! {}))"
+     "(assoc! tcoll :a 1)"
+     "(assoc! tcoll :b 2)"
+     "tcoll ;;=> #<[object Object]> "
+     "(:a tcoll) ;;=> 1"
+     "(:b tcoll) ;;=> 2"
+     "(def a (persistent! tcoll)) ;;=> {:a 1 :b 2}"]],
    :description-html
    "<p>assoc(iate) on transient collection</p><p>When applied to a transient map, adds mapping of key(s) to val(s).</p><p>When applied to a transient vector, sets the val at index.  Note - index must be <= (count vector).</p><p>Returns coll.</p>",
    :examples
@@ -2860,9 +2863,9 @@
    :type "function/macro",
    :related ["cljs.core/dissoc"],
    :examples-strings
-   [[["(def a #js {:foo 1 :bar 2})"
-      "(js-delete a \"foo\")"
-      "a ;;=> #js {:bar 2}"]]],
+   [["(def a #js {:foo 1 :bar 2})"
+     "(js-delete a \"foo\")"
+     "a ;;=> #js {:bar 2}"]],
    :description-html
    "<p>Deletes property <code>key</code> in JavaScript object <code>obj</code>.</p><p>Equivalent to <code>delete obj&#91;key&#93;</code> in JavaScript.</p>",
    :examples
@@ -2971,14 +2974,14 @@
    :type "function",
    :related ["cljs.core/add-watch"],
    :examples-strings
-   [[["(def a (atom {}))"
-      "(add-watch a :logger"
-      "  (fn [_key _atom old-state new-state]"
-      "    (println \"old:\" old-state)"
-      "    (println \"new:\" new-state)))"
-      "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"
-      "(remove-watch a :logger)"
-      "(swap! a assoc :foo 3) ;;=> nothing will be printed..."]]],
+   [["(def a (atom {}))"
+     "(add-watch a :logger"
+     "  (fn [_key _atom old-state new-state]"
+     "    (println \"old:\" old-state)"
+     "    (println \"new:\" new-state)))"
+     "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"
+     "(remove-watch a :logger)"
+     "(swap! a assoc :foo 3) ;;=> nothing will be printed..."]],
    :description-html
    "<p>Removes a watch function identified by <code>key</code> from atom <code>a</code>.  The function must have originally been set by <code>add-watch</code>.</p>",
    :examples
@@ -3008,8 +3011,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-xor"],
    :examples-strings
-   [[["(bit-or 2r1100 2r1010) ;;=> 14 ;; 14 = 2r1110"]
-     ["(bit-or 12 10) ;;=> 14"]]],
+   [["(bit-or 2r1100 2r1010) ;;=> 14 ;; 14 = 2r1110"
+     "(bit-or 12 10) ;;=> 14"]],
    :description-html
    "<p>Bitwise \"or\". Same as <code>x | y</code> in JavaScript.</p>",
    :examples
@@ -3113,16 +3116,16 @@
    :description-html
    "<p>A proper definition for something that cannot be read.</p><p>When certain values cannot be printed to a REPL using some literal syntax form, it wraps a description of its value in a form defined as unreadable, <code>#&lt;&gt;</code>.  A reader error will be thrown if this value is fed back into the REPL.</p><p>For example, <code>&#40;atom 42&#41;</code> will print <code>#&lt;Atom: 42&gt;</code> when evaluated in a REPL. This communicates a human-readable form that is not intended to be reproduce its value.</p><p>Oftentimes, evaluating JavaScript objects in a REPL will print the result of its <code>.toString</code> method inside the unreadable form <code>#&lt;&gt;</code>.</p>",
    :examples-strings
-   [[["#<foo> ;; clojure.lang.ExceptionInfo: Unreadable form"]
-     ["(deftype Foo [])"
-      "(Foo.) ;;=> #<[object Object]>"
-      "(deftype Foo [x]"
-      "  Object"
-      "  (toString [_]"
-      "    (str \"Foo: \" x)))"
-      "(Foo. 1) ;;=> #<Foo: 1>"]
-     ["Math/sin ;;=> #<function sin() { [native code] }>"
-      "js/console ;;=> #<[object Object]>"]]],
+   [["#<foo> ;; clojure.lang.ExceptionInfo: Unreadable form"
+     "(deftype Foo [])"
+     "(Foo.) ;;=> #<[object Object]>"
+     "(deftype Foo [x]"
+     "  Object"
+     "  (toString [_]"
+     "    (str \"Foo: \" x)))"
+     "(Foo. 1) ;;=> #<Foo: 1>"
+     "Math/sin ;;=> #<function sin() { [native code] }>"
+     "js/console ;;=> #<[object Object]>"]],
    :examples-htmls
    ["<p>Unreadable forms will throw an exception when read:</p><pre><code class=\"clj\">#&lt;foo&gt;\n;; clojure.lang.ExceptionInfo: Unreadable form\n</code></pre><p>You can create an unreadable form for a custom type:</p><pre><code class=\"clj\">&#40;deftype Foo &#91;&#93;&#41;\n&#40;Foo.&#41;\n;;=&gt; #&lt;&#91;object Object&#93;&gt;\n\n&#40;deftype Foo &#91;x&#93;\n  Object\n  &#40;toString &#91;&#95;&#93;\n    &#40;str &quot;Foo: &quot; x&#41;&#41;&#41;\n&#40;Foo. 1&#41;\n;;=&gt; #&lt;Foo: 1&gt;\n</code></pre><p>Some examples of unreadable JavaScript values:</p><pre><code class=\"clj\">Math/sin\n;;=&gt; #&lt;function sin&#40;&#41; { &#91;native code&#93; }&gt;\n\njs/console\n;;=&gt; #&lt;&#91;object Object&#93;&gt;\n</code></pre>"]},
   "longs"
@@ -3567,8 +3570,8 @@
    :type "syntax",
    :related ["special/var"],
    :examples-strings
-   [[["(def x 123)"
-      "(meta #'x) ;;=> {:arglists (), :test nil, :name x, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"]]],
+   [["(def x 123)"
+     "(meta #'x) ;;=> {:arglists (), :test nil, :name x, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"]],
    :description-html
    "<p><code>#'foo</code> is sugar for [<code>&#40;var foo&#41;</code>][doc:special/var].</p><p>Accesses the var attached to the given symbol.</p>",
    :examples
@@ -3644,10 +3647,10 @@
    :type "function/macro",
    :related ["cljs.core/*" "cljs.core/quot"],
    :examples-strings
-   [[["(/ 6 3) ;;=> 2"
-      "(/ 6 3 2) ;;=> 1"
-      "(/ 10) ;;=> 0.1"
-      "(/ 1 3) ;;=> 0.3333333333333333"]]],
+   [["(/ 6 3) ;;=> 2"
+     "(/ 6 3 2) ;;=> 1"
+     "(/ 10) ;;=> 0.1"
+     "(/ 1 3) ;;=> 0.3333333333333333"]],
    :description-html
    "<p>If no denominators are supplied, returns 1/numerator, else returns numerator divided by all of the denominators.</p>",
    :examples
@@ -3700,14 +3703,14 @@
    :type "function",
    :related ["cljs.core/peek" "cljs.core/rest" "cljs.core/conj"],
    :examples-strings
-   [[["(pop [1 2 3]) ;;=> [1 2]"
-      "(pop [1 2]) ;;=> [1]"
-      "(pop [1]) ;;=> []"
-      "(pop []) ;; Error: Can't pop empty vector"]]
-    [["(pop '(1 2 3)) ;;=> (2 3)"
-      "(pop '(1 2)) ;;=> (2)"
-      "(pop '(1)) ;;=> ()"
-      "(pop '()) ;; Error: Can't pop empty list"]]],
+   [["(pop [1 2 3]) ;;=> [1 2]"
+     "(pop [1 2]) ;;=> [1]"
+     "(pop [1]) ;;=> []"
+     "(pop []) ;; Error: Can't pop empty vector"]
+    ["(pop '(1 2 3)) ;;=> (2 3)"
+     "(pop '(1 2)) ;;=> (2)"
+     "(pop '(1)) ;;=> ()"
+     "(pop '()) ;; Error: Can't pop empty list"]],
    :description-html
    "<p>For a list, returns a new list without the first item.</p><p>For a vector, returns a new vector without the last item.</p>",
    :examples
@@ -3768,23 +3771,23 @@
    :type "special character",
    :related ["syntax/symbol" "syntax/namespace"],
    :examples-strings
-   [[["(def obj #js {:age 28, :greet #(str \"Hi \" %)})"
-      "(. obj greet \"Bob\") ;;=> \"Hi Bob\""
-      "(.greet obj \"Bob\") ;;=> \"Hi Bob\""
-      "(. obj -age) ;;=> 28"
-      "(.-age obj) ;;=> 28"]
-     ["(deftype Foo [x]"
-      "   Object"
-      "   (toString [_] (str \"Foo:\" x)))"
-      "(Foo. 1) ;;=> #<Foo: 1>"
-      "(new Foo 1) ;;=> #<Foo: 1>"]
-     ["(ns example.nested.core)"
-      "(def foo 1)"
-      "example.nested.core/foo ;;=> 1"]
-     ["(js/console.log \"HELLO\") ;; \"HELLO\""
-      "(.log js/console \"HELLO\") ;; \"HELLO\""]
-     ["cljs.core/PersistentQueue.EMPTY ;;=> #queue []"
-      "(.-EMPTY cljs.core/PersistentQueue) ;;=> #queue []"]]],
+   [["(def obj #js {:age 28, :greet #(str \"Hi \" %)})"
+     "(. obj greet \"Bob\") ;;=> \"Hi Bob\""
+     "(.greet obj \"Bob\") ;;=> \"Hi Bob\""
+     "(. obj -age) ;;=> 28"
+     "(.-age obj) ;;=> 28"
+     "(deftype Foo [x]"
+     "   Object"
+     "   (toString [_] (str \"Foo:\" x)))"
+     "(Foo. 1) ;;=> #<Foo: 1>"
+     "(new Foo 1) ;;=> #<Foo: 1>"
+     "(ns example.nested.core)"
+     "(def foo 1)"
+     "example.nested.core/foo ;;=> 1"
+     "(js/console.log \"HELLO\") ;; \"HELLO\""
+     "(.log js/console \"HELLO\") ;; \"HELLO\""
+     "cljs.core/PersistentQueue.EMPTY ;;=> #queue []"
+     "(.-EMPTY cljs.core/PersistentQueue) ;;=> #queue []"]],
    :description-html
    "<p>Dots can be used inside symbols. Its meaning depends on its position in the symbol:</p><ul><li><code>.</code> (by itself), <code>.-foo</code>, <code>.foo</code> all refer to the interop [<code>. &#40;special form&#41;</code>][doc:special/.].</li><li><code>foo.</code> is constructor sugar, meaning [<code>&#40;new foo&#41;</code>][doc:special/new].</li><li><code>&#40;ns foo.bar&#41;</code> and <code>foo.bar/baz</code> means that <code>foo.bar</code> is a nested namespace.</li><li><code>foo/bar.baz</code> or <code>bar.baz</code> means <code>bar.baz</code> is nested JS property access (<b>not allowed in clojure</b>).</li></ul>",
    :examples
@@ -3872,18 +3875,18 @@
    :type "macro",
    :related ["special/." "cljs.core/->" "cljs.core/doto"],
    :examples-strings
-   [[["// JavaScript"
-      "\"a b c d\".toUpperCase().replace(\"A\", \"X\")"
-      "//=> \"X B C D\""]
-     [" ;; ClojureScript"
-      "(.. \"a b c d\""
-      "    toUpperCase"
-      "    (replace \"A\" \"X\")) ;;=> \"X B C D\""]
-     ["(. (. \"a b c d\" toUpperCase) (replace \"A\" \"X\"))"]
-     ["(.replace (.toUpperCase \"a b c d\") \"A\" \"X\") ;;=> \"X B C D\""]
-     ["(-> \"a b c d\""
-      "    .toUpperCase"
-      "    (.replace \"A\" \"X\")) ;;=> \"X B C D\""]]],
+   [["// JavaScript"
+     "\"a b c d\".toUpperCase().replace(\"A\", \"X\")"
+     "//=> \"X B C D\""
+     " ;; ClojureScript"
+     "(.. \"a b c d\""
+     "    toUpperCase"
+     "    (replace \"A\" \"X\")) ;;=> \"X B C D\""
+     "(. (. \"a b c d\" toUpperCase) (replace \"A\" \"X\"))"
+     "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\") ;;=> \"X B C D\""
+     "(-> \"a b c d\""
+     "    .toUpperCase"
+     "    (.replace \"A\" \"X\")) ;;=> \"X B C D\""]],
    :description-html
    "<p>For interop, the <code>..</code> macro allows method/property chaining on the given JavaScript object <code>o</code>.</p><p>It essentially combines the thread-first <code>-&gt;</code> macro with the <code>.</code> operator.</p>",
    :examples
@@ -3931,8 +3934,8 @@
    :type "macro",
    :related ["cljs.core/str"],
    :examples-strings
-   [[["(js-str 23) ;;=> \"23\""
-      "(js-str #js {:foo 1}) ;;=> \"[Object object]\""]]],
+   [["(js-str 23) ;;=> \"23\""
+     "(js-str #js {:foo 1}) ;;=> \"[Object object]\""]],
    :description-html
    "<p>Convert <code>s</code> to string using JavaScript's coercion behavior.</p><p>Equivalent to <code>''+s</code> in JavaScript.</p>",
    :examples
@@ -3993,10 +3996,10 @@
     "cljs.core/aget"
     "cljs.core/aset"],
    :examples-strings
-   [[["js/document ;;=> #<[object HTMLDocument]>"]
-     ["(js/alert \"Hello World\") ;; displays alert popup"]
-     ["(js/console.log \"Hello World\") ;; displays in developer console"]
-     ["(js/Date.) ;;=> #inst \"2015-07-14T00:25:33.881-00:00\""]]],
+   [["js/document ;;=> #<[object HTMLDocument]>"
+     "(js/alert \"Hello World\") ;; displays alert popup"
+     "(js/console.log \"Hello World\") ;; displays in developer console"
+     "(js/Date.) ;;=> #inst \"2015-07-14T00:25:33.881-00:00\""]],
    :description-html
    "<p>A special namespace used for accessing any symbol defined in JavaScript's global scope.</p>",
    :examples
@@ -4119,7 +4122,7 @@
    :type "function/macro",
    :related ["cljs.core/+"],
    :examples-strings
-   [[["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2) ;;=> 5"]]],
+   [["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2) ;;=> 5"]],
    :description-html
    "<p>If no <code>y</code>s are supplied, returns the negation of <code>x</code>, else subtracts the <code>y</code>s from <code>x</code> and returns the result.</p>",
    :examples
@@ -4372,11 +4375,11 @@
    :type "function",
    :related ["cljs.core/alter-meta!" "cljs.core/with-meta"],
    :examples-strings
-   [[["(def a ^:foo [1 2 3])"
-      "(def b (vary-meta a assoc :bar true))"
-      "(= a b) ;;=> true"
-      "(meta a) ;;=> {:foo true}"
-      "(meta b) ;;=> {:foo true, :bar true}"]]],
+   [["(def a ^:foo [1 2 3])"
+     "(def b (vary-meta a assoc :bar true))"
+     "(= a b) ;;=> true"
+     "(meta a) ;;=> {:foo true}"
+     "(meta b) ;;=> {:foo true, :bar true}"]],
    :description-html
    "<p>Returns an object of the same type and value as <code>obj</code>, with <code>&#40;apply f &#40;meta obj&#41; args&#41;</code> as its metadata.</p>",
    :examples
@@ -4481,7 +4484,7 @@
    :type "macro",
    :related ["cljs.repl/doc"],
    :examples-strings
-   [[["(find-doc \"some\") ;; Prints: (docs truncated) ;; - IPrintWriter (docstring match) ;; - contains? (docstring match) ;; - gensym (docstring match) ;; - cljs.core/if-some ;; - some ;; - cljs.core/some-> ;; - cljs.core/some->> ;; - some-fn ;; - some? ;; - trampoline (docstring match) ;; - cljs.core/when-some ;; - cljs.core/while (docstring match) ;; ;;=> nil"]]],
+   [["(find-doc \"some\") ;; Prints: (docs truncated) ;; - IPrintWriter (docstring match) ;; - contains? (docstring match) ;; - gensym (docstring match) ;; - cljs.core/if-some ;; - some ;; - cljs.core/some-> ;; - cljs.core/some->> ;; - some-fn ;; - some? ;; - trampoline (docstring match) ;; - cljs.core/when-some ;; - cljs.core/while (docstring match) ;; ;;=> nil"]],
    :description-html
    "<p>Prints documentation for any var whose documentation or name contains a match for <code>re-string-or-pattern</code>.</p>",
    :examples
@@ -4780,11 +4783,11 @@
    :type "binding",
    :related ["syntax/destructure-vector"],
    :examples-strings
-   [[["(defn print-point"
-      "  [{:keys [x y z]}]"
-      "  (println x y z))"
-      "(print-point {:x 1, :y 2, :z 3}) ;; 1 2 3"]]
-    [["(let [{:keys [a b]} '(:a 1 :b 2)]" "  (println a b)) ;; 1 2"]]],
+   [["(defn print-point"
+     "  [{:keys [x y z]}]"
+     "  (println x y z))"
+     "(print-point {:x 1, :y 2, :z 3}) ;; 1 2 3"]
+    ["(let [{:keys [a b]} '(:a 1 :b 2)]" "  (println a b)) ;; 1 2"]],
    :description-html
    "<p>A helpful shorthand for binding names to values inside a map.</p><p>The destructure map can be a map from a symbol to a lookup value:</p><pre><code class=\"clj\">&#40;let &#91; {a :foo}   ;; &lt;-- destructure map\n       {:foo 1} &#93;\n  a&#41;\n;;=&gt; 1\n</code></pre><p>The destructure map can bind multiple names:</p><pre><code class=\"clj\">&#40;let &#91; {a :foo, b :bar}   ;; &lt;-- destructure map\n       {:foo 1, :bar 2} &#93;\n  &#40;println a b&#41;&#41;\n;; 1 2\n</code></pre><p>Use this convenient alternative if names match the keys:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93;}   ;; &lt;-- destructure map\n       {:foo 1, :bar 2} &#93;\n  &#40;println foo bar&#41;&#41;\n;; 1 2\n</code></pre><p>Different key types are supported using <code>:keys</code>, <code>:strs</code>, or <code>:syms</code>, which map to the manual destructuring forms below:</p><ul><li><code>{:keys &#91;foo&#93;}</code> -> <code>{foo :foo }</code></li><li><code>{:strs &#91;foo&#93;}</code> -> <code>{foo &quot;foo&quot;}</code></li><li><code>{:syms &#91;foo&#93;}</code> -> <code>{foo 'foo }</code></li></ul><p>Use <code>:as foo</code> to name the original value:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93; :as whole}\n       {:foo 1, :bar 2} &#93;\n  whole&#41;\n;;=&gt; {:foo 1, :bar 2}\n</code></pre><p>Use <code>:or {}</code> to provide default values if missing:</p><pre><code class=\"clj\">&#40;let &#91; {:keys &#91;foo bar&#93; :or {bar 0} }\n       {:foo 1} &#93;\n  &#40;println foo bar&#41;&#41;\n;; 1 0\n</code></pre><p>Use the special destructuring map in place of any local name binding in the following forms:</p><ul><li><code>&#40;let &#91;...&#93;&#41;</code></li><li><code>&#40;fn &#91;...&#93;&#41;</code></li><li><code>&#40;loop &#91;...&#93;&#41;</code></li></ul><p>Destructure maps can be nested, even in place of names in [destructure vectors][doc:syntax/destructure-vector].</p>",
    :examples
@@ -4954,10 +4957,10 @@
     "cljs.core/re-seq"
     "cljs.core/re-matches"],
    :examples-strings
-   [[["#\"foo\" ;;=> #\"foo\""
-      "(re-seq #\"foo\" \"FOO BAR foo bar\") ;;=> (\"foo\")"]
-     ["#\"(?i)foo\" ;;=> #\"foo\""
-      "(re-seq #\"(?i)foo\" \"FOO BAR foo bar\") ;;=> (\"FOO\" \"foo\")"]]],
+   [["#\"foo\" ;;=> #\"foo\""
+     "(re-seq #\"foo\" \"FOO BAR foo bar\") ;;=> (\"foo\")"
+     "#\"(?i)foo\" ;;=> #\"foo\""
+     "(re-seq #\"(?i)foo\" \"FOO BAR foo bar\") ;;=> (\"FOO\" \"foo\")"]],
    :description-html
    "<p>Signifies a regular expression. Represented as native [JavaScript regular expressions].</p><p>[JavaScript regular expressions]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions</p><p>An inline modifier can be included at the beginning of the regex:</p><p>|  modifier          | ClojureScript | JavaScript | |--------------------|---------------|------------| |  global match      | N/A           | <code>/foo/g</code>   | |  case-insensitive  | <code>#&quot;&#40;?i&#41;foo&quot;</code>  | <code>/foo/i</code>   | |  multi-line        | <code>#&quot;&#40;?m&#41;f.&#42;o&quot;</code> | <code>/f.&#42;o/m</code>  |</p><p>Global matches (i.e. multiple matches per line) can be achieved using <code>re-seq</code>.</p>",
    :examples
@@ -5070,11 +5073,11 @@
    :type "function",
    :related ["cljs.core/atom" "cljs.core/reset!" "cljs.core/swap!"],
    :examples-strings
-   [[["(def a (atom \"abc\"))"
-      "(compare-and-set! a \"abc\" \"def\") ;;=> true"
-      "@a ;;=> \"def\""
-      "(compare-and-set! a \"abc\" \"def\") ;;=> false"
-      "@a ;;=> \"def\""]]],
+   [["(def a (atom \"abc\"))"
+     "(compare-and-set! a \"abc\" \"def\") ;;=> true"
+     "@a ;;=> \"def\""
+     "(compare-and-set! a \"abc\" \"def\") ;;=> false"
+     "@a ;;=> \"def\""]],
    :description-html
    "<p>Atomically sets the value of atom <code>a</code> to <code>newval</code> if and only if the current value of the atom is identical to <code>oldval</code>.</p><p>Returns true if set happened, false otherwise.</p>",
    :examples
@@ -5094,14 +5097,14 @@
    :type "tagged literal",
    :related ["cljs.core/time" "syntax/tagged-literal"],
    :examples-strings
-   [[["#inst \"1985-04-12\" ;;=> #inst \"1985-04-12T00:00:00.000-00:00\""
-      "#inst \"1985-04-12T23:20:50.52Z\" ;;=> #inst \"1985-04-12T23:20:50.520-00:00\""]
-     ["(def a #inst \"2005-01-20\")"
-      "(def b #inst \"2005-01-21\")"
-      "(< a b) ;;=> true"]
-     ["(def a #inst \"2012-06-13\")"
-      "(def b #inst \"2012-06-13\")"
-      "(= a b) ;;=> true"]]],
+   [["#inst \"1985-04-12\" ;;=> #inst \"1985-04-12T00:00:00.000-00:00\""
+     "#inst \"1985-04-12T23:20:50.52Z\" ;;=> #inst \"1985-04-12T23:20:50.520-00:00\""
+     "(def a #inst \"2005-01-20\")"
+     "(def b #inst \"2005-01-21\")"
+     "(< a b) ;;=> true"
+     "(def a #inst \"2012-06-13\")"
+     "(def b #inst \"2012-06-13\")"
+     "(= a b) ;;=> true"]],
    :description-html
    "<p>An instant in time, using a [RFC-3339] formatted string. Creates a JavaScript [Date] object.</p><p>The format is <code>#inst &quot;yyyy-mm-ddThh:mm:ss&quot;</code>, where:</p><ul><li><code>yyyy-mm-dd</code> = date</li><li><code>hh:mm:ss</code> = time (optional)</li></ul><p>Append <code>Z</code> to denote UTC, or <code>-hh:mm</code> to denote exact UTC offset.</p><p>[Date]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date [RFC-3339]:http://www.ietf.org/rfc/rfc3339.txt</p>",
    :examples
@@ -5134,7 +5137,7 @@
    :type "function",
    :related ["cljs.core/partial" "cljs.core/juxt"],
    :examples-strings
-   [[["(def f (comp str inc +))" "(f 1 2 3) ;;=> \"7\""]]],
+   [["(def f (comp str inc +))" "(f 1 2 3) ;;=> \"7\""]],
    :description-html
    "<p>Takes a set of functions and returns a function that is the composition of those functions.</p><p>The returned function takes a variable number of arguments, applies the rightmost of <code>fns</code> to the arguments, whose result is subsequently applied to the next left function, and so on.</p><p><code>&#40;&#40;comp a b c&#41; x y&#41;</code> = <code>&#40;a &#40;b &#40;c x y&#41;&#41;&#41;</code></p>",
    :examples
@@ -5292,7 +5295,7 @@
    :type "convention",
    :related ["syntax/predicate"],
    :examples-strings
-   [[["(def a (atom 1))" "@a ;;=> 1" "(reset! a 2)" "@a ;;=> 2"]]],
+   [["(def a (atom 1))" "@a ;;=> 1" "(reset! a 2)" "@a ;;=> 2"]],
    :description-html
    "<p>A naming convention for impure functions (unenforced).</p><p>Impure functions are those that have side-effects on some state.</p><p>Some impure functions which use this convention:</p><ul><li>[doc:special/set!]</li><li>[doc:cljs.core/swap!]</li><li>[doc:cljs.core/conj!]</li><li>[doc:cljs.core/specify!]</li></ul>",
    :examples
@@ -5392,8 +5395,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-or"],
    :examples-strings
-   [[["(bit-xor 2r1100 2r1010) ;;=> 6 ;; 6 = 2r0110"]
-     ["(bit-xor 12 10) ;;=> 6"]]],
+   [["(bit-xor 2r1100 2r1010) ;;=> 6 ;; 6 = 2r0110"
+     "(bit-xor 12 10) ;;=> 6"]],
    :description-html
    "<p>Bitwise \"exclusive or\". Same as <code>x &#94; y</code> in JavaScript.</p>",
    :examples
@@ -5538,11 +5541,11 @@
    :type "function",
    :related ["cljs.core/alter-meta!" "cljs.core/vary-meta"],
    :examples-strings
-   [[["(def a ^:foo [1 2 3])"
-      "(def b (with-meta a {:bar true}))"
-      "(= a b) ;;=> true"
-      "(meta a) ;;=> {:foo true}"
-      "(meta b) ;;=> {:bar true}"]]],
+   [["(def a ^:foo [1 2 3])"
+     "(def b (with-meta a {:bar true}))"
+     "(= a b) ;;=> true"
+     "(meta a) ;;=> {:foo true}"
+     "(meta b) ;;=> {:bar true}"]],
    :description-html
    "<p>Returns an object of the same type and value as <code>obj</code>, with map <code>m</code> as its metadata.</p>",
    :examples
@@ -5606,11 +5609,11 @@
    :type "function",
    :related ["cljs.core/array" "cljs.core/make-array"],
    :examples-strings
-   [[["(def a #js [1 2 3])"
-      "(def b (aclone a))"
-      "(aset b 0 4)"
-      "a ;;=> #js [1 2 3]"
-      "b ;;=> #js [4 2 3]"]]],
+   [["(def a #js [1 2 3])"
+     "(def b (aclone a))"
+     "(aset b 0 4)"
+     "a ;;=> #js [1 2 3]"
+     "b ;;=> #js [4 2 3]"]],
    :description-html
    "<p>Creates a clone of the given JavaScript array <code>arr</code>.  The result is a new JavaScript array, which is a shallow copy, not a deep copy.</p>",
    :examples
@@ -5639,8 +5642,7 @@
    :name "unquote-splicing",
    :type "syntax",
    :related ["syntax/syntax-quote" "syntax/unquote"],
-   :examples-strings
-   [[["(def foo '[a b c])" "`(~@foo) ;;=> (a b c)"]]],
+   :examples-strings [["(def foo '[a b c])" "`(~@foo) ;;=> (a b c)"]],
    :description-html
    "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Intended for use inside a [doc:syntax/syntax-quote].</p><p>Forces evaluation of the following form and expands its children into the parent form.</p>",
    :examples
@@ -5742,8 +5744,13 @@
    :description-html
    "<p>A concept for binding the rest of the values of some sequence to a name.  See [doc:syntax/destructure-vector] or [doc:cljs.core/fn] for exact usage details in their respective contexts.</p>",
    :examples-strings
-   [[["(defn foo" "  [a b & c]" "  c)" "(foo 1 2 3 4) ;;=> (3 4)"]
-     ["(let [[a b & c]" "      [1 2 3 4]]" "  c) ;;=> (3 4)"]]],
+   [["(defn foo"
+     "  [a b & c]"
+     "  c)"
+     "(foo 1 2 3 4) ;;=> (3 4)"
+     "(let [[a b & c]"
+     "      [1 2 3 4]]"
+     "  c) ;;=> (3 4)"]],
    :examples-htmls
    ["<p>Binding <code>c</code> to the rest of the function arguments:</p><pre><code class=\"clj\">&#40;defn foo\n  &#91;a b &amp; c&#93;\n  c&#41;\n&#40;foo 1 2 3 4&#41;\n;;=&gt; &#40;3 4&#41;\n</code></pre><p>Binding <code>c</code> to the rest of the destructured values:</p><pre><code class=\"clj\">&#40;let &#91;&#91;a b &amp; c&#93;\n      &#91;1 2 3 4&#93;&#93;\n  c&#41;\n;;=&gt; &#40;3 4&#41;\n</code></pre>"]},
   "unsafe-cast"
@@ -5870,11 +5877,11 @@
    :signature ["[x]"],
    :type "function",
    :examples-strings
-   [[["(count [1 2 3]) ;;=> 3"
-      "(count []) ;;=> 0"
-      "(count nil) ;;=> 0"
-      "(count #{:a :b}) ;;=> 2"
-      "(count {:key \"value\" :key2 \"value2\"}) ;;=> 2"]]],
+   [["(count [1 2 3]) ;;=> 3"
+     "(count []) ;;=> 0"
+     "(count nil) ;;=> 0"
+     "(count #{:a :b}) ;;=> 2"
+     "(count {:key \"value\" :key2 \"value2\"}) ;;=> 2"]],
    :description-html
    "<p>Returns the number of items in <code>x</code>.</p><p><code>count</code> works on arrays, lists, maps, sets, strings, and vectors.</p><p><code>&#40;count nil&#41;</code> returns 0.</p>",
    :examples
@@ -6061,9 +6068,9 @@
    :type "function",
    :related ["cljs.core/object?"],
    :examples-strings
-   [[["(array? #js [1 2 3]) ;;=> true"
-      "(array? [1 2 3]) ;;=> false"
-      "(array? \"hi\") ;;=> false"]]],
+   [["(array? #js [1 2 3]) ;;=> true"
+     "(array? [1 2 3]) ;;=> false"
+     "(array? \"hi\") ;;=> false"]],
    :description-html
    "<p>Returns true if <code>x</code> is a JavaScript array, false otherwise.</p>",
    :examples
@@ -6094,8 +6101,8 @@
    :description-html
    "<p>Equivalent to [doc:syntax/comment].</p><p>This is intended to allow executable ClojureScript files under Unix by allowing the first line of the file to have a <a href='https://en.wikipedia.org/wiki/Shebang_(Unix'>shebang line</a>).</p>",
    :examples-strings
-   [[["#!/bin/cljs ;; waits for another form since #!/bin/cljs was ignored."
-      "123 #! this is ignored ;;=> 123"]]],
+   [["#!/bin/cljs ;; waits for another form since #!/bin/cljs was ignored."
+     "123 #! this is ignored ;;=> 123"]],
    :examples-htmls
    ["<pre><code class=\"clj\">#!/bin/cljs\n;; waits for another form since #!/bin/cljs was ignored.\n\n123 #! this is ignored\n;;=&gt; 123\n</code></pre>"]},
   "xhr-connection"
@@ -6119,10 +6126,10 @@
    :type "function",
    :related ["cljs.core/conj"],
    :examples-strings
-   [[["(cons 1 (list 1 2 3)) ;;=> (1 1 2 3)"
-      "(cons 1 [1 2 3]) ;;=> (1 1 2 3)"
-      "(cons 1 nil) ;;=> (1)"
-      "(cons nil nil) ;;=> (nil)"]]],
+   [["(cons 1 (list 1 2 3)) ;;=> (1 1 2 3)"
+     "(cons 1 [1 2 3]) ;;=> (1 1 2 3)"
+     "(cons 1 nil) ;;=> (1)"
+     "(cons nil nil) ;;=> (nil)"]],
    :description-html
    "<p>Returns a new sequence where <code>x</code> is the first element and <code>coll</code> is the rest.</p>",
    :examples
@@ -6375,9 +6382,9 @@
    :type "function",
    :related ["cljs.core/map"],
    :examples-strings
-   [[["(max 1 2 3) ;;=> 3"
-      "(apply max [1 2 3]) ;;=> 3"
-      "(apply max 1 [2 3]) ;;=> 3"]]],
+   [["(max 1 2 3) ;;=> 3"
+     "(apply max [1 2 3]) ;;=> 3"
+     "(apply max 1 [2 3]) ;;=> 3"]],
    :description-html
    "<p>Applies function <code>f</code> to the argument list formed by prepending intervening arguments to <code>args</code>.</p>",
    :examples
@@ -6551,8 +6558,8 @@
    :type "macro",
    :related ["cljs.core/reduce"],
    :examples-strings
-   [[["(def a #js [1 2 3])"
-      "(areduce a i ret 0 (+ ret (aget a i))) ;;=> 6"]]],
+   [["(def a #js [1 2 3])"
+     "(areduce a i ret 0 (+ ret (aget a i))) ;;=> 6"]],
    :description-html
    "<p>For quickly reducing an expression <code>expr</code> across a JavaScript array <code>a</code>.  The expression can use <code>ret</code> as the current result, which is initialized to <code>init</code>. It can also use <code>idx</code> to get the current index.</p>",
    :examples
@@ -6592,13 +6599,15 @@
    :type "var",
    :related ["cljs.core/*2" "cljs.core/*3" "cljs.core/*e"],
    :examples-strings
-   [[["(+ 1 2 3 4) ;;=> 10" "*1 ;;=> 10" "(inc *1) ;;=> 11"]
-     [":first ;;=> :first"
-      ":second ;;=> :second"
-      ":third ;;=> :third"
-      "*3 ;;=> :first"
-      "*2 ;;=> :second"
-      "*1 ;;=> :third"]]],
+   [["(+ 1 2 3 4) ;;=> 10"
+     "*1 ;;=> 10"
+     "(inc *1) ;;=> 11"
+     ":first ;;=> :first"
+     ":second ;;=> :second"
+     ":third ;;=> :third"
+     "*3 ;;=> :first"
+     "*2 ;;=> :second"
+     "*1 ;;=> :third"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Holds the result of the last expression.</p>",
    :examples
@@ -6825,7 +6834,7 @@
    :name "in-ns",
    :signature ["[name]"],
    :type "special form (repl)",
-   :examples-strings [[["(in-ns 'foo.core)"]]],
+   :examples-strings [["(in-ns 'foo.core)"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Changes to the namespace <code>name</code>, creating it if needed.</p><p>Sets <code>&#42;cljs-ns&#42;</code> to the namespace <code>name</code>.</p>",
    :examples
@@ -6900,13 +6909,14 @@
    :type "special symbol",
    :related ["syntax/number" "syntax/NaN"],
    :examples-strings
-   [[["Infinity ;;=> Infinity"
-      "+Infinity ;;=> Infinity"
-      "-Infinity ;;=> -Infinity"]
-     ["(/ 1 0) ;;=> Infinity"
-      "(Math/log 0) ;;=> -Infinity"
-      "(* 0 Infinity) ;;=> NaN"]
-     ["js/Infinity ;;=> Infinity" "js/-Infinity ;;=> -Infinity"]]],
+   [["Infinity ;;=> Infinity"
+     "+Infinity ;;=> Infinity"
+     "-Infinity ;;=> -Infinity"
+     "(/ 1 0) ;;=> Infinity"
+     "(Math/log 0) ;;=> -Infinity"
+     "(* 0 Infinity) ;;=> NaN"
+     "js/Infinity ;;=> Infinity"
+     "js/-Infinity ;;=> -Infinity"]],
    :description-html
    "<p>The IEEE 754 Floating Point representations of infinity.</p><p><code>Infinity</code> = <code>+Infinity</code> = positive infinity</p><p><code>-Infinity</code> = negative infinity</p>",
    :examples
@@ -6933,8 +6943,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-or"],
    :examples-strings
-   [[["(bit-and 2r1100 2r1010) ;;=> 8 ;; 8 = 2r1000"]
-     ["(bit-and 12 10) ;;=> 8"]]],
+   [["(bit-and 2r1100 2r1010) ;;=> 8 ;; 8 = 2r1000"
+     "(bit-and 12 10) ;;=> 8"]],
    :description-html
    "<p>Bitwise \"and\".  Same as <code>x &amp; y</code> in JavaScript.</p>",
    :examples
@@ -6954,10 +6964,12 @@
    :type "function",
    :related ["cljs.core/namespace"],
    :examples-strings
-   [[["(name :foo/bar) ;;=> \"bar\"" "(name 'foo/bar) ;;=> \"bar\""]
-     ["(name :foo) ;;=> \"foo\"" "(name 'foo) ;;=> \"foo\""]
-     ["(name \"foo/bar\") ;;=> \"foo/bar\""
-      "(name \"foo\") ;;=> \"foo\""]]],
+   [["(name :foo/bar) ;;=> \"bar\""
+     "(name 'foo/bar) ;;=> \"bar\""
+     "(name :foo) ;;=> \"foo\""
+     "(name 'foo) ;;=> \"foo\""
+     "(name \"foo/bar\") ;;=> \"foo/bar\""
+     "(name \"foo\") ;;=> \"foo\""]],
    :description-html
    "<p>Returns the name string of a possibly namespace-qualified keyword or symbol.</p><p>Equivalent to [doc:cljs.core/identity] for strings.</p>",
    :examples
@@ -7081,9 +7093,9 @@
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-not"],
    :examples-strings
-   [[["(bit-and-not 2r1100 2r1010) ;;=> 4 ;; 4 = 2r0100"]
-     ["(bit-and-not 12 10) ;;=> 4"]
-     ["(bit-and 12 (bit-not 10)) ;;=> 4"]]],
+   [["(bit-and-not 2r1100 2r1010) ;;=> 4 ;; 4 = 2r0100"
+     "(bit-and-not 12 10) ;;=> 4"
+     "(bit-and 12 (bit-not 10)) ;;=> 4"]],
    :description-html
    "<p>Bitwise \"and\" <code>x</code> with bitwise \"not\" <code>y</code>.  Same as <code>x &amp; &#126;y</code> in JavaScript.</p>",
    :examples
@@ -7141,10 +7153,10 @@
    :type "macro",
    :related ["cljs.core/macroexpand" "cljs.core/defmacro"],
    :examples-strings
-   [[["(macroexpand-1 '(-> 2 inc)) ;;=> (inc 2)"
-      "(macroexpand-1 '(inc 2)) ;;=> (cljs.core/+ 2 1)"
-      "(macroexpand-1 '(cljs.core/+ 2 1)) ;;=> (js* \"(~{} + ~{})\" 2 1)"]
-     ["(macroexpand-1 '(inc (inc 2))) ;;=> (cljs.core/+ (inc 2) 1)"]]],
+   [["(macroexpand-1 '(-> 2 inc)) ;;=> (inc 2)"
+     "(macroexpand-1 '(inc 2)) ;;=> (cljs.core/+ 2 1)"
+     "(macroexpand-1 '(cljs.core/+ 2 1)) ;;=> (js* \"(~{} + ~{})\" 2 1)"
+     "(macroexpand-1 '(inc (inc 2))) ;;=> (cljs.core/+ (inc 2) 1)"]],
    :description-html
    "<p>(only intended as a REPL utility)</p><p>If the given quoted form is a macro call, expand it once. NOTE: subforms are <i>not</i> expanded.</p><p>See [doc:cljs.core/macroexpand] if you wish to repeatedly expand a form.</p>",
    :examples
@@ -7168,9 +7180,9 @@
     "syntax/unquote"
     "syntax/unquote-splicing"],
    :examples-strings
-   [[["`foo ;;=> cljs.user/foo"
-      "`foo# ;;=> foo__20418__auto__"
-      "`(def foo 1) ;;=> (def cljs.user/foo 1)"]]],
+   [["`foo ;;=> cljs.user/foo"
+     "`foo# ;;=> foo__20418__auto__"
+     "`(def foo 1) ;;=> (def cljs.user/foo 1)"]],
    :description-html
    "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Prevent evaluation of the following form.</p><p>Adds namespace-qualification to any symbols inside the following form by resolving them in the current context.</p><p>Any non-namespaced symbols ending with <code>#</code> are replaced with unique symbols. See [doc:syntax/auto-gensym].</p>",
    :examples
@@ -7291,10 +7303,10 @@
    :signature ["[coll]"],
    :type "function",
    :examples-strings
-   [[["(associative? [1 2 3]) ;;=> true"
-      "(associative? {:a 1 :b 2}) ;;=> true"
-      "(associative? #{1 2 3}) ;;=> false"
-      "(associative? '(1 2 3)) ;;=> false"]]],
+   [["(associative? [1 2 3]) ;;=> true"
+     "(associative? {:a 1 :b 2}) ;;=> true"
+     "(associative? #{1 2 3}) ;;=> false"
+     "(associative? '(1 2 3)) ;;=> false"]],
    :description-html
    "<p>Returns true if <code>coll</code> implements the <code>IAssociative</code> protocol, false otherwise.</p><p>Maps and vectors are associative.</p>",
    :examples
@@ -7345,9 +7357,9 @@
    :type "function",
    :related ["cljs.core/random-uuid" "syntax/uuid-literal"],
    :examples-strings
-   [[["(uuid \"00000000-0000-0000-0000-000000000000\") ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
-      "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\") ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]
-     ["(uuid \"\") ;;=> #uuid \"\""]]],
+   [["(uuid \"00000000-0000-0000-0000-000000000000\") ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
+     "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\") ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
+     "(uuid \"\") ;;=> #uuid \"\""]],
    :description-html
    "<p>Creates a universally unique identifier (UUID) from the given string, using the [doc:cljs.core/UUID] type.</p><p>The string has an expected format <code>8-4-4-12</code> where the numbers represent the number of hex digits.  No validation is performed.</p><p>To create a UUID literal (parsed and validated at compile time), use [doc:syntax/uuid-literal].</p>",
    :examples
@@ -7377,12 +7389,12 @@
    :type "macro",
    :related ["cljs.core/condp" "cljs.core/case" "special/if"],
    :examples-strings
-   [[["(def a 42)"
-      "(cond"
-      "  (< a 10) \"a is less than 10\""
-      "  (= a 10) \"a is 10\""
-      "  (> a 10) \"a is bigger than 10\""
-      "  :else \"a is not a number!\") ;;=> \"a is bigger than 10\""]]],
+   [["(def a 42)"
+     "(cond"
+     "  (< a 10) \"a is less than 10\""
+     "  (= a 10) \"a is 10\""
+     "  (> a 10) \"a is bigger than 10\""
+     "  :else \"a is not a number!\") ;;=> \"a is bigger than 10\""]],
    :description-html
    "<p><code>clauses</code> must be an even number of forms, ie: <code>&#40;cond t1 e1, t2 e2, t3 e3&#41;</code>. Each test <code>t</code> is evaluated one at a time. If a test returns logical true, <code>cond</code> evaluates and returns the corresponding expression <code>e</code> and does not evaluate any of the other tests or expressions.</p><p>It is idiomatic to provide a default case as the last test pair using the keyword <code>:else</code> (a keyword always evaluates to logical true).</p><p><code>&#40;cond&#41;</code> returns nil.</p>",
    :examples
@@ -7578,10 +7590,10 @@
     "cljs.core/if-let"
     "cljs.core/if-not"],
    :examples-strings
-   [[["(def v [1 2])"
-      "(if (empty? v) \"empty!\" \"filled!\") ;;=> \"filled!\""
-      "(str \"This vector is \""
-      "  (if (empty? v) \"empty!\" \"filled!\")) ;;=> \"This vector is filled!\""]]],
+   [["(def v [1 2])"
+     "(if (empty? v) \"empty!\" \"filled!\") ;;=> \"filled!\""
+     "(str \"This vector is \""
+     "  (if (empty? v) \"empty!\" \"filled!\")) ;;=> \"This vector is filled!\""]],
    :description-html
    "<p>If <code>test</code> is not false or nil, <code>then</code> is evaluated and returned. Otherwise, <code>else?</code> is evaluated and returned. <code>else?</code> defaults to nil if not provided.</p><p><code>if</code> is one of ClojureScript's <a href='http://clojure.org/special_forms'>special forms</a> and is a fundamental building block of the language. All other conditionals in ClojureScript are based on <code>if</code>s notion of truthiness (ie: anything other than false or nil).</p>",
    :examples
@@ -7685,11 +7697,11 @@
    :signature ["[obj s & args]"],
    :type "function",
    :examples-strings
-   [[["// JavaScript"
-      "var obj = {"
-      "  \"my sum\": function(a,b) { return a+b; }"
-      "};"]
-     ["(js-invoke js/obj \"my sum\" 1 2) ;=> 3"]]],
+   [["// JavaScript"
+     "var obj = {"
+     "  \"my sum\": function(a,b) { return a+b; }"
+     "};"
+     "(js-invoke js/obj \"my sum\" 1 2) ;=> 3"]],
    :description-html
    "<p>Invoke JavaScript object <code>obj</code> method via string <code>s</code>. Needed when the string is not a valid unquoted property name.</p>",
    :examples
@@ -7718,11 +7730,11 @@
    :type "syntax",
    :related ["syntax/string" "cljs.core/str"],
    :examples-strings
-   [[["\\c ;;=> \"c\""
-      "\\A ;;=> \"A\""
-      "\\newline ;;=> \"\\n\""
-      "\\u00a1 ;;=> \"¡\""
-      "\\o256 ;;=> \"®\""]]],
+   [["\\c ;;=> \"c\""
+     "\\A ;;=> \"A\""
+     "\\newline ;;=> \"\\n\""
+     "\\u00a1 ;;=> \"¡\""
+     "\\o256 ;;=> \"®\""]],
    :description-html
    "<p>A single character string.  Carried over from Clojure for compatibility.  They are represented as single character JavaScript strings.</p><p><code>\\c</code> = <code>&quot;c&quot;</code></p><p>| unicode characters  | constraints                                   | |---------------------|-----------------------------------------------| | <code>\\uXXXX</code>            | XXXX must have 4 digits outside 0xD7FF-0xE000 | | <code>\\oXXX</code>             | XXX is octal between 0 and 0377               |</p><p>| special characters  | result   | |---------------------|----------| | <code>\\newline</code>          | <code>&quot;\\n&quot;</code>   | | <code>\\space</code>            | <code>&quot; &quot;</code>    | | <code>\\tab</code>              | <code>&quot;\\t&quot;</code>   | | <code>\\formfeed</code>         | <code>&quot;\\f&quot;</code>   | | <code>\\backspace</code>        | <code>&quot;\\b&quot;</code>   | | <code>\\return</code>           | <code>&quot;\\r&quot;</code>   |</p>",
    :examples
@@ -7760,13 +7772,13 @@
    :type "convention",
    :related ["cljs.core/binding"],
    :examples-strings
-   [[["(def ^:dynamic *foo* 1)"
-      "(def print-foo []"
-      "  (println *foo*))"
-      "(print-foo) ;; 1"
-      "(binding [*foo* 2]"
-      "  (print-foo)) ;; 2"
-      "(print-foo) ;; 1"]]],
+   [["(def ^:dynamic *foo* 1)"
+     "(def print-foo []"
+     "  (println *foo*))"
+     "(print-foo) ;; 1"
+     "(binding [*foo* 2]"
+     "  (print-foo)) ;; 2"
+     "(print-foo) ;; 1"]],
    :description-html
    "<p>A naming convention for dynamic vars (unenforced).</p><p><code>&#40;def &#94;:dynamic &#42;foo&#42; 1&#41;</code></p><p>Dynamic vars are global vars that you intend to temporarily rebind with [doc:cljs.core/binding].</p><p>NOTE: Sometimes, the core library uses the earmuffs convention for non-dynamic special global vars (e.g. [doc:cljs.core/<em>clojurescript-version</em>], [doc:cljs.core/<em>main-cli-fn</em>]).</p>",
    :examples
@@ -7816,13 +7828,13 @@
    :signature ["[& import-symbols-or-lists]"],
    :type "special form (repl)",
    :examples-strings
-   [[["(import 'goog.math.Long"
-      "        '[goog.math Vec2 Vec3]"
-      "        '[goog.math Integer])"
-      "(Long. 4 6) ;;=> #<25769803780>"
-      "(Vec2. 1 2) ;;=> #<(1, 2)>"
-      "(Vec3. 1 2 3) ;;=> #<(1, 2, 3)>"
-      "(Integer.fromString \"10\") ;;=> #<10>"]]],
+   [["(import 'goog.math.Long"
+     "        '[goog.math Vec2 Vec3]"
+     "        '[goog.math Integer])"
+     "(Long. 4 6) ;;=> #<25769803780>"
+     "(Vec2. 1 2) ;;=> #<(1, 2)>"
+     "(Vec3. 1 2 3) ;;=> #<(1, 2, 3)>"
+     "(Integer.fromString \"10\") ;;=> #<10>"]],
    :description-html
    "<p>import-list => (closure-namespace constructor-name-symbols*)</p><p>Only usable from a REPL.</p><p>Import Google Closure classes.</p>",
    :examples
@@ -8019,9 +8031,9 @@
    :signature ["[x]"],
    :type "function",
    :examples-strings
-   [[["(char 81) ;;=> \"Q\""
-      "(char \"Q\") ;;=> \"Q\""
-      "(char \"foo\") ;; Error: Argument to char must be a character or number"]]],
+   [["(char 81) ;;=> \"Q\""
+     "(char \"Q\") ;;=> \"Q\""
+     "(char \"foo\") ;; Error: Argument to char must be a character or number"]],
    :description-html
    "<p>Converts a number <code>x</code> to a character using <code>String.fromCharCode&#40;x&#41;</code> from JavaScript.</p>",
    :examples
@@ -8155,12 +8167,12 @@
     "cljs.core/set-validator!"
     "cljs.core/get-validator"],
    :examples-strings
-   [[["(def a (atom 1))"
-      "@a ;;=> 1"
-      "(reset! a 2)"
-      "@a ;;=> 2"
-      "(swap! a inc)"
-      "@a ;;=> 3"]]],
+   [["(def a (atom 1))"
+     "@a ;;=> 1"
+     "(reset! a 2)"
+     "@a ;;=> 2"
+     "(swap! a inc)"
+     "@a ;;=> 3"]],
    :description-html
    "<p>Creates and returns an atom with an initial value of <code>x</code>.</p><p><code>opts</code> is an optional map with optional keys <code>:meta</code> and <code>:validator</code>.</p><p><code>:meta</code> should be a <a href='http://clojure.org/metadata'>metadata-map</a> for the atom.</p><p><code>:validator</code> should be a validator function for the atom. See <code>set-validator!</code> for more information.</p>",
    :examples
@@ -8423,17 +8435,17 @@
    :type "macro",
    :related ["cljs.core/and" "special/if"],
    :examples-strings
-   [[["(or) ;;=> nil"
-      "(or false) ;;=> false"
-      "(or true) ;;=> true"
-      "(or true true) ;;=> true"
-      "(or true false) ;;=> true"
-      "(or false false) ;;=> false"]]
-    [["(or \"foo\" \"bar\") ;;=> \"bar\""
-      "(or \"foo\" nil) ;;=> \"foo\""
-      "(or \"foo\" false) ;;=> \"foo\""
-      "(or nil \"foo\") ;;=> \"foo\""
-      "(or false \"foo\") ;;=> \"foo\""]]],
+   [["(or) ;;=> nil"
+     "(or false) ;;=> false"
+     "(or true) ;;=> true"
+     "(or true true) ;;=> true"
+     "(or true false) ;;=> true"
+     "(or false false) ;;=> false"]
+    ["(or \"foo\" \"bar\") ;;=> \"bar\""
+     "(or \"foo\" nil) ;;=> \"foo\""
+     "(or \"foo\" false) ;;=> \"foo\""
+     "(or nil \"foo\") ;;=> \"foo\""
+     "(or false \"foo\") ;;=> \"foo\""]],
    :description-html
    "<p>Evaluates arguments one at a time from left to right. If an argument returns logical true, <code>or</code> returns that value and doesn't evaluate any of the other arguments, otherwise it returns the value of the last argument.</p><p><code>&#40;or&#41;</code> returns nil.</p>",
    :examples
@@ -8548,19 +8560,19 @@
    :type "macro",
    :related ["cljs.core/cond" "cljs.core/condp"],
    :examples-strings
-   [[["(def a 1)"
-      "(def b 2)"
-      "(case a"
-      "  0 \"zero\""
-      "  1 \"one\""
-      "  \"default\") ;;=> \"one\""
-      "(case b"
-      "  0 \"zero\""
-      "  1 \"one\""
-      "  \"default\") ;;=> \"default\""
-      "(case b"
-      "  0 \"zero\""
-      "  1 \"one\") ;; Error: No matching clause: 2"]]],
+   [["(def a 1)"
+     "(def b 2)"
+     "(case a"
+     "  0 \"zero\""
+     "  1 \"one\""
+     "  \"default\") ;;=> \"one\""
+     "(case b"
+     "  0 \"zero\""
+     "  1 \"one\""
+     "  \"default\") ;;=> \"default\""
+     "(case b"
+     "  0 \"zero\""
+     "  1 \"one\") ;; Error: No matching clause: 2"]],
    :description-html
    "<p>Takes an expression and a set of clauses. Each clause can take the form of either:</p><p><code>test-constant result-expr</code></p><p><code>&#40;test-constant1 ... test-constantN&#41;  result-expr</code></p><p>The test-constants are not evaluated. They must be compile-time literals, and need not be quoted. If the expression is equal to a test-constant, the corresponding <code>result-expr</code> is returned. A single default expression can follow the clauses, and its value will be returned if no clause matches. If no default expression is provided and no clause matches, an Error is thrown.</p><p>Unlike <code>cond</code> and <code>condp</code>, <code>case</code> does a constant-time dispatch, the clauses are not considered sequentially. All manner of constant expressions are acceptable in <code>case</code>, including numbers, strings, symbols, keywords, and ClojureScript composites thereof. Note that since lists are used to group multiple constants that map to the same expression, a vector can be used to match a list if needed. The test-constants need not be all of the same type.</p>",
    :examples
@@ -8745,13 +8757,13 @@
    :related
    ["syntax/keyword-qualify" "cljs.core/keyword" "cljs.core/keyword?"],
    :examples-strings
-   [[[":foo ;;=> :foo" ":a/foo ;;=> :a/foo"]]
-    [["(def m {:foo 1})"
-      "(:foo m) ;;=> 1"
-      "(def things [{:foo 1 :bar 2}"
-      "             {:foo 3 :bar 4}"
-      "             {:foo 5 :bar 6}])"
-      "(map :foo things) ;;=> (1 3 5)"]]],
+   [[":foo ;;=> :foo" ":a/foo ;;=> :a/foo"]
+    ["(def m {:foo 1})"
+     "(:foo m) ;;=> 1"
+     "(def things [{:foo 1 :bar 2}"
+     "             {:foo 3 :bar 4}"
+     "             {:foo 5 :bar 6}])"
+     "(map :foo things) ;;=> (1 3 5)"]],
    :description-html
    "<p>A keyword is a string-like datatype that evaluates to itself.  Keywords are often used as enums or keys for maps.  Keywords should not start with a number.</p><p>Keywords can have an optional namespace. For example, <code>:foo/bar</code>. This is useful for functions in a namespace to prevent key collisions on a globally accessible map.</p>",
    :examples
@@ -8952,7 +8964,7 @@
    :signature ["[x]"],
    :type "function/macro",
    :examples-strings
-   [[["(bit-not 2r1100) ;;=> -13"] ["(bit-not 12) ;;=> -13"]]],
+   [["(bit-not 2r1100) ;;=> -13" "(bit-not 12) ;;=> -13"]],
    :description-html
    "<p>Bitwise complement.  Same as <code>&#126;x</code> in JavaScript.</p>",
    :examples
@@ -9009,13 +9021,16 @@
     "cljs.core/integer?"
     "cljs.core/int"],
    :examples-strings
-   [[["123 ;;=> 123" "123.45 ;;=> 123.45"]
-     ["12e3 ;;=> 12000" "1.2e-3 ;;=> 0.0012"]
-     ["0x1f ;;=> 31" "010 ;;=> 8"]
-     ["2r10111 ;;=> 23"
-      "8r32 ;;=> 26"
-      "16rFF ;;=> 255"
-      "36rZ ;;=> 35"]]],
+   [["123 ;;=> 123"
+     "123.45 ;;=> 123.45"
+     "12e3 ;;=> 12000"
+     "1.2e-3 ;;=> 0.0012"
+     "0x1f ;;=> 31"
+     "010 ;;=> 8"
+     "2r10111 ;;=> 23"
+     "8r32 ;;=> 26"
+     "16rFF ;;=> 255"
+     "36rZ ;;=> 35"]],
    :description-html
    "<p>ClojureScript numbers are the same as [JavaScript numbers], double-precision 64-bit format IEEE 754.</p><p>[JavaScript numbers]:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers<i>and</i>dates#Numbers</p><p>Available formats listed below. Decimal points are not allowed when specifying a custom base.</p><ul><li>decimal <code>123</code> <code>1.23</code></li><li>exponent <code>12e3</code> <code>1.2e3</code> <code>1.2e-3</code></li><li>hexadecimal <code>0x123</code></li><li>octal <code>0123</code></li><li>binary <code>2r0110</code></li><li>arbitrary <code>NrXXX</code> where <code>&#40;&lt;= 2 N 36&#41;</code> and <code>X</code> is in <code>&#91;0-9,A-Z&#93;</code></li></ul>",
    :examples
@@ -9187,10 +9202,10 @@
    :type "function/macro",
    :related ["cljs.core/>"],
    :examples-strings
-   [[["(>= 2 1) ;;=> true"
-      "(>= 2 2) ;;=> true"
-      "(>= 1 2) ;;=> false"
-      "(>= 6 5 4 3 2) ;;=> true"]]],
+   [["(>= 2 1) ;;=> true"
+     "(>= 2 2) ;;=> true"
+     "(>= 1 2) ;;=> false"
+     "(>= 6 5 4 3 2) ;;=> true"]],
    :description-html
    "<p>Returns true if each successive number argument is less than or equal to the previous one, false otherwise.</p>",
    :examples
@@ -9316,8 +9331,8 @@
    :type "macro",
    :related ["cljs.repl/find-doc" "cljs.repl/apropos"],
    :examples-strings
-   [[["(require 'clojure.set)"
-      "(dir clojure.set) ;; Prints: ;;  difference ;;  index ;;  intersection ;;  join ;;  map-invert ;;  project ;;  rename ;;  rename-keys ;;  select ;;  subset? ;;  superset? ;;  union ;; ;;=> nil"]]],
+   [["(require 'clojure.set)"
+     "(dir clojure.set) ;; Prints: ;;  difference ;;  index ;;  intersection ;;  join ;;  map-invert ;;  project ;;  rename ;;  rename-keys ;;  select ;;  subset? ;;  superset? ;;  union ;; ;;=> nil"]],
    :description-html
    "<p>Prints a sorted directory of public vars in a namespace <code>ns</code>.</p>",
    :examples
@@ -9360,9 +9375,9 @@
    :type "function",
    :related ["cljs.core/conj" "cljs.core/into"],
    :examples-strings
-   [[["(concat (list 1 2 3) (list 4 5 6)) ;;=> (1 2 3 4 5 6)"
-      "(concat [1 2 3] (list 4 5 6)) ;; => (1 2 3 4 5 6)"
-      "(concat [1] [2] [3]) ;; => (1 2 3)"]]],
+   [["(concat (list 1 2 3) (list 4 5 6)) ;;=> (1 2 3 4 5 6)"
+     "(concat [1 2 3] (list 4 5 6)) ;; => (1 2 3 4 5 6)"
+     "(concat [1] [2] [3]) ;; => (1 2 3)"]],
    :description-html
    "<p>Returns a lazy sequence representing the concatenation of the elements in the supplied collections.</p>",
    :examples
@@ -9513,10 +9528,10 @@
    :type "macro",
    :related ["cljs.core/contains?"],
    :examples-strings
-   [[["(def a #js {:foo 1 :bar 2})"
-      "(js-in \"foo\" a) ;;=> true"
-      "(js-in \"hello\" a) ;;=> false"]
-     ["(js-in \"toString\" a) ;;=> true"]]],
+   [["(def a #js {:foo 1 :bar 2})"
+     "(js-in \"foo\" a) ;;=> true"
+     "(js-in \"hello\" a) ;;=> false"
+     "(js-in \"toString\" a) ;;=> true"]],
    :description-html
    "<p>Determines if property <code>key</code> is in JavaScript object <code>obj</code>.</p><p>Equivalent to <code>key in obj</code> in JavaScript.</p>",
    :examples
@@ -9685,7 +9700,7 @@
    :type "function",
    :related ["cljs.core/not"],
    :examples-strings
-   [[["(def a 10)" "((complement #(= a %)) 12) ;;=> true"]]],
+   [["(def a 10)" "((complement #(= a %)) 12) ;;=> true"]],
    :description-html
    "<p>Takes a function <code>f</code> and returns a function that takes the same arguments as <code>f</code>, has the same effects, if any, and returns the opposite truth value.</p>",
    :examples
@@ -9730,11 +9745,11 @@
    :related
    ["syntax/keyword" "cljs.core/keyword" "cljs.core/keyword?"],
    :examples-strings
-   [[["::foo ;;=> :user/foo"]
-     ["(require '[example.util :as util])"
-      "::util/foo ;;=> :example.util/foo"]
-     ["::cljs.core/foo ;;=> :cljs.core/foo"]
-     ["::foo/bar ;; clojure.lang.ExceptionInfo: Invalid token: ::foo/bar {:type :reader-exception, ..."]]],
+   [["::foo ;;=> :user/foo"
+     "(require '[example.util :as util])"
+     "::util/foo ;;=> :example.util/foo"
+     "::cljs.core/foo ;;=> :cljs.core/foo"
+     "::foo/bar ;; clojure.lang.ExceptionInfo: Invalid token: ::foo/bar {:type :reader-exception, ..."]],
    :description-html
    "<p>Keywords starting with <code>::</code> will evaluate to regular keywords with a namespace qualification. The namespace will resolve to either of the following:</p><ul><li>current namespace if none is specified</li><li>given namespace if it exists</li><li>full namespace if the given one is an alias</li><li>reader error if given namespace doesn't exist</li></ul>",
    :examples
@@ -9971,9 +9986,9 @@
    :related
    ["syntax/arg" "cljs.core/fn" "cljs.core/defn" "cljs.core/partial"],
    :examples-strings
-   [[["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
-      "(def f #(println %1 %2 %&))"
-      "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]]],
+   [["(map #(* 2 %) [1 2 3]) ;;=> (2 4 6)"
+     "(def f #(println %1 %2 %&))"
+     "(f 1 2 3 4 5) ;; prints: 1 2 (3 4 5)"]],
    :description-html
    "<p>Shorthand for creating an anonymous function:</p><p><code>#&#40;...&#41;</code> = <code>&#40;fn &#91;args&#93; &#40;...&#41;&#41;</code></p><p>Use the following to access the implicit function arguments:</p><ul><li><code>%</code> or <code>%1</code> for first argument.</li><li><code>%2</code>, <code>%3</code> and so on for subsequent arguments</li><li><code>%&amp;</code> for the rest of the arguments after the highest individually referenced argument</li></ul><p>Note that <code>#&#40;1&#41;</code> does not create a function that returns <code>1</code>, for the same reason that <code>&#40;1&#41;</code> does evaluate to <code>1</code>.</p><p><code>#&#40;&#41;</code> forms cannot be nested, since this would create an ambiguity between the automatically assigned <code>%</code> argument names.</p>",
    :examples
@@ -10286,27 +10301,28 @@
    :type "macro",
    :related ["cljs.core/->>"],
    :examples-strings
-   [[["(first (.split (.replace (.toUpperCase \"a b c d\") \"A\" \"X\") \" \")) ;;=> \"X\""
-      "(-> \"a b c d\""
-      "    .toUpperCase"
-      "    (.replace \"A\" \"X\")"
-      "    (.split \" \")"
-      "    first) ;;=> \"X\""]]
-    [["(def person"
-      "  {:name \"Mark Volkmann\""
-      "   :address {:street \"644 Glen Summit\""
-      "             :city \"St. Charles\""
-      "             :state \"Missouri\""
-      "             :zip 63304}"
-      "   :employer {:name \"Object Computing, Inc.\""
-      "              :address {:street \"12140 Woodcrest Dr.\""
-      "                        :city \"Creve Coeur\""
-      "                        :state \"Missouri\""
-      "                        :zip 63141}}})"
-      "(-> person :employer :address :city) ;;=> \"Creve Coeur\""]
-     ["(:city (:address (:employer person))) ;;=> \"Creve Coeur\""]]
-    [["(def c 5)" "(-> c (+ 3) (/ 2) (- 1)) ;;=> 3"]
-     ["(- (/ (+ c 3) 2) 1) ;;=> 3"]]],
+   [["(first (.split (.replace (.toUpperCase \"a b c d\") \"A\" \"X\") \" \")) ;;=> \"X\""
+     "(-> \"a b c d\""
+     "    .toUpperCase"
+     "    (.replace \"A\" \"X\")"
+     "    (.split \" \")"
+     "    first) ;;=> \"X\""]
+    ["(def person"
+     "  {:name \"Mark Volkmann\""
+     "   :address {:street \"644 Glen Summit\""
+     "             :city \"St. Charles\""
+     "             :state \"Missouri\""
+     "             :zip 63304}"
+     "   :employer {:name \"Object Computing, Inc.\""
+     "              :address {:street \"12140 Woodcrest Dr.\""
+     "                        :city \"Creve Coeur\""
+     "                        :state \"Missouri\""
+     "                        :zip 63141}}})"
+     "(-> person :employer :address :city) ;;=> \"Creve Coeur\""
+     "(:city (:address (:employer person))) ;;=> \"Creve Coeur\""]
+    ["(def c 5)"
+     "(-> c (+ 3) (/ 2) (- 1)) ;;=> 3"
+     "(- (/ (+ c 3) 2) 1) ;;=> 3"]],
    :description-html
    "<p>The thread-first macro \"threads\" an expression through several forms as the second item in a list.</p><p>Inserts <code>x</code> as the second item in the first form, making a list of it if it is not a list already. If there are more forms, inserts the first form as the second item in second form, etc.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(-> x   (a b c)   d   (x y z))</pre></td><pre><code>  &lt;td&gt;&lt;pre&gt; \n</code></pre>(x (d (a x b c)) y z)</pre></td></tr></tbody></table></p>",
    :examples
@@ -10358,17 +10374,17 @@
    :type "macro",
    :related ["cljs.core/or" "special/if"],
    :examples-strings
-   [[["(and) ;;=> true"
-      "(and false) ;;=> false"
-      "(and true) ;;=> true"
-      "(and true true) ;;=> true"
-      "(and true false) ;;=> false"
-      "(and false false) ;;=> false"]]
-    [["(and \"foo\" \"bar\") ;;=> \"bar\""
-      "(and \"foo\" nil) ;;=> nil"
-      "(and \"foo\" false) ;;=> false"
-      "(and nil \"foo\") ;;=> nil"
-      "(and false \"foo\") ;;=> false"]]],
+   [["(and) ;;=> true"
+     "(and false) ;;=> false"
+     "(and true) ;;=> true"
+     "(and true true) ;;=> true"
+     "(and true false) ;;=> false"
+     "(and false false) ;;=> false"]
+    ["(and \"foo\" \"bar\") ;;=> \"bar\""
+     "(and \"foo\" nil) ;;=> nil"
+     "(and \"foo\" false) ;;=> false"
+     "(and nil \"foo\") ;;=> nil"
+     "(and false \"foo\") ;;=> false"]],
    :description-html
    "<p>Evaluates arguments one at a time from left to right. If an argument returns logical false (nil or false), <code>and</code> returns that value and doesn't evaluate any of the other arguments, otherwise it returns the value of the last argument.</p><p><code>&#40;and&#41;</code> returns true.</p>",
    :examples
@@ -10519,7 +10535,7 @@
    :type "function",
    :related ["cljs.core/rem"],
    :examples-strings
-   [[["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0) ;;=> NaN"]]],
+   [["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0) ;;=> NaN"]],
    :description-html
    "<p>Returns the modulus of dividing numerator <code>n</code> by denominator <code>d</code>.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p><p>Truncates toward negative infinity.</p>",
    :examples
@@ -10616,10 +10632,10 @@
     "cljs.core/butlast"
     "cljs.core/take-last"],
    :examples-strings
-   [[["(last [1 2 3]) ;;=> 3"
-      "(last [1 2]) ;;=> 2"
-      "(last [1]) ;;=> 1"
-      "(last []) ;;=> nil"]]],
+   [["(last [1 2 3]) ;;=> 3"
+     "(last [1 2]) ;;=> 2"
+     "(last [1]) ;;=> 1"
+     "(last []) ;;=> nil"]],
    :description-html
    "<p>Returns the last item in <code>coll</code> in linear time.</p><p><code>peek</code> is much faster than <code>last</code> for a vector.</p>",
    :examples
@@ -10696,11 +10712,11 @@
    :description-html
    "<p><code>&#95;</code> is a valid symbol name that indicates an unused or disregarded value. This is not enforced by the compiler.</p><p>For example, create a function whose first two arguments are ignored:</p><pre><code class=\"clj\">&#40;fn &#91;&#95; &#95; a&#93;\n  &#40;println a&#41;&#41;\n</code></pre><p>Ignore the first and third value of a [destructured][doc:syntax/destructure-vector] sequence:</p><pre><code class=\"clj\">&#40;let &#91; &#91;&#95; a b &#95; c&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  &#40;println a b c&#41;&#41;\n;; 2 3 5\n</code></pre><p>Ignore return values of debug statements in a [doc:cljs.core/let] block:</p><pre><code class=\"clj\">&#40;let &#91;a 1\n      &#95; &#40;println a&#41;\n      b &#40;+ a 2&#41;\n      &#95; &#40;println b&#41;\n      c &#40;+ b 3&#41;&#93;\n  ...&#41;\n</code></pre><p>Multiple <code>&#95;</code>'s can be used in each of the previous examples because duplicate names will shadow those previously occurring.  Thus, <code>&#95;</code> actually holds the value of its last binding, but using it should be strictly avoided to prevent confusion.  This is the only encouraged use-case for duplicating parameter names.</p>",
    :examples-strings
-   [[["(def a (atom 1))"
-      "(add-watch a :foo"
-      "  (fn [_ _ _ s]"
-      "    (println s)))"
-      "(reset! a 2) ;; 2"]]],
+   [["(def a (atom 1))"
+     "(add-watch a :foo"
+     "  (fn [_ _ _ s]"
+     "    (println s)))"
+     "(reset! a 2) ;; 2"]],
    :examples-htmls
    ["<p>It is common to use <code>&#95;</code> to ignore all but the latest value of a changing atom inside an [doc:cljs.core/add-watch] callback:</p><pre><code class=\"clj\">&#40;def a &#40;atom 1&#41;&#41;\n\n&#40;add-watch a :foo\n  &#40;fn &#91;&#95; &#95; &#95; s&#93;\n    &#40;println s&#41;&#41;&#41;\n\n&#40;reset! a 2&#41;\n;; 2\n</code></pre>"]},
   "HashMap"
@@ -10760,7 +10776,7 @@
    :type "macro",
    :related ["cljs.repl/doc"],
    :examples-strings
-   [[["(source comment) ;; Prints: ;; (defmacro comment ;;   \"Ignores body, yields nil\" ;;   {:added \"1.0\"} ;;   [& body]) ;; ;;=> nil"]]],
+   [["(source comment) ;; Prints: ;; (defmacro comment ;;   \"Ignores body, yields nil\" ;;   {:added \"1.0\"} ;;   [& body]) ;; ;;=> nil"]],
    :description-html
    "<p>Prints the source code for the given symbol <code>name</code>, if it can find it.  This requires that the symbol resolve to a Var defined in a namespace for which the .cljs is in the classpath.</p>",
    :examples
@@ -10781,10 +10797,10 @@
    :type "function/macro",
    :related ["cljs.core/<="],
    :examples-strings
-   [[["(< 1 2) ;;=> true"
-      "(< 2 1) ;;=> false"
-      "(< 1 1) ;;=> false"
-      "(< 2 3 4 5 6) ;;=> true"]]],
+   [["(< 1 2) ;;=> true"
+     "(< 2 1) ;;=> false"
+     "(< 1 1) ;;=> false"
+     "(< 2 3 4 5 6) ;;=> true"]],
    :description-html
    "<p>Returns true if each successive number argument is greater than the previous one, false otherwise.</p>",
    :examples
@@ -10849,7 +10865,7 @@
    :type "special form (repl)",
    :related ["specialrepl/require"],
    :examples-strings
-   [[["(require-macros '[cljs.core.async.macros :refer [go]])"]]],
+   [["(require-macros '[cljs.core.async.macros :refer [go]])"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>This is a way for ClojureScript to load macros from Clojure files. The usage is similar to the <code>require</code> form.</p><p>There is a nicer alternative if the Clojure macros file has the same name as a ClojureScript file in the same directory, which is a common pattern.  In this case, you can just use the <code>:include-macros</code> or <code>:refer-macros</code> flag of the <code>require</code> form.</p>",
    :examples
@@ -10982,11 +10998,11 @@
    :type "function/macro",
    :related ["cljs.core/count"],
    :examples-strings
-   [[["(def a #js [1 2 3])"
-      "(alength a) ;;=> 3"
-      "(.-length a) ;;=> 3"
-      "(aget a \"length\") ;;=> 3"
-      "(count a) ;;=> 3"]]],
+   [["(def a #js [1 2 3])"
+     "(alength a) ;;=> 3"
+     "(.-length a) ;;=> 3"
+     "(aget a \"length\") ;;=> 3"
+     "(count a) ;;=> 3"]],
    :description-html
    "<p>For interop, it returns the length of a JavaScript array or string.</p>",
    :examples
@@ -11008,22 +11024,25 @@
    :type "special form",
    :related ["cljs.core/.." "cljs.core/aget"],
    :examples-strings
-   [[["// JavaScript" "var m = \"Hello World\";" "m.length;" "//=> 11"]
-     [" ;; ClojureScript"
-      "(def m \"Hello World\")"
-      "(.-length m) ;;=> 11"]
-     ["// JavaScript"
-      "m.toUpperCase();"
-      "//=> \"HELLO WORLD\""
-      "m.replace(\"H\", \"\");"
-      "//=> \"ello World\";"]
-     [" ;; ClojureScript"
-      "(.toUpperCase m) ;;=> \"HELLO WORLD\""
-      "(.replace m \"H\" \"\") ;;=> \"ello World\""]]
-    [["(def o #js {:foo \"bar\"})"]
-     ["(. o -foo) ;;=> \"bar\""
-      "(.-foo o) ;;=> \"bar\""
-      "(aget o \"foo\") ;;=> \"bar\""]]],
+   [["// JavaScript"
+     "var m = \"Hello World\";"
+     "m.length;"
+     "//=> 11"
+     " ;; ClojureScript"
+     "(def m \"Hello World\")"
+     "(.-length m) ;;=> 11"
+     "// JavaScript"
+     "m.toUpperCase();"
+     "//=> \"HELLO WORLD\""
+     "m.replace(\"H\", \"\");"
+     "//=> \"ello World\";"
+     " ;; ClojureScript"
+     "(.toUpperCase m) ;;=> \"HELLO WORLD\""
+     "(.replace m \"H\" \"\") ;;=> \"ello World\""]
+    ["(def o #js {:foo \"bar\"})"
+     "(. o -foo) ;;=> \"bar\""
+     "(.-foo o) ;;=> \"bar\""
+     "(aget o \"foo\") ;;=> \"bar\""]],
    :description-html
    "<p>For interop, the <code>.</code> special form allows access to member properties of the given JavaScript object <code>o</code>.</p><p>If the second operand is a symbol preceded with a hyphen as in <code>-p</code>, the expression will result in the value of the property named <code>p</code>.</p><p>If the second operand is a symbol that is not preceded with a hyphen as in <code>m</code>, the expression will evaluate to a call of the method named <code>m</code>.  Any additional operands will be passed as arguments to the method.</p><p>The <b>preferred, idiomatic</b> way to access members of a JavaScript object is to use the following sugar:</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Sugar&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt; \n</code></pre>  </thead>   <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.-p o&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o -p&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt;\n&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.m o&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o m&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt;\n&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.m o 1 2&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o m 1 2&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt; \n</code></pre>  </tbody> </table></p>",
    :examples
@@ -11095,14 +11114,14 @@
    :type "function",
    :related ["cljs.core/with-meta" "cljs.core/vary-meta"],
    :examples-strings
-   [[["(def a ^:foo [1 2 3])"
-      "(meta a) ;;=> {:foo true}"
-      "(alter-meta! a assoc :bar true)"
-      "(meta a) ;;=> {:foo true, :bar true}"]
-     ["(def a [1 2 3])"
-      "(meta #'a) ;;=> {:arglists (), :test nil, :name a, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"
-      "(alter-meta! #'a assoc :bar true)"
-      "(:bar (meta #'a)) ;;=> nil"]]],
+   [["(def a ^:foo [1 2 3])"
+     "(meta a) ;;=> {:foo true}"
+     "(alter-meta! a assoc :bar true)"
+     "(meta a) ;;=> {:foo true, :bar true}"
+     "(def a [1 2 3])"
+     "(meta #'a) ;;=> {:arglists (), :test nil, :name a, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"
+     "(alter-meta! #'a assoc :bar true)"
+     "(:bar (meta #'a)) ;;=> nil"]],
    :description-html
    "<p>Alter the metadata of <code>data</code> to be <code>&#40;apply f its-current-meta args&#41;</code>.</p><p>Metadata of vars cannot be altered since they are statically determined at compile-time.</p>",
    :examples
@@ -11146,10 +11165,11 @@
     "cljs.core/peek"
     "cljs.core/pop"],
    :examples-strings
-   [[["(conj [1 2 3] 4) ;;=> [1 2 3 4]"]
-     ["(conj (list 1 2 3) 0) ;;=> (0 1 2 3)"]
-     ["(def x (range 1 4)) ;;=> (1 2 3)" "(conj x 0) ;;=> (0 1 2 3)"]
-     ["(conj #{\"a\" \"b\" \"c\"} \"d\") ;;=> #{\"a\" \"b\" \"c\" \"d\"}"]]],
+   [["(conj [1 2 3] 4) ;;=> [1 2 3 4]"
+     "(conj (list 1 2 3) 0) ;;=> (0 1 2 3)"
+     "(def x (range 1 4)) ;;=> (1 2 3)"
+     "(conj x 0) ;;=> (0 1 2 3)"
+     "(conj #{\"a\" \"b\" \"c\"} \"d\") ;;=> #{\"a\" \"b\" \"c\" \"d\"}"]],
    :description-html
    "<p>conj(oin)</p><p>Returns a new collection with the <code>x</code>s \"added\" to <code>coll</code>.</p><p>The \"addition\" may happen at different \"places\" depending on the collection type.</p><p><code>&#40;conj nil item&#41;</code> returns <code>&#40;item&#41;</code>.</p>",
    :examples
@@ -11295,9 +11315,9 @@
    :type "function",
    :related ["cljs.core/js->clj"],
    :examples-strings
-   [[["(clj->js {:foo 1 :bar 2}) ;;=> #js {:foo 1, :bar 2}"
-      "(clj->js [:foo \"bar\" 'baz]) ;;=> #js [\"foo\" \"bar\" \"baz\"]"
-      "(clj->js [1 {:foo \"bar\"} 4]) ;;=> #js [1 #js {:foo \"bar\"} 4]"]]],
+   [["(clj->js {:foo 1 :bar 2}) ;;=> #js {:foo 1, :bar 2}"
+     "(clj->js [:foo \"bar\" 'baz]) ;;=> #js [\"foo\" \"bar\" \"baz\"]"
+     "(clj->js [1 {:foo \"bar\"} 4]) ;;=> #js [1 #js {:foo \"bar\"} 4]"]],
    :description-html
    "<p>Recursively transforms ClojureScript values to JavaScript.</p><p>| ClojureScript |        | JavaScript |         | |---------------|--------|------------|---------| | Set           | <code>#{}</code>  | Array      | <code>&#91;&#93;</code>    | | Vector        | <code>&#91;&#93;</code>   | Array      | <code>&#91;&#93;</code>    | | List          | <code>&#40;&#41;</code>   | Array      | <code>&#91;&#93;</code>    | | Keyword       | <code>:foo</code> | String     | <code>&quot;foo&quot;</code> | | Symbol        | <code>bar</code>  | String     | <code>&quot;bar&quot;</code> | | Map           | <code>{}</code>   | Object     | <code>{}</code>    |</p>",
    :examples
@@ -11360,8 +11380,8 @@
    :type "syntax",
    :related ["syntax/cond"],
    :examples-strings
-   [[["'(def #?@(:cljs [a 1]"
-      "          :clj  [b 2])) ;;=> (def a 1)"]]],
+   [["'(def #?@(:cljs [a 1]"
+     "          :clj  [b 2])) ;;=> (def a 1)"]],
    :description-html
    "<p>(Only allowed in <code>.cljc</code> files or the REPL)</p><p>Like [doc:syntax/cond], except:</p><ul><li>each conditional value must be a sequence,</li><li>the selected sequence is spliced into the parent form,</li><li>and it must have a parent form to be spliced into (not top level).</li></ul><p><code>&#40;def #?@&#40;:cljs &#91;foo 1&#93;&#41;</code> is read as <code>&#40;def foo 1&#41;</code>.</p>",
    :examples
@@ -11454,13 +11474,13 @@
     "cljs.core/vary-meta"
     "cljs.core/alter-meta!"],
    :examples-strings
-   [[["^:foo [1 2 3] ;;=> [1 2 3]"]
-     ["(meta ^:foo [1 2 3]) ;;=> {:foo true}"
-      "(meta ^{:foo \"bar\"} [1 2 3]) ;;=> {:foo \"bar\"}"
-      "(meta ^\"foo\" [1 2 3]) ;;=> {:tag \"foo\"}"
-      "(def foo 1)"
-      "(meta ^foo [1 2 3]) ;;=> {:tag 1}"]
-     ["(meta ^:foo ^\"foo\" [1 2 3]) ;;=> {:foo true, :tag \"foo\"}"]]],
+   [["^:foo [1 2 3] ;;=> [1 2 3]"
+     "(meta ^:foo [1 2 3]) ;;=> {:foo true}"
+     "(meta ^{:foo \"bar\"} [1 2 3]) ;;=> {:foo \"bar\"}"
+     "(meta ^\"foo\" [1 2 3]) ;;=> {:tag \"foo\"}"
+     "(def foo 1)"
+     "(meta ^foo [1 2 3]) ;;=> {:tag 1}"
+     "(meta ^:foo ^\"foo\" [1 2 3]) ;;=> {:foo true, :tag \"foo\"}"]],
    :description-html
    "<p>Attaches metadata to the following form.  Metadata can only be attached to a symbol or collection.</p><p>Metadata will assume the following transformations depending on its type:</p><ul><li>keyword <code>&#94;:foo</code> => <code>&#94;{:foo true}</code></li><li>string <code>&#94;&quot;foo&quot;</code> => <code>&#94;{:tag &quot;foo&quot;}</code></li><li>symbol <code>&#94;foo</code> => <code>&#94;{:tag &lt;value of foo&gt;}</code></li></ul>",
    :examples
@@ -11618,11 +11638,11 @@
    :type "convention",
    :related ["syntax/impure"],
    :examples-strings
-   [[["(defn divisible? [n factor]"
-      "  (zero? (mod n factor)))"
-      "(divisible? 15 3) ;;=> true"
-      "(divisible? 15 2) ;;=> false"
-      "(filter #(divisible? 15 %) (range 15)) ;;=> (1 3 5)"]]],
+   [["(defn divisible? [n factor]"
+     "  (zero? (mod n factor)))"
+     "(divisible? 15 3) ;;=> true"
+     "(divisible? 15 2) ;;=> false"
+     "(filter #(divisible? 15 %) (range 15)) ;;=> (1 3 5)"]],
    :description-html
    "<p>A naming convention for predicate functions (unenforced).</p><p>A predicate function is one that returns <code>true</code> or <code>false</code>, and is presumably pure (not having any side-effects on state).</p><p>Some predicate functions which use this convention:</p><ul><li>[doc:cljs.core/even?]</li><li>[doc:cljs.core/empty?]</li><li>[doc:cljs.core/contains?]</li><li>[doc:cljs.core/nil?]</li></ul><p>It is sometimes used to name boolean values as well, not just predicate functions.</p>",
    :examples
@@ -11794,11 +11814,12 @@
    :type "tagged literal",
    :related ["syntax/list" "syntax/vector" "syntax/map" "syntax/set"],
    :examples-strings
-   [[["#queue [] ;;=> #queue []" "#queue [1 2 3] ;;=> #queue [1 2 3]"]
-     ["(def q #queue [1 2 3]) ;;=> #queue [1 2 3]"
-      "(conj q 4) ;;=> #queue [1 2 3 4]"
-      "(pop q) ;;=> #queue [2 3]"
-      "(peek q) ;;=> 1"]]],
+   [["#queue [] ;;=> #queue []"
+     "#queue [1 2 3] ;;=> #queue [1 2 3]"
+     "(def q #queue [1 2 3]) ;;=> #queue [1 2 3]"
+     "(conj q 4) ;;=> #queue [1 2 3 4]"
+     "(pop q) ;;=> #queue [2 3]"
+     "(peek q) ;;=> 1"]],
    :description-html
    "<p>Create a persistent queue. The form following <code>#queue</code> must be a vector.</p><p>Queues are the only core collection type that requires a tagged literal to create, while the other collections have built-in delimiters <code>&#40;&#41;</code> <code>&#91;&#93;</code> <code>{}</code> <code>#{}</code>.</p><p>See [doc:cljs.core/PersistentQueue] for data structure details.</p>",
    :examples
@@ -11867,8 +11888,8 @@
    :related
    ["cljs.core/bit-shift-left" "cljs.core/unsigned-bit-shift-right"],
    :examples-strings
-   [[["(bit-shift-right 2r1010 1) ;;=> 5 ;; 5 = 2r0101"]
-     ["(bit-shift-right 10 1) ;;=> 5"]]],
+   [["(bit-shift-right 2r1010 1) ;;=> 5 ;; 5 = 2r0101"
+     "(bit-shift-right 10 1) ;;=> 5"]],
    :description-html
    "<p>Bitwise shift right <code>n</code> bits.  Same as <code>x &gt;&gt; n</code> in JavaScript.</p>",
    :examples
@@ -11888,16 +11909,16 @@
    :type "macro",
    :related ["cljs.core/->"],
    :examples-strings
-   [[["(->> (range)"
-      "     (map #(* % %))"
-      "     (filter even?)"
-      "     (take 10)"
-      "     (reduce +)) ;;=> 1140"]
-     ["(reduce +"
-      "  (take 10"
-      "    (filter even?"
-      "      (map #(* % %)"
-      "        (range))))) ;;=> 1140"]]],
+   [["(->> (range)"
+     "     (map #(* % %))"
+     "     (filter even?)"
+     "     (take 10)"
+     "     (reduce +)) ;;=> 1140"
+     "(reduce +"
+     "  (take 10"
+     "    (filter even?"
+     "      (map #(* % %)"
+     "        (range))))) ;;=> 1140"]],
    :description-html
    "<p>The thread-last macro \"threads\" an expression through several forms as the last item in a list.</p><p>Inserts <code>x</code> as the last item in the first form, making a list of it if it is not a list already. If there are more forms, inserts the first form as the last item in second form, etc.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(->> x   (a b c)   d   (x y z))</pre></td><pre><code>  &lt;td&gt;&lt;pre&gt; \n</code></pre>(x y z (d (a b c x)))</pre></td></tr></tbody></table></p>",
    :examples
@@ -12038,8 +12059,8 @@
    :signature ["[array]" "[array i]"],
    :type "function",
    :examples-strings
-   [[["(array-seq #js [1 2 3]) ;;=> (1 2 3)"
-      "(array-seq #js [1 2 3] 1) ;;=> (2 3)"]]],
+   [["(array-seq #js [1 2 3]) ;;=> (1 2 3)"
+     "(array-seq #js [1 2 3] 1) ;;=> (2 3)"]],
    :description-html
    "<p>Creates a <code>seq</code> from a JavaScript array, starting at index <code>i</code> if given.</p>",
    :examples
@@ -12083,8 +12104,8 @@
    :related
    ["cljs.core/assoc" "cljs.core/hash-map" "cljs.core/sorted-map"],
    :examples-strings
-   [[["(array-map :a 10) ;;=> {:a 10}"
-      "(array-map :a 10 :b 20) ;;=> {:a 10 :b 20}"]]],
+   [["(array-map :a 10) ;;=> {:a 10}"
+     "(array-map :a 10 :b 20) ;;=> {:a 10 :b 20}"]],
    :description-html
    "<p>Returns a new array map (a map implemented with arrays) with the supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
    :examples
@@ -12116,12 +12137,12 @@
    :type "function",
    :related ["cljs.core/remove-watch"],
    :examples-strings
-   [[["(def a (atom {}))"
-      "(add-watch a :logger"
-      "  (fn [_key _atom old-state new-state]"
-      "    (println \"old:\" old-state)"
-      "    (println \"new:\" new-state)))"
-      "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"]]],
+   [["(def a (atom {}))"
+     "(add-watch a :logger"
+     "  (fn [_key _atom old-state new-state]"
+     "    (println \"old:\" old-state)"
+     "    (println \"new:\" new-state)))"
+     "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"]],
    :description-html
    "<p>Adds a watch function <code>f</code> to atom <code>a</code> that will execute when the value of <code>a</code> changes.</p><p>The watch function takes 4 arguments: a key, the atom, its old state, and its new state.</p><p><code>key</code> should be a keyword and can be used with <code>remove-watch</code> to remove the watch function.</p>",
    :examples
@@ -12215,11 +12236,11 @@
    :type "tagged literal",
    :related ["cljs.core/uuid" "cljs.core/random-uuid"],
    :examples-strings
-   [[["#uuid \"00000000-0000-0000-0000-000000000000\" ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
-      "#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
-      "#uuid \"asdf\" ;; clojure.lang.ExceptionInfo: Invalid UUID string: asdf"]
-     ["(def foo #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")"
-      "(str foo) ;;=> \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]]],
+   [["#uuid \"00000000-0000-0000-0000-000000000000\" ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
+     "#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
+     "#uuid \"asdf\" ;; clojure.lang.ExceptionInfo: Invalid UUID string: asdf"
+     "(def foo #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")"
+     "(str foo) ;;=> \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]],
    :description-html
    "<p>Creates a universally unique identifier (UUID), using the [doc:cljs.core/UUID] type.</p><p>The format is <code>#uuid &quot;8-4-4-4-12&quot;</code>, where the numbers represent the number of hex digits.</p><p>Representing UUIDs with <code>#uuid</code> rather than just a plain string has the following benefits:</p><ul><li>the reader will throw an exception on malformed UUIDs</li><li>its UUID type is preserved and shown when serialized to [edn].</li></ul><p>To create a UUID from an evaluated expression, use [doc:cljs.core/uuid].</p><p>[edn]:https://github.com/edn-format/edn</p>",
    :examples
@@ -12281,8 +12302,8 @@
     "cljs.core/sorted-set"
     "cljs.core/sorted-set-by"],
    :examples-strings
-   [[["#{1 2 3} ;;=> #{1 2 3}"]
-     ["#{1 1 2 3} ;; Error: Duplicate key: 1"]]],
+   [["#{1 2 3} ;;=> #{1 2 3}"
+     "#{1 1 2 3} ;; Error: Duplicate key: 1"]],
    :description-html
    "<p>Create a literal set.  Values must be unique.</p>",
    :examples
@@ -12322,17 +12343,17 @@
    :type "var",
    :related ["cljs.core/*1" "cljs.core/*2" "cljs.core/*e"],
    :examples-strings
-   [[["(+ 1 2 3 4) ;;=> 10"
-      "(+ 4 8) ;;=> 12"
-      "(+ 1 2) ;;=> 3"
-      "*3 ;;=> 10"
-      "(inc *3) ;;=> 11"]
-     [":first ;;=> :first"
-      ":second ;;=> :second"
-      ":third ;;=> :third"
-      "*3 ;;=> :first"
-      "*2 ;;=> :second"
-      "*1 ;;=> :third"]]],
+   [["(+ 1 2 3 4) ;;=> 10"
+     "(+ 4 8) ;;=> 12"
+     "(+ 1 2) ;;=> 3"
+     "*3 ;;=> 10"
+     "(inc *3) ;;=> 11"
+     ":first ;;=> :first"
+     ":second ;;=> :second"
+     ":third ;;=> :third"
+     "*3 ;;=> :first"
+     "*2 ;;=> :second"
+     "*1 ;;=> :third"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Holds the result of the third to last expression.</p>",
    :examples
@@ -12659,8 +12680,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-clear"],
    :examples-strings
-   [[["(bit-set 2r1100 1) ;;=> 14 ;; 14 = 2r1110"]
-     ["(bit-set 12 1) ;;=> 14"]]],
+   [["(bit-set 2r1100 1) ;;=> 14 ;; 14 = 2r1110"
+     "(bit-set 12 1) ;;=> 14"]],
    :description-html
    "<p>Set bit at index <code>n</code>.  Same as <code>x | &#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
    :examples
@@ -12679,9 +12700,9 @@
    :type "syntax",
    :related ["syntax/syntax-quote" "syntax/unquote-splicing"],
    :examples-strings
-   [[["(def foo 1)"
-      "`~foo ;;=> 1"
-      "`(def foo ~foo) ;;=> (def cljs.user/foo 1)"]]],
+   [["(def foo 1)"
+     "`~foo ;;=> 1"
+     "`(def foo ~foo) ;;=> (def cljs.user/foo 1)"]],
    :description-html
    "<p>(Only intended for use in Clojure macros, which can be used from but not written in ClojureScript.)</p><p>Intended for use inside a [doc:syntax/syntax-quote].</p><p>Forces evaluation of the following form.</p>",
    :examples
@@ -12738,12 +12759,12 @@
     "cljs.core/defmacro"
     "cljs.core/defmulti"],
    :examples-strings
-   [[["(def a)"
-      "a ;;=> nil"
-      "(def b 42)"
-      "b ;;=> 42"
-      "(def c \"an optional docstring\" 42)"
-      "c ;;=> 42"]]],
+   [["(def a)"
+     "a ;;=> nil"
+     "(def b 42)"
+     "b ;;=> 42"
+     "(def c \"an optional docstring\" 42)"
+     "c ;;=> 42"]],
    :description-html
    "<p>Creates a global variable with the name of <code>symbol</code> and a namespace of the current namespace.</p><p>If <code>init</code> is supplied, it is evaluated and the result is assigned to <code>symbol</code>.</p><p><code>doc-string</code> is an optional documentation string.</p><p><code>def</code> is one of ClojureScript's <a href='http://clojure.org/special_forms'>special forms</a> and is used by many macros to define common elements (ie: <code>defn</code>, <code>defmacro</code>, etc).</p><p>Supported metadata:</p><ul><li><code>&#94;:private boolean</code> - make non-accessible from other namespaces</li><li><code>&#94;:dynamic boolean</code> - make [dynamically bindable][doc:cljs.core/binding] (usually named with [doc:syntax/earmuffs])</li><li><code>&#94;:const boolean</code> - prevents redef and allows it to be used in [doc:cljs.core/case].</li><li><code>&#94;:jsdoc &#91;&quot;&quot;&#93;</code> - vector of JSDoc Tags for [Google Closure][closure-jsdoc] or [standard][other-jsdoc].</li><li><code>&#94;:test &#40;fn &#91;&#93; &#40;assert ...&#41;&#41;</code> - allows function to be tested with [doc:cljs.core/test].</li><li><code>&#94;:doc &quot;&quot;</code> - doc-string (prefer the use of the <code>&#40;def symbol doc-string init&#41;</code>)</li></ul><p>[closure-jsdoc]:https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en#tags [other-jsdoc]:http://usejsdoc.org/#block-tags</p><p>Compiler will also add metadata:</p><ul><li><code>:ns</code></li><li><code>:name</code></li><li><code>:file</code></li><li><code>:line</code>, <code>:end-line</code></li><li><code>:column</code>, <code>:end-column</code></li><li><code>:source</code></li><li><code>:arglists</code></li></ul>",
    :examples
@@ -12812,13 +12833,13 @@
    :related
    ["cljs.core/seq?" "cljs.core/list?" "cljs.core/sequential?"],
    :examples-strings
-   [[["(coll? [1 2 3]) ;;=> true"
-      "(coll? '(1 2 3)) ;;=> true"
-      "(coll? #{1 2 3}) ;;=> true"
-      "(coll? {:foo 1 :bar 2}) ;;=> true"]
-     ["(coll? \"foo\") ;;=> false"
-      "(coll? 123) ;;=> false"
-      "(coll? nil) ;;=> false"]]],
+   [["(coll? [1 2 3]) ;;=> true"
+     "(coll? '(1 2 3)) ;;=> true"
+     "(coll? #{1 2 3}) ;;=> true"
+     "(coll? {:foo 1 :bar 2}) ;;=> true"
+     "(coll? \"foo\") ;;=> false"
+     "(coll? 123) ;;=> false"
+     "(coll? nil) ;;=> false"]],
    :description-html
    "<p>Returns true if <code>x</code> is a collection, false otherwise.</p><p>Lists, maps, sets, and vectors are collections.</p>",
    :examples
@@ -12878,8 +12899,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-shift-right"],
    :examples-strings
-   [[["(bit-shift-left 2r0101 1) ;;=> 10 ;; 10 = 2r1010"]
-     ["(bit-shift-left 5 1) ;;=> 10"]]],
+   [["(bit-shift-left 2r0101 1) ;;=> 10 ;; 10 = 2r1010"
+     "(bit-shift-left 5 1) ;;=> 10"]],
    :description-html
    "<p>Bitwise shift left <code>n</code> bits.  Same as <code>x &lt;&lt; n</code> in JavaScript.</p>",
    :examples
@@ -12898,16 +12919,16 @@
    :type "var",
    :related ["cljs.core/*1" "cljs.core/*3" "cljs.core/*e"],
    :examples-strings
-   [[["(+ 1 2 3 4) ;;=> 10"
-      "(+ 4 8) ;;=> 12"
-      "*2 ;;=> 10"
-      "(inc *2) ;;=> 11"]
-     [":first ;;=> :first"
-      ":second ;;=> :second"
-      ":third ;;=> :third"
-      "*3 ;;=> :first"
-      "*2 ;;=> :second"
-      "*1 ;;=> :third"]]],
+   [["(+ 1 2 3 4) ;;=> 10"
+     "(+ 4 8) ;;=> 12"
+     "*2 ;;=> 10"
+     "(inc *2) ;;=> 11"
+     ":first ;;=> :first"
+     ":second ;;=> :second"
+     ":third ;;=> :third"
+     "*3 ;;=> :first"
+     "*2 ;;=> :second"
+     "*1 ;;=> :third"]],
    :description-html
    "<p>Only usable from a REPL.</p><p>Holds the result of the second to last expression.</p>",
    :examples
@@ -12970,10 +12991,10 @@
    :type "binding",
    :related ["syntax/destructure-map"],
    :examples-strings
-   [[["(defn foo [[a b] c]" "  (+ a b c))" "(foo [1 2] 3) ;;=> 6"]]
-    [["(let [ [[a b] c]"
-      "       [[1 2] 3] ]"
-      "  (println a b c)) ;; 1 2 3"]]],
+   [["(defn foo [[a b] c]" "  (+ a b c))" "(foo [1 2] 3) ;;=> 6"]
+    ["(let [ [[a b] c]"
+     "       [[1 2] 3] ]"
+     "  (println a b c)) ;; 1 2 3"]],
    :description-html
    "<p>A helpful shorthand for destructuring a sequence into multiple names.</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c&#93;   ;; &lt;-- destructure vector\n       &#91;1 2 3&#93; &#93;\n  &#40;println a b c&#41;&#41;\n;; 1 2 3\n</code></pre><p>Use <code>&amp; foo</code> to name the rest of the items in the sequence:</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c &amp; d&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  &#40;println a b c d&#41;&#41;\n;; 1 2 3 &#40;4 5&#41;\n</code></pre><p>Use <code>:as foo</code> to name the original value:</p><pre><code class=\"clj\">&#40;let &#91; &#91;a b c &amp; d :as whole&#93;\n       &#91;1 2 3 4 5&#93; &#93;\n  whole&#41;\n;;=&gt; &#91;1 2 3 4 5&#93;\n</code></pre><p>Use the special destructure vector in place of any local name binding in the following forms:</p><ul><li><code>&#40;let &#91;...&#93;&#41;</code></li><li><code>&#40;fn &#91;...&#93;&#41;</code></li><li><code>&#40;loop &#91;...&#93;&#41;</code></li></ul><p>Destructure vectors can be nested, even in place of names in [destructure maps][doc:syntax/destructure-map].</p>",
    :examples
@@ -12995,7 +13016,7 @@
    :type "macro",
    :related ["cljs.repl/find-doc"],
    :examples-strings
-   [[["(apropos \"some\") ;;=> (cljs.core/if-some ;;    cljs.core/some ;;    cljs.core/some-> ;;    cljs.core/some->> ;;    cljs.core/some-fn ;;    cljs.core/some? ;;    cljs.core/when-some)"]]],
+   [["(apropos \"some\") ;;=> (cljs.core/if-some ;;    cljs.core/some ;;    cljs.core/some-> ;;    cljs.core/some->> ;;    cljs.core/some-fn ;;    cljs.core/some? ;;    cljs.core/when-some)"]],
    :description-html
    "<p>Given a regular expression or stringable thing, return a seq of all public definitions in all currently-loaded namespaces that match the <code>str-or-pattern</code>.</p>",
    :examples
@@ -13039,7 +13060,7 @@
    :description-html
    "<p><code>nil</code> is a representation of nothing.</p><p>It is common for operations to safely handle <code>nil</code> without causing exceptions.</p><p>Expressions evaluate to <code>nil</code> if there is no value to return.</p>",
    :examples-strings
-   [[["nil ;;=> nil"] ["(:foo {}) ;;=> nil"] ["(:foo nil) ;;=> nil"]]],
+   [["nil ;;=> nil" "(:foo {}) ;;=> nil" "(:foo nil) ;;=> nil"]],
    :examples-htmls
    ["<pre><code class=\"clj\">nil\n;;=&gt; nil\n</code></pre><p><code>nil</code> can sometimes mean \"not found\":</p><pre><code class=\"clj\">&#40;:foo {}&#41;\n;;=&gt; nil\n</code></pre><p><code>nil</code> can also mean that the operation didn't make sense:</p><pre><code class=\"clj\">&#40;:foo nil&#41;\n;;=&gt; nil\n</code></pre>"]},
   "nnext"
@@ -13131,8 +13152,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-flip"],
    :examples-strings
-   [[["(bit-clear 2r1111 2) ;;=> 11 ;; 11 = 2r1011"]
-     ["(bit-clear 15 2) ;;=> 11"]]],
+   [["(bit-clear 2r1111 2) ;;=> 11 ;; 11 = 2r1011"
+     "(bit-clear 15 2) ;;=> 11"]],
    :description-html
    "<p>Clear bit at index <code>n</code>.  Same as <code>x &amp; &#126;&#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
    :examples
@@ -13173,10 +13194,11 @@
    :type "function",
    :related ["cljs.core/name"],
    :examples-strings
-   [[["(namespace :foo/bar) ;;=> \"foo\""
-      "(namespace 'foo/bar) ;;=> \"foo\""]
-     ["(namespace :foo) ;;=> nil" "(namespace 'foo) ;;=> nil"]
-     ["(name \"foo/bar\") ;;=> nil"]]],
+   [["(namespace :foo/bar) ;;=> \"foo\""
+     "(namespace 'foo/bar) ;;=> \"foo\""
+     "(namespace :foo) ;;=> nil"
+     "(namespace 'foo) ;;=> nil"
+     "(name \"foo/bar\") ;;=> nil"]],
    :description-html
    "<p>Returns the namespace string of a possibly namespace-qualified keyword or symbol.</p><p>Returns [doc:syntax/nil] if not present.</p>",
    :examples
@@ -13225,12 +13247,12 @@
    :signature ["[& body]"],
    :type "macro",
    :examples-strings
-   [[["(comment 123) ;;=> nil"
-      "(comment"
-      "  (foo 1 2 3)"
-      "  (bar \"hello\")) ;;=> nil"]
-     ["(comment [1 2 3]]) ;; Error: Unmatched delimiter ]"
-      "(comment a : b) ;; Error: Invalid token :"]]],
+   [["(comment 123) ;;=> nil"
+     "(comment"
+     "  (foo 1 2 3)"
+     "  (bar \"hello\")) ;;=> nil"
+     "(comment [1 2 3]]) ;; Error: Unmatched delimiter ]"
+     "(comment a : b) ;; Error: Invalid token :"]],
    :description-html
    "<p>Ignores all <code>body</code> forms (i.e. \"commenting out\"). Returns nil.</p><p>This is often used near the bottom of a file to hold expressions that test different functions during development.  Specific expressions within the <code>comment</code> can then be selected and evaluated from some editors.</p><p>You can also use <code>;</code> to \"comment out\" code until the end of a line.</p>",
    :examples
@@ -13436,10 +13458,10 @@
    :type "function",
    :related ["cljs.core/next"],
    :examples-strings
-   [[["(nfirst [[1 2 3] [4 5]]) ;;=> (2 3)"
-      "(nfirst [[1 2] [3 4]]) ;;=> (2)"
-      "(nfirst [[1] [2 3]]) ;;=> nil"
-      "(nfirst [[] [1 2]]) ;;=> nil"]]],
+   [["(nfirst [[1 2 3] [4 5]]) ;;=> (2 3)"
+     "(nfirst [[1 2] [3 4]]) ;;=> (2)"
+     "(nfirst [[1] [2 3]]) ;;=> nil"
+     "(nfirst [[] [1 2]]) ;;=> nil"]],
    :description-html
    "<p>Same as <code>&#40;next &#40;first coll&#41;&#41;</code>.</p>",
    :examples
@@ -13519,10 +13541,10 @@
    :related
    ["cljs.core/assoc" "cljs.core/update-in" "cljs.core/get-in"],
    :examples-strings
-   [[["(def users [{:name \"James\" :age 26}"
-      "            {:name \"John\" :age 43}])"]
-     ["(assoc-in users [1 :age] 44) ;;=> [{:name \"James\", :age 26} ;;    {:name \"John\", :age 44}]"]
-     ["(assoc-in users [1 :password] \"nhoJ\") ;;=> [{:name \"James\", :age 26} ;;    {:password \"nhoJ\", :name \"John\", :age 43}]"]]],
+   [["(def users [{:name \"James\" :age 26}"
+     "            {:name \"John\" :age 43}])"
+     "(assoc-in users [1 :age] 44) ;;=> [{:name \"James\", :age 26} ;;    {:name \"John\", :age 44}]"
+     "(assoc-in users [1 :password] \"nhoJ\") ;;=> [{:name \"James\", :age 26} ;;    {:password \"nhoJ\", :name \"John\", :age 43}]"]],
    :description-html
    "<p>Associates a value in a nested associative structure, where <code>ks</code> is a sequence of keys and <code>v</code> is the new value. Returns a new nested structure.</p><p>If any levels do not exist, hash-maps will be created.</p>",
    :examples
@@ -13563,14 +13585,14 @@
    :related
    ["cljs.core/assoc-in" "cljs.core/dissoc" "cljs.core/merge"],
    :examples-strings
-   [[["(def my-map {:foo 1})"
-      "(assoc my-map :foo 2) ;;=> {:foo 2}"
-      "(assoc my-map :bar 2) ;;=> {:foo 1 :bar 2}"
-      "(assoc my-map :a 3 :b 4 :c 5 :d 6) ;;=> {:foo 1 :a 3 :b 4 :c 5 :d 6} ;; you must pass a value for every key"
-      "(assoc my-map :foo) ;;=> WARNING: Wrong number of args (2) passed to cljs.core/assoc"]]
-    [["(def my-vec [1 2 3])"
-      "(assoc my-vec 0 \"foo\") ;;=> [\"foo\" 2 3]"
-      "(assoc my-vec 3 \"foo\") ;;=> Error: Index 3 out of bounds  [0,0]"]]],
+   [["(def my-map {:foo 1})"
+     "(assoc my-map :foo 2) ;;=> {:foo 2}"
+     "(assoc my-map :bar 2) ;;=> {:foo 1 :bar 2}"
+     "(assoc my-map :a 3 :b 4 :c 5 :d 6) ;;=> {:foo 1 :a 3 :b 4 :c 5 :d 6} ;; you must pass a value for every key"
+     "(assoc my-map :foo) ;;=> WARNING: Wrong number of args (2) passed to cljs.core/assoc"]
+    ["(def my-vec [1 2 3])"
+     "(assoc my-vec 0 \"foo\") ;;=> [\"foo\" 2 3]"
+     "(assoc my-vec 3 \"foo\") ;;=> Error: Index 3 out of bounds  [0,0]"]],
    :description-html
    "<p>assoc(iate)</p><p>When applied to a map, returns a new map that contains the mapping of key(s) to val(s).</p><p>Has no effect on the map type (hashed/sorted).</p><p>When applied to a vector, returns a new vector that contains value <code>v</code> at index <code>k</code>.</p>",
    :examples
@@ -13820,7 +13842,7 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/=" "cljs.core/identical?"],
-   :examples-strings [[["(== 1 1) ;;=> true" "(== 1 2) ;;=> false"]]],
+   :examples-strings [["(== 1 1) ;;=> true" "(== 1 2) ;;=> false"]],
    :description-html
    "<p>This is an equality check for numbers of different types that was carried over from Clojure, to allow compatibility when converting code to ClojureScript.</p><p>Since there is only a single number type in JavaScript, 64-bit floating point, there is no reason to use the <code>==</code> operator in ClojureScript.</p><p>Behavior on non-number arguments is undefined.</p>",
    :examples
@@ -13896,13 +13918,13 @@
    :type "function",
    :related ["cljs.core/distinct"],
    :examples-strings
-   [[["(distinct? 1) ;;=> true"
-      "(distinct? 1 2) ;;=> true"
-      "(distinct? 1 1) ;;=> false"
-      "(distinct? 1 2 3) ;;=> true"
-      "(distinct? 1 2 1) ;;=> false"]
-     ["(apply distinct? [1 2 3]) ;;=> true"
-      "(apply distinct? [1 2 1]) ;;=> false"]]],
+   [["(distinct? 1) ;;=> true"
+     "(distinct? 1 2) ;;=> true"
+     "(distinct? 1 1) ;;=> false"
+     "(distinct? 1 2 3) ;;=> true"
+     "(distinct? 1 2 1) ;;=> false"
+     "(apply distinct? [1 2 3]) ;;=> true"
+     "(apply distinct? [1 2 1]) ;;=> false"]],
    :description-html
    "<p>Returns true if no two of the arguments are <code>=</code></p>",
    :examples
@@ -13987,11 +14009,11 @@
    :type "function/macro",
    :related ["cljs.core/*" "cljs.core/-"],
    :examples-strings
-   [[["(+) ;;=> 0"
-      "(+ 1) ;;=> 1"
-      "(+ -10) ;;=> -10"
-      "(+ 1 2) ;;=> 3"
-      "(+ 1 2 3) ;;=> 6"]]],
+   [["(+) ;;=> 0"
+     "(+ 1) ;;=> 1"
+     "(+ -10) ;;=> -10"
+     "(+ 1 2) ;;=> 3"
+     "(+ 1 2 3) ;;=> 6"]],
    :description-html
    "<p>Returns the sum of nums.</p><p><code>&#40;+&#41;</code> returns 0.</p>",
    :examples
@@ -14095,11 +14117,11 @@
    :related
    ["cljs.core/aclone" "cljs.core/make-array" "cljs.core/clj->js"],
    :examples-strings
-   [[["(array 1 2 3) ;;=> #js [1 2 3]"
-      "(apply array [1 2 3]) ;;=> #js [1 2 3]"
-      "#js [1 2 3] ;;=> #js [1 2 3]"]]
-    [["(array 1 2 (array 3 4)) ;;=> #js [1 2 #js [3 4]]"
-      "(clj->js [1 2 [3 4]]) ;;=> #js [1 2 #js [3 4]]"]]],
+   [["(array 1 2 3) ;;=> #js [1 2 3]"
+     "(apply array [1 2 3]) ;;=> #js [1 2 3]"
+     "#js [1 2 3] ;;=> #js [1 2 3]"]
+    ["(array 1 2 (array 3 4)) ;;=> #js [1 2 #js [3 4]]"
+     "(clj->js [1 2 [3 4]]) ;;=> #js [1 2 #js [3 4]]"]],
    :description-html
    "<p>Creates a JavaScript array containing <code>args</code>.</p><p>The tagged literal <code>#js &#91;1 2 3&#93;</code> is equivalent to <code>&#40;array 1 2 3&#41;</code></p>",
    :examples
@@ -14144,11 +14166,11 @@
     "cljs.core/cond->"
     "cljs.core/cond"],
    :examples-strings
-   [[["(def filter? true)"
-      "(def sum? true)"
-      "(cond->> [1 2 3 4]"
-      "  filter? (filter even?)"
-      "  sum?    (reduce +)) ;;=> 6"]]],
+   [["(def filter? true)"
+     "(def sum? true)"
+     "(cond->> [1 2 3 4]"
+     "  filter? (filter even?)"
+     "  sum?    (reduce +)) ;;=> 6"]],
    :description-html
    "<p>Takes an expression and a set of test/form pairs. Threads <code>expr</code> (via <code>-&gt;&gt;</code>) through each form for which the corresponding test expression is true.</p><p>Note that, unlike <code>cond</code> branching, <code>cond-&gt;&gt;</code> threading does not short circuit after the first true test expression.</p>",
    :examples
@@ -14351,13 +14373,13 @@
    :type "syntax",
    :related ["syntax/dispatch"],
    :examples-strings
-   [[["#js {:foo 1} ;;=> #js {:foo 1}"
-      "(def foo 1)"
-      "#js {:foo foo} ;;=> #js {:foo 1}"]
-     ["#queue [1 2 3] ;;=> #queue [1 2 3]"
-      "(conj #queue [1 2 3] 4) ;;=> #queue [1 2 3 4]"]
-     ["#inst \"2014-10-13\" ;;=> #inst \"2014-10-13T00:00:00.000-00:00\""]
-     ["#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]]],
+   [["#js {:foo 1} ;;=> #js {:foo 1}"
+     "(def foo 1)"
+     "#js {:foo foo} ;;=> #js {:foo 1}"
+     "#queue [1 2 3] ;;=> #queue [1 2 3]"
+     "(conj #queue [1 2 3] 4) ;;=> #queue [1 2 3 4]"
+     "#inst \"2014-10-13\" ;;=> #inst \"2014-10-13T00:00:00.000-00:00\""
+     "#uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\" ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""]],
    :description-html
    "<p>A tagged literal is a way to tag another core syntax literal to represent a single, new literal.</p><ul><li><code>#foo &#91;&#93;</code></li><li><code>#foo {}</code></li><li><code>#foo &quot;bar&quot;</code></li><li><code>#foo 123</code></li><li>...</li></ul><p>If a [symbol][doc:syntax/symbol] is prefixed by <code>#</code>, that symbol is considered a <b>tag</b> for the following form.  Together they represent a new value.  Real examples:</p><ul><li><code>#js {:foo 1}</code>, map -> JavaScript object</li><li><code>#inst &quot;2015-01-12&quot;</code> string -> Date</li></ul><p>In these examples, the values <code>{:foo 1}</code> and <code>&quot;2015-01-12&quot;</code> are read normally, but are further interpretted by their registered tag handlers to produce new values: a JavaScript object and Date, respectively.</p><p>These tagged literals are the \"extensible\" part of extensible data notation ([edn]), with ClojureScript being a superset of edn.</p><p>[edn]:https://github.com/edn-format/edn#tagged-elements</p><p>ClojureScript supports the following tagged literals:</p><ul><li>[doc:syntax/inst-literal]</li><li>[doc:syntax/uuid-literal]</li><li>[doc:syntax/js-literal]</li><li>[doc:syntax/queue-literal]</li></ul>",
    :examples
@@ -14394,7 +14416,7 @@
    :type "macro",
    :related ["cljs.repl/find-doc" "cljs.core/meta" "special/var"],
    :examples-strings
-   [[["(doc map) ;; Prints: ;;  ------------------------- ;;  cljs.core/map ;;  [f coll] ;;    Returns a lazy sequence consisting of the result of applying f to ;;    the set of first items of each coll, followed by applying f to the ;;    set of second items in each coll, until any one of the colls is ;;    exhausted.  Any remaining items in other colls are ignored. Function ;;    f should accept number-of-colls arguments. Returns a transducer when ;;    no collection is provided. ;; ;;=> nil"]]],
+   [["(doc map) ;; Prints: ;;  ------------------------- ;;  cljs.core/map ;;  [f coll] ;;    Returns a lazy sequence consisting of the result of applying f to ;;    the set of first items of each coll, followed by applying f to the ;;    set of second items in each coll, until any one of the colls is ;;    exhausted.  Any remaining items in other colls are ignored. Function ;;    f should accept number-of-colls arguments. Returns a transducer when ;;    no collection is provided. ;; ;;=> nil"]],
    :description-html
    "<p>Prints documentation for the var or special form with the name <code>name</code>.</p>",
    :examples
@@ -14468,9 +14490,9 @@
    :signature ["[expr]" "[expr message]"],
    :type "macro",
    :examples-strings
-   [[["(assert true) ;;=> nil"
-      "(assert false) ;;=> Uncaught Error: Assert failed: false"
-      "(assert (= 1 2) \"1 is not 2\") ;;=> Uncaught Error: Assert failed: 1 is not 2 ;;   (= 1 2)"]]],
+   [["(assert true) ;;=> nil"
+     "(assert false) ;;=> Uncaught Error: Assert failed: false"
+     "(assert (= 1 2) \"1 is not 2\") ;;=> Uncaught Error: Assert failed: 1 is not 2 ;;   (= 1 2)"]],
    :description-html
    "<p>Evaluates expression <code>expr</code> and throws an exception if it does not evaluate to logical true.  Exception will include <code>message</code> if given.</p><p>Returns <code>nil</code>.</p>",
    :examples
@@ -14786,7 +14808,7 @@
    :signature ["[coll]"],
    :type "function",
    :related ["cljs.core/first" "cljs.core/fnext" "cljs.core/nfirst"],
-   :examples-strings [[["(ffirst [[1 2] [3 4] [5 6]]) ;;=> 1"]]],
+   :examples-strings [["(ffirst [[1 2] [3 4] [5 6]]) ;;=> 1"]],
    :description-html
    "<p>Same as <code>&#40;first &#40;first coll&#41;&#41;</code>.</p>",
    :examples
@@ -14843,7 +14865,7 @@
     "cljs.core/take"
     "cljs.core/ffirst"],
    :examples-strings
-   [[["(first [1 2 3]) ;;=> 1" "(first []) ;;=> nil"]]],
+   [["(first [1 2 3]) ;;=> 1" "(first []) ;;=> nil"]],
    :description-html
    "<p>Returns the first item in <code>coll</code> and calls <code>seq</code> on its argument.</p><p>Returns nil when <code>coll</code> is nil.</p>",
    :examples
@@ -14950,15 +14972,15 @@
     "cljs.core/macroexpand"
     "cljs.core/macroexpand-1"],
    :examples-strings
-   [[[" ;; in macros.clj"
-      "(ns foo.macros) ;; expands to a runtime call"
-      "(defmacro str->int [s]"
-      "  `(js/parseInt s))"]
-     [" ;; in macros.cljc"
-      "(ns foo.macros) ;; expands to the result of the conversion"
-      "(defmacro str->int [s]"
-      "  #?(:clj  (Integer/parseInt s)"
-      "     :cljs (js/parseInt s)))"]]],
+   [[" ;; in macros.clj"
+     "(ns foo.macros) ;; expands to a runtime call"
+     "(defmacro str->int [s]"
+     "  `(js/parseInt s))"
+     " ;; in macros.cljc"
+     "(ns foo.macros) ;; expands to the result of the conversion"
+     "(defmacro str->int [s]"
+     "  #?(:clj  (Integer/parseInt s)"
+     "     :cljs (js/parseInt s)))"]],
    :description-html
    "<p>Defines a macro, which is essentially a function that runs at compile time. Macros can be used to define syntactic constructs which would require primitives or built-in support in other languages.</p><p>Using macros is as easy as using functions, but writing them is a little more difficult.  Also, creating macros is generally discouraged if you can accomplish the same goal with a function.</p><h2>Rules and Details</h2><p>There is a strict rule for when you can use <code>defmacro</code> -- you can only use it in what we call a <i>macro namespace</i>, effectively forcing you to separate your compile time and runtime code.</p><p>A side effect of this is that you cannot use <code>defmacro</code> from a REPL.  Sorry!</p><p>This strict rule is due to the nature of differing compile time environments for the optimized \"ClojureScript JVM\" compiler and the newer bootstrapped \"ClojureScript JS\" compiler.</p><p>In order to create macros that are portable between either compiler version, you must place macros in a <code>.cljc</code> file, but a <code>.clj</code> file is sufficient if no [reader conditionals][doc:syntax/cond] are needed.  Why would they be needed? Because ClojureScript macro namespaces may be handed off to Clojure for evaluation, depending on the compiler version:</p><p>| compiler version  | macro namespaces evaluated by | |-------------------|-------------------------------| | ClojureScript JVM | Clojure                       | | ClojureScript JS  | ClojureScript                 |</p><p>Please see the examples section below for a more concrete look.</p>",
    :examples
@@ -15037,10 +15059,10 @@
    :type "function/macro",
    :related ["cljs.core/>="],
    :examples-strings
-   [[["(> 1 2) ;;=> false"
-      "(> 2 1) ;;=> true"
-      "(> 2 2) ;;=> false"
-      "(> 6 5 4 3 2) ;;=> true"]]],
+   [["(> 1 2) ;;=> false"
+     "(> 2 1) ;;=> true"
+     "(> 2 2) ;;=> false"
+     "(> 6 5 4 3 2) ;;=> true"]],
    :description-html
    "<p>Returns true if each successive number argument is less than the previous one, false otherwise.</p>",
    :examples
@@ -15088,10 +15110,10 @@
    :type "function",
    :related ["cljs.core/ffirst" "cljs.core/second"],
    :examples-strings
-   [[["(fnext [1 2 3]) ;;=> 2"
-      "(fnext [1 2]) ;;=> 2"
-      "(fnext [1]) ;;=> nil"
-      "(fnext []) ;;=> nil"]]],
+   [["(fnext [1 2 3]) ;;=> 2"
+     "(fnext [1 2]) ;;=> 2"
+     "(fnext [1]) ;;=> nil"
+     "(fnext []) ;;=> nil"]],
    :description-html
    "<p>Same as <code>&#40;first &#40;next coll&#41;&#41;</code></p>",
    :examples
