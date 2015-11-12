@@ -4,6 +4,7 @@
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller]]
+            [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
             [cljs-browser-repl.gist :as gist]
@@ -193,7 +194,7 @@
                            :class "api-panel-popup-section-title"]
                           [md-icon-button
                            :md-icon-name "zmdi-info"
-                           :tooltip "See docs online"
+                           :tooltip "See online documentation"
                            :tooltip-position :right-center
                            :size :smaller
                            :style {:justify-content :center}
@@ -223,53 +224,67 @@
                             :href (utils/symbol->clojuredocs-url rel)
                             :target "_blank"])]]])
 
-(defn build-example-ui
-  "Builds the UI for a single example"
-  [example]
+(defn example-ui
+  "The (single) example, usually monospaced, html UI. Wants a map {:html ... :strings}."
+  [example-map]
+  {:pre [(:strings example-map) (:html example-map)]}
   [v-box
-   :size "none"
+   :size "1 0 auto"
    :gap "2px"
-   :children [[label :label (utils/html-string->hiccup (:html example)
-                                                       :style {:margin "0"})]
-              #_[:pre {:style {:margin "0"}}
-                 [:code example]]]])
+   :children [[label
+               :style {:width "100%"}
+               :label (utils/html-string->hiccup (:html example-map)
+                                                       :style {:margin "0"})]]])
 
+(defn example-number-icon
+  "From https://github.com/Day8/re-com/blob/master/src/re_com/buttons.cljs"
+  [index]
+  [:div {:class "noselect rc-circle-larger"}
+   [:i {:class (str "zmdi zmdi-hc-fw-rc zmdi-hc-2x " "zmdi-n-" (inc index) "-square")}]])
+
+(defn example-send-to-repl-button-label
+  "https://github.com/Day8/re-com/blob/master/src/re_demo/button.cljs#L80"
+  [example-index example-map]
+  [:span "Send to REPL"
+   [:img {:class "api-panel-button-send-repl zmdi-hc-fw-rc"
+          :src "styles/images/cljs.svg"
+          :alt "Load the example in the REPL"
+          :style {:padding-left "4px"
+                  :-moz-padding-start "4px"
+                  :-webkit-padding-start "4px"
+                  :width "28px"
+                  :height "28px"}}]])
 
 (defn example-panel
-  "Build the example panel, accepts a list of {:html ... :string ...}
-  maps."
-  [example-index example-string]
-  ;{:pre [(:string example-map) (:html example-map)]}
+  "UI for a single example. Wants a map {:html ... :strings}."
+  [example-index example-map]
+  {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
    :gap "2px"
    :justify :center
    :children [[h-box
                :size "1 1 auto"
-               :gap "2px"
-               :align :center
-               :children [[:i.material-icons (str "looks_" (if (< example-index 2)
-                                                             (utils/number->word (inc example-index)) ; looks_one, looks_two
-                                                             (inc example-index)))] ; looks_3, looks_4, ...
-                          ;; <img src="kiwi.svg" alt="Kiwi standing on oval">
-                          [v-box
-                           :size "none"
-                           :width "70%"
-                           :children [build-example-ui example-string]]
+               :justify :between
+               :align :baseline
+               :children [[box
+                           :size "0 1 auto"
+                           :child [example-number-icon example-index]]
+                          ;; problem here, see https://github.com/Day8/re-com/issues/76
                           [button
-                           :label [:img {:class "api-panel-button-send-repl"
-                                         :src "styles/images/cljs.svg"
-                                         :alt "Send to the REPL!"}]
-                           :tooltip "Load the example in the REPL"
-                           :tooltip-position :above-left
-                           :disabled? (not (app/console-created? :cljs-console))]]]]])
+                           :class "btn btn-default"
+                           :style (flex-child-style "1 0 auto")
+                           :label [example-send-to-repl-button-label example-index example-map]
+                           :disabled? (not (app/console-created? :cljs-console))]]]
+              [example-ui example-map]]])
 
 (defn build-examples-ui
-  "Builds the UI for the symbol's examples."
-  [examples]
+  "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
+  [examples-map]
   [v-box
    :size "0 1 auto"
-   :children [[gap :size "4px"]
+   :children [
+              [gap :size "4px"]
               [title
                :label "Examples"
                :level :level4
@@ -277,7 +292,7 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed example-panel examples)]]])
+               :children (map-indexed example-panel examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
@@ -289,10 +304,10 @@
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-         examples (flatten examples-strings)
-         popover-width  400
-         popover-height 400
-         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+        examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+        popover-width  400
+        popover-height 400
+        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
     [popover-content-wrapper
      :showing? showing?
      :position @popover-position
@@ -312,6 +327,7 @@
                        :size "1 1 auto"
                        :gap "8px"
                        :width (str popover-content-width)
+                       :style {:padding "4px"}
                        :children [(when (not-empty sign)
                                     [build-signatures-ui sign])
                                   (when (not-empty desc)
