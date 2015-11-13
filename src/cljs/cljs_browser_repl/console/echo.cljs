@@ -18,7 +18,7 @@
    (fn []
      (let [jqconsole (console/new-jqconsole "#echo-console"
                                             {:prompt-label "Let me echo it for you: "})]
-       (app/add-console! :echo-console jqconsole)
+       ;; (app/add-console! :echo-console jqconsole)
        (echo-prompt jqconsole)))))
 
 (defn echo-console-render []
