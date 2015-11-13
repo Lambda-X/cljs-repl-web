@@ -1,24 +1,20 @@
 (ns cljs-browser-repl.app
-  (:require [reagent.core :as reagent]))
+  (:require [reagent.core :as reagent]
+            [re-frame.core :refer [dispatch]]))
 
-(def initial-state {:consoles {}})
-
-(defonce state (reagent/atom initial-state))
+;; AR - we are going to use re-frame
+;; (defonce state (reagent/atom initial-state))
 
 (defn reset-state!
-  "Reset the app state."
+  "Reset the app state. Use this do"
   []
-  (reset! state initial-state))
-
-(defn add-console!
-  "Add a new console instance to the app state."
-  [key instance]
-  (swap! state assoc-in [:consoles (name key)] instance))
+  (dispatch [:reset-db]))
 
 (defn console
-  "Given a console key, returns its instance or nil if not found."
-  [key]
-  (get-in @state [:consoles (name key)]))
+  "Given a db and console key, returns its instance or nil if not
+  found."
+  [db k]
+  (get-in db [:consoles (name k)]))
 
 (def console-created? "Was the console created? Returns a truey or falsey value."
   console)
