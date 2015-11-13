@@ -338,61 +338,72 @@
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
-  (if-let [symbol (get-symbol-doc-map (str symbol))]
-    (let [showing? (reagent/atom false)
-          popover-position (reagent/atom :below-center)]
-      [popover-anchor-wrapper
-       :showing? showing?
-       ;; we initialize the position but it does not matter because we will
-       ;; recalculate it, but we have to specify an initial value
-       :position :below-center
-       ;; we use `:input` instead of `button` because button's `on-click` accepts
-       ;; a parametless function and we need the mouse click coordinates
-       :anchor [:input {:type "button"
-                        :class "btn btn-default"
-                        :value (:name symbol)
-                        :on-click #(do
-                                     (reset! popover-position
-                                             (utils/calculate-popover-position [(.-clientX %) (.-clientY %)]))
-                                     (reset! showing? true))}]
-       :popover [symbol-popover showing? popover-position symbol]])
-    [button
-     :label (str symbol)
-     :class "btn-default"
-     :disabled? true]))
+  [box
+   :size "0 1 auto"
+   :align :center
+   :class "api-panel-symbol-label-box"
+   :child (if-let [symbol (get-symbol-doc-map (str symbol))]
+            (let [showing? (reagent/atom false)
+                  popover-position (reagent/atom :below-center)]
+              [popover-anchor-wrapper
+               :showing? showing?
+               ;; we initialize the position but it does not matter because we will
+               ;; recalculate it, but we have to specify an initial value
+               :position :below-center
+               ;; we use `:input` instead of `button` because button's `on-click` accepts
+               ;; a parametless function and we need the mouse click coordinates
+               :anchor [:input {:type "button"
+                                :class "btn btn-default api-panel-symbol-button"
+                                :value (:name symbol)
+                                :on-click #(do
+                                             (reset! popover-position
+                                                     (utils/calculate-popover-position [(.-clientX %) (.-clientY %)]))
+                                             (reset! showing? true))}]
+               :popover [symbol-popover showing? popover-position symbol]])
+            [label
+             :label (str symbol)
+             :class "api-panel-symbol-button"
+             :style (flex-child-style "80 1 auto")])])
+
+(defn section-title-component
+  [section-title]
+  [box
+   :size "0 0 120px"
+   :min-width "120px"
+   :class "api-panel-topic-box"
+   :child [title
+           :label section-title
+           :level :level4
+           :class "api-panel-topic"]])
 
 (defn build-section-ui
   "Builds the UI for a section."
   [section]
   [v-box
    :size "1 1 auto"
-   :gap "10px"
+   :gap "4px"
    :children [[title
                :label (:title section)
                :level :level3
                :class "api-panel-section-title"]
               [h-box
                :size "0 1 auto"
-               :gap "10px"
+               :gap "4px"
                :children [[v-box
-                           :size "1 0 auto"
-                           :gap "2px"
-                           :children (for [topic (:topics section)]
-                                       [title
-                                        :label (:title topic)
-                                        :level :level4
-                                        :class "api-panel-topic"])]
-                          [v-box
                            :size "1 1 auto"
                            :gap "2px"
-                           :children [(for [topic (:topics section)]
-                                        [h-box
-                                         :size "none"
-                                         :gap "2px"
-                                         :style {:flex-flow "wrap"}
-                                         :class "wrap"
-                                         :children (for [symbol (:symbols topic)]
-                                                     [build-symbol-ui symbol])])]]]]]])
+                           :children (for [topic (:topics section)]
+                                       [h-box
+                                        :size "1 1 auto"
+                                        :gap "2px"
+                                        :children [[section-title-component (:title topic)]
+                                                   [h-box
+                                                    :size "1 1 auto"
+                                                    :gap "2px"
+                                                    :justify :start
+                                                    :style {:flex-flow "wrap"}
+                                                    :children (for [symbol (:symbols topic)]
+                                                                [build-symbol-ui symbol])]]])]]]]])
 
 (defn build-api-panel-ui
   "Builds the UI for the api panel. Expects the numer of columns in which place the sections
@@ -404,7 +415,7 @@
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
     [h-box
-     :size "0 1 50%"
+     :size (str "0 1 " (quot 100 cols) "%")
      :gap "10px"
      :children (for [sections partitioned-sections]
                  [v-box
