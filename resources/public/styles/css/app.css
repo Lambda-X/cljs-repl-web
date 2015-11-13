@@ -82,10 +82,14 @@
 }
 
 .api-panel-button-send-repl {
-    width: 26px;
-    height:29px;
 }
 
 .api-panel-button-send-repl:hover {
     fill: #ace63c;
+}
+
+.popover-content code {
+  color: inherit;
+  background-color: inherit;
+  border: none;
 }
