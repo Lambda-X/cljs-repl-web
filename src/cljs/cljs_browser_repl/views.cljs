@@ -249,7 +249,8 @@
   [:span "Send to REPL"
    [:img {:class "api-panel-send-repl-img zmdi-hc-fw-rc"
           :src "styles/images/cljs.svg"
-          :alt "Load the example in the REPL"}]])
+          :alt "Load the example in the REPL"
+          :on-click #(dispatch [:send-to-console :cljs-console (:strings example-map)])}]])
 
 (defn example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
