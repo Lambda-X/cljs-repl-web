@@ -75,3 +75,14 @@
                       :style style}
                      attr)]
         (map (comp trim-strings unescape-html hickory/as-hiccup) (hickory/parse-fragment html-string))))
+
+;; AR - Not used anywhere atm
+(defn inject-attributes
+  "Walk a given Hiccup form and inject the attribute map, merging (with
+  precedence to attr-map) with the pre-existing one if any."
+  [attr-map hiccup]
+  (println hiccup)
+  ;; having fun
+  (assoc hiccup 1 (merge-with merge (when (map? (nth hiccup 1))
+                                      (nth hiccup 1))
+                              attr-map)))

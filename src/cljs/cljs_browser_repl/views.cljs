@@ -239,21 +239,16 @@
 (defn example-number-icon
   "From https://github.com/Day8/re-com/blob/master/src/re_com/buttons.cljs"
   [index]
-  [:div {:class "noselect rc-circle-larger"}
+  [:div {:class "api-panel-number-icon noselect"}
    [:i {:class (str "zmdi zmdi-hc-fw-rc zmdi-hc-2x " "zmdi-n-" (inc index) "-square")}]])
 
 (defn example-send-to-repl-button-label
   "https://github.com/Day8/re-com/blob/master/src/re_demo/button.cljs#L80"
   [example-index example-map]
   [:span "Send to REPL"
-   [:img {:class "api-panel-button-send-repl zmdi-hc-fw-rc"
+   [:img {:class "api-panel-send-repl-img zmdi-hc-fw-rc"
           :src "styles/images/cljs.svg"
-          :alt "Load the example in the REPL"
-          :style {:padding-left "4px"
-                  :-moz-padding-start "4px"
-                  :-webkit-padding-start "4px"
-                  :width "28px"
-                  :height "28px"}}]])
+          :alt "Load the example in the REPL"}]])
 
 (defn example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
@@ -261,21 +256,24 @@
   {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
-   :gap "2px"
+   :gap "4px"
    :justify :center
-   :children [[h-box
-               :size "1 1 auto"
-               :justify :between
-               :align :baseline
-               :children [[box
-                           :size "0 1 auto"
-                           :child [example-number-icon example-index]]
-                          ;; problem here, see https://github.com/Day8/re-com/issues/76
-                          [button
-                           :class "btn btn-default"
-                           :style (flex-child-style "1 0 auto")
-                           :label [example-send-to-repl-button-label example-index example-map]
-                           :disabled? (not (app/console-created? :cljs-console))]]]
+   ;; Why the box?
+   ;; See problem here, see https://github.com/Day8/re-com/issues/76
+   :children [[box
+               :class "api-panel-button-send-repl-box"
+               :size "1 0 auto"
+               :child [button
+                       :class "btn btn-default api-panel-button-send-repl"
+                       :style (merge (flex-child-style "1 0 auto")
+                                     {:width "100%"})
+                       :disabled? (not (app/console-created? :cljs-console))
+                       :label [h-box
+                               :size "1 1 auto"
+                               :justify :between
+                               :align :center
+                               :children [[example-number-icon example-index]
+                                          [example-send-to-repl-button-label example-index example-map]]]]]
               [example-ui example-map]]])
 
 (defn build-examples-ui
