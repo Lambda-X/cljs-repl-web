@@ -7,7 +7,15 @@
 ;;; We can easily add or remove sections/topics and they will be automatically
 ;;; displayed in the API panel.
 (def custom-api-map
-  {:sections [(Section. "Datatypes" ""
+  {:sections [(Section. "Useful Macros" ""
+                        [(Topic. "conditionals"
+                                 '(if if-let cond condp and or when when-let))
+                         (Topic. "nesting, chaining, and interop"
+                                 '(-> ->> doto .. .))
+                         (Topic. "defining things"
+                                 '(def defn fn let binding defmulti defmethod
+                                    deftype defrecord reify this-as))])
+              (Section. "Datatypes" ""
                         [(Topic. "maps " '({:key1 val1 :key2 val2}))
                          (Topic. "vectors" '([1 2 3] [:a :b :c]))
                          (Topic. "sets" '(#{:a :b :c 1 2 3}))
@@ -22,14 +30,6 @@
                                  '("(fn |NAME| [<ARGS*>] |CONSTRAINTS| <ACTIONS*>)"))
                          (Topic. "anonymous inline funcion"
                                  '("#(<ACTION> |% %2 %3 OR %&|)"))])
-              (Section. "Useful Macros" ""
-                        [(Topic. "conditionals"
-                                 '(if if-let cond condp and or when when-let))
-                         (Topic. "nesting, chaining, and interop"
-                                 '(-> ->> doto .. .))
-                         (Topic. "defining things"
-                                 '(def defn fn let binding defmulti defmethod
-                                   deftype defrecord reify this-as))])
               (Section. "Useful Functions" ""
                         [(Topic. "math"
                                  '(+ - * / quot rem mod inc dec max min))
