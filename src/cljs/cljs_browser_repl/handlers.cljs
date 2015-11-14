@@ -35,7 +35,8 @@
  :send-to-console
  (fn [db [_ console-key lines]]
    (let [console (app/console db console-key)
-         prompt  (replumb/get-prompt)]
+         prompt  (replumb/get-prompt)
+         lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
      (doseq [line lines]
        (console/write-old-prompt! console
                                   (str prompt (apply str (take-while (complement #{\;}) line))))
