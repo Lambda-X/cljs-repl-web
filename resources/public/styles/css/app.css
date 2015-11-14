@@ -72,16 +72,27 @@
     font-family: "Roboto";
 }
 
+/* problem here, see https://github.com/Day8/re-com/issues/76 */
+.api-panel-topic-box > div {
+    -webkit-flex: 0 1 auto !important;
+    flex: 0 1 auto !important;
+}
+
+/* problem here, see https://github.com/Day8/re-com/issues/76 */
+.api-panel-symbol-label-box > div {
+    -webkit-flex: 0 1 auto !important;
+    flex: 0 1 auto !important;
+}
+
 .api-panel-symbol-button {
-    font-family: monospace;
-    font-size: 0.5em;
+    font-family: monospace,monospace;
+    font-size:0.8125em;
+    margin-top: 2px;
 }
 
 .api-panel-signature {
     font-family: monospace;
 }
-
-
 
 /* problem here, see https://github.com/Day8/re-com/issues/76 */
 .api-panel-button-send-repl-box > div {
@@ -113,7 +124,7 @@
 }
 
 .popover-content code {
-  color: inherit;
-  background-color: inherit;
-  border: none;
+    color: inherit;
+    background-color: inherit;
+    border: none;
 }
