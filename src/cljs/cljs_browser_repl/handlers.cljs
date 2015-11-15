@@ -29,17 +29,19 @@
 (register-handler
  :add-console
  (fn [db [_ console-key console]]
-   (assoc-in db [:consoles (name console-key)] console)))
+   (assoc-in db [:consoles (name console-key) :console] console)))
 
 (register-handler
  :send-to-console
  (fn [db [_ console-key lines]]
    (let [console (app/console db console-key)
-         prompt  (replumb/get-prompt)
          lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
-     (doseq [line lines]
-       (console/write-old-prompt! console
-                                  (str prompt (apply str (take-while (complement #{\;}) line))))
-       (cljs/cljs-read-eval-print! console line)))
-   db))
+     (console/set-prompt-text! console (first lines))
+     (assoc-in db [:consoles (name console-key) :examples] (rest lines)))))
+
+(register-handler
+ :delete-first-example
+ (fn [db [_ console-key]]
+   (let [examples (app/examples db console-key)]
+     (assoc-in db [:consoles (name console-key) :examples] (rest examples)))))
 

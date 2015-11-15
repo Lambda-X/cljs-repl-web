@@ -97,3 +97,8 @@
   captured."
   [console]
   (.Focus console))
+
+(defn set-prompt-text!
+  "jqconsole wrapper, sets the current prompt."
+  [console text]
+  (.SetPromptText console text))

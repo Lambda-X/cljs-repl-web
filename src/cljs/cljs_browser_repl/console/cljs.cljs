@@ -1,5 +1,6 @@
 (ns cljs-browser-repl.console.cljs
   (:require [replumb.core :as replumb]
+            [re-frame.core :refer [subscribe dispatch]]
             [cljs-browser-repl.console :as console]
             [cljs-browser-repl.highlight :as highlight]))
 
@@ -29,7 +30,10 @@
     (.Prompt true (fn [input]
                     (cljs-read-eval-print! console input)
                     (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
-                    (cljs-console-prompt! console)))))
+                    (cljs-console-prompt! console))))
+  (when-let [example @(subscribe [:get-next-example :cljs-console])]
+    (console/set-prompt-text! console example)
+    (dispatch [:delete-first-example :cljs-console])))
 
 (defn cljs-console!
   "Create a console for ClojureScript."

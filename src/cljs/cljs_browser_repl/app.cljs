@@ -14,7 +14,13 @@
   "Given a db and console key, returns its instance or nil if not
   found."
   [db k]
-  (get-in db [:consoles (name k)]))
+  (get-in db [:consoles (name k) :console]))
+
+(defn examples
+  "Given a db and console key, returns its examples or nil if not
+  found."
+  [db k]
+  (get-in db [:consoles (name k) :examples]))
 
 (def console-created? "Was the console created? Returns a truey or falsey value."
   console)

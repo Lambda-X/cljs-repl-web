@@ -16,3 +16,9 @@
   :get-console
   (fn [db [_ console-key]]
     (reaction (app/console @db console-key))))
+
+(register-sub
+ :get-next-example
+  (fn [db [_ console-key]]
+    (reaction (first (app/examples @db console-key)))))
+
