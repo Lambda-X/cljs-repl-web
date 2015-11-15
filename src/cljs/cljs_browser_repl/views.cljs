@@ -115,7 +115,7 @@
         save-auth-data (reagent/atom nil)
         ok-fn #(do (reset! showing? false)
                    (let [{:keys [username password]} @auth-data
-                         text (console/dump-console! (subscribe [:get-console :cljs-console]))]
+                         text (console/dump-console! @(subscribe [:get-console :cljs-console]))]
                      (gist/create-gist username password text on-gist-created gist-error-handler)))
         cancel-fn #(do
                      (reset! auth-data @save-auth-data)
@@ -143,14 +143,14 @@
    :gap "4px"
    :children [[md-icon-button
                :md-icon-name "zmdi-delete"
-               :on-click #(cljs/cljs-reset-console-and-prompt! (subscribe [:get-console :cljs-console]))
+               :on-click #(cljs/cljs-reset-console-and-prompt! @(subscribe [:get-console :cljs-console]))
                :class "cljs-btn"
                :tooltip "Reset"
                :tooltip-position :left-center
                :disabled? (not @(subscribe [:console-created? :cljs-console]))]
               [md-icon-button
                :md-icon-name "zmdi-format-clear-all"
-               :on-click #(cljs/cljs-clear-console! (subscribe [:get-console :cljs-console]))
+               :on-click #(cljs/cljs-clear-console! @(subscribe [:get-console :cljs-console]))
                :class "cljs-btn"
                :tooltip "Clear"
                :tooltip-position :left-center
@@ -249,8 +249,7 @@
   [:span "Send to REPL"
    [:img {:class "api-panel-send-repl-img zmdi-hc-fw-rc"
           :src "styles/images/cljs.svg"
-          :alt "Load the example in the REPL"
-          :on-click #(dispatch [:send-to-console :cljs-console (:strings example-map)])}]])
+          :alt "Load the example in the REPL"}]])
 
 (defn example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
@@ -275,7 +274,8 @@
                                :justify :between
                                :align :center
                                :children [[example-number-icon example-index]
-                                          [example-send-to-repl-button-label example-index example-map]]]]]
+                                          [example-send-to-repl-button-label example-index example-map]]]
+                       :on-click #(dispatch [:send-to-console :cljs-console (:strings example-map)])]]
               [example-ui example-map]]])
 
 (defn build-examples-ui
