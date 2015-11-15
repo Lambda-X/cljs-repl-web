@@ -1,6 +1,7 @@
 (ns cljs-browser-repl.console.cljs
   (:require [replumb.core :as replumb]
-            [cljs-browser-repl.console :as console]))
+            [cljs-browser-repl.console :as console]
+            [cljs-browser-repl.highlight :as highlight]))
 
 ;; ;TODO: commented out for now, because of hljs
 ;; (def default-matchings {})
@@ -39,7 +40,7 @@
                                        :continue-label "  "}
                                       console-opts))
     ;; (console/register-matchings! default-matchings)
-    (console/color-crap!)))
+    (highlight/highlight-hack!)))
 
 (defn cljs-reset-console-and-prompt!
   "Resets the console and forces the focus onto it."
