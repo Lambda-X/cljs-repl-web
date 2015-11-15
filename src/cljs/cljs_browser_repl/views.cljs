@@ -139,23 +139,32 @@
    To place them in a layout, call the function (it does not return a
    component)."
   []
-  [v-box
-   :gap "4px"
-   :children [[md-icon-button
-               :md-icon-name "zmdi-delete"
-               :on-click #(cljs/cljs-reset-console-and-prompt! @(subscribe [:get-console :cljs-console]))
-               :class "cljs-btn"
-               :tooltip "Reset"
-               :tooltip-position :left-center
-               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
-              [md-icon-button
-               :md-icon-name "zmdi-format-clear-all"
-               :on-click #(cljs/cljs-clear-console! @(subscribe [:get-console :cljs-console]))
-               :class "cljs-btn"
-               :tooltip "Clear"
-               :tooltip-position :left-center
-               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
-              [gist-login-popover-dialog]]])
+  (let [console  (subscribe [:get-console :cljs-console])
+        created? (subscribe [:console-created? :cljs-console])]
+    (fn []
+     [v-box
+      :gap "4px"
+      :children [[md-icon-button
+                  :md-icon-name "zmdi-delete"
+                  :on-click #(cljs/cljs-reset-console-and-prompt! @console)
+                  :class "cljs-btn"
+                  :tooltip "Reset"
+                  :tooltip-position :left-center
+                  :disabled? (not @created?)]
+                 [md-icon-button
+                  :md-icon-name "zmdi-format-clear-all"
+                  :on-click #(cljs/cljs-clear-console! @console)
+                  :class "cljs-btn"
+                  :tooltip "Clear"
+                  :tooltip-position :left-center
+                  :disabled? (not @created?)]
+                 [gist-login-popover-dialog]
+                 [md-icon-button
+                  :md-icon-name "zmdi-minus-circle"
+                  :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                  :class "cljs-btn"
+                  :tooltip "Exit interactive example"
+                  :tooltip-position :right-center]]])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  API panel section  ;;;

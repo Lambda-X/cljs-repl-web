@@ -36,6 +36,7 @@
  (fn [db [_ console-key lines]]
    (let [console (app/console db console-key)
          lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
+     (.scrollTo js/window 0 0) ; in case we are at the bottom of the page
      (console/set-prompt-text! console (first lines))
      (console/focus-console! console)
      (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
@@ -45,4 +46,12 @@
  (fn [db [_ console-key]]
    (let [examples (app/interactive-examples db console-key)]
      (assoc-in db [:consoles (name console-key) :interactive-examples] (drop 1 examples)))))
+
+(register-handler
+ :exit-interactive-examples
+ (fn [db [_ console-key]]
+   (let [console (app/console db console-key)]
+     (console/set-prompt-text! console "")
+     (console/focus-console! console)
+     (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
 
