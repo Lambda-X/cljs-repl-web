@@ -253,7 +253,7 @@
 
 (defn example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [example-index example-map]
+  [example-index example-map showing?]
   {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
@@ -275,12 +275,13 @@
                                :align :center
                                :children [[example-number-icon example-index]
                                           [example-send-to-repl-button-label example-index example-map]]]
-                       :on-click #(dispatch [:send-to-console :cljs-console (:strings example-map)])]]
+                       :on-click #(do (reset! showing? false)
+                                      (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
               [example-ui example-map]]])
 
 (defn build-examples-ui
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
-  [examples-map]
+  [examples-map showing?]
   [v-box
    :size "0 1 auto"
    :children [
@@ -292,7 +293,7 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed example-panel examples-map)]]])
+               :children (map-indexed #(example-panel %1 %2 showing?) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
@@ -335,7 +336,7 @@
                                   (when (not-empty related)
                                     [build-related-symbols-ui related])
                                   (when (not-empty examples)
-                                    [build-examples-ui examples])]]])]]))
+                                    [build-examples-ui examples showing?])]]])]]))
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
   [symbol]

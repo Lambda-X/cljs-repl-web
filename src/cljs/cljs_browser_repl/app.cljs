@@ -16,11 +16,11 @@
   [db k]
   (get-in db [:consoles (name k) :console]))
 
-(defn examples
+(defn interactive-examples
   "Given a db and console key, returns its examples or nil if not
   found."
   [db k]
-  (get-in db [:consoles (name k) :examples]))
+  (get-in db [:consoles (name k) :interactive-examples]))
 
 (def console-created? "Was the console created? Returns a truey or falsey value."
   console)

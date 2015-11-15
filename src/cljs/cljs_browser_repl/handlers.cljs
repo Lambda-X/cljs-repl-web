@@ -37,11 +37,12 @@
    (let [console (app/console db console-key)
          lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
      (console/set-prompt-text! console (first lines))
-     (assoc-in db [:consoles (name console-key) :examples] (rest lines)))))
+     (console/focus-console! console)
+     (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
 
 (register-handler
  :delete-first-example
  (fn [db [_ console-key]]
-   (let [examples (app/examples db console-key)]
-     (assoc-in db [:consoles (name console-key) :examples] (rest examples)))))
+   (let [examples (app/interactive-examples db console-key)]
+     (assoc-in db [:consoles (name console-key) :interactive-examples] (drop 1 examples)))))
 
