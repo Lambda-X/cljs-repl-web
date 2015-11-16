@@ -14,7 +14,8 @@
             [cljs-repl-web.console.cljs :as cljs]
             [cljs-repl-web.cljs-api :as api]
             [cljs-repl-web.cljs-api.utils :as api-utils]
-            [cljs-repl-web.views.utils :as utils]))
+            [cljs-repl-web.views.utils :as utils]
+            [cljs-repl-web.markdown :as md]))
 
 ;; (set! re-com.box/debug true)
 
@@ -196,7 +197,8 @@
                  :class "api-panel-signature"])]])
 
 (defn build-symbol-description-ui
-  "Builds the UI for the symbol's description in the popover."
+  "Builds the UI for the symbol's description in the popover. Desc needs
+  to be markdown."
   [sym desc]
   [v-box
    :size "0 0 auto"
@@ -218,7 +220,8 @@
               ;; the html string (using eg. hickory)
               ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
               ;; AR - hickory performs better in flexbox container calculation)
-              [label :label (utils/html-string->hiccup desc)]]])
+              ;; AR - markdown->react component solves issue #
+              [label :label [md/md->react-component desc]]]])
 
 (defn build-related-symbols-ui
   "Builds the UI for related symbols in the popover."
@@ -314,7 +317,7 @@
   [showing? popover-position sym-doc-map]
   (let [{name :name
          full-name :full-name
-         desc :description-html
+         desc :description
          examples-htmls :examples-htmls
          examples-strings :examples-strings
          sign :signature
@@ -461,6 +464,7 @@
    [h-box
     :class "app-main"
     :size "1 1 auto"
+    :justify :center
     :gap "10px"
     :children [[cljs-buttons]
                [box

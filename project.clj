@@ -11,7 +11,8 @@
                  [cljs-ajax "0.5.1"]
                  [endophile "0.1.2"]
                  [markdown-clj "0.9.78"]
-                 [hickory "0.5.4"]]
+                 [hickory "0.5.4"]
+                 [cljsjs/showdown "0.4.0-1"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
