@@ -110,12 +110,14 @@
 
 (defn gist-login-popover-dialog
   []
-  (let [showing? (reagent/atom false)
+  (let [console (subscribe [:get-console :cljs-console])
+        console-created? (subscribe [:console-created? :cljs-console])
+        showing? (reagent/atom false)
         auth-data (reagent/atom {:username "" :password ""})
         save-auth-data (reagent/atom nil)
         ok-fn #(do (reset! showing? false)
                    (let [{:keys [username password]} @auth-data
-                         text (console/dump-console! (subscribe [:get-console :cljs-console]))]
+                         text (console/dump-console! @console)]
                      (gist/create-gist username password text on-gist-created gist-error-handler)))
         cancel-fn #(do
                      (reset! auth-data @save-auth-data)
@@ -131,7 +133,7 @@
                 :class "cljs-btn"
                 :tooltip "Create Gist"
                 :tooltip-position :below-center
-                :disabled? (not @(subscribe [:console-created? :cljs-console]))]
+                :disabled? (not @console-created?)]
      :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
 
 (defn cljs-buttons
@@ -139,23 +141,34 @@
    To place them in a layout, call the function (it does not return a
    component)."
   []
-  [v-box
-   :gap "4px"
-   :children [[md-icon-button
-               :md-icon-name "zmdi-delete"
-               :on-click #(cljs/cljs-reset-console-and-prompt! (subscribe [:get-console :cljs-console]))
-               :class "cljs-btn"
-               :tooltip "Reset"
-               :tooltip-position :left-center
-               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
-              [md-icon-button
-               :md-icon-name "zmdi-format-clear-all"
-               :on-click #(cljs/cljs-clear-console! (subscribe [:get-console :cljs-console]))
-               :class "cljs-btn"
-               :tooltip "Clear"
-               :tooltip-position :left-center
-               :disabled? (not @(subscribe [:console-created? :cljs-console]))]
-              [gist-login-popover-dialog]]])
+  (let [console  (subscribe [:get-console :cljs-console])
+        console-created? (subscribe [:console-created? :cljs-console])
+        example-mode? (subscribe [:example-mode? :cljs-console])]
+    (fn []
+      [v-box
+       :gap "8px"
+       :children [[md-icon-button
+                   :md-icon-name "zmdi-delete"
+                   :on-click #(cljs/cljs-reset-console-and-prompt! @console)
+                   :class "cljs-btn"
+                   :tooltip "Reset"
+                   :tooltip-position :left-center
+                   :disabled? (not @console-created?)]
+                  [md-icon-button
+                   :md-icon-name "zmdi-format-clear-all"
+                   :on-click #(cljs/cljs-clear-console! @console)
+                   :class "cljs-btn"
+                   :tooltip "Clear"
+                   :tooltip-position :left-center
+                   :disabled? (not @console-created?)]
+                  [gist-login-popover-dialog]
+                  [md-icon-button
+                   :md-icon-name "zmdi-stop"
+                   :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                   :class "cljs-btn"
+                   :tooltip "Stop interactive example mode"
+                   :tooltip-position :right-center
+                   :disabled? (not @example-mode?)]]])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  API panel section  ;;;
@@ -253,7 +266,7 @@
 
 (defn example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [example-index example-map]
+  [example-index example-map showing?]
   {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
@@ -274,12 +287,14 @@
                                :justify :between
                                :align :center
                                :children [[example-number-icon example-index]
-                                          [example-send-to-repl-button-label example-index example-map]]]]]
+                                          [example-send-to-repl-button-label example-index example-map]]]
+                       :on-click #(do (reset! showing? false)
+                                      (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
               [example-ui example-map]]])
 
 (defn build-examples-ui
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
-  [examples-map]
+  [examples-map showing?]
   [v-box
    :size "0 1 auto"
    :children [
@@ -291,7 +306,7 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed example-panel examples-map)]]])
+               :children (map-indexed #(example-panel %1 %2 showing?) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
@@ -334,7 +349,7 @@
                                   (when (not-empty related)
                                     [build-related-symbols-ui related])
                                   (when (not-empty examples)
-                                    [build-examples-ui examples])]]])]]))
+                                    [build-examples-ui examples showing?])]]])]]))
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
   [symbol]

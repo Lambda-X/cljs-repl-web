@@ -7,34 +7,34 @@
 }
 
 .jqconsole-old-prompt {
-  opacity: 0.25;
+  opacity: 0.4;
   font-weight: normal;
 }
 
 .jqconsole-output {
-  color: dark-grey;
+    color: dark-grey;
 }
 
 .jqconsole-return {
-  color: #2c4010;
+    color: #2c4010;
 }
 
 .jqconsole-error {
-   color: #CB2531;
+    color: #CB2531;
 }
 
 /* The cursor. */
 .jqconsole-cursor {
-   font-weight: normal;
-   font-family: monospace;
-   background-color: #96ca4b;
+    font-weight: normal;
+    font-family: monospace;
+    background-color: #96ca4b;
 }
 
 /* The cursor color when the console looses focus. */
 .jqconsole-blurred .jqconsole-cursor {
-  font-weight: normal;
-  font-family: monospace;
-  background-color: #b2ca8f;
+    font-weight: normal;
+    font-family: monospace;
+    background-color: #b2ca8f;
 }
 
 /* Additional elements */
@@ -49,7 +49,7 @@
 
 /* Character matchings */
 
- /* ( ) */
+/* ( ) */
 .match-round-brackets {
     color: red;
 }
@@ -70,86 +70,86 @@
 }
 
 .jqconsole-ansi-bold {
-  font-weight: bold!important;
+    font-weight: bold!important;
 }
 
 .jqconsole-ansi-lighter {
-  font-weight: lighter!important;
+    font-weight: lighter!important;
 }
 
 .jqconsole-ansi-italic {
-  font-style: italic!important;
+    font-style: italic!important;
 }
 
 .jqconsole-ansi-underline {
-  text-decoration: underline!important;
+    text-decoration: underline!important;
 }
 
 @-webkit-keyframes blinker {
-  from { opacity: 1.0; }
-  to { opacity: 0.0; }
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
 }
 
 @-moz-keyframes blinker {
-  from { opacity: 1.0; }
-  to { opacity: 0.0; }
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
 }
 
 @-ms-keyframes blinker {
-  from { opacity: 1.0; }
-  to { opacity: 0.0; }
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
 }
 
 @-o-keyframes blinker {
-  from { opacity: 1.0; }
-  to { opacity: 0.0; }
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
 }
 
 .jqconsole-ansi-blink {
-  -webkit-animation-name: blinker;
-  -moz-animation-name: blinker;
-  -ms-animation-name: blinker;
-  -o-animation-name: blinker;
-  -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  -ms-animation-iteration-count: infinite;
-  -o-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -ms-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -o-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -moz-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -webkit-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  -o-animation-duration: 1s;
-  -ms-animation-duration: 1s;
+    -webkit-animation-name: blinker;
+    -moz-animation-name: blinker;
+    -ms-animation-name: blinker;
+    -o-animation-name: blinker;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -ms-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -o-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -moz-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -o-animation-duration: 1s;
+    -ms-animation-duration: 1s;
 }
 
 .jqconsole-ansi-blink-rapid {
-  -webkit-animation-name: blinker;
-  -moz-animation-name: blinker;
-  -ms-animation-name: blinker;
-  -o-animation-name: blinker;
-  -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  -ms-animation-iteration-count: infinite;
-  -o-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -ms-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -o-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -moz-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -webkit-animation-duration: 0.5s;
-  -moz-animation-duration: 0.5s;
-  -o-animation-duration: 0.5s;
-  -ms-animation-duration: 0.5s;
+    -webkit-animation-name: blinker;
+    -moz-animation-name: blinker;
+    -ms-animation-name: blinker;
+    -o-animation-name: blinker;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -ms-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -o-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -moz-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    -o-animation-duration: 0.5s;
+    -ms-animation-duration: 0.5s;
 }
 
 
 .jqconsole-ansi-hidden {
-  visibility:hidden!important;
+    visibility:hidden!important;
 }
 
 .jqconsole-ansi-line-through {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 .jqconsole-ansi-fonts-1 {
@@ -185,58 +185,58 @@
 }
 
 .jqconsole-ansi-color-black {
-  color: black!important;
+    color: black!important;
 }
 .jqconsole-ansi-color-red {
-  color: red!important;
+    color: red!important;
 }
 .jqconsole-ansi-color-green {
-  color: green!important;
+    color: green!important;
 }
 .jqconsole-ansi-color-yellow {
-  color: yellow!important;
+    color: yellow!important;
 }
 .jqconsole-ansi-color-blue {
-  color: blue!important;
+    color: blue!important;
 }
 .jqconsole-ansi-color-magenta {
-  color: magenta!important;
+    color: magenta!important;
 }
 .jqconsole-ansi-color-cyan {
-  color: cyan!important;
+    color: cyan!important;
 }
 .jqconsole-ansi-color-white {
-  color: white!important;
+    color: white!important;
 }
 
 .jqconsole-ansi-background-color-black {
-  background-color: black!important;
+    background-color: black!important;
 }
 .jqconsole-ansi-background-color-red {
-  background-color: red!important;
+    background-color: red!important;
 }
 .jqconsole-ansi-background-color-green {
-  background-color: green!important;
+    background-color: green!important;
 }
 .jqconsole-ansi-background-color-yellow {
-  background-color: yellow!important;
+    background-color: yellow!important;
 }
 .jqconsole-ansi-background-color-blue {
-  background-color: blue!important;
+    background-color: blue!important;
 }
 .jqconsole-ansi-background-color-magenta {
-  background-color: magenta!important;
+    background-color: magenta!important;
 }
 .jqconsole-ansi-background-color-cyan {
-  background-color: cyan!important;
+    background-color: cyan!important;
 }
 .jqconsole-ansi-background-color-white {
-  background-color: white!important;
+    background-color: white!important;
 }
 
 .jqconsole-ansi-framed {
-  border: 1px solid!important;
+    border: 1px solid!important;
 }
 .jqconsole-ansi-overline {
-  text-decoration: overline!important;
+    text-decoration: overline!important;
 }

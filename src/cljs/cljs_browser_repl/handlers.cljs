@@ -1,5 +1,9 @@
 (ns cljs-browser-repl.handlers
-  (:require [re-frame.core :refer [register-handler]]))
+  (:require [re-frame.core :refer [register-handler]]
+            [replumb.core :as replumb]
+            [cljs-browser-repl.console.cljs :as cljs]
+            [cljs-browser-repl.console :as console]
+            [cljs-browser-repl.app :as app]))
 
 (def initial-state {:consoles {}})
 
@@ -25,4 +29,29 @@
 (register-handler
  :add-console
  (fn [db [_ console-key console]]
-   (assoc-in db [:consoles (name console-key)] console)))
+   (assoc-in db [:consoles (name console-key) :console] console)))
+
+(register-handler
+ :send-to-console
+ (fn [db [_ console-key lines]]
+   (let [console (app/console db console-key)
+         lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
+     (.scrollTo js/window 0 0) ; in case we are at the bottom of the page
+     (console/set-prompt-text! console (first lines))
+     (console/focus-console! console)
+     (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
+
+(register-handler
+ :delete-first-example
+ (fn [db [_ console-key]]
+   (let [examples (app/interactive-examples db console-key)]
+     (assoc-in db [:consoles (name console-key) :interactive-examples] (drop 1 examples)))))
+
+(register-handler
+ :exit-interactive-examples
+ (fn [db [_ console-key]]
+   (let [console (app/console db console-key)]
+     (console/set-prompt-text! console "")
+     (console/focus-console! console)
+     (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
+

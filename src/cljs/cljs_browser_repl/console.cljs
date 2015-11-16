@@ -52,6 +52,12 @@
   [console & messages]
   (apply write! console :jqconsole-output messages))
 
+(defn write-old-prompt!
+  "Writes a jqconsole-old-prompt message to the input console. It
+  automatically separates messagges with \n."
+  [console & messages]
+  (apply write! console :jqconsole-old-prompt messages))
+
 (defn write-exception!
   ([console ex] (write-exception! console ex false))
   ([console ex print-stack-trace?]
@@ -91,3 +97,8 @@
   captured."
   [console]
   (.Focus console))
+
+(defn set-prompt-text!
+  "jqconsole wrapper, sets the current prompt."
+  [console text]
+  (.SetPromptText console text))
