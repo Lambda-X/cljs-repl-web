@@ -233,6 +233,7 @@
               [h-box
                :size "0 0 auto"
                :gap "4px"
+               :style {:flex-flow "wrap"}
                :children (for [rel related]
                            [hyperlink-href
                             :label (utils/strip-namespace rel)
