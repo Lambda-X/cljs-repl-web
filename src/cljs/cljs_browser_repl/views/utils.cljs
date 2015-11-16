@@ -1,12 +1,16 @@
 (ns cljs-browser-repl.views.utils
   (:require-macros [re-com.core :refer [handler-fn]])
-  (:require [cljs.pprint :as pprint]
+  (:require [cljs.pprint :as pprint :refer [pprint]]
             [clojure.string :as string]
             [clojure.walk :as walk]
+            [clojure.zip :as zip]
             [reagent.core :as reagent]
             [re-com.core :refer [popover-tooltip]]
             [hickory.core :as hickory]
-            [goog.string :as gstring]))
+            [hickory.zip :as hzip]
+            [hickory.convert :as hconvert]
+            [goog.string :as gstring]
+            [cljs-browser-repl.highlight :as hl]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 
@@ -67,14 +71,87 @@
        form))
    hiccup))
 
+(defn add-node-class
+  "Given a loc's node, adds a class (as either string or keyword) and
+  returns the new node. Usually used like: (zip/edit loc
+  add-loc-class :class-name)"
+  [node class-name]
+  (update-in node [:attrs :class] (fn [old-str]
+                                    (if (empty? old-str)
+                                      (name class-name)
+                                      (str old-str " " (name class-name))))))
+
+(def as-hickory-zip (comp hzip/hickory-zip
+                          hickory/as-hickory))
+
+(defn inject-node-highlight
+  "Given a loc's node, replaces its string :content with highlighted
+  nodes, returns the new node. Usually used like: (zip/edit loc
+  inject-node-highlight)"
+  [node]
+  (update-in node [:content] (fn [old-content]
+                               (if-let [s (first old-content)]
+                                 (if (string? s)
+                                   (let [parsed-hls (hickory/parse-fragment (hl/highlight-html s))]
+                                     (mapv (comp zip/root as-hickory-zip) parsed-hls))
+                                   old-content)
+                                 old-content))))
+
+(defn highlight-code-locs
+  "Given a hickory zipper, highlights all the <code> locs."
+  [hickory-zip-root]
+  (loop [loc hickory-zip-root]
+    (if-not (zip/end? loc)
+      (recur (zip/next (if (= :code (:tag (zip/node loc)))
+                         (-> loc
+                             (zip/edit add-node-class :hljs)
+                             (zip/edit inject-node-highlight))
+                         loc)))
+      loc)))
+
 (defn html-string->hiccup
-  "Convert the string to hiccup vector, filling up class style and attr
-  if present on the initial :div"
+  "Convert a html string to hiccup vector, optionally merging class,
+  style and attr if present as variadic params."
   [html-string & {:keys [class style attr]}]
   (into [:div (merge {:class class
                       :style style}
                      attr)]
-        (map (comp trim-strings unescape-html hickory/as-hiccup) (hickory/parse-fragment html-string))))
+        (map (comp unescape-html hickory/as-hiccup)
+             (hickory/parse-fragment html-string))))
+
+(defn html-string->highligthed-hiccup
+  "Convert a html string to a hiccup vector, optionally merging class,
+  style and attr if present as variadic params."
+  [html-string & {:keys [class style attr]}]
+  (into [:div (merge {:class class
+                      :style style}
+                     attr)]
+        (map (comp unescape-html
+                   hconvert/hickory-to-hiccup
+                   zip/root
+                   highlight-code-locs
+                   as-hickory-zip)
+             (hickory/parse-fragment html-string))))
+
+(comment
+  (require '[clairvoyant.core :as t :include-macros true])
+  (require '[hickory.core :as hickory])
+  (require '[hickory.render :as hrender])
+  (require '[hickory.convert :as hconver])
+  (require '[hickory.zip :as hzip])
+  (require '[clojure.zip :as zip])
+  (require '[cljs-browser-repl.highlight :as hl])
+  (require '[cljs.pprint :refer [pprint]])
+
+  (def h1 (hl/highlight-html "(def a \"b\")"))
+
+  (def s1 "<div><pre><code class=\"clj\">(def a \"b\")</code></pre></div>")
+  (def s2 "<div><pre><code class=\"clj\">(def a \"b\")</code></pre></div> <div><pre><code class=\"clj\">(defn myfun [coll] (first coll))</code></pre></div>")
+
+  (def h (map as-hickory-zip (hickory/parse-fragment s2)))
+  (map highlight-code-locs h)
+
+  (html-string->highligthed-hiccup s2))
 
 ;; AR - Not used anywhere atm
 (defn inject-attributes
