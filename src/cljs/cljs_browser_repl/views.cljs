@@ -110,12 +110,14 @@
 
 (defn gist-login-popover-dialog
   []
-  (let [showing? (reagent/atom false)
+  (let [console (subscribe [:get-console :cljs-console])
+        console-created? (subscribe [:console-created? :cljs-console])
+        showing? (reagent/atom false)
         auth-data (reagent/atom {:username "" :password ""})
         save-auth-data (reagent/atom nil)
         ok-fn #(do (reset! showing? false)
                    (let [{:keys [username password]} @auth-data
-                         text (console/dump-console! @(subscribe [:get-console :cljs-console]))]
+                         text (console/dump-console! @console)]
                      (gist/create-gist username password text on-gist-created gist-error-handler)))
         cancel-fn #(do
                      (reset! auth-data @save-auth-data)
@@ -131,7 +133,7 @@
                 :class "cljs-btn"
                 :tooltip "Create Gist"
                 :tooltip-position :below-center
-                :disabled? (not @(subscribe [:console-created? :cljs-console]))]
+                :disabled? (not @console-created?)]
      :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
 
 (defn cljs-buttons
@@ -140,7 +142,7 @@
    component)."
   []
   (let [console  (subscribe [:get-console :cljs-console])
-        created? (subscribe [:console-created? :cljs-console])
+        console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:example-mode? :cljs-console])]
     (fn []
       [v-box
@@ -151,14 +153,14 @@
                    :class "cljs-btn"
                    :tooltip "Reset"
                    :tooltip-position :left-center
-                   :disabled? (not @created?)]
+                   :disabled? (not @console-created?)]
                   [md-icon-button
                    :md-icon-name "zmdi-format-clear-all"
                    :on-click #(cljs/cljs-clear-console! @console)
                    :class "cljs-btn"
                    :tooltip "Clear"
                    :tooltip-position :left-center
-                   :disabled? (not @created?)]
+                   :disabled? (not @console-created?)]
                   [gist-login-popover-dialog]
                   [md-icon-button
                    :md-icon-name "zmdi-stop"
