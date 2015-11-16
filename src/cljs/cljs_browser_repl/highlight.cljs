@@ -70,3 +70,14 @@
                            (.-$prompt_before console)
                            (.-$prompt_after console)
                            (.-$console console)))
+
+(defn element-text
+  [element]
+  (or (.-textContent element) (.-innerText element)))
+
+(defn highlight-html
+  "Given an html string, returns"
+  ([html-string]
+   (highlight-html "clojure" html-string))
+  ([language html-string]
+   (.-value (js/hljs.highlight language html-string true))))
