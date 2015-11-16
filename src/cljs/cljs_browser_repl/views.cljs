@@ -140,31 +140,33 @@
    component)."
   []
   (let [console  (subscribe [:get-console :cljs-console])
-        created? (subscribe [:console-created? :cljs-console])]
+        created? (subscribe [:console-created? :cljs-console])
+        example-mode? (subscribe [:example-mode? :cljs-console])]
     (fn []
-     [v-box
-      :gap "4px"
-      :children [[md-icon-button
-                  :md-icon-name "zmdi-delete"
-                  :on-click #(cljs/cljs-reset-console-and-prompt! @console)
-                  :class "cljs-btn"
-                  :tooltip "Reset"
-                  :tooltip-position :left-center
-                  :disabled? (not @created?)]
-                 [md-icon-button
-                  :md-icon-name "zmdi-format-clear-all"
-                  :on-click #(cljs/cljs-clear-console! @console)
-                  :class "cljs-btn"
-                  :tooltip "Clear"
-                  :tooltip-position :left-center
-                  :disabled? (not @created?)]
-                 [gist-login-popover-dialog]
-                 [md-icon-button
-                  :md-icon-name "zmdi-minus-circle"
-                  :on-click #(dispatch [:exit-interactive-examples :cljs-console])
-                  :class "cljs-btn"
-                  :tooltip "Exit interactive example"
-                  :tooltip-position :right-center]]])))
+      [v-box
+       :gap "8px"
+       :children [[md-icon-button
+                   :md-icon-name "zmdi-delete"
+                   :on-click #(cljs/cljs-reset-console-and-prompt! @console)
+                   :class "cljs-btn"
+                   :tooltip "Reset"
+                   :tooltip-position :left-center
+                   :disabled? (not @created?)]
+                  [md-icon-button
+                   :md-icon-name "zmdi-format-clear-all"
+                   :on-click #(cljs/cljs-clear-console! @console)
+                   :class "cljs-btn"
+                   :tooltip "Clear"
+                   :tooltip-position :left-center
+                   :disabled? (not @created?)]
+                  [gist-login-popover-dialog]
+                  [md-icon-button
+                   :md-icon-name "zmdi-stop"
+                   :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                   :class "cljs-btn"
+                   :tooltip "Stop interactive example mode"
+                   :tooltip-position :right-center
+                   :disabled? (not @example-mode?)]]])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  API panel section  ;;;

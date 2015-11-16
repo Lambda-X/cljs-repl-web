@@ -19,6 +19,10 @@
 
 (register-sub
  :get-next-example
-  (fn [db [_ console-key]]
-    (reaction (first (app/interactive-examples @db console-key)))))
+ (fn [db [_ console-key]]
+   (reaction (first (app/interactive-examples @db console-key)))))
 
+(register-sub
+ :example-mode?
+ (fn [db [_ console-key]]
+   (reaction (not (empty? (app/interactive-examples @db console-key))))))
