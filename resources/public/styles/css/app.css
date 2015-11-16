@@ -2,6 +2,10 @@
     padding: 0 20px 0;
 }
 
+#app-bottom {
+    margin-top: 18px;
+}
+
 .app-progress-bar {
     padding: 4px;
     width: 40%;

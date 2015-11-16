@@ -1,10 +1,11 @@
 (ns cljs-browser-repl.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
+            [timothypratley.reanimated.core :as anim]
             [re-frame.core :refer [subscribe dispatch]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
-                                 popover-tooltip title label scroller]]
+                                 popover-tooltip title label scroller line]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
             [cljs-browser-repl.app :as app]
@@ -152,14 +153,14 @@
                    :on-click #(cljs/cljs-reset-console-and-prompt! @console)
                    :class "cljs-btn"
                    :tooltip "Reset"
-                   :tooltip-position :left-center
+                   :tooltip-position :right-center
                    :disabled? (not @console-created?)]
                   [md-icon-button
                    :md-icon-name "zmdi-format-clear-all"
                    :on-click #(cljs/cljs-clear-console! @console)
                    :class "cljs-btn"
                    :tooltip "Clear"
-                   :tooltip-position :left-center
+                   :tooltip-position :right-center
                    :disabled? (not @console-created?)]
                   [gist-login-popover-dialog]
                   [md-icon-button
@@ -441,3 +442,28 @@
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
+
+(defn bottom-panel []
+  []
+  [v-box
+   :class "app-main"
+   :size "1 1 auto"
+   :gap "4px"
+   :align :stretch
+   :children [[line
+               :size "2px"
+               :color "#96ca4b"
+               :style {:opacity "0.5"}]
+              [api-panel]]])
+
+(defn repl-component []
+  [anim/pop-when true
+   [h-box
+    :class "app-main"
+    :size "1 1 auto"
+    :gap "10px"
+    :children [[cljs-buttons]
+               [box
+                :size "1"
+                :style {:overflow "hidden"}
+                :child [cljs-console-component]]]]])

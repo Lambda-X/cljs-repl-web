@@ -20,7 +20,7 @@
     <div class="app-main page-header">
       <h1>A ClojureScript REPL <small>featuring replumb</small></h1>
     </div>
-    <div id="app" class="app-main">
+    <div id="app-center" class="app-main">
       <div class="app-progress-bar panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title">Cleaning up parens...</h2>
@@ -33,12 +33,12 @@
         </div>
       </div>
     </div>
-
+    <div id="app-bottom" class="app-main">
+    </div>
     <script src="js/compiled/cljs-browser-repl.js"></script>
     <script>
          window.prstr = function (obj) { return cljs.core.pr_str(obj) };
          window.onload = function () { cljs_browser_repl.core.main(); }
     </script>
-
   </body>
 </html>
