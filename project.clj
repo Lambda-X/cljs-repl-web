@@ -1,6 +1,6 @@
 (defproject cljs-browser-repl "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.145"]
+                 [org.clojure/clojurescript "1.7.170"]
                  [replumb/replumb "0.1.0"]
                  [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
@@ -13,7 +13,7 @@
                  [markdown-clj "0.9.78"]
                  [hickory "0.5.4"]]
 
-  :plugins [[lein-cljsbuild "1.1.0"]
+  :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
             ;; [lein-simpleton "1.4.0-SNAPSHOT"]
             ]
@@ -68,7 +68,7 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
-                             [lein-figwheel "0.4.1" :exclusions [cider/cider-nrepl]]]
+                             [lein-figwheel "0.5.0" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
                               :repl true
