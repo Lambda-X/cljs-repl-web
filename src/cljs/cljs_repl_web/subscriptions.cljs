@@ -1,7 +1,7 @@
-(ns cljs-browser-repl.subscriptions
+(ns cljs-repl-web.subscriptions
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require [re-frame.core :refer [register-sub]]
-            [cljs-browser-repl.app :as app]))
+            [cljs-repl-web.app :as app]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subscription handlers ;;;

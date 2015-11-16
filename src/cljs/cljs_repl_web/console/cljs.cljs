@@ -1,8 +1,8 @@
-(ns cljs-browser-repl.console.cljs
+(ns cljs-repl-web.console.cljs
   (:require [replumb.core :as replumb]
             [re-frame.core :refer [subscribe dispatch]]
-            [cljs-browser-repl.console :as console]
-            [cljs-browser-repl.highlight :as highlight]))
+            [cljs-repl-web.console :as console]
+            [cljs-repl-web.highlight :as highlight]))
 
 ;; ;TODO: commented out for now, because of hljs
 ;; (def default-matchings {})

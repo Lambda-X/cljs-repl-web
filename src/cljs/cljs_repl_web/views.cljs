@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.views
+(ns cljs-repl-web.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
             [timothypratley.reanimated.core :as anim]
@@ -8,13 +8,13 @@
                                  popover-tooltip title label scroller line]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
-            [cljs-browser-repl.app :as app]
-            [cljs-browser-repl.gist :as gist]
-            [cljs-browser-repl.console :as console]
-            [cljs-browser-repl.console.cljs :as cljs]
-            [cljs-browser-repl.cljs-api :as api]
-            [cljs-browser-repl.cljs-api.utils :as api-utils]
-            [cljs-browser-repl.views.utils :as utils]))
+            [cljs-repl-web.app :as app]
+            [cljs-repl-web.gist :as gist]
+            [cljs-repl-web.console :as console]
+            [cljs-repl-web.console.cljs :as cljs]
+            [cljs-repl-web.cljs-api :as api]
+            [cljs-repl-web.cljs-api.utils :as api-utils]
+            [cljs-repl-web.views.utils :as utils]))
 
 ;; (set! re-com.box/debug true)
 

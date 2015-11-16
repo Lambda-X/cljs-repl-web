@@ -1,10 +1,10 @@
-(ns cljs-browser-repl.core
+(ns cljs-repl-web.core
   (:require [reagent.core :as reagent]
             [re-frame.core :refer [dispatch-sync]]
             [re-com.core :refer [p h-box v-box box gap line]]
-            [cljs-browser-repl.handlers]
-            [cljs-browser-repl.subscriptions]
-            [cljs-browser-repl.views :as views]))
+            [cljs-repl-web.handlers]
+            [cljs-repl-web.subscriptions]
+            [cljs-repl-web.views :as views]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
 

@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.gist
+(ns cljs-repl-web.gist
   (:require [ajax.core :as ajax]
             [goog.crypt.base64 :as b64]))
 
@@ -33,4 +33,3 @@
     :error-handler error-handler
     :format (ajax/json-request-format)
     :response-format (ajax/json-response-format {:keywords? true})} ))
-

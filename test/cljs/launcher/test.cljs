@@ -1,7 +1,5 @@
 (ns ^:figwheel-always launcher.test
-  (:require [cljs.test :refer [successful?] :refer-macros [run-tests run-all-tests]]
-            [cljs-browser-repl.core :as core]
-            [cljs-browser-repl.console-test]))
+  (:require [cljs.test :refer [successful?] :refer-macros [run-tests run-all-tests]]))
 
 (enable-console-print!)
 
@@ -12,4 +10,4 @@
   []
   (run-all-tests #"^cljs.*-test")
   ;; For re-rendering everything
-  (core/main))
+  #_(core/main))

@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.app
+(ns cljs-repl-web.app
   (:require [reagent.core :as reagent]
             [re-frame.core :refer [dispatch]]))
 

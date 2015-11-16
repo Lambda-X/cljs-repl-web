@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.highlight
+(ns cljs-repl-web.highlight
   (:require [clojure.string :as string]
             [cljsjs.highlight]
             [cljsjs.highlight.langs.clojure]))

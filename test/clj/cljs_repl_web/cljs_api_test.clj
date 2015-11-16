@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.cljs-api-test
+(ns cljs-repl-web.cljs-api-test
   (:require [clojure.test :refer :all]
             [cljs-browser-repl.cljs-api :as ca]))
 

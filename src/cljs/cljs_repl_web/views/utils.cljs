@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.views.utils
+(ns cljs-repl-web.views.utils
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [cljs.pprint :as pprint :refer [pprint]]
             [clojure.string :as string]
@@ -10,7 +10,7 @@
             [hickory.zip :as hzip]
             [hickory.convert :as hconvert]
             [goog.string :as gstring]
-            [cljs-browser-repl.highlight :as hl]))
+            [cljs-repl-web.highlight :as hl]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 

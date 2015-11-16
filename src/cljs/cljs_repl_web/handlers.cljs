@@ -1,9 +1,9 @@
-(ns cljs-browser-repl.handlers
+(ns cljs-repl-web.handlers
   (:require [re-frame.core :refer [register-handler]]
             [replumb.core :as replumb]
-            [cljs-browser-repl.console.cljs :as cljs]
-            [cljs-browser-repl.console :as console]
-            [cljs-browser-repl.app :as app]))
+            [cljs-repl-web.console.cljs :as cljs]
+            [cljs-repl-web.console :as console]
+            [cljs-repl-web.app :as app]))
 
 (def initial-state {:consoles {}})
 
@@ -54,4 +54,3 @@
      (console/set-prompt-text! console "")
      (console/focus-console! console)
      (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
-

@@ -143,10 +143,10 @@
   (when (seq args)
     (do (.println *err* "This script does not want params.\n\nUsage: lein run -m cljs-api.generator/-main.")
         (exit 255)))
-  (let [file-name "src/cljs/cljs_browser_repl/cljs_api.cljs"
+  (let [file-name "src/cljs/cljs_repl_web/cljs_api.cljs"
         api-edn (load-cljs-api-edn)
         new-edn-map (api-edn->api-map api-edn)
-        file-content (str "(ns cljs-browser-repl.cljs-api)\n\n"
+        file-content (str "(ns cljs-repl-web.cljs-api)\n\n"
                           "(def cljs-api-edn " (with-out-str (pprint new-edn-map)) ")")]
     (try
       (spit file-name file-content :encoding "UTF-8")

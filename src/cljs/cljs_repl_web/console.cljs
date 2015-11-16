@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.console
+(ns cljs-repl-web.console
   (:require [clojure.string :as string]
             [cljsjs.jqconsole]
             [replumb.core :as replumb]))

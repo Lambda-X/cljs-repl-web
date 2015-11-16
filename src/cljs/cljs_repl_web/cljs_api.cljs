@@ -1,4 +1,4 @@
-(ns cljs-browser-repl.cljs-api)
+(ns cljs-repl-web.cljs-api)
 
 (def cljs-api-edn {:symbols
  {"butlast"
@@ -3248,7 +3248,7 @@
    "<p>Expands to code which yields a lazy sequence of the concatenation of the supplied collections. Each collections expression is not evaluated until it is needed.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;code&gt;&#40;lazy-cat x y z&#41;&lt;/code&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(concat (lazy-seq x)<pre><code>    &#40;lazy-seq y&#41;\n    &#40;lazy-seq z&#41;&#41;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt; \n</code></pre></p>",
    :full-name "cljs.core/lazy-cat",
    :docstring
-   "Expands to code which yields a lazy sequence of the concatenation\nof the supplied colls.  Each coll expr is not evaluated until it is\nneeded. \n\n(lazy-cat xs ys zs) === (concat (lazy-seq xs) (lazy-seq ys) (lazy-seq zs))"},
+   "Expands to code which yields a lazy sequence of the concatenation\nof the supplied colls.  Each coll expr is not evaluated until it is\nneeded.\n\n(lazy-cat xs ys zs) === (concat (lazy-seq xs) (lazy-seq ys) (lazy-seq zs))"},
   "print-meta?"
   {:ns "cljs.core",
    :name "print-meta?",
@@ -5015,7 +5015,7 @@
    "Evaluates test. If not the singular values nil or false,\nevaluates and yields then, otherwise, evaluates and yields else. If\nelse is not supplied it defaults to nil."},
   "let"
   {:description
-   "Binds expressions to symbols and makes those symbols available only within\n`body`.\n\n`bindings` should be a vector with an even number of forms, ie: `[a1 b1, a2 b2,\na3 b3]`. The first item in a pair (the `a`s) should be a symbol that is assigned\nthe evaluation of the second item (the `b`s). These symbols (the `a`s) are then\navailable within `body` (and not outside of `body`).\n\nAnother way to think about this is that the binding symbols in `let` are like\nlocal `def`s that are only available within `let`'s scope.\n\nIn addition to direct symbol binding, `let` supports a destructuring syntax to\n\"break apart\" collections into multiple symbols. This destructuring syntax is\nlike it's own [mini-language] and allows for succinct code.\n\n`let` is a wrapper over one of ClojureScript's [special forms] and is a\nfundamental building block of the language. Many macros rely on `let`s binding\nsyntax and scope rules.\n\n[mini-language]:http://blog.jayfields.com/2010/07/clojure-destructuring.html\n[special forms]:http://clojure.org/special_forms",
+   "Binds expressions to symbols and makes those symbols available only within\n`body`.\n\n`bindings` should be a vector with an even number of forms, ie: `[a1 b1, a2 b2,\na3 b3]`. The first item in a pair (the `a`s) should be a symbol that is assigned\nthe evaluation of the second item (the `b`s). These symbols (the `a`s) are then\navailable within `body` (and not outside of `body`).\n\nAnother way to think about this is that the binding symbols in `let` are like\nlocal `def`s that are only available within `let`'s scope.\n\nIn addition to direct symbol binding, `let` supports a destructuring syntax to\n\"break apart\" collections into multiple symbols. This destructuring syntax is\nlike it's own [mini-language] and allows for succinct code.\n\n`let` is a wrapper over one of ClojureScript's [special forms] and is a\nfundamental building block of the language. Many macros rely on `let`s binding\nsyntax and scope rules.\n\n[mini-language]: http://blog.jayfields.com/2010/07/clojure-destructuring.html\n[special forms]: http://clojure.org/special_forms",
    :examples-htmls [],
    :ns "cljs.core",
    :name "let",
@@ -5024,7 +5024,7 @@
    :related ["cljs.core/letfn" "cljs.core/if-let"],
    :examples-strings [],
    :description-html
-   "<p>Binds expressions to symbols and makes those symbols available only within <code>body</code>.</p><p><code>bindings</code> should be a vector with an even number of forms, ie: `[a1 b1, a2 b2, a3 b3]<code>. The first item in a pair &#40;the </code>a`s) should be a symbol that is assigned the evaluation of the second item (the <code>b</code>s). These symbols (the <code>a</code>s) are then available within <code>body</code> (and not outside of <code>body</code>).</p><p>Another way to think about this is that the binding symbols in <code>let</code> are like local <code>def</code>s that are only available within <code>let</code>'s scope.</p><p>In addition to direct symbol binding, <code>let</code> supports a destructuring syntax to \"break apart\" collections into multiple symbols. This destructuring syntax is like it's own [mini-language] and allows for succinct code.</p><p><code>let</code> is a wrapper over one of ClojureScript's [special forms] and is a fundamental building block of the language. Many macros rely on <code>let</code>s binding syntax and scope rules.</p><p>[mini-language]:http://blog.jayfields.com/2010/07/clojure-destructuring.html [special forms]:http://clojure.org/special_forms</p>",
+   "<p>Binds expressions to symbols and makes those symbols available only within <code>body</code>.</p><p><code>bindings</code> should be a vector with an even number of forms, ie: `[a1 b1, a2 b2, a3 b3]<code>. The first item in a pair &#40;the </code>a`s) should be a symbol that is assigned the evaluation of the second item (the <code>b</code>s). These symbols (the <code>a</code>s) are then available within <code>body</code> (and not outside of <code>body</code>).</p><p>Another way to think about this is that the binding symbols in <code>let</code> are like local <code>def</code>s that are only available within <code>let</code>'s scope.</p><p>In addition to direct symbol binding, <code>let</code> supports a destructuring syntax to \"break apart\" collections into multiple symbols. This destructuring syntax is like it's own [mini-language] and allows for succinct code.</p><p><code>let</code> is a wrapper over one of ClojureScript's [special forms] and is a fundamental building block of the language. Many macros rely on <code>let</code>s binding syntax and scope rules.</p><p>[mini-language]: http://blog.jayfields.com/2010/07/clojure-destructuring.html [special forms]: http://clojure.org/special_forms</p>",
    :full-name "cljs.core/let",
    :docstring
    "binding => binding-form init-expr\n\nEvaluates the exprs in a lexical context in which the symbols in\nthe binding-forms are bound to their respective init-exprs or parts\ntherein."},
@@ -9762,9 +9762,9 @@
    :examples-strings [],
    :examples-htmls []}},
  :release
- {:gclosure-lib "0.0-20150805-acd8b553",
-  :cljs-version "1.7.145",
+ {:gclosure-lib "0.0-20151016-61277aea",
+  :cljs-version "1.7.170",
   :treader-version "0.10.0-alpha3",
-  :cljs-date "2015-10-13",
+  :cljs-date "2015-11-06",
   :clj-version "1.7.0"}}
 )

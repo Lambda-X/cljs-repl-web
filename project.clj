@@ -1,4 +1,4 @@
-(defproject cljs-browser-repl "0.1.0-SNAPSHOT"
+(defproject cljs-repl-web "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [replumb/replumb "0.1.0"]
@@ -29,8 +29,8 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
                         :figwheel {:on-jsload "launcher.test/run"}
-                        :compiler {:main cljs-browser-repl.core
-                                   :output-to "resources/public/js/compiled/cljs-browser-repl.js"
+                        :compiler {:main cljs-repl-web.core
+                                   :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
                                    :optimizations :none
@@ -38,17 +38,16 @@
                        {:id "test"
                         :source-paths ["src/cljs" "test/doo"]
                         :compiler {:main launcher.runner
-                                   :output-to "resources/private/test/compiled/cljs-browser-repl.js"
+                                   :output-to "resources/private/test/compiled/cljs-repl-web.js"
                                    :pretty-print false}}
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler { ;; :main cljs-browser-repl.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
-                                   :output-to "resources/public/js/compiled/cljs-browser-repl.js"
+                        :compiler { ;; :main cljs-repl-web.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
+                                   :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :optimizations :advanced
-                                   :pretty-print false
-                                   :externs ["resources/cljs-browser-repl.ext.js"]}}]}
+                                   :pretty-print false}}]}
 
-  ;; :prep-tasks ["run" "-m cljs-api.generator/-main" "src/cljs/cljs_browser_repl/cljs_api.cljs"]
+  ;; :prep-tasks ["run" "-m cljs-api.generator/-main"]
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
