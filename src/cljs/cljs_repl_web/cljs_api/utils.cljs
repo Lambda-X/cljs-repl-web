@@ -19,7 +19,7 @@
                         [(Topic. "maps " '({:key1 val1 :key2 val2}))
                          (Topic. "vectors" '([1 2 3] [:a :b :c]))
                          (Topic. "sets" '(#{:a :b :c 1 2 3}))
-                         (Topic. "scalars" '(a-symbol :a-keyword "a-string"))
+                         (Topic. "scalars" '(a-symbol :a-keyword "\"a-string\""))
                          (Topic. "arrays" '((array 1 2 3)))])
               (Section. "Functions" ""
                         [(Topic. "calling"
@@ -42,16 +42,14 @@
                          (Topic. "data create"
                                  '(vector vec hash-map set for list list*))
                          (Topic. "data inspection"
-                                 '(first rest get get-in keys vals count get nth contains? find))
+                                 '(first rest get get-in keys vals count nth contains? find))
                          (Topic. "data manipulation"
                                  '(seq into conj cons assoc assoc-in dissoc zipmap
-                                   merge merge-with select-keys update-in))
-                         (Topic. "arrays"
-                                 '(first rest get get-in keys vals count get nth contains? find))])
+                                   merge merge-with select-keys update-in))])
               (Section. "JavaScript Interop" ""
                         [(Topic. "method call" '("(.the-method target-object args...)"))
                          (Topic. "property access" '("(.-property target-object -property)"))
                          (Topic. "property setting" '("(set! (.-title js/document) \"Hi!\")"))
-                         (Topic. "direct javascript" '("(js/alert \"Hello scalac!\")"))
+                         (Topic. "direct javascript" '("(js/alert \"Hello world!\")"))
                          (Topic. "external library use" '("(.text (js/jQuery \"#title\") \"ClojureScript Rocks!\")"))])]
 })
