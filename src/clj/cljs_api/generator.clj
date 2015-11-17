@@ -1,7 +1,8 @@
 (ns cljs-api.generator
-  (:require [clojure.pprint :as pprint :refer [pprint]]
+  (:require [clojure.tools.reader.edn :as tr-edn]
+            [clojure.tools.reader.reader-types :as tr-types]
+            [clojure.pprint :as pprint :refer [pprint]]
             [clojure.string :as s]
-            [clojure.edn :as edn]
             [clojure.java.io :as io]
             [endophile.core :as e]
             [markdown.core :as md]
@@ -50,6 +51,33 @@
         html (mapv #(md/md-to-html-string %) examples)]
     (assoc api-symbol-content :examples-htmls html)))
 
+(defn top-level-sexps
+  "Given a string, splits it in top level sexp. Returns a list of
+  strings."
+  [edn-string]
+  (with-open [r (tr-types/string-push-back-reader edn-string)]
+    (loop [paren-count 0
+           top-level ""
+           top-levels []]
+      (if-let [c (tr-types/read-char r)]
+        (cond
+          (= \( c) (recur (inc paren-count)
+                          (if (= 0 paren-count)
+                            (str c)
+                            (str top-level c))
+                          (if (= 0 paren-count)
+                            (conj top-levels top-level)
+                            top-levels))
+          (= \) c) (recur (dec paren-count)
+                          (if (= 0 (dec paren-count))
+                            ""
+                            (str top-level c))
+                          (if (= 0 (dec paren-count))
+                            (conj top-levels (str top-level c))
+                            top-levels))
+          :else (recur paren-count (str top-level c) top-levels))
+        top-levels))))
+
 (defn lift-up-comments
   "Given lines of code, merges each commented line (;) with the
   previous. Tipically [\"(pop [1 2 3])\" \";;=> [1 2]\" ...] becomes
@@ -64,13 +92,12 @@
 
   ;; AR - conj does not fit because drop returns lazy seqs,
   ;; reverse trasducer would be nice
-  (apply vector
-         (reverse (reduce (fn [merged-lines line]
-                            (if (re-find #"^;" line)
-                              (cons (str (first merged-lines) " " line)
-                                    (drop 1 merged-lines))
-                              (cons line merged-lines)))
-                          () lines))))
+  (vec (reverse (reduce (fn [merged-lines line]
+                          (if (re-find #"^;" line)
+                            (cons (str (first merged-lines) " " line)
+                                  (drop 1 merged-lines))
+                            (cons line merged-lines)))
+                        () lines))))
 
 (defn clj-node-seq->strings
   "Nodes as used in clojure.xml and in the enlive HTML library.
@@ -78,12 +105,13 @@
   [clj-node-seq]
   (let [code-content #(-> % :content first :content first)
         code-nodes (filter #(and (= :pre (:tag %)) (= :code (-> % :content first :tag))) clj-node-seq)]
-    ;; Thanks Thomas for spotting this!
+    ;; AR - Thanks Thomas for spotting the nested vector problem!
     (into [] (flatten
-              (mapv (comp lift-up-comments      ;; see docstring
-                          (partial filterv seq) ;; filter out empty lines
-                          s/split-lines         ;; split lines
-                          code-content)         ;; fetch content
+              (mapv (comp lift-up-comments          ;; see docstring
+                          (partial filterv seq)     ;; filter out empty lines
+                          (partial map #(s/trim %)) ;; trim spaces
+                          top-level-sexps           ;; split in top level forms
+                          code-content)             ;; fetch content
                     code-nodes)))))
 
 (defn assoc-example-strings
@@ -95,6 +123,11 @@
         seq-of-clj-node-seq (map #(e/to-clj (e/mp %)) examples) ;; this is a seq of {:tag .. :content ...}
         examples-strings (mapv clj-node-seq->strings seq-of-clj-node-seq)]
     (assoc api-symbol-content :examples-strings examples-strings)))
+
+(comment
+  (def ss (:symbols (filter-kv api-edn-keyseqs (load-cljs-api-edn))))
+  (def c (val (first (filter #(and (= "cond" (-> % second :name)) (= "cljs.core" (-> % second :ns))) ss))))
+  (def c1 (assoc-example-strings c)))
 
 ;;;;;;;;;;;;;;;;;;;
 ;; :description ;;;
@@ -115,7 +148,7 @@
 
 (defn load-cljs-api-edn
   []
-  (edn/read-string (slurp (io/file (io/resource "cljs-api.edn")))))
+  (tr-edn/read-string (slurp (io/file (io/resource "cljs-api.edn")))))
 
 (defn api-edn->api-map
   "Given the cljs edn map, generate a new map with only interesting

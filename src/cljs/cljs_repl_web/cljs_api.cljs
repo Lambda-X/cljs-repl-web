@@ -18,12 +18,12 @@
     "cljs.core/drop-last"
     "cljs.core/take-last"],
    :examples-strings
-   [["(butlast [1 2 3]) ;;=> (1 2)"
-     "(butlast [1 2]) ;;=> (1)"
+   [["(butlast [1 2 3]) ;;=>"
+     "(1 2)"
+     "(butlast [1 2]) ;;=>"
+     "(1)"
      "(butlast [1]) ;;=> nil"
-     "(butlast []) ;;=> nil"]],
-   :description-html
-   "<p>Returns a sequence of all but the last item in <code>s</code>.</p><p><code>butlast</code> runs in linear time.</p>",
+     "(butlast [])"]],
    :examples
    [{:id "7a4676",
      :content
@@ -36,7 +36,6 @@
    :name "PersistentArrayMap.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentArrayMap.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "float"
@@ -45,7 +44,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/float",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*print-level*"
@@ -55,30 +53,26 @@
    :full-name "cljs.core/*print-level*",
    :docstring
    "*print-level* controls how many levels deep the printer will\nprint nested objects. If it is bound to logical false, there is no\nlimit. Otherwise, it must be bound to an integer indicating the maximum\nlevel to print. Each argument to print is at level 0; if an argument is a\ncollection, its items are at level 1; and so on. If an object is a\ncollection and is at a level greater than or equal to the value bound to\n*print-level*, the printer prints '#' to represent it. The root binding\nis nil indicating no limit.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "re-pattern"
   {:description
    "Returns an instance of RegExp which has compiled the provided string.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "re-pattern",
    :signature ["[s]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns an instance of RegExp which has compiled the provided string.</p>",
    :full-name "cljs.core/re-pattern",
    :docstring
-   "Returns an instance of RegExp which has compiled the provided string."},
+   "Returns an instance of RegExp which has compiled the provided string.",
+   :examples-strings [],
+   :examples-htmls []},
   "gen-apply-to"
   {:ns "cljs.core",
    :name "gen-apply-to",
    :signature ["[]"],
    :type "macro",
    :full-name "cljs.core/gen-apply-to",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Subvec"
@@ -87,7 +81,6 @@
    :signature ["[meta v start end __hash]"],
    :type "type",
    :full-name "cljs.core/Subvec",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-mod"
@@ -101,11 +94,7 @@
    :type "function/macro",
    :related ["cljs.core/mod"],
    :examples-strings
-   [["(js-mod -5 3) ;;=> -2"
-     "(js-mod 5 3) ;;=> 2"
-     "(js-mod 5 0) ;;=> NaN"]],
-   :description-html
-   "<p>Returns the modulus of dividing numerator <code>n</code> by denominator <code>d</code>, with JavaScript's original behavior for negative numbers.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p><p>Equivalent to <code>x % y</code> in JavaScript.</p>",
+   [["(js-mod -5 3) ;;=> -2" "(js-mod 5 3) ;;=> 2" "(js-mod 5 0)"]],
    :examples
    [{:id "75fa6d",
      :content
@@ -128,8 +117,6 @@
    :type "function",
    :related ["cljs.core/comp" "cljs.core/juxt"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a function <code>f</code> and fewer than the normal arguments to <code>f</code>. Returns a function that takes a variable number of additional arguments. When called, the returned function calls <code>f</code> with the original arguments plus the additional arguments.</p><p><code>&#40;&#40;partial f a b&#41; c d&#41;</code> => <code>&#40;f a b c d&#41;</code></p>",
    :full-name "cljs.core/partial",
    :docstring
    "Takes a function f and fewer than the normal arguments to f, and\nreturns a fn that takes a variable number of additional args. When\ncalled, the returned function calls f with args + additional args."},
@@ -139,7 +126,6 @@
    :signature ["[tag form]"],
    :type "type",
    :full-name "cljs.core/TaggedLiteral",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "boolean"
@@ -153,11 +139,7 @@
    :type "function",
    :related ["special/if"],
    :examples-strings
-   [["(boolean 1) ;;=> true"
-     "(boolean 0) ;;=> true"
-     "(boolean nil) ;;=> false"]],
-   :description-html
-   "<p>Return <code>false</code> if <code>x</code> is false or nil.  Otherwise return <code>true</code>.  This is the truthiness condition used by <code>if</code> expressions.</p>",
+   [["(boolean 1) ;;=> true" "(boolean 0) ;;=> true" "(boolean nil)"]],
    :examples
    [{:id "9edf3a",
      :content
@@ -172,7 +154,6 @@
    :full-name "cljs.core/remove-method",
    :docstring
    "Removes the method of multimethod associated with dispatch-value.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "sorted-set"
@@ -188,8 +169,6 @@
     "cljs.core/rsubseq"
     "cljs.core/sorted-map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new sorted set with supplied <code>keys</code>.</p>",
    :full-name "cljs.core/sorted-set",
    :docstring "Returns a new sorted set with supplied keys."},
   "drop-last"
@@ -202,8 +181,6 @@
    :type "function",
    :related ["cljs.core/drop" "cljs.core/drop-while"],
    :examples-strings [],
-   :description-html
-   "<p>Return a lazy sequence of all but the last <code>n</code> items in <code>s</code>.</p><p><code>n</code> defaults to 1.</p>",
    :full-name "cljs.core/drop-last",
    :docstring
    "Return a lazy sequence of all but the last n (default 1) items in coll"},
@@ -213,7 +190,6 @@
    :signature ["[v offset]"],
    :type "function",
    :full-name "cljs.core/vector-seq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-negate"
@@ -222,7 +198,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-negate",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "map"
@@ -245,25 +220,21 @@
     "cljs.core/keep"
     "cljs.core/juxt"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of applying function <code>f</code> to every element of <code>coll</code>.</p><p>When more than one collection is provided, returns a lazy sequence consisting of the result of applying <code>f</code> to the set of first items of each <code>c</code>, followed by applying <code>f</code> to the set of second items in each <code>c</code>, until any one of the <code>c</code>s is exhausted. Any remaining items in other <code>c</code>s are ignored. Function <code>f</code> should accept number-of-<code>c</code>s arguments.</p><p>Returns a transducer when no collection is provided.</p>",
    :full-name "cljs.core/map",
    :docstring
    "Returns a lazy sequence consisting of the result of applying f to\nthe set of first items of each coll, followed by applying f to the\nset of second items in each coll, until any one of the colls is\nexhausted.  Any remaining items in other colls are ignored. Function\nf should accept number-of-colls arguments. Returns a transducer when\nno collection is provided."},
   "select-keys"
   {:description
    "Returns a map containing only those entries in `map` whose key is in `keys`.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "select-keys",
    :signature ["[map keys]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a map containing only those entries in <code>map</code> whose key is in <code>keys</code>.</p>",
    :full-name "cljs.core/select-keys",
    :docstring
-   "Returns a map containing only those entries in map whose key is in keys"},
+   "Returns a map containing only those entries in map whose key is in keys",
+   :examples-strings [],
+   :examples-htmls []},
   "zipmap"
   {:description
    "Returns a map with `keys` mapped to corresponding `vals`.\n\n<pre>user=> (zipmap [:a :b :c :d] [1 2 3 4])\n{:a 1, :b 2, :c 3, :d 4}</pre>",
@@ -274,8 +245,6 @@
    :type "function",
    :related ["cljs.core/interleave"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a map with <code>keys</code> mapped to corresponding <code>vals</code>.</p><p><pre>user=> (zipmap [:a :b :c :d] [1 2 3 4]) {:a 1, :b 2, :c 3, :d 4}</pre></p>",
    :full-name "cljs.core/zipmap",
    :docstring
    "Returns a map with the keys mapped to the corresponding vals."},
@@ -289,8 +258,6 @@
    :type "function",
    :related ["cljs.core/reverse"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence of the items in <code>coll</code> in reverse order in constant time.</p><p>Returns nil if <code>coll</code> is empty.</p><p><code>coll</code> must be a vector or a sorted-map.</p>",
    :full-name "cljs.core/rseq",
    :docstring
    "Returns, in constant time, a seq of the items in rev (which\ncan be a vector or sorted-map), in reverse order. If rev is empty returns nil"},
@@ -301,7 +268,6 @@
    :type "function",
    :full-name "cljs.core/unchecked-int",
    :docstring "Coerce to int by stripping decimal places.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "compare"
@@ -322,9 +288,7 @@
      "(compare 12 10) ;;=> 1"
      "(compare 10 10) ;;=> 0"
      "(compare 10 nil) ;;=>  1"
-     "(compare 10 (list 1 2 3)) ;; Error: compare on non-nil objects of different types"]],
-   :description-html
-   "<p>Comparator.</p><p>Returns a negative number, zero, or a positive number when <code>x</code> is logically \"less than\", \"equal to\", or \"greater than\" <code>y</code>.</p><p>Uses <code>IComparable</code> if available and <code>google.array.defaultCompare</code> for objects of the same type. nil is treated as a special case and is always less than any other object.</p>",
+     "(compare 10 (list 1 2 3))"]],
    :examples
    [{:id "e13fa0",
      :content
@@ -337,7 +301,6 @@
    :name "IDerefWithTimeout",
    :type "protocol",
    :full-name "cljs.core/IDerefWithTimeout",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "split-with"
@@ -354,8 +317,6 @@
     "cljs.core/take-while"
     "cljs.core/drop-while"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a vector of <code>&#91;&#40;take-while pred coll&#41; &#40;drop-while pred coll&#41;&#93;</code></p>",
    :full-name "cljs.core/split-with",
    :docstring
    "Returns a vector of [(take-while pred coll) (drop-while pred coll)]"},
@@ -365,7 +326,6 @@
    :signature ["[ns name str _hash _meta]"],
    :type "type",
    :full-name "cljs.core/Symbol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "binding"
@@ -380,13 +340,8 @@
    :related ["cljs.core/let"],
    :examples-strings
    [["(def ^:dynamic *foo* 1)"
-     "(defn do-something []"
-     "  (println *foo*))"
-     "(binding [*foo* 2]"
-     "  (do-something)) ;;=> prints 2"
-     "*foo* ;;=> 1"]],
-   :description-html
-   "<p>binding => var-symbol init-expr</p><p>Creates new bindings for the (already-existing) vars, with the supplied initial values, executes the exprs in an implicit <code>do</code>, then re-establishes the bindings that existed before.</p><p>The new bindings are made in parallel (unlike <code>let</code>); all init-exprs are evaluated before the vars are bound to their new values.</p>",
+     "(defn do-something []\n  (println *foo*))"
+     "(binding [*foo* 2]\n  (do-something))"]],
    :examples
    [{:id "7dd17f",
      :content
@@ -404,8 +359,6 @@
    :type "function/macro",
    :related ["cljs.core/char" "cljs.core/integer?"],
    :examples-strings [],
-   :description-html
-   "<p>Coerces <code>x</code> to an integer by stripping decimal places.</p>",
    :full-name "cljs.core/int",
    :docstring "Coerce to int by stripping decimal places."},
   "seq"
@@ -418,8 +371,6 @@
    :type "function",
    :related ["cljs.core/seq?" "cljs.core/empty?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence on the collection. If the collection is empty, returns nil.</p><p><code>&#40;seq nil&#41;</code> returns nil.</p><p><code>seq</code> also works on strings.</p>",
    :full-name "cljs.core/seq",
    :docstring
    "Returns a seq on the collection. If the collection is\nempty, returns nil.  (seq nil) returns nil. seq also works on\nStrings."},
@@ -435,15 +386,9 @@
    :type "macro",
    :related ["cljs.core/map"],
    :examples-strings
-   [["(def a #js [1 2 3])"
-     "(amap a i ret (* 10 (aget a i))) ;;=> #js [10 20 30]"]
+   [["(def a #js [1 2 3])" "(amap a i ret (* 10 (aget a i)))"]
     ["(def a #js [1 2 3])"
-     "(amap a i ret (+ (if (pos? i)"
-     "                   (aget ret (dec i))"
-     "                   0)"
-     "                 (* 10 (aget a i)))) ;;=> #js [10 30 60]"]],
-   :description-html
-   "<p>For quickly creating a new JavaScript array by mapping an expression <code>expr</code> across a JavaScript array <code>a</code>.  The expression can use <code>ret</code> as the current result, which is initialized to <code>a</code>.  It can also use <code>idx</code> to get the current index.</p>",
+     "(amap a i ret (+ (if (pos? i)\n                   (aget ret (dec i))\n                   0)\n                 (* 10 (aget a i))))"]],
    :examples
    [{:id "3a7471",
      :content
@@ -460,12 +405,10 @@
    :type "protocol",
    :full-name "cljs.core/IChunkedNext",
    :docstring "Protocol for accessing the chunks of a collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ancestors"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "ancestors",
    :signature ["[tag]" "[h tag]"],
    :type "function",
@@ -474,11 +417,11 @@
     "cljs.core/isa?"
     "cljs.core/make-hierarchy"
     "cljs.core/derive"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/ancestors",
    :docstring
-   "Returns the immediate and indirect parents of tag, either via a JavaScript type\ninheritance relationship or a relationship established via derive. h\nmust be a hierarchy obtained from make-hierarchy, if not supplied\ndefaults to the global hierarchy"},
+   "Returns the immediate and indirect parents of tag, either via a JavaScript type\ninheritance relationship or a relationship established via derive. h\nmust be a hierarchy obtained from make-hierarchy, if not supplied\ndefaults to the global hierarchy",
+   :examples-strings [],
+   :examples-htmls []},
   "object-array"
   {:ns "cljs.core",
    :name "object-array",
@@ -487,7 +430,6 @@
    :full-name "cljs.core/object-array",
    :docstring
    "Creates an array of objects. Does not coerce array, provided for compatibility\nwith Clojure.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "shorts"
@@ -496,7 +438,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/shorts",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "cond->"
@@ -515,11 +456,7 @@
     "cljs.core/cond"],
    :examples-strings
    [["(def a 12)"
-     "(cond-> a"
-     "  (> a 10) (str \" is greater than 10\")"
-     "  (< a 20) (str \" and less than 20\")) ;;=> \"12 is greater than 10 and less than 20\""]],
-   :description-html
-   "<p>Takes an expression and a set of test/form pairs. Threads <code>expr</code> (via <code>-&gt;</code>) through each form for which the corresponding test expression is true.</p><p>Note that, unlike <code>cond</code> branching, <code>cond-&gt;</code> threading does not short circuit after the first true test expression.</p>",
+     "(cond-> a\n  (> a 10) (str \" is greater than 10\")\n  (< a 20) (str \" and less than 20\"))"]],
    :examples
    [{:id "f08338",
      :content
@@ -534,7 +471,6 @@
    :full-name "cljs.core/IFn",
    :docstring
    "Protocol for adding the ability to invoke an object as a function.\n  For example, a vector can also be used to look up a value:\n  ([1 2 3 4] 1) => 2",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "range"
@@ -547,8 +483,6 @@
    :type "function",
    :related ["cljs.core/repeat"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of nums from <code>start</code> (inclusive) to <code>end</code> (exclusive), by <code>step</code>, where <code>start</code> defaults to 0, <code>step</code> to 1, and <code>end</code> to infinity.</p>",
    :full-name "cljs.core/range",
    :docstring
    "Returns a lazy seq of nums from start (inclusive) to end\n(exclusive), by step, where start defaults to 0, step to 1,\nand end to infinity."},
@@ -558,7 +492,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-short",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-debugger"
@@ -571,13 +504,8 @@
    :signature ["[]"],
    :type "macro",
    :examples-strings
-   [["(defn foo []"
-     "  (println \"HI\")"
-     "  (js-debugger)"
-     "  (println \"WORLD\"))"
-     "(foo) ;; will print \"HI\" then pause JS inside this function ;; if browser devtools are open."]],
-   :description-html
-   "<p>Creates breakpoint that will stop the debugger if the browser's devtools are open.  Equivalent to <code>debugger;</code> in JavaScript.</p>",
+   [["(defn foo []\n  (println \"HI\")\n  (js-debugger)\n  (println \"WORLD\"))"
+     "(foo)"]],
    :examples
    [{:id "87f2fa",
      :content
@@ -590,7 +518,6 @@
    :signature ["[ty]"],
    :type "macro",
    :full-name "cljs.core/es6-iterable",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "not-every?"
@@ -603,8 +530,6 @@
    :type "function",
    :related ["cljs.core/every?" "cljs.core/not-any?" "cljs.core/some"],
    :examples-strings [],
-   :description-html
-   "<p>Returns false if <code>&#40;pred x&#41;</code> is logical true for every <code>x</code> in <code>coll</code>, else true.</p>",
    :full-name "cljs.core/not-every?",
    :docstring
    "Returns false if (pred x) is logical true for every x in\ncoll, else true."},
@@ -618,8 +543,6 @@
    :type "function",
    :related ["cljs.core/take-while" "cljs.core/split-with"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the items in <code>coll</code> starting from the first item for which <code>&#40;pred item&#41;</code> returns logical false.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/drop-while",
    :docstring
    "Returns a lazy sequence of the items in coll starting from the\nfirst item for which (pred item) returns logical false.  Returns a\nstateful transducer when no collection is provided."},
@@ -638,13 +561,11 @@
    [["(peek [1 2 3]) ;;=> 3"
      "(peek [1 2]) ;;=> 2"
      "(peek [1]) ;;=> 1"
-     "(peek []) ;;=> nil"]
+     "(peek [])"]
     ["(peek '(1 2 3)) ;;=> 1"
      "(peek '(1 2)) ;;=> 1"
      "(peek '(1)) ;;=> 1"
-     "(peek '()) ;;=> nil"]],
-   :description-html
-   "<p>Returns the first element of a list; same as <code>first</code>.</p><p>Returns the last element of a vector, and much more efficient than using <code>last</code>.</p><p>Returns nil if <code>coll</code> is empty.</p>",
+     "(peek '())"]],
    :examples
    [{:id "4abc4c",
      :content
@@ -658,31 +579,27 @@
   "subs"
   {:description
    "Returns the substring of `s` beginning at `start` inclusive, and ending at `end`\nexclusive.\n\n`end` defaults to the length of the string.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "subs",
    :signature ["[s start]" "[s start end]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns the substring of <code>s</code> beginning at <code>start</code> inclusive, and ending at <code>end</code> exclusive.</p><p><code>end</code> defaults to the length of the string.</p>",
    :full-name "cljs.core/subs",
    :docstring
-   "Returns the substring of s beginning at start inclusive, and ending\nat end (defaults to length of string), exclusive."},
+   "Returns the substring of s beginning at start inclusive, and ending\nat end (defaults to length of string), exclusive.",
+   :examples-strings [],
+   :examples-htmls []},
   "take-nth"
   {:description
    "Returns a lazy seq of every `n`th item in `coll`.\n\nReturns a stateful transducer when no collection is provided.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "take-nth",
    :signature ["[n]" "[n coll]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a lazy seq of every <code>n</code>th item in <code>coll</code>.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/take-nth",
    :docstring
-   "Returns a lazy seq of every nth item in coll.  Returns a stateful\ntransducer when no collection is provided."},
+   "Returns a lazy seq of every nth item in coll.  Returns a stateful\ntransducer when no collection is provided.",
+   :examples-strings [],
+   :examples-htmls []},
   "enable-console-print!"
   {:ns "cljs.core",
    :name "enable-console-print!",
@@ -690,7 +607,6 @@
    :type "function",
    :full-name "cljs.core/enable-console-print!",
    :docstring "Set *print-fn* to console.log",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ns-name"
@@ -699,7 +615,6 @@
    :signature ["[ns-obj]"],
    :type "function",
    :full-name "cljs.core/ns-name",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*e"
@@ -712,12 +627,8 @@
    :type "var",
    :related ["cljs.core/*1" "cljs.core/*2" "cljs.core/*3"],
    :examples-strings
-   [["(defn cause-error []"
-     "  (throw \"Error: something went wrong\"))"
-     "(cause-error) ;; Error: something went wrong"
-     "*e ;;=> \"Error: something went wrong\""]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Holds the result of the last exception.</p>",
+   [["(defn cause-error []\n  (throw \"Error: something went wrong\"))"
+     "(cause-error)"]],
    :examples
    [{:id "bea858",
      :content
@@ -732,7 +643,6 @@
    :type "function",
    :full-name "cljs.core/prn-str",
    :docstring "Same as pr-str followed by (newline)",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "nthrest"
@@ -745,8 +655,6 @@
    :type "function",
    :related ["cljs.core/drop" "cljs.core/nthnext" "cljs.core/nth"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the <code>nth</code> rest of <code>coll</code>.</p><p>Returns <code>coll</code> when <code>n</code> is 0.</p>",
    :full-name "cljs.core/nthrest",
    :docstring "Returns the nth rest of coll, coll when n is 0."},
   "VectorNode"
@@ -755,7 +663,6 @@
    :signature ["[edit arr]"],
    :type "type",
    :full-name "cljs.core/VectorNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "satisfies?"
@@ -765,7 +672,6 @@
    :type "macro",
    :full-name "cljs.core/satisfies?",
    :docstring "Returns true if x satisfies the protocol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISeqable"
@@ -775,7 +681,6 @@
    :full-name "cljs.core/ISeqable",
    :docstring
    "Protocol for adding the ability to a type to be transformed into a sequence.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vec"
@@ -788,8 +693,6 @@
    :type "function",
    :related ["cljs.core/vector" "cljs.core/vector?"],
    :examples-strings [],
-   :description-html
-   "<p>Creates a new vector containing the contents of <code>coll</code></p>",
    :full-name "cljs.core/vec",
    :docstring
    "Creates a new vector containing the contents of coll. JavaScript arrays\nwill be aliased and should not be modified."},
@@ -810,9 +713,7 @@
     "cljs.core/some->"
     "cljs.core/some->>"],
    :examples-strings
-   [["(as-> [1 2 3 4] x" "  (reduce + x)" "  (/ x 2)) ;;=> 5"]],
-   :description-html
-   "<p>Binds <code>name</code> to <code>expr</code>, evaluates the first form in the lexical context of that binding, then binds <code>name</code> to that result, repeating for each successive form, returning the result of the last form.</p><p>Useful for when you want a threading macro to use different \"places\" at each form.</p>",
+   [["(as-> [1 2 3 4] x\n  (reduce + x)\n  (/ x 2))"]],
    :examples
    [{:id "5e7eef",
      :content
@@ -826,7 +727,6 @@
    :signature ["[h1 len]"],
    :type "function",
    :full-name "cljs.core/m3-fmix",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "integer?"
@@ -838,8 +738,6 @@
    :type "function",
    :related ["cljs.core/int"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is an integer, false otherwise.</p>",
    :full-name "cljs.core/integer?",
    :docstring "Returns true if n is an integer."},
   "js->clj"
@@ -854,11 +752,9 @@
    :related ["cljs.core/clj->js"],
    :examples-strings
    [["(def json \"{\\\"foo\\\": 1, \\\"bar\\\": 2, \\\"baz\\\": [1,2,3]}\")"
-     "(def a (.parse js/JSON json)) ;;=> #js {:foo 1, :bar 2, :baz #js [1 2 3]}"
+     "(def a (.parse js/JSON json))"
      "(js->clj a) ;;=> {\"foo\" 1, \"bar\" 2, \"baz\" [1 2 3]}"
-     "(js->clj a :keywordize-keys true) ;;=> {:foo 1, :bar 2, :baz [1 2 3]}"]],
-   :description-html
-   "<p>Recursively transforms JavaScript arrays into ClojureScript vectors, and JavaScript objects into ClojureScript maps.</p><p>With option <code>{:keywordize-keys true}</code> will convert object fields from strings to keywords.</p><p>Note that <code>js-&gt;clj</code> is not optimized for speed and the [transit.cljs] library is recommended for parsing large amounts of JSON data.</p><p>[transit.cljs]:http://swannodette.github.io/2014/07/26/transit--clojurescript/</p>",
+     "(js->clj a :keywordize-keys true)"]],
    :examples
    [{:id "61d263",
      :content
@@ -873,7 +769,6 @@
    :full-name "cljs.core/*print-dup*",
    :docstring
    "When set to logical true, objects will be printed in a way that preserves\ntheir type when read in later.\n\nDefaults to false.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "loop"
@@ -887,12 +782,7 @@
    :type "macro",
    :related ["special/recur"],
    :examples-strings
-   [["(loop [x 0]"
-     "  (when (< x 10)"
-     "    (println x)"
-     "    (recur (+ x 2)))) ;; Prints: ;; 0 ;; 2 ;; 4 ;; 6 ;; 8 ;; ;;=> nil"]],
-   :description-html
-   "<p>Evaluates the <code>body-exprs</code> in a lexical context in which the symbols in the binding-forms are bound to their respective init-exprs, just like a <code>let</code> form. Acts as a <code>recur</code> target, which will allow tail-call optimization.</p>",
+   [["(loop [x 0]\n  (when (< x 10)\n    (println x)\n    (recur (+ x 2))))"]],
    :examples
    [{:id "60291e",
      :content
@@ -907,7 +797,6 @@
    :full-name "cljs.core/IWatchable",
    :docstring
    "Protocol for types that can be watched. Currently only implemented by Atom.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "min"
@@ -919,9 +808,7 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/max" "cljs.core/min-key"],
-   :examples-strings
-   [["(min 1 2 3 4) ;; => 1" "(apply min [1 2 3 4]) ;; => 1"]],
-   :description-html "<p>Returns the least number argument.</p>",
+   :examples-strings [["(min 1 2 3 4)" "(apply min [1 2 3 4])"]],
    :examples
    [{:id "ab2de5",
      :content
@@ -935,7 +822,6 @@
    :full-name "cljs.core/IMap",
    :docstring
    "Protocol for adding mapping functionality to collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-flip"
@@ -948,11 +834,7 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-clear"],
-   :examples-strings
-   [["(bit-flip 2r1111 2) ;;=> 11 ;; 11 = 2r1011"
-     "(bit-flip 15 2) ;;=> 11"]],
-   :description-html
-   "<p>Flip bit at index <code>n</code>.  Same as <code>x &#94; &#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
+   :examples-strings [["(bit-flip 2r1111 2)" "(bit-flip 15 2)"]],
    :examples
    [{:id "5d7ee0",
      :content
@@ -975,14 +857,11 @@
     "cljs.core/defmacro"
     "cljs.core/fn"],
    :examples-strings [],
-   :description-html
-   "<p>Defines a function.</p><p><code>doc-string?</code> is an optional documentation string.</p><p><code>attr-map?</code> is an optional map of <a href='http://clojure.org/metadata'>metadata</a> to attach to the global variable name.</p><p><code>prepost-map?</code> is an optional map with optional keys <code>:pre</code> and <code>:post</code> that contain collections of <a href='http://blog.fogus.me/2009/12/21/clojures-pre-and-post/'>pre or post conditions</a> for the function.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(defn foo [a b c]   (&#42; a b c))</pre></td><pre><code>  &lt;td&gt;&lt;pre&gt; \n</code></pre>(def foo   (fn [a b c]<pre><code>&#40;\\&#42; a b c&#41;&#41;&#41;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt; \n</code></pre></p>",
    :full-name "cljs.core/defn",
    :docstring
    "Same as (def name (core/fn [params* ] exprs*)) or (def\n name (core/fn ([params* ] exprs*)+)) with any doc-string or attrs added\n to the var metadata. prepost-map defines a map with optional keys\n :pre and :post that contain collections of pre or post conditions."},
   "isa?"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "isa?",
    :signature ["[child parent]" "[h child parent]"],
    :type "function",
@@ -991,11 +870,11 @@
     "cljs.core/descendants"
     "cljs.core/make-hierarchy"
     "cljs.core/derive"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/isa?",
    :docstring
-   "Returns true if (= child parent), or child is directly or indirectly derived from\nparent, either via a JavaScript type inheritance relationship or a\nrelationship established via derive. h must be a hierarchy obtained\nfrom make-hierarchy, if not supplied defaults to the global\nhierarchy"},
+   "Returns true if (= child parent), or child is directly or indirectly derived from\nparent, either via a JavaScript type inheritance relationship or a\nrelationship established via derive. h must be a hierarchy obtained\nfrom make-hierarchy, if not supplied defaults to the global\nhierarchy",
+   :examples-strings [],
+   :examples-htmls []},
   "*flush-on-newline*"
   {:ns "cljs.core",
    :name "*flush-on-newline*",
@@ -1003,7 +882,6 @@
    :full-name "cljs.core/*flush-on-newline*",
    :docstring
    "When set to true, output will be flushed whenever a newline is printed.\n\nDefaults to true.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "printf"
@@ -1013,7 +891,6 @@
    :type "function",
    :full-name "cljs.core/printf",
    :docstring "Prints formatted output, as per format",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "max-key"
@@ -1026,8 +903,6 @@
    :type "function",
    :related ["cljs.core/max" "cljs.core/min-key"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the <code>x</code> for which <code>&#40;k x&#41;</code> is greatest.</p><p><code>&#40;k x&#41;</code> should return a number.</p>",
    :full-name "cljs.core/max-key",
    :docstring "Returns the x for which (k x), a number, is greatest."},
   "HashMap.fromArrays"
@@ -1036,7 +911,6 @@
    :signature ["[ks vs]"],
    :type "function",
    :full-name "cljs.core/HashMap.fromArrays",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "es6-iterator"
@@ -1047,7 +921,6 @@
    :full-name "cljs.core/es6-iterator",
    :docstring
    "EXPERIMENTAL: Return a ES2015 compatible iterator for coll.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "="
@@ -1067,23 +940,20 @@
      "(= 1 1) ;;=> true"
      "(= 1 2) ;;=> false"
      "(= 1 1 1) ;;=> true"
-     "(= 1 1 2) ;;=> false"]
-    ["(= '(1 2) [1 2]) ;;=> true"
+     "(= 1 1 2)"]
+    ["(= '(1 2) [1 2])"
      "(def a #js [1 2])"
      "(def b #js [1 2])"
      "(= a b) ;;=> false"
-     "(= (seq a) (seq b)) ;;=> true"]
+     "(= (seq a) (seq b))"]
     ["(def a {:foo {:bar \"baz\"}})"
      "(def b {:foo {:bar \"baz\"}})"
      "(= a b) ;;=> true"
-     "(= [a b] [a b]) ;=> true"
+     "(= [a b] [a b])"
      "(def a #js {:foo #js {:bar \"baz\"}})"
      "(def b #js {:foo #js {:bar \"baz\"}})"
      "(= a b) ;;=> false"
-     "(= (js->clj a)"
-     "   (js->clj b)) ;;=> true"]],
-   :description-html
-   "<p>Returns true if the value of <code>x</code> equals the value of <code>y</code>, false otherwise.</p><p><code>=</code> is a value comparison, not an identity comparison.</p><p>All collections can be tested for value, regardless of \"depth\".</p>",
+     "(= (js->clj a)\n   (js->clj b))"]],
    :examples
    [{:id "edffb6",
      :content
@@ -1106,8 +976,6 @@
    :type "function/macro",
    :related ["cljs.core/vector" "cljs.core/list?"],
    :examples-strings [],
-   :description-html
-   "<p>Creates a new list containing <code>items</code>.</p>",
    :full-name "cljs.core/list",
    :docstring "Creates a new list containing the items."},
   "IMeta"
@@ -1116,7 +984,6 @@
    :type "protocol",
    :full-name "cljs.core/IMeta",
    :docstring "Protocol for accessing the metadata of an object.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "constantly"
@@ -1133,9 +1000,7 @@
    [["(def ten (constantly 10))"
      "(ten \"hi\") ;;=> 10"
      "(ten 123) ;;=> 10"
-     "(ten :whatever) ;;=> 10"]],
-   :description-html
-   "<p>Returns a function that takes any number of arguments and always returns <code>x</code>.</p>",
+     "(ten :whatever)"]],
    :examples
    [{:id "9d5c25",
      :content
@@ -1153,8 +1018,6 @@
    :type "function",
    :related ["cljs.core/to-array" "cljs.core/make-array"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new JavaScript array from the elements of <code>aseq</code>.</p>",
    :full-name "cljs.core/into-array",
    :docstring
    "Returns an array with components set to the values in aseq. Optional type\nargument accepted for compatibility with Clojure."},
@@ -1165,7 +1028,6 @@
    :full-name "cljs.core/*print-readably*",
    :docstring
    "When set to logical false, strings and characters will be printed with\nnon-alphanumeric characters converted to the appropriate escape sequences.\n\nDefaults to true",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-double"
@@ -1174,7 +1036,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-double",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IWithMeta"
@@ -1183,7 +1044,6 @@
    :type "protocol",
    :full-name "cljs.core/IWithMeta",
    :docstring "Protocol for adding metadata to an object.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr-str-with-opts"
@@ -1194,23 +1054,20 @@
    :full-name "cljs.core/pr-str-with-opts",
    :docstring
    "Prints a sequence of objects to a string, observing all the\noptions given in opts",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "fnil"
   {:description
    "Takes a function `f`, and returns a function that calls `f`, replacing a nil\nfirst argument to `f` with the supplied value `x`. Higher arity versions can\nreplace arguments in the second and third positions (`y`, `z`).\n\nNote that the function `f` can take any number of arguments, not just the one(s)\nbeing nil-patched.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "fnil",
    :signature ["[f x]" "[f x y]" "[f x y z]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Takes a function <code>f</code>, and returns a function that calls <code>f</code>, replacing a nil first argument to <code>f</code> with the supplied value <code>x</code>. Higher arity versions can replace arguments in the second and third positions (<code>y</code>, <code>z</code>).</p><p>Note that the function <code>f</code> can take any number of arguments, not just the one(s) being nil-patched.</p>",
    :full-name "cljs.core/fnil",
    :docstring
-   "Takes a function f, and returns a function that calls f, replacing\na nil first argument to f with the supplied value x. Higher arity\nversions can replace arguments in the second and third\npositions (y, z). Note that the function f can take any number of\narguments, not just the one(s) being nil-patched."},
+   "Takes a function f, and returns a function that calls f, replacing\na nil first argument to f with the supplied value x. Higher arity\nversions can replace arguments in the second and third\npositions (y, z). Note that the function f can take any number of\narguments, not just the one(s) being nil-patched.",
+   :examples-strings [],
+   :examples-htmls []},
   "random-sample"
   {:ns "cljs.core",
    :name "random-sample",
@@ -1219,7 +1076,6 @@
    :full-name "cljs.core/random-sample",
    :docstring
    "Returns items from coll with random probability of prob (0.0 -\n1.0).  Returns a transducer when no collection is provided.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-count"
@@ -1230,10 +1086,7 @@
    :name "bit-count",
    :signature ["[x]"],
    :type "function",
-   :examples-strings
-   [["(bit-count 2r1011) ;;=> 3" "(bit-count 11) ;;=> 3"]],
-   :description-html
-   "<p>Counts the number of bits set in <code>x</code>.</p>",
+   :examples-strings [["(bit-count 2r1011)" "(bit-count 11)"]],
    :examples
    [{:id "35c78c",
      :content
@@ -1251,12 +1104,10 @@
    :related ["cljs.core/+" "cljs.core//"],
    :examples-strings
    [[" ;; there is an implicit 1"
-     "(*) ;;=> 1 ;; the implicit 1 comes into play"
+     "(*) ;;=> 1\n\n;; the implicit 1 comes into play"
      "(* 6) ;;=> 6"
      "(* 2 3) ;;=> 6"
-     "(* 2 3 4) ;;=> 24"]],
-   :description-html
-   "<p>Returns the product of nums.</p><p><code>&#40;&#42;&#41;</code> returns 1.</p>",
+     "(* 2 3 4)"]],
    :examples
    [{:id "bc4a1f",
      :content
@@ -1274,12 +1125,12 @@
    :type "function",
    :related ["cljs.core/rest" "cljs.core/first" "cljs.core/fnext"],
    :examples-strings
-   [["(next [1 2 3]) ;;=> (2 3)"
-     "(next [1 2]) ;;=> (2)"
+   [["(next [1 2 3]) ;;=>"
+     "(2 3)"
+     "(next [1 2]) ;;=>"
+     "(2)"
      "(next [1]) ;;=> nil"
-     "(next []) ;;=> nil"]],
-   :description-html
-   "<p>Returns a sequence of the items after the first and calls <code>seq</code> on its argument.</p><p>Returns nil if <code>coll</code> is empty.</p>",
+     "(next [])"]],
    :examples
    [{:id "7db59a",
      :content
@@ -1293,7 +1144,6 @@
    :signature ["[arr no-clone]"],
    :type "function",
    :full-name "cljs.core/PersistentHashMap.fromArray",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-test"
@@ -1307,11 +1157,9 @@
    :type "function/macro",
    :examples-strings
    [["(bit-test 2r0100 2) ;;=> true"
-     "(bit-test 2r0100 1) ;;=> false"
+     "(bit-test 2r0100 1)"
      "(bit-test 4 2) ;;=> true"
-     "(bit-test 4 1) ;;=> false"]],
-   :description-html
-   "<p>Test bit at index <code>n</code>. Returns <code>true</code> if 1, and <code>false</code> if 0. Same as <code>&#40;x &amp; &#40;1 &lt;&lt; y&#41;&#41; != 0</code> in JavaScript.</p>",
+     "(bit-test 4 1)"]],
    :examples
    [{:id "f64664",
      :content
@@ -1326,7 +1174,6 @@
    :full-name "cljs.core/transduce",
    :docstring
    "reduce with a transformation of f (xf). If init is not\nsupplied, (f) will be called to produce it. f should be a reducing\nstep function that accepts both 1 and 2 arguments, if it accepts\nonly 2 you can add the arity-1 with 'completing'. Returns the result\nof applying (the transformed) xf to init and the first item in coll,\nthen applying xf to that result and the 2nd item, etc. If coll\ncontains no items, returns init and f is not called. Note that\ncertain transforms may inject or skip items.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "keys"
@@ -1338,8 +1185,6 @@
    :type "function",
    :related ["cljs.core/vals"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence of the keys in <code>hash-map</code>.</p>",
    :full-name "cljs.core/keys",
    :docstring "Returns a sequence of the map's keys."},
   "nil-iter"
@@ -1348,7 +1193,6 @@
    :signature ["[]"],
    :type "function",
    :full-name "cljs.core/nil-iter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IVolatile"
@@ -1357,7 +1201,6 @@
    :type "protocol",
    :full-name "cljs.core/IVolatile",
    :docstring "Protocol for adding volatile functionality.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "MultiStepper"
@@ -1366,7 +1209,6 @@
    :signature ["[xform iters nexts]"],
    :type "type",
    :full-name "cljs.core/MultiStepper",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "subvec"
@@ -1379,8 +1221,6 @@
    :type "function",
    :related ["cljs.core/vector" "cljs.core/vector?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a persistent vector of the items in <code>v</code> from <code>start</code> inclusive to <code>end</code> exclusive.</p><p>If <code>end</code> is not supplied, defaults to <code>&#40;count v&#41;</code>.</p><p>This operation is O(1) and very fast, as the resulting vector shares structure with the original and no trimming is done.</p>",
    :full-name "cljs.core/subvec",
    :docstring
    "Returns a persistent vector of the items in vector from\nstart (inclusive) to end (exclusive).  If end is not supplied,\ndefaults to (count vector). This operation is O(1) and very fast, as\nthe resulting vector shares structure with the original and no\ntrimming is done."},
@@ -1397,14 +1237,12 @@
    :examples-strings
    [["(contains? #{:a :b} :a) ;;=> true"
      "(contains? {:a 1, :b 2} :a) ;;=> true"
-     "(contains? {:a 1, :b 2} 1) ;;=> false"
+     "(contains? {:a 1, :b 2} 1)"
      "(contains? [:a :b] :b) ;;=> false"
-     "(contains? [:a :b] 1) ;;=> true"
+     "(contains? [:a :b] 1)"
      "(contains? '(:a :b) :a) ;;=> false"
      "(contains? '(:a :b) 1) ;;=> false"
-     "(contains? (range 3) 1) ;;=> false"]],
-   :description-html
-   "<p>Returns true if the <code>coll</code> contains the lookup key <code>k</code>, otherwise returns false.</p><p>Note that for numerically indexed collections like vectors and arrays, this tests if the numeric key is within the range of indexes.</p><p><code>contains?</code> operates in constant or logarithmic time, using <code>get</code> to perform the lookup. It will not perform a linear search for a value.  <code>some</code> is used for this purpose:</p><pre><code class=\"clj\">&#40;some #{value} coll&#41;\n</code></pre>",
+     "(contains? (range 3) 1)"]],
    :examples
    [{:id "2991f0",
      :content
@@ -1426,9 +1264,7 @@
    [["(<= 1 2) ;;=> true"
      "(<= 2 2) ;;=> true"
      "(<= 3 2) ;;=> false"
-     "(<= 2 3 4 5 6) ;;=> true"]],
-   :description-html
-   "<p>Returns true if each successive number argument is greater than or equal to the previous one, false otherwise.</p>",
+     "(<= 2 3 4 5 6)"]],
    :examples
    [{:id "adb3fd",
      :content
@@ -1450,8 +1286,6 @@
     "cljs.core/some->>"
     "cljs.core/some"],
    :examples-strings [],
-   :description-html
-   "<p>When <code>expr</code> is not nil, threads it into the first form (via <code>-&gt;</code>), and when that result is not nil, through the next, etc.</p>",
    :full-name "cljs.core/some->",
    :docstring
    "When expr is not nil, threads it into the first form (via ->),\nand when that result is not nil, through the next etc"},
@@ -1463,7 +1297,6 @@
    :full-name "cljs.core/undefined?",
    :docstring
    "Returns true if x identical to the JavaScript undefined value.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentVector.EMPTY-NODE"
@@ -1471,7 +1304,6 @@
    :name "PersistentVector.EMPTY-NODE",
    :type "var",
    :full-name "cljs.core/PersistentVector.EMPTY-NODE",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentQueue"
@@ -1480,7 +1312,6 @@
    :signature ["[meta count front rear __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentQueue",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "if-not"
@@ -1493,8 +1324,6 @@
    :type "macro",
    :related ["special/if" "cljs.core/when-not"],
    :examples-strings [],
-   :description-html
-   "<p>If <code>test</code> is false or nil, evaluates and returns <code>then</code>. Otherwise, evaluates and returns <code>else</code>. <code>else</code> defaults to nil if not provided.</p>",
    :full-name "cljs.core/if-not",
    :docstring
    "Evaluates test. If logical false, evaluates and returns then expr, \notherwise else expr, if supplied, else nil."},
@@ -1512,8 +1341,6 @@
     "cljs.core/rsubseq"
     "cljs.core/sorted-set-by"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new sorted map with supplied mappings, using the supplied comparator function.</p><p><code>keyvals</code> must be an even number of forms.</p>",
    :full-name "cljs.core/sorted-map-by",
    :docstring
    "keyval => key val\nReturns a new sorted map with supplied mappings, using the supplied comparator."},
@@ -1528,8 +1355,6 @@
    :related
    ["cljs.core/keep-indexed" "cljs.core/map" "cljs.core/filter"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the non-nil results of <code>&#40;f item&#41;</code>. Note, this means false return values will be included.</p><p><code>f</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
    :full-name "cljs.core/keep",
    :docstring
    "Returns a lazy sequence of the non-nil results of (f item). Note,\nthis means false return values will be included.  f must be free of\nside-effects.  Returns a transducer when no collection is provided."},
@@ -1542,10 +1367,7 @@
    :signature ["[obj]"],
    :type "function",
    :related ["cljs.core/keys"],
-   :examples-strings
-   [["(js-keys #js {:foo 1 :bar 2}) ;;=> #js [\"foo\" \"bar\"]"]],
-   :description-html
-   "<p>Returns the keys for the JavaScript object <code>obj</code>.</p>",
+   :examples-strings [["(js-keys #js {:foo 1 :bar 2})"]],
    :examples
    [{:id "5dd933",
      :content
@@ -1560,7 +1382,6 @@
    :full-name "cljs.core/unchecked-subtract",
    :docstring
    "If no ys are supplied, returns the negation of x, else subtracts\nthe ys from x and returns the result.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "declare"
@@ -1574,11 +1395,7 @@
    :type "macro",
    :related ["special/def"],
    :examples-strings
-   [["a ;; WARNING: Use of undeclared Var"
-     "(declare a)"
-     "a ;;=> nil"]],
-   :description-html
-   "<p>Uses <code>def</code> to establish symbols of <code>names</code> with no bindings.</p><p>Useful for making forward declarations.</p>",
+   [["a\n;; WARNING: Use of undeclared Var" "(declare a)"]],
    :examples
    [{:id "5a2dc2",
      :content
@@ -1589,24 +1406,21 @@
   "when-first"
   {:description
    "With `bindings` as `x`, `xs`, roughly the same as `(when (seq xs) (let [x (first\nxs)] body))` but `xs` is evaluated only once.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "when-first",
    :signature ["[bindings & body]"],
    :type "macro",
-   :examples-strings [],
-   :description-html
-   "<p>With <code>bindings</code> as <code>x</code>, <code>xs</code>, roughly the same as `(when (seq xs) (let [x (first xs)] body))<code> but </code>xs` is evaluated only once.</p>",
    :full-name "cljs.core/when-first",
    :docstring
-   "bindings => x xs\n\nRoughly the same as (when (seq xs) (let [x (first xs)] body)) but xs is evaluated only once"},
+   "bindings => x xs\n\nRoughly the same as (when (seq xs) (let [x (first xs)] body)) but xs is evaluated only once",
+   :examples-strings [],
+   :examples-htmls []},
   "PersistentHashMap"
   {:ns "cljs.core",
    :name "PersistentHashMap",
    :signature ["[meta cnt root has-nil? nil-val __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentHashMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IMultiFn"
@@ -1614,7 +1428,6 @@
    :name "IMultiFn",
    :type "protocol",
    :full-name "cljs.core/IMultiFn",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "seqable?"
@@ -1624,7 +1437,6 @@
    :type "function",
    :full-name "cljs.core/seqable?",
    :docstring "Return true if s satisfies ISeqable",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "nthnext"
@@ -1637,8 +1449,6 @@
    :type "function",
    :related ["cljs.core/nth" "cljs.core/drop" "cljs.core/nthrest"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the <code>n</code>th <code>next</code> of <code>coll</code>.</p><p>Returns <code>&#40;seq coll&#41;</code> when <code>n</code> is 0.</p>",
    :full-name "cljs.core/nthnext",
    :docstring "Returns the nth next of coll, (seq coll) when n is 0."},
   "IKVReduce"
@@ -1648,7 +1458,6 @@
    :full-name "cljs.core/IKVReduce",
    :docstring
    "Protocol for associative types that can reduce themselves\n  via a function of key and val. Called by cljs.core/reduce-kv.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "to-array-2d"
@@ -1661,8 +1470,6 @@
    :type "function",
    :related ["cljs.core/to-array"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a (potentially-ragged) 2-dimensional JavaScript array containing the contents of <code>coll</code>.</p>",
    :full-name "cljs.core/to-array-2d",
    :docstring
    "Returns a (potentially-ragged) 2-dimensional array\ncontaining the contents of coll."},
@@ -1672,7 +1479,6 @@
    :signature ["[name]"],
    :type "function",
    :full-name "cljs.core/demunge",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentTreeSet"
@@ -1681,7 +1487,6 @@
    :signature ["[meta tree-map __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentTreeSet",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "disj!"
@@ -1692,7 +1497,6 @@
    :full-name "cljs.core/disj!",
    :docstring
    "disj[oin]. Returns a transient set of the same (hashed/sorted) type, that\ndoes not contain key(s).",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentArrayMap.fromArrays"
@@ -1701,7 +1505,6 @@
    :signature ["[ks vs]"],
    :type "function",
    :full-name "cljs.core/PersistentArrayMap.fromArrays",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Reduced"
@@ -1710,7 +1513,6 @@
    :signature ["[val]"],
    :type "type",
    :full-name "cljs.core/Reduced",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "aget"
@@ -1724,8 +1526,6 @@
    :related
    ["cljs.core/.." "cljs.core/aset" "cljs.core/get" "cljs.core/nth"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the value at index <code>i</code> of a JavaScript array.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 3&#93;&#41;\n&#40;aget a 0&#41;\n;;=&gt; 1\n</code></pre><p>Retrieve nested elements with the additional <code>idxs</code> arguments.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 #js &#91;3 4&#93;&#93;&#41;\n&#40;aget a 2 0&#41;\n;;=&gt; 3\n</code></pre><p>For JavaScript objects, use [<code>goog.object/get</code>] or the multi-arity [<code>goog.object/getValueByKeys</code>].</p><pre><code class=\"clj\">&#40;require 'goog.object&#41;\n&#40;def obj #js {:foo #js {:bar 2}}&#41;\n\n&#40;goog.object/get obj &quot;foo&quot;&#41;\n;;=&gt; #js {:bar 2} \n\n&#40;goog.object/getValueByKeys obj &quot;foo&quot; &quot;bar&quot;&#41;\n;;=&gt; 2\n</code></pre><p>[<code>goog.object/get</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#get [<code>goog.object/getValueByKeys</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#getValueByKeys</p>",
    :full-name "cljs.core/aget",
    :docstring "Returns the value at the index."},
   "find"
@@ -1738,8 +1538,6 @@
    :type "function",
    :related ["cljs.core/get" "cljs.core/get-in"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the map entry for key <code>k</code>, or nil if <code>k</code> is not found.</p>",
    :full-name "cljs.core/find",
    :docstring
    "Returns the map entry for key, or nil if key not present."},
@@ -1748,7 +1546,6 @@
    :name "m3-C2",
    :type "var",
    :full-name "cljs.core/m3-C2",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "system-time"
@@ -1759,7 +1556,6 @@
    :full-name "cljs.core/system-time",
    :docstring
    "Returns highest resolution time offered by host in milliseconds.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ITransientCollection"
@@ -1769,7 +1565,6 @@
    :full-name "cljs.core/ITransientCollection",
    :docstring
    "Protocol for adding basic functionality to transient collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "create-ns"
@@ -1778,7 +1573,6 @@
    :signature ["[sym]" "[sym ns-obj]"],
    :type "function",
    :full-name "cljs.core/create-ns",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "number?"
@@ -1790,8 +1584,6 @@
    :type "function/macro",
    :related ["cljs.core/integer?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is a number, false otherwise.</p>",
    :full-name "cljs.core/number?",
    :docstring "Returns true if x is a JavaScript number."},
   "IRecord"
@@ -1800,7 +1592,6 @@
    :type "protocol",
    :full-name "cljs.core/IRecord",
    :docstring "Marker interface indicating a record object",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-shift-right-zero-fill"
@@ -1810,7 +1601,6 @@
    :type "function/macro",
    :full-name "cljs.core/bit-shift-right-zero-fill",
    :docstring "DEPRECATED: Bitwise shift right with zero fill",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "booleans"
@@ -1819,7 +1609,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/booleans",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "dissoc"
@@ -1834,9 +1623,7 @@
    :related
    ["cljs.core/assoc" "cljs.core/disj" "cljs.core/select-keys"],
    :examples-strings
-   [["(dissoc {:key \"value\" :key2 \"value2\"} :key) ;;=> {:key2 \"value2\"}"]],
-   :description-html
-   "<p>dissoc(iate)</p><p>Returns a new map that does not contain a mapping for key(s).</p><p>Has no effect on the map type (hashed/sorted).</p>",
+   [["(dissoc {:key \"value\" :key2 \"value2\"} :key)"]],
    :examples
    [{:id "fd6ae9",
      :content
@@ -1852,7 +1639,6 @@
    :full-name "cljs.core/mix-collection-hash",
    :docstring
    "Mix final collection hash for ordered or unordered collections.\nhash-basis is the combined collection hash, count is the number\nof elements included in the basis. Note this is the hash code\nconsistent with =, different from .hashCode.\nSee http://clojure.org/data_structures#hash for full algorithms.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-divide-int"
@@ -1863,7 +1649,6 @@
    :full-name "cljs.core/unchecked-divide-int",
    :docstring
    "If no denominators are supplied, returns 1/numerator,\nelse returns numerator divided by all of the denominators.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "gensym"
@@ -1874,7 +1659,6 @@
    :full-name "cljs.core/gensym",
    :docstring
    "Returns a new symbol with a unique name. If a prefix string is\nsupplied, the name is prefix# where # is some unique number. If\nprefix is not supplied, the prefix is 'G__'.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-obj"
@@ -1888,10 +1672,7 @@
    :type "function/macro",
    :related
    ["syntax/js-literal" "cljs.core/array" "cljs.core/clj->js"],
-   :examples-strings
-   [["(js-obj \"foo\" 1 \"bar\" 2) ;;=> #js {:foo 1, :bar 2}"]],
-   :description-html
-   "<p>Returns a new JavaScript object using the supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
+   :examples-strings [["(js-obj \"foo\" 1 \"bar\" 2)"]],
    :examples
    [{:id "657cd7",
      :content
@@ -1913,12 +1694,10 @@
    [["(def tcoll (transient! {}))"
      "(assoc! tcoll :a 1)"
      "(assoc! tcoll :b 2)"
-     "tcoll ;;=> #<[object Object]> "
+     "tcoll\n;;=> #<[object Object]>"
      "(:a tcoll) ;;=> 1"
      "(:b tcoll) ;;=> 2"
-     "(def a (persistent! tcoll)) ;;=> {:a 1 :b 2}"]],
-   :description-html
-   "<p>assoc(iate) on transient collection</p><p>When applied to a transient map, adds mapping of key(s) to val(s).</p><p>When applied to a transient vector, sets the val at index.  Note - index must be <= (count vector).</p><p>Returns coll.</p>",
+     "(def a (persistent! tcoll))"]],
    :examples
    [{:id "7d1e6b",
      :content
@@ -1937,11 +1716,7 @@
    :type "function/macro",
    :related ["cljs.core/dissoc"],
    :examples-strings
-   [["(def a #js {:foo 1 :bar 2})"
-     "(js-delete a \"foo\")"
-     "a ;;=> #js {:bar 2}"]],
-   :description-html
-   "<p>Deletes property <code>key</code> in JavaScript object <code>obj</code>.</p><p>Equivalent to <code>delete obj&#91;key&#93;</code> in JavaScript.</p>",
+   [["(def a #js {:foo 1 :bar 2})" "(js-delete a \"foo\")"]],
    :examples
    [{:id "5b24ea",
      :content
@@ -1958,8 +1733,6 @@
    :type "function",
    :related ["cljs.core/array?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a JavaScript object, false otherwise.</p>",
    :full-name "cljs.core/object?",
    :docstring "Returns true if x's constructor is Object"},
   "when-some"
@@ -1972,8 +1745,6 @@
    :type "macro",
    :related ["cljs.core/if-some"],
    :examples-strings [],
-   :description-html
-   "<p>When <code>test</code> is not nil, evaluates <code>body</code> with <code>x</code> bound to the value of <code>test</code>.</p>",
    :full-name "cljs.core/when-some",
    :docstring
    "bindings => binding-form test\n\nWhen test is not nil, evaluates body with binding-form bound to the\nvalue of test"},
@@ -1983,7 +1754,6 @@
    :signature ["[i record base-count fields ext-map-iter]"],
    :type "type",
    :full-name "cljs.core/RecordIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vector?"
@@ -1995,8 +1765,6 @@
    :type "function",
    :related ["cljs.core/vector" "cljs.core/vec"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a vector, false otherwise.</p>",
    :full-name "cljs.core/vector?",
    :docstring "Return true if x satisfies IVector"},
   "remove-watch"
@@ -2011,15 +1779,10 @@
    :related ["cljs.core/add-watch"],
    :examples-strings
    [["(def a (atom {}))"
-     "(add-watch a :logger"
-     "  (fn [_key _atom old-state new-state]"
-     "    (println \"old:\" old-state)"
-     "    (println \"new:\" new-state)))"
-     "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"
+     "(add-watch a :logger\n  (fn [_key _atom old-state new-state]\n    (println \"old:\" old-state)\n    (println \"new:\" new-state)))"
+     "(swap! a assoc :foo \"bar\") ;;=> will print the following:\n;; old: {}\n;; new: {:foo \"bar\"}"
      "(remove-watch a :logger)"
-     "(swap! a assoc :foo 3) ;;=> nothing will be printed..."]],
-   :description-html
-   "<p>Removes a watch function identified by <code>key</code> from atom <code>a</code>.  The function must have originally been set by <code>add-watch</code>.</p>",
+     "(swap! a assoc :foo 3)"]],
    :examples
    [{:id "70044a",
      :content
@@ -2034,7 +1797,6 @@
    :type "macro",
    :full-name "cljs.core/js-inline-comment",
    :docstring "Emit an inline JavaScript comment.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-or"
@@ -2046,11 +1808,7 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-xor"],
-   :examples-strings
-   [["(bit-or 2r1100 2r1010) ;;=> 14 ;; 14 = 2r1110"
-     "(bit-or 12 10) ;;=> 14"]],
-   :description-html
-   "<p>Bitwise \"or\". Same as <code>x | y</code> in JavaScript.</p>",
+   :examples-strings [["(bit-or 2r1100 2r1010)" "(bit-or 12 10)"]],
    :examples
    [{:id "ecea10",
      :content
@@ -2065,7 +1823,6 @@
    :full-name "cljs.core/reduced",
    :docstring
    "Wraps x in a way such that a reduce will terminate with the value x",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ES6SetEntriesIterator"
@@ -2074,7 +1831,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/ES6SetEntriesIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*print-meta*"
@@ -2084,7 +1840,6 @@
    :full-name "cljs.core/*print-meta*",
    :docstring
    "If set to logical true, when printing an object, its metadata will also\nbe printed in a form that can be read back by the reader.\n\nDefaults to false.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "not"
@@ -2097,8 +1852,6 @@
    :type "function",
    :related ["cljs.core/complement" "cljs.core/false?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is logical false, false otherwise.</p>",
    :full-name "cljs.core/not",
    :docstring "Returns true if x is logical false, false otherwise."},
   "longs"
@@ -2107,7 +1860,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/longs",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "HashMap.EMPTY"
@@ -2115,7 +1867,6 @@
    :name "HashMap.EMPTY",
    :type "var",
    :full-name "cljs.core/HashMap.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "newline"
@@ -2124,7 +1875,6 @@
    :signature ["[]" "[opts]"],
    :type "function",
    :full-name "cljs.core/newline",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reductions"
@@ -2137,8 +1887,6 @@
    :type "function",
    :related ["cljs.core/reduce"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the intermediate values of the reduction (as per <code>reduce</code>) of <code>coll</code> by <code>f</code>, starting with <code>init</code>.</p>",
    :full-name "cljs.core/reductions",
    :docstring
    "Returns a lazy seq of the intermediate values of the reduction (as\nper reduce) of coll by f, starting with init."},
@@ -2148,7 +1896,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/is_proto_",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-negate-int"
@@ -2157,7 +1904,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-negate-int",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "doall"
@@ -2170,8 +1916,6 @@
    :type "function",
    :related ["cljs.core/dorun" "cljs.core/doseq"],
    :examples-strings [],
-   :description-html
-   "<p>Forces evaluation of a lazy sequence. Often used to see the effects of a sequence produced via functions that have side effects.</p><p><code>doall</code> walks through the successive <code>next</code>s of the sequence, returning the head and causing the entire sequence to reside in memory at one time.</p>",
    :full-name "cljs.core/doall",
    :docstring
    "When lazy sequences are produced via functions that have side\neffects, any effects other than those needed to produce the first\nelement in the seq do not occur until the seq is consumed. doall can\nbe used to force any effects. Walks through the successive nexts of\nthe seq, retains the head and returns it, thus causing the entire\nseq to reside in memory at one time."},
@@ -2185,8 +1929,6 @@
    :type "macro",
    :related ["cljs.core/when-let" "special/if"],
    :examples-strings [],
-   :description-html
-   "<p>When <code>test</code> is logical true, evaluates <code>then</code> with the value of <code>test</code> bound to <code>x</code>. Otherwise, evaluates <code>else</code> with no bindings.</p><p><code>else</code> defaults to nil.</p>",
    :full-name "cljs.core/if-let",
    :docstring
    "bindings => binding-form test\n\nIf test is true, evaluates then with binding-form bound to the value of \ntest, if not, yields else"},
@@ -2198,7 +1940,6 @@
    :full-name "cljs.core/pop!",
    :docstring
    "Removes the last item from a transient vector. If\nthe collection is empty, throws an exception. Returns coll",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-add"
@@ -2208,7 +1949,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-add",
    :docstring "Returns the sum of nums. (+) returns 0.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IReversible"
@@ -2217,7 +1957,6 @@
    :type "protocol",
    :full-name "cljs.core/IReversible",
    :docstring "Protocol for reversing a seq.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "run!"
@@ -2228,7 +1967,6 @@
    :full-name "cljs.core/run!",
    :docstring
    "Runs the supplied procedure (via reduce), for purposes of side\neffects, on successive items in the collection. Returns nil",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentArrayMapSeq"
@@ -2237,7 +1975,6 @@
    :signature ["[arr i _meta]"],
    :type "type",
    :full-name "cljs.core/PersistentArrayMapSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "string-hash-cache-count"
@@ -2245,7 +1982,6 @@
    :name "string-hash-cache-count",
    :type "var",
    :full-name "cljs.core/string-hash-cache-count",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "find-ns-obj"
@@ -2254,7 +1990,6 @@
    :signature ["[ns]"],
    :type "function",
    :full-name "cljs.core/find-ns-obj",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IEditableCollection"
@@ -2264,7 +1999,6 @@
    :full-name "cljs.core/IEditableCollection",
    :docstring
    "Protocol for collections which can transformed to transients.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "NS_CACHE"
@@ -2272,7 +2006,6 @@
    :name "NS_CACHE",
    :type "var",
    :full-name "cljs.core/NS_CACHE",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "DEMUNGE_MAP"
@@ -2280,7 +2013,6 @@
    :name "DEMUNGE_MAP",
    :type "var",
    :full-name "cljs.core/DEMUNGE_MAP",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "doseq"
@@ -2297,8 +2029,6 @@
     "cljs.core/for"
     "cljs.core/dotimes"],
    :examples-strings [],
-   :description-html
-   "<p>Repeatedly executes <code>body</code> (presumably for side-effects) with bindings and filtering as provided by <code>for</code>. Does not retain the head of the sequence.</p><p>Returns nil.</p>",
    :full-name "cljs.core/doseq",
    :docstring
    "Repeatedly executes body (presumably for side-effects) with\nbindings and filtering as provided by \"for\".  Does not retain\nthe head of the sequence. Returns nil."},
@@ -2312,8 +2042,6 @@
    :type "function",
    :related ["cljs.core/seq?" "cljs.core/coll?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>coll</code> implements the <code>ISequential</code> protocol, false otherwise.</p><p>Lists and vectors are sequential.</p>",
    :full-name "cljs.core/sequential?",
    :docstring "Returns true if coll satisfies ISequential"},
   "get-validator"
@@ -2325,8 +2053,6 @@
    :type "function",
    :related ["cljs.core/atom" "cljs.core/set-validator!"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the validator function for atom <code>a</code>.</p>",
    :full-name "cljs.core/get-validator",
    :docstring "Gets the validator-fn for a var/ref/agent/atom."},
   "pr-with-opts"
@@ -2337,7 +2063,6 @@
    :full-name "cljs.core/pr-with-opts",
    :docstring
    "Prints a sequence of objects using string-print, observing all\nthe options given in opts",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "replicate"
@@ -2347,7 +2072,6 @@
    :type "function",
    :full-name "cljs.core/replicate",
    :docstring "Returns a lazy seq of n xs.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "m3-hash-int"
@@ -2356,7 +2080,6 @@
    :signature ["[in]"],
    :type "function",
    :full-name "cljs.core/m3-hash-int",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IDeref"
@@ -2366,7 +2089,6 @@
    :full-name "cljs.core/IDeref",
    :docstring
    "Protocol for adding dereference functionality to a reference.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "long-array"
@@ -2377,7 +2099,6 @@
    :full-name "cljs.core/long-array",
    :docstring
    "Creates an array of longs. Does not coerce array, provided for compatibility\nwith Clojure.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Delay"
@@ -2386,7 +2107,6 @@
    :signature ["[f value]"],
    :type "type",
    :full-name "cljs.core/Delay",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "some-fn"
@@ -2399,8 +2119,6 @@
    :type "function",
    :related ["cljs.core/every-pred" "cljs.core/some" "cljs.core/or"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a set of predicate functions and returns a function <code>f</code> that returns the first logical true value returned by one of its composing predicates against any of its arguments, else it returns logical false.</p><p>Note that <code>f</code> is short-circuiting in that it will stop execution on the first argument that triggers a logical true result against the original predicates.</p>",
    :full-name "cljs.core/some-fn",
    :docstring
    "Takes a set of predicates and returns a function f that returns the first logical true value\nreturned by one of its composing predicates against any of its arguments, else it returns\nlogical false. Note that f is short-circuiting in that it will stop execution on the first\nargument that triggers a logical true result against the original predicates."},
@@ -2419,8 +2137,6 @@
    :type "function",
    :related ["cljs.core/assoc-in" "cljs.core/get-in"],
    :examples-strings [],
-   :description-html
-   "<p>\"Updates\" a value in a nested associative structure, where <code>ks</code> is a sequence of keys and <code>f</code> is a function that will take the old value and any supplied arguments and return the new value. Returns a new nested structure.</p><p>If any levels do not exist, hash-maps will be created.</p>",
    :full-name "cljs.core/update-in",
    :docstring
    "'Updates' a value in a nested associative structure, where ks is a\nsequence of keys and f is a function that will take the old value\nand any supplied args and return the new value, and returns a new\nnested structure.  If any levels do not exist, hash-maps will be\ncreated."},
@@ -2432,7 +2148,6 @@
    :full-name "special/var",
    :docstring
    "The symbol must resolve to a var, and the Var object\nitself (not its value) is returned. The reader macro #'x expands to (var x).",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "RedNode"
@@ -2441,7 +2156,6 @@
    :signature ["[key val left right __hash]"],
    :type "type",
    :full-name "cljs.core/RedNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "hash-map"
@@ -2454,8 +2168,6 @@
    :type "function/macro",
    :related ["cljs.core/array-map" "cljs.core/sorted-map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new hash map with supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
    :full-name "cljs.core/hash-map",
    :docstring
    "keyval => key val\nReturns a new hash map with supplied mappings."},
@@ -2467,7 +2179,6 @@
    :full-name "cljs.core/try",
    :docstring
    "(try expr* catch-clause* finally-clause?)\n\n Special Form\n\n catch-clause => (catch protoname name expr*)\n finally-clause => (finally expr*)\n\nCatches and handles JavaScript exceptions.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "/"
@@ -2481,12 +2192,7 @@
    :type "function/macro",
    :related ["cljs.core/*" "cljs.core/quot"],
    :examples-strings
-   [["(/ 6 3) ;;=> 2"
-     "(/ 6 3 2) ;;=> 1"
-     "(/ 10) ;;=> 0.1"
-     "(/ 1 3) ;;=> 0.3333333333333333"]],
-   :description-html
-   "<p>If no denominators are supplied, returns 1/numerator, else returns numerator divided by all of the denominators.</p>",
+   [["(/ 6 3) ;;=> 2" "(/ 6 3 2) ;;=> 1" "(/ 10) ;;=> 0.1" "(/ 1 3)"]],
    :examples
    [{:id "824bb7",
      :content
@@ -2497,24 +2203,21 @@
   "str"
   {:description
    "`(str)` and `(str nil)` return the empty string.\n\n`(str x)` returns `x.toString()`.\n\nWith more than one argument, returns the concatenation of the `str` values of\nthe arguments.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "str",
    :signature ["[]" "[x]" "[x & ys]"],
    :type "function/macro",
-   :examples-strings [],
-   :description-html
-   "<p><code>&#40;str&#41;</code> and <code>&#40;str nil&#41;</code> return the empty string.</p><p><code>&#40;str x&#41;</code> returns <code>x.toString&#40;&#41;</code>.</p><p>With more than one argument, returns the concatenation of the <code>str</code> values of the arguments.</p>",
    :full-name "cljs.core/str",
    :docstring
-   "With no args, returns the empty string. With one arg x, returns\nx.toString().  (str nil) returns the empty string. With more than\none arg, returns the concatenation of the str values of the args."},
+   "With no args, returns the empty string. With one arg x, returns\nx.toString().  (str nil) returns the empty string. With more than\none arg, returns the concatenation of the str values of the args.",
+   :examples-strings [],
+   :examples-htmls []},
   "import-macros"
   {:ns "cljs.core",
    :name "import-macros",
    :signature ["[ns [& vars]]"],
    :type "macro",
    :full-name "cljs.core/import-macros",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pop"
@@ -2532,13 +2235,14 @@
    [["(pop [1 2 3]) ;;=> [1 2]"
      "(pop [1 2]) ;;=> [1]"
      "(pop [1]) ;;=> []"
-     "(pop []) ;; Error: Can't pop empty vector"]
-    ["(pop '(1 2 3)) ;;=> (2 3)"
-     "(pop '(1 2)) ;;=> (2)"
-     "(pop '(1)) ;;=> ()"
-     "(pop '()) ;; Error: Can't pop empty list"]],
-   :description-html
-   "<p>For a list, returns a new list without the first item.</p><p>For a vector, returns a new vector without the last item.</p>",
+     "(pop [])"]
+    ["(pop '(1 2 3)) ;;=>"
+     "(2 3)"
+     "(pop '(1 2)) ;;=>"
+     "(2)"
+     "(pop '(1)) ;;=>"
+     "()"
+     "(pop '())"]],
    :examples
    [{:id "6bd9f7",
      :content
@@ -2557,7 +2261,6 @@
    :full-name "cljs.core/long",
    :docstring
    "Coerce to long by stripping decimal places. Identical to `int'.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reverse"
@@ -2570,23 +2273,20 @@
    :type "function",
    :related ["cljs.core/rseq"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence of the items in <code>coll</code> in reverse order. Not lazy.</p>",
    :full-name "cljs.core/reverse",
    :docstring
    "Returns a seq of the items in coll in reverse order. Not lazy."},
   "vswap!"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "vswap!",
    :signature ["[vol f & args]"],
    :type "macro",
    :related ["cljs.core/vreset!" "cljs.core/volatile!"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/vswap!",
    :docstring
-   "Non-atomically swaps the value of the volatile as if:\n(apply f current-value-of-vol args). Returns the value that\nwas swapped in."},
+   "Non-atomically swaps the value of the volatile as if:\n(apply f current-value-of-vol args). Returns the value that\nwas swapped in.",
+   :examples-strings [],
+   :examples-htmls []},
   "rand"
   {:description
    "Returns a random floating point number between 0 inclusive and `n` exclusive.\n\n`n` defaults to 1.",
@@ -2597,8 +2297,6 @@
    :type "function",
    :related ["cljs.core/rand-int" "cljs.core/rand-nth"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a random floating point number between 0 inclusive and <code>n</code> exclusive.</p><p><code>n</code> defaults to 1.</p>",
    :full-name "cljs.core/rand",
    :docstring
    "Returns a random floating point number between 0 (inclusive) and\nn (default 1) (exclusive)."},
@@ -2610,7 +2308,6 @@
    :full-name "cljs.core/conj!",
    :docstring
    "Adds x to the transient collection, and return coll. The 'addition'\nmay happen at different 'places' depending on the concrete type.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "trampoline"
@@ -2621,7 +2318,6 @@
    :full-name "cljs.core/trampoline",
    :docstring
    "trampoline can be used to convert algorithms requiring mutual\nrecursion without stack consumption. Calls f with supplied args, if\nany. If f returns a fn, calls that fn with no arguments, and\ncontinues to repeat, until the return value is not a fn, then\nreturns that non-fn value. Note that if you want to return a fn as a\nfinal value, you must wrap it in some data structure and unpack it\nafter trampoline returns.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "hash"
@@ -2632,7 +2328,6 @@
    :full-name "cljs.core/hash",
    :docstring
    "Returns the hash code of its argument. Note this is the hash code\nconsistent with =.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "simple-benchmark"
@@ -2644,7 +2339,6 @@
    :full-name "cljs.core/simple-benchmark",
    :docstring
    "Runs expr iterations times in the context of a let expression with\nthe given bindings, then prints out the bindings and the expr\nfollowed by number of iterations and total time. The optional\nargument print-fn, defaulting to println, sets function used to\nprint the result. expr's string representation will be produced\nusing pr-str in any case.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   ".."
@@ -2658,20 +2352,15 @@
    :type "macro",
    :related ["special/." "cljs.core/->" "cljs.core/doto"],
    :examples-strings
-   [["// JavaScript"
-     "\"a b c d\".toUpperCase().replace(\"A\", \"X\")"
-     "//=> \"X B C D\""
+   [["// JavaScript\n\"a b c d\".toUpperCase"
+     "()"
+     ".replace"
+     "(\"A\", \"X\")"
      " ;; ClojureScript"
-     "(.. \"a b c d\""
-     "    toUpperCase"
-     "    (replace \"A\" \"X\")) ;;=> \"X B C D\""
+     "(.. \"a b c d\"\n    toUpperCase\n    (replace \"A\" \"X\"))"
      "(. (. \"a b c d\" toUpperCase) (replace \"A\" \"X\"))"
-     "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\") ;;=> \"X B C D\""
-     "(-> \"a b c d\""
-     "    .toUpperCase"
-     "    (.replace \"A\" \"X\")) ;;=> \"X B C D\""]],
-   :description-html
-   "<p>For interop, the <code>..</code> macro allows method/property chaining on the given JavaScript object <code>o</code>.</p><p>It essentially combines the thread-first <code>-&gt;</code> macro with the <code>.</code> operator.</p>",
+     "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\")"
+     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\"))"]],
    :examples
    [{:id "500658",
      :content
@@ -2685,7 +2374,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/chars",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-dec-int"
@@ -2695,7 +2383,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-dec-int",
    :docstring "Returns a number one less than x, an int.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "m3-seed"
@@ -2703,7 +2390,6 @@
    :name "m3-seed",
    :type "var",
    :full-name "cljs.core/m3-seed",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-str"
@@ -2717,10 +2403,7 @@
    :type "macro",
    :related ["cljs.core/str"],
    :examples-strings
-   [["(js-str 23) ;;=> \"23\""
-     "(js-str #js {:foo 1}) ;;=> \"[Object object]\""]],
-   :description-html
-   "<p>Convert <code>s</code> to string using JavaScript's coercion behavior.</p><p>Equivalent to <code>''+s</code> in JavaScript.</p>",
+   [["(js-str 23) ;;=> \"23\"" "(js-str #js {:foo 1})"]],
    :examples
    [{:id "e92009",
      :content
@@ -2732,7 +2415,6 @@
    :signature ["[i base arr v start end]"],
    :type "type",
    :full-name "cljs.core/RangedIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IStack"
@@ -2742,7 +2424,6 @@
    :full-name "cljs.core/IStack",
    :docstring
    "Protocol for collections to provide access to their items as stacks. The top\n  of the stack should be accessed in the most efficient way for the different\n  data structures.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "TransientArrayMap"
@@ -2751,7 +2432,6 @@
    :signature ["[editable? len arr]"],
    :type "type",
    :full-name "cljs.core/TransientArrayMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "every?"
@@ -2764,8 +2444,6 @@
    :type "function",
    :related ["cljs.core/some" "cljs.core/not-any?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>&#40;pred x&#41;</code> is logical true for every <code>x</code> in <code>coll</code>, else false.</p>",
    :full-name "cljs.core/every?",
    :docstring
    "Returns true if (pred x) is logical true for every x in coll, else\nfalse."},
@@ -2775,7 +2453,6 @@
    :signature ["[ty]"],
    :type "function",
    :full-name "cljs.core/type->str",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "print-map"
@@ -2784,7 +2461,6 @@
    :signature ["[m print-one writer opts]"],
    :type "function",
    :full-name "cljs.core/print-map",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "with-redefs"
@@ -2795,7 +2471,6 @@
    :full-name "cljs.core/with-redefs",
    :docstring
    "binding => var-symbol temp-value-expr\n\nTemporarily redefines vars while executing the body.  The\ntemp-value-exprs will be evaluated and each resulting value will\nreplace in parallel the root value of its var.  After the body is\nexecuted, the root values of all the vars will be set back to their\nold values. Useful for mocking out functions during testing.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "EmptyList"
@@ -2804,7 +2479,6 @@
    :signature ["[meta]"],
    :type "type",
    :full-name "cljs.core/EmptyList",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "-"
@@ -2817,10 +2491,7 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/+"],
-   :examples-strings
-   [["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2) ;;=> 5"]],
-   :description-html
-   "<p>If no <code>y</code>s are supplied, returns the negation of <code>x</code>, else subtracts the <code>y</code>s from <code>x</code> and returns the result.</p>",
+   :examples-strings [["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2)"]],
    :examples
    [{:id "0a974e",
      :content
@@ -2834,12 +2505,10 @@
    :signature ["[edit cnt arr]"],
    :type "type",
    :full-name "cljs.core/ArrayNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "descendants"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "descendants",
    :signature ["[tag]" "[h tag]"],
    :type "function",
@@ -2848,11 +2517,11 @@
     "cljs.core/isa?"
     "cljs.core/make-hierarchy"
     "cljs.core/derive"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/descendants",
    :docstring
-   "Returns the immediate and indirect children of tag, through a\nrelationship established via derive. h must be a hierarchy obtained\nfrom make-hierarchy, if not supplied defaults to the global\nhierarchy. Note: does not work on JavaScript type inheritance\nrelationships."},
+   "Returns the immediate and indirect children of tag, through a\nrelationship established via derive. h must be a hierarchy obtained\nfrom make-hierarchy, if not supplied defaults to the global\nhierarchy. Note: does not work on JavaScript type inheritance\nrelationships.",
+   :examples-strings [],
+   :examples-htmls []},
   "key"
   {:description "Returns the key of the map entry.",
    :examples-htmls [],
@@ -2862,7 +2531,6 @@
    :type "function",
    :related ["cljs.core/keys"],
    :examples-strings [],
-   :description-html "<p>Returns the key of the map entry.</p>",
    :full-name "cljs.core/key",
    :docstring "Returns the key of the map entry."},
   "hash-unordered-coll"
@@ -2873,7 +2541,6 @@
    :full-name "cljs.core/hash-unordered-coll",
    :docstring
    "Returns the hash code, consistent with =, for an external unordered\ncollection implementing Iterable. For maps, the iterator should\nreturn map entries whose hash is computed as\n  (hash-ordered-coll [k v]).\nSee http://clojure.org/data_structures#hash for full algorithms.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "repeat"
@@ -2890,8 +2557,6 @@
     "cljs.core/constantly"
     "cljs.core/dotimes"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of <code>x</code>s.</p><p>The length of the sequence is infinite, or <code>n</code> if provided.</p>",
    :full-name "cljs.core/repeat",
    :docstring
    "Returns a lazy (infinite!, or length n if supplied) sequence of xs."},
@@ -2902,7 +2567,6 @@
    :full-name "cljs.core/*print-fn*",
    :docstring
    "Each runtime environment provides a different way to print output.\nWhatever function *print-fn* is bound to will be passed any\nStrings which should be printed.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "LazyTransformer"
@@ -2911,7 +2575,6 @@
    :signature ["[stepper first rest meta]"],
    :type "type",
    :full-name "cljs.core/LazyTransformer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "set-print-err-fn!"
@@ -2921,7 +2584,6 @@
    :type "function",
    :full-name "cljs.core/set-print-err-fn!",
    :docstring "Set *print-err-fn* to f.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "dissoc!"
@@ -2932,7 +2594,6 @@
    :full-name "cljs.core/dissoc!",
    :docstring
    "Returns a transient map that doesn't contain a mapping for key(s).",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Iterator"
@@ -2941,7 +2602,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/Iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "methods"
@@ -2952,7 +2612,6 @@
    :full-name "cljs.core/methods",
    :docstring
    "Given a multimethod, returns a map of dispatch values -> dispatch fns",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "dedupe"
@@ -2963,7 +2622,6 @@
    :full-name "cljs.core/dedupe",
    :docstring
    "Returns a lazy sequence removing consecutive duplicates in coll.\nReturns a transducer when no collection is provided.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*assert*"
@@ -2971,7 +2629,6 @@
    :name "*assert*",
    :type "dynamic var",
    :full-name "cljs.core/*assert*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vary-meta"
@@ -2989,9 +2646,7 @@
      "(def b (vary-meta a assoc :bar true))"
      "(= a b) ;;=> true"
      "(meta a) ;;=> {:foo true}"
-     "(meta b) ;;=> {:foo true, :bar true}"]],
-   :description-html
-   "<p>Returns an object of the same type and value as <code>obj</code>, with <code>&#40;apply f &#40;meta obj&#41; args&#41;</code> as its metadata.</p>",
+     "(meta b)"]],
    :examples
    [{:id "8cca62",
      :content
@@ -3009,8 +2664,6 @@
    :type "function/macro",
    :related ["cljs.core/false?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is the value true, false otherwise.</p>",
    :full-name "cljs.core/true?",
    :docstring "Returns true if x is the value true, false otherwise."},
   "second"
@@ -3027,8 +2680,6 @@
     "cljs.core/fnext"
     "cljs.core/next"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the second item in <code>coll</code>.</p><p>Same as <code>&#40;first &#40;next coll&#41;&#41;</code></p>",
    :full-name "cljs.core/second",
    :docstring "Same as (first (next x))"},
   "m3-hash-unencoded-chars"
@@ -3037,7 +2688,6 @@
    :signature ["[in]"],
    :type "function",
    :full-name "cljs.core/m3-hash-unencoded-chars",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISwap"
@@ -3046,7 +2696,6 @@
    :type "protocol",
    :full-name "cljs.core/ISwap",
    :docstring "Protocol for adding swapping functionality.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "iterate"
@@ -3060,8 +2709,6 @@
    :related
    ["cljs.core/cycle" "cljs.core/repeatedly" "cljs.core/repeat"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of <code>x</code>, <code>&#40;f x&#41;</code>, <code>&#40;f &#40;f x&#41;&#41;</code> etc.</p><p><code>f</code> must be free of side-effects.</p>",
    :full-name "cljs.core/iterate",
    :docstring
    "Returns a lazy sequence of x, (f x), (f (f x)) etc. f must be free of side-effects"},
@@ -3073,7 +2720,6 @@
    :full-name "cljs.core/force",
    :docstring
    "If x is a Delay, returns the (possibly cached) value of its expression, else returns x",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentHashMap.EMPTY"
@@ -3081,7 +2727,6 @@
    :name "PersistentHashMap.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentHashMap.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunk-append"
@@ -3090,7 +2735,6 @@
    :signature ["[b x]"],
    :type "function",
    :full-name "cljs.core/chunk-append",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "copy-arguments"
@@ -3099,7 +2743,6 @@
    :signature ["[dest]"],
    :type "macro",
    :full-name "cljs.core/copy-arguments",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "hash-combine"
@@ -3108,7 +2751,6 @@
    :signature ["[seed hash]"],
    :type "function",
    :full-name "cljs.core/hash-combine",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "persistent!"
@@ -3119,7 +2761,6 @@
    :full-name "cljs.core/persistent!",
    :docstring
    "Returns a new, persistent version of the transient collection, in\nconstant time. The transient collection cannot be used after this\ncall, any such use will throw an exception.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ObjMap"
@@ -3128,7 +2769,6 @@
    :signature ["[meta keys strobj update-count __hash]"],
    :type "type",
    :full-name "cljs.core/ObjMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ObjMap.EMPTY"
@@ -3136,7 +2776,6 @@
    :name "ObjMap.EMPTY",
    :type "var",
    :full-name "cljs.core/ObjMap.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunk-cons"
@@ -3145,7 +2784,6 @@
    :signature ["[chunk rest]"],
    :type "function",
    :full-name "cljs.core/chunk-cons",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "false?"
@@ -3158,8 +2796,6 @@
    :type "function/macro",
    :related ["cljs.core/true?" "cljs.core/not"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is the value false, false otherwise.</p>",
    :full-name "cljs.core/false?",
    :docstring
    "Returns true if x is the value false, false otherwise."},
@@ -3169,7 +2805,6 @@
    :type "protocol",
    :full-name "cljs.core/IEmptyableCollection",
    :docstring "Protocol for creating an empty collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "max"
@@ -3181,7 +2816,6 @@
    :type "function/macro",
    :related ["cljs.core/min" "cljs.core/max-key"],
    :examples-strings [],
-   :description-html "<p>Returns the greatest number argument.</p>",
    :full-name "cljs.core/max",
    :docstring "Returns the greatest of the nums."},
   "try*"
@@ -3189,7 +2823,6 @@
    :name "try*",
    :type "special form",
    :full-name "special/try*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "MetaFn"
@@ -3198,7 +2831,6 @@
    :signature ["[afn meta]"],
    :type "type",
    :full-name "cljs.core/MetaFn",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "m3-mix-K1"
@@ -3207,7 +2839,6 @@
    :signature ["[k1]"],
    :type "function",
    :full-name "cljs.core/m3-mix-K1",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISet"
@@ -3216,7 +2847,6 @@
    :type "protocol",
    :full-name "cljs.core/ISet",
    :docstring "Protocol for adding set functionality to a collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "cycle"
@@ -3229,8 +2859,6 @@
    :type "function",
    :related ["cljs.core/lazy-seq" "cljs.core/repeatedly"],
    :examples-strings [],
-   :description-html
-   "<p>Returns an infinite lazy sequence of repetitions of the items in <code>coll</code>.</p>",
    :full-name "cljs.core/cycle",
    :docstring
    "Returns a lazy (infinite!) sequence of repetitions of the items in coll."},
@@ -3244,8 +2872,6 @@
    :type "macro",
    :related ["cljs.core/lazy-seq" "cljs.core/concat"],
    :examples-strings [],
-   :description-html
-   "<p>Expands to code which yields a lazy sequence of the concatenation of the supplied collections. Each collections expression is not evaluated until it is needed.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;code&gt;&#40;lazy-cat x y z&#41;&lt;/code&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(concat (lazy-seq x)<pre><code>    &#40;lazy-seq y&#41;\n    &#40;lazy-seq z&#41;&#41;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt; \n</code></pre></p>",
    :full-name "cljs.core/lazy-cat",
    :docstring
    "Expands to code which yields a lazy sequence of the concatenation\nof the supplied colls.  Each coll expr is not evaluated until it is\nneeded.\n\n(lazy-cat xs ys zs) === (concat (lazy-seq xs) (lazy-seq ys) (lazy-seq zs))"},
@@ -3255,7 +2881,6 @@
    :signature ["[opts obj]"],
    :type "function",
    :full-name "cljs.core/print-meta?",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "get-in"
@@ -3272,8 +2897,6 @@
     "cljs.core/find"
     "cljs.core/get"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the value in a nested associative structure, where <code>ks</code> is a sequence of keys.</p><p>Returns nil if the key is not found, or <code>not-found</code> if supplied.</p>",
    :full-name "cljs.core/get-in",
    :docstring
    "Returns the value in a nested associative structure,\nwhere ks is a sequence of keys. Returns nil if the key is not present,\nor the not-found value if supplied."},
@@ -3285,7 +2908,6 @@
    :full-name "special/new",
    :docstring
    "The args, if any, are evaluated from left to right, and\npassed to the JavaScript constructor. The constructed object is\nreturned.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "dispatch-fn"
@@ -3295,7 +2917,6 @@
    :type "function",
    :full-name "cljs.core/dispatch-fn",
    :docstring "Given a multimethod, return it's dispatch-fn.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "LazyTransformer.create"
@@ -3304,7 +2925,6 @@
    :signature ["[xform coll]"],
    :type "function",
    :full-name "cljs.core/LazyTransformer.create",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr-sequential"
@@ -3315,7 +2935,6 @@
    :full-name "cljs.core/pr-sequential",
    :docstring
    "Do not use this.  It is kept for backwards compatibility with the\nold IPrintable protocol.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "nth"
@@ -3332,8 +2951,6 @@
     "cljs.core/nthnext"
     "cljs.core/get"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the value at index <code>n</code> or <code>not-found</code> if the index is out of bounds.</p><p><code>nth</code> will throw an exception if <code>n</code> is out of bounds and <code>not-found</code> is not supplied.</p><p><code>nth</code> works for Strings, Arrays, Regex Matchers, Lists, and Sequences. For Sequences, <code>nth</code> takes O(n) time.</p>",
    :full-name "cljs.core/nth",
    :docstring
    "Returns the value at the index. get returns nil if index out of\nbounds, nth throws an exception unless not-found is supplied.  nth\nalso works for strings, arrays, regex Matchers and Lists, and,\nin O(n) time, for sequences."},
@@ -3343,7 +2960,6 @@
    :signature ["[arr off end]"],
    :type "type",
    :full-name "cljs.core/ArrayChunk",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "BlackNode"
@@ -3352,7 +2968,6 @@
    :signature ["[key val left right __hash]"],
    :type "type",
    :full-name "cljs.core/BlackNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "regexp?"
@@ -3362,7 +2977,6 @@
    :type "function",
    :full-name "cljs.core/regexp?",
    :docstring "Returns true if x is a JavaScript RegExp instance.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "add-to-string-hash-cache"
@@ -3371,7 +2985,6 @@
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/add-to-string-hash-cache",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ICounted"
@@ -3381,7 +2994,6 @@
    :full-name "cljs.core/ICounted",
    :docstring
    "Protocol for adding the ability to count a collection in constant time.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*loaded-libs*"
@@ -3389,7 +3001,6 @@
    :name "*loaded-libs*",
    :type "dynamic var",
    :full-name "cljs.core/*loaded-libs*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "compare-and-set!"
@@ -3404,12 +3015,8 @@
    :related ["cljs.core/atom" "cljs.core/reset!" "cljs.core/swap!"],
    :examples-strings
    [["(def a (atom \"abc\"))"
-     "(compare-and-set! a \"abc\" \"def\") ;;=> true"
-     "@a ;;=> \"def\""
-     "(compare-and-set! a \"abc\" \"def\") ;;=> false"
-     "@a ;;=> \"def\""]],
-   :description-html
-   "<p>Atomically sets the value of atom <code>a</code> to <code>newval</code> if and only if the current value of the atom is identical to <code>oldval</code>.</p><p>Returns true if set happened, false otherwise.</p>",
+     "(compare-and-set! a \"abc\" \"def\") ;;=> true\n\n@a\n;;=> \"def\""
+     "(compare-and-set! a \"abc\" \"def\")"]],
    :examples
    [{:id "1fa306",
      :content
@@ -3427,8 +3034,6 @@
    :type "special form",
    :related ["cljs.core/aset" "cljs.core/reset!"],
    :examples-strings [],
-   :description-html
-   "<p>Sets <code>js-var</code> to <code>val</code> using the JavaScript <code>=</code> operator.</p>",
    :full-name "special/set!",
    :docstring "Used to set vars and JavaScript object fields"},
   "comp"
@@ -3441,10 +3046,7 @@
    :signature ["[& fns]"],
    :type "function",
    :related ["cljs.core/partial" "cljs.core/juxt"],
-   :examples-strings
-   [["(def f (comp str inc +))" "(f 1 2 3) ;;=> \"7\""]],
-   :description-html
-   "<p>Takes a set of functions and returns a function that is the composition of those functions.</p><p>The returned function takes a variable number of arguments, applies the rightmost of <code>fns</code> to the arguments, whose result is subsequently applied to the next left function, and so on.</p><p><code>&#40;&#40;comp a b c&#41; x y&#41;</code> = <code>&#40;a &#40;b &#40;c x y&#41;&#41;&#41;</code></p>",
+   :examples-strings [["(def f (comp str inc +))" "(f 1 2 3)"]],
    :examples
    [{:id "5d3250",
      :content
@@ -3465,8 +3067,6 @@
     "cljs.core/split-at"
     "cljs.core/partition-by"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of lists of <code>n</code> items each, at offsets <code>step</code> apart.</p><p>If <code>step</code> is not supplied, defaults to <code>n</code>, i.e. the partitions do not overlap.</p><p>If a <code>pad</code> collection is supplied, its elements will be used as necessary to complete the last partition up to <code>n</code> items.</p><p>Returns a partition with less than <code>n</code> items if there are not enough padding elements.</p>",
    :full-name "cljs.core/partition",
    :docstring
    "Returns a lazy sequence of lists of n items each, at offsets step\napart. If step is not supplied, defaults to n, i.e. the partitions\ndo not overlap. If a pad collection is supplied, use its elements as\nnecessary to complete last partition up to n items. In case there are\nnot enough padding elements, return a partition with less than n items."},
@@ -3482,8 +3082,6 @@
    :type "macro",
    :related ["cljs.core/defn" "cljs.core/defn-"],
    :examples-strings [],
-   :description-html
-   "<p>Defines a function.</p><p><code>name?</code> is an optional name of the function to be used inside <code>body</code>. This is useful for recursive calls. Note that <code>name?</code> in <code>fn</code> is not the same as the <code>name</code> argument to <code>defn</code>, which defines a global symbol for the function.</p><p><code>params&#42;</code> are the arguments to the function and a binding form for the symbols that the arguments will take inside the body of the function. Functions can have arity of 0-20 and there is no runtime enforcement of arity when calling a function (just like in JavaScript).</p><p><code>prepost-map?</code> is an optional map with optional keys <code>:pre</code> and <code>:post</code> that contain collections of <a href='http://blog.fogus.me/2009/12/21/clojures-pre-and-post/'>pre or post conditions</a> for the function.</p><p><code>body</code> is a series of expressions that execute when the function is called. The arguments to the function are mapped to symbols in <code>params&#42;</code> and are available in <code>body</code>. The value of the last expression in <code>body</code> is the return value of calling the function.</p>",
    :full-name "cljs.core/fn",
    :docstring
    "params => positional-params* , or positional-params* & next-param\npositional-param => binding-form\nnext-param => binding-form\nname => symbol\n\nDefines a function"},
@@ -3493,7 +3091,6 @@
    :signature ["[]"],
    :type "function",
    :full-name "cljs.core/flush",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "tagged-literal?"
@@ -3504,7 +3101,6 @@
    :full-name "cljs.core/tagged-literal?",
    :docstring
    "Return true if the value is the data representation of a tagged literal",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "println-str"
@@ -3514,7 +3110,6 @@
    :type "function",
    :full-name "cljs.core/println-str",
    :docstring "println to a string, returning it",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "munge"
@@ -3523,7 +3118,6 @@
    :signature ["[name]"],
    :type "function",
    :full-name "cljs.core/munge",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentTreeMap.EMPTY"
@@ -3531,7 +3125,6 @@
    :name "PersistentTreeMap.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentTreeMap.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentVector"
@@ -3540,7 +3133,6 @@
    :signature ["[meta cnt shift root tail __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentVector",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "cloneable?"
@@ -3550,7 +3142,6 @@
    :type "function",
    :full-name "cljs.core/cloneable?",
    :docstring "Return true if x implements ICloneable protocol.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "for"
@@ -3563,29 +3154,24 @@
    :type "macro",
    :related ["cljs.core/doseq" "cljs.core/doall" "special/recur"],
    :examples-strings [],
-   :description-html
-   "<p>List comprehension.</p><p>Takes a vector of one or more binding-form/collection-expr pairs, each followed by zero or more modifiers, and yields a lazy sequence of evaluations of expr.</p><p>Collections are iterated in a nested fashion, rightmost fastest, and nested coll-exprs can refer to bindings created in prior binding-forms. Supported modifiers are: <code>:let &#91;binding-form expr ...&#93;</code>, <code>:while test</code>, <code>:when test</code>.</p>",
    :full-name "cljs.core/for",
    :docstring
    "List comprehension. Takes a vector of one or more\n binding-form/collection-expr pairs, each followed by zero or more\n modifiers, and yields a lazy sequence of evaluations of expr.\n Collections are iterated in a nested fashion, rightmost fastest,\n and nested coll-exprs can refer to bindings created in prior\n binding-forms.  Supported modifiers are: :let [binding-form expr ...],\n :while test, :when test.\n\n(take 100 (for [x (range 100000000) y (range 1000000) :while (< y x)]  [x y]))"},
   "shuffle"
   {:description "Returns a random permutation of `coll`.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "shuffle",
    :signature ["[coll]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a random permutation of <code>coll</code>.</p>",
    :full-name "cljs.core/shuffle",
-   :docstring "Return a random permutation of coll"},
+   :docstring "Return a random permutation of coll",
+   :examples-strings [],
+   :examples-htmls []},
   "deftype*"
   {:ns "special",
    :name "deftype*",
    :type "special form",
    :full-name "special/deftype*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "defrecord*"
@@ -3593,7 +3179,6 @@
    :name "defrecord*",
    :type "special form",
    :full-name "special/defrecord*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-xor"
@@ -3606,11 +3191,7 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-or"],
-   :examples-strings
-   [["(bit-xor 2r1100 2r1010) ;;=> 6 ;; 6 = 2r0110"
-     "(bit-xor 12 10) ;;=> 6"]],
-   :description-html
-   "<p>Bitwise \"exclusive or\". Same as <code>x &#94; y</code> in JavaScript.</p>",
+   :examples-strings [["(bit-xor 2r1100 2r1010)" "(bit-xor 12 10)"]],
    :examples
    [{:id "3ccd99",
      :content
@@ -3625,7 +3206,6 @@
    :full-name "cljs.core/defrecord",
    :docstring
    "(defrecord name [fields*]  options* specs*)\n\nCurrently there are no options.\n\nEach spec consists of a protocol or interface name followed by zero\nor more method bodies:\n\nprotocol-or-Object\n(methodName [args*] body)*\n\nThe record will have the (immutable) fields named by\nfields, which can have type hints. Protocols and methods\nare optional. The only methods that can be supplied are those\ndeclared in the protocols.  Note that method bodies are\nnot closures, the local environment includes only the named fields,\nand those fields can be accessed directly.\n\nMethod definitions take the form:\n\n(methodname [args*] body)\n\nThe argument and return types can be hinted on the arg and\nmethodname symbols. If not supplied, they will be inferred, so type\nhints should be reserved for disambiguation.\n\nMethods should be supplied for all methods of the desired\nprotocol(s). You can also define overrides for\nmethods of Object. Note that a parameter must be supplied to\ncorrespond to the target object ('this' in JavaScript parlance). Note also\nthat recur calls to the method head should *not* pass the target object, it\nwill be supplied automatically and can not be substituted.\n\nIn the method bodies, the (unqualified) name can be used to name the\nclass (for calls to new, instance? etc).\n\nThe type will have implementations of several ClojureScript\nprotocol generated automatically: IMeta/IWithMeta (metadata support) and\nIMap, etc.\n\nIn addition, defrecord will define type-and-value-based =,\nand will define ClojureScript IHash and IEquiv.\n\nTwo constructors will be defined, one taking the designated fields\nfollowed by a metadata map (nil for none) and an extension field\nmap (nil for none), and one taking only the fields (using nil for\nmeta and extension fields). Note that the field names __meta\nand __extmap are currently reserved and should not be used when\ndefining your own records.\n\nGiven (defrecord TypeName ...), two factory functions will be\ndefined: ->TypeName, taking positional parameters for the fields,\nand map->TypeName, taking a map of keywords to field values.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*out*"
@@ -3633,7 +3213,6 @@
    :name "*out*",
    :type "dynamic var",
    :full-name "cljs.core/*out*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "eduction"
@@ -3644,7 +3223,6 @@
    :full-name "cljs.core/eduction",
    :docstring
    "Returns a reducible/iterable application of the transducers\nto the items in coll. Transducers are applied in order as if\ncombined with comp. Note that these applications will be\nperformed every time reduce/iterator is called.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ChunkBuffer"
@@ -3653,7 +3231,6 @@
    :signature ["[buf end]"],
    :type "type",
    :full-name "cljs.core/ChunkBuffer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "with-meta"
@@ -3671,9 +3248,7 @@
      "(def b (with-meta a {:bar true}))"
      "(= a b) ;;=> true"
      "(meta a) ;;=> {:foo true}"
-     "(meta b) ;;=> {:bar true}"]],
-   :description-html
-   "<p>Returns an object of the same type and value as <code>obj</code>, with map <code>m</code> as its metadata.</p>",
+     "(meta b)"]],
    :examples
    [{:id "f189d4",
      :content
@@ -3691,8 +3266,6 @@
    :type "special form",
    :related ["special/try" "special/finally" "special/throw"],
    :examples-strings [],
-   :description-html
-   "<p><code>catch</code> should be used inside of a <code>try</code> expression.</p><p><code>exception-type</code> should be the type of exception thrown (usually <code>js/Error</code> or <code>js/Object</code>). When there is a match, the thrown exception will be bound to <code>name</code> inside of <code>expr&#42;</code> and <code>expr&#42;</code> will be evaluated and returned as the value of the <code>try</code> expression.</p><p>Since JavaScript allows you to throw anything, <code>exception-type</code> can be set to <code>:default</code> to catch all types of exceptions.</p>",
    :full-name "special/catch",
    :docstring
    "catch-clause => (catch classname name expr*)\nfinally-clause => (finally expr*)\nCatches and handles JavaScript exceptions."},
@@ -3703,7 +3276,6 @@
    :type "function",
    :full-name "cljs.core/prn-str-with-opts",
    :docstring "Same as pr-str-with-opts followed by (newline)",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "aclone"
@@ -3717,13 +3289,7 @@
    :type "function",
    :related ["cljs.core/array" "cljs.core/make-array"],
    :examples-strings
-   [["(def a #js [1 2 3])"
-     "(def b (aclone a))"
-     "(aset b 0 4)"
-     "a ;;=> #js [1 2 3]"
-     "b ;;=> #js [4 2 3]"]],
-   :description-html
-   "<p>Creates a clone of the given JavaScript array <code>arr</code>.  The result is a new JavaScript array, which is a shallow copy, not a deep copy.</p>",
+   [["(def a #js [1 2 3])" "(def b (aclone a))" "(aset b 0 4)"]],
    :examples
    [{:id "422c4e",
      :content
@@ -3745,8 +3311,6 @@
     "cljs.core/take-last"
     "cljs.core/take-nth"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the first <code>n</code> items in <code>coll</code>. Returns all the items if there are fewer than <code>n</code>.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/take",
    :docstring
    "Returns a lazy sequence of the first n items in coll, or all items if\nthere are fewer than n.  Returns a stateful transducer when\nno collection is provided."},
@@ -3756,7 +3320,6 @@
    :signature ["[mseq _meta]"],
    :type "type",
    :full-name "cljs.core/ValSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ITransientSet"
@@ -3766,7 +3329,6 @@
    :full-name "cljs.core/ITransientSet",
    :docstring
    "Protocol for adding set functionality to a transient collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "rest"
@@ -3784,12 +3346,14 @@
     "cljs.core/drop"
     "cljs.core/pop"],
    :examples-strings
-   [["(rest [1 2 3]) ;;=> (2 3)"
-     "(rest [1 2]) ;;=> (2)"
-     "(rest [1]) ;;=> ()"
-     "(rest []) ;;=> ()"]],
-   :description-html
-   "<p>Returns a possibly empty sequence of the items after the first item.</p><p>Calls <code>seq</code> on its argument.</p>",
+   [["(rest [1 2 3]) ;;=>"
+     "(2 3)"
+     "(rest [1 2]) ;;=>"
+     "(2)"
+     "(rest [1]) ;;=>"
+     "()"
+     "(rest []) ;;=>"
+     "()"]],
    :examples
    [{:id "0869af",
      :content
@@ -3805,7 +3369,6 @@
    :full-name "cljs.core/unsafe-cast",
    :docstring
    "EXPERIMENTAL: Subject to change. Unsafely cast a value to a different type.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "identical?"
@@ -3818,21 +3381,18 @@
    :type "function/macro",
    :related ["cljs.core/=" "cljs.core/=="],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> and <code>y</code> are the same object, false otherwise.</p>",
    :full-name "cljs.core/identical?",
    :docstring "Tests if 2 arguments are the same object"},
   "volatile?"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "volatile?",
    :signature ["[x]"],
    :type "function",
    :related ["cljs.core/volatile!"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/volatile?",
-   :docstring "Returns true if x is a volatile."},
+   :docstring "Returns true if x is a volatile.",
+   :examples-strings [],
+   :examples-htmls []},
   "reduce-kv"
   {:description
    "Reduces an associative collection.\n\n`f` should be a function of 3 arguments. Returns the result of applying `f` to\n`init`, the first key and the first value in `coll`, then applying `f` to that\nresult and the 2nd key and value, etc.\n\nIf `coll` contains no entries, returns `init` and `f` is not called.\n\nNote that `reduce-kv` is supported on vectors, where the keys will be the\nordinals.",
@@ -3843,8 +3403,6 @@
    :type "function",
    :related ["cljs.core/reduce"],
    :examples-strings [],
-   :description-html
-   "<p>Reduces an associative collection.</p><p><code>f</code> should be a function of 3 arguments. Returns the result of applying <code>f</code> to <code>init</code>, the first key and the first value in <code>coll</code>, then applying <code>f</code> to that result and the 2nd key and value, etc.</p><p>If <code>coll</code> contains no entries, returns <code>init</code> and <code>f</code> is not called.</p><p>Note that <code>reduce-kv</code> is supported on vectors, where the keys will be the ordinals.</p>",
    :full-name "cljs.core/reduce-kv",
    :docstring
    "Reduces an associative collection. f should be a function of 3\narguments. Returns the result of applying f to init, the first key\nand the first value in coll, then applying f to that result and the\n2nd key and value, etc. If coll contains no entries, returns init\nand f is not called. Note that reduce-kv is supported on vectors,\nwhere the keys will be the ordinals."},
@@ -3854,7 +3412,6 @@
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/key->js",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "merge-with"
@@ -3867,8 +3424,6 @@
    :type "function",
    :related ["cljs.core/merge"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a map that consists of the rest of the maps <code>conj</code>-ed onto the first.</p><p>If a key occurs in more than one map, the mapping(s) from the latter (left-to- right) will be combined with the mapping in the result by calling `(f val-in- result val-in-latter)`.</p>",
    :full-name "cljs.core/merge-with",
    :docstring
    "Returns a map that consists of the rest of the maps conj-ed onto\nthe first.  If a key occurs in more than one map, the mapping(s)\nfrom the latter (left-to-right) will be combined with the mapping in\nthe result by calling (f val-in-result val-in-latter)."},
@@ -3886,9 +3441,7 @@
      "(count []) ;;=> 0"
      "(count nil) ;;=> 0"
      "(count #{:a :b}) ;;=> 2"
-     "(count {:key \"value\" :key2 \"value2\"}) ;;=> 2"]],
-   :description-html
-   "<p>Returns the number of items in <code>x</code>.</p><p><code>count</code> works on arrays, lists, maps, sets, strings, and vectors.</p><p><code>&#40;count nil&#41;</code> returns 0.</p>",
+     "(count {:key \"value\" :key2 \"value2\"})"]],
    :examples
    [{:id "96e470",
      :content
@@ -3902,7 +3455,6 @@
    :signature ["[ns]"],
    :type "function",
    :full-name "cljs.core/find-macros-ns",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "persistent-array-map-seq"
@@ -3911,7 +3463,6 @@
    :signature ["[arr i _meta]"],
    :type "function",
    :full-name "cljs.core/persistent-array-map-seq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "update"
@@ -3927,7 +3478,6 @@
    :full-name "cljs.core/update",
    :docstring
    "'Updates' a value in an associative structure, where k is a\nkey and f is a function that will take the old value\nand any supplied args and return the new value, and returns a new\nstructure.  If the key does not exist, nil is passed as the old value.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-float"
@@ -3936,12 +3486,10 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-float",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "derive"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "derive",
    :signature ["[tag parent]" "[h tag parent]"],
    :type "function",
@@ -3950,11 +3498,11 @@
     "cljs.core/descendants"
     "cljs.core/isa?"
     "cljs.core/make-hierarchy"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/derive",
    :docstring
-   "Establishes a parent/child relationship between parent and\ntag. Parent must be a namespace-qualified symbol or keyword and\nchild can be either a namespace-qualified symbol or keyword or a\nclass. h must be a hierarchy obtained from make-hierarchy, if not\nsupplied defaults to, and modifies, the global hierarchy."},
+   "Establishes a parent/child relationship between parent and\ntag. Parent must be a namespace-qualified symbol or keyword and\nchild can be either a namespace-qualified symbol or keyword or a\nclass. h must be a hierarchy obtained from make-hierarchy, if not\nsupplied defaults to, and modifies, the global hierarchy.",
+   :examples-strings [],
+   :examples-htmls []},
   "dorun"
   {:description
    "Forces evaluation of a lazy sequence. Often used to see the effects of a\nsequence produced via functions that have side effects.\n\n`dorun` walks through the successive `next`s of the sequence and returns nil.",
@@ -3965,8 +3513,6 @@
    :type "function",
    :related ["cljs.core/doall"],
    :examples-strings [],
-   :description-html
-   "<p>Forces evaluation of a lazy sequence. Often used to see the effects of a sequence produced via functions that have side effects.</p><p><code>dorun</code> walks through the successive <code>next</code>s of the sequence and returns nil.</p>",
    :full-name "cljs.core/dorun",
    :docstring
    "When lazy sequences are produced via functions that have side\neffects, any effects other than those needed to produce the first\nelement in the seq do not occur until the seq is consumed. dorun can\nbe used to force any effects. Walks through the successive nexts of\nthe seq, does not retain the head and returns nil."},
@@ -3980,8 +3526,6 @@
    :type "function",
    :related ["cljs.core/seq"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>coll</code> has no items - same as <code>&#40;not &#40;seq coll&#41;&#41;</code>.</p><p>Please use the idiom <code>&#40;seq x&#41;</code> rather than <code>&#40;not &#40;empty? x&#41;&#41;</code>.</p>",
    :full-name "cljs.core/empty?",
    :docstring
    "Returns true if coll has no items - same as (not (seq coll)).\nPlease use the idiom (seq x) rather than (not (empty? x))"},
@@ -3991,7 +3535,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/short",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "to-array"
@@ -4001,7 +3544,6 @@
    :type "function",
    :full-name "cljs.core/to-array",
    :docstring "Naive impl of to-array as a start.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "letfn*"
@@ -4009,7 +3551,6 @@
    :name "letfn*",
    :type "special form",
    :full-name "special/letfn*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array?"
@@ -4025,9 +3566,7 @@
    :examples-strings
    [["(array? #js [1 2 3]) ;;=> true"
      "(array? [1 2 3]) ;;=> false"
-     "(array? \"hi\") ;;=> false"]],
-   :description-html
-   "<p>Returns true if <code>x</code> is a JavaScript array, false otherwise.</p>",
+     "(array? \"hi\")"]],
    :examples
    [{:id "39913c",
      :content
@@ -4045,12 +3584,14 @@
    :type "function",
    :related ["cljs.core/conj"],
    :examples-strings
-   [["(cons 1 (list 1 2 3)) ;;=> (1 1 2 3)"
-     "(cons 1 [1 2 3]) ;;=> (1 1 2 3)"
-     "(cons 1 nil) ;;=> (1)"
-     "(cons nil nil) ;;=> (nil)"]],
-   :description-html
-   "<p>Returns a new sequence where <code>x</code> is the first element and <code>coll</code> is the rest.</p>",
+   [["(cons 1 (list 1 2 3)) ;;=>"
+     "(1 1 2 3)"
+     "(cons 1 [1 2 3]) ;;=>"
+     "(1 1 2 3)"
+     "(cons 1 nil) ;;=>"
+     "(1)"
+     "(cons nil nil) ;;=>"
+     "(nil)"]],
    :examples
    [{:id "68c769",
      :content
@@ -4068,8 +3609,6 @@
    :type "function",
    :related ["cljs.core/atom" "cljs.core/reset!"],
    :examples-strings [],
-   :description-html
-   "<p>Atomically swaps the value of atom to be: `(apply f current-value-of-atom args)`</p><p>Note that <code>f</code> may be called multiple times, and thus should be free of side effects.</p><p>Returns the value that was swapped in.</p>",
    :full-name "cljs.core/swap!",
    :docstring
    "Atomically swaps the value of atom to be:\n(apply f current-value-of-atom args). Note that f may be called\nmultiple times, and thus should be free of side effects.  Returns\nthe value that was swapped in."},
@@ -4083,8 +3622,6 @@
    :type "function",
    :related ["cljs.core/rand"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a random integer between 0 inclusive and <code>n</code> exclusive.</p>",
    :full-name "cljs.core/rand-int",
    :docstring
    "Returns a random integer between 0 (inclusive) and n (exclusive)."},
@@ -4094,7 +3631,6 @@
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/hash-keyword",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "sort"
@@ -4107,8 +3643,6 @@
    :type "function",
    :related ["cljs.core/sort-by"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sorted sequence of the items in <code>coll</code>.</p><p><code>comp</code> can be a boolean-valued comparison funcion, or a -/0/+ valued comparator.</p><p><code>comp</code> defaults to <code>compare</code>.</p>",
    :full-name "cljs.core/sort",
    :docstring
    "Returns a sorted sequence of the items in coll. Comp can be\nboolean-valued comparison function, or a -/0/+ valued comparator.\nComp defaults to compare."},
@@ -4119,7 +3653,6 @@
    :full-name "cljs.core/IPending",
    :docstring
    "Protocol for types which can have a deferred realization. Currently only\n  implemented by Delay.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IReduce"
@@ -4129,7 +3662,6 @@
    :full-name "cljs.core/IReduce",
    :docstring
    "Protocol for seq types that can reduce themselves.\n  Called by cljs.core/reduce.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "re-seq"
@@ -4147,8 +3679,6 @@
     "cljs.core/subs"
     "clojure.string/split"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of successive matches of regex <code>re</code> in string <code>s</code>.</p>",
    :full-name "cljs.core/re-seq",
    :docstring
    "Returns a lazy sequence of successive matches of re in s."},
@@ -4158,23 +3688,20 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "re-find"
   {:description
    "Returns the first regex match, if any, of `s` to `re`, using `re.exec(s)`.\n\nReturns a vector, containing first the matching substring, then any capturing\ngroups if the regular expression contains capturing groups.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "re-find",
    :signature ["[re s]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns the first regex match, if any, of <code>s</code> to <code>re</code>, using <code>re.exec&#40;s&#41;</code>.</p><p>Returns a vector, containing first the matching substring, then any capturing groups if the regular expression contains capturing groups.</p>",
    :full-name "cljs.core/re-find",
    :docstring
-   "Returns the first regex match, if any, of s to re, using\nre.exec(s). Returns a vector, containing first the matching\nsubstring, then any capturing groups if the regular expression contains\ncapturing groups."},
+   "Returns the first regex match, if any, of s to re, using\nre.exec(s). Returns a vector, containing first the matching\nsubstring, then any capturing groups if the regular expression contains\ncapturing groups.",
+   :examples-strings [],
+   :examples-htmls []},
   "not-any?"
   {:description
    "Returns false if `(pred x)` is logical true for any `x` in `coll`, else true.",
@@ -4185,8 +3712,6 @@
    :type "function",
    :related ["cljs.core/every?" "cljs.core/some"],
    :examples-strings [],
-   :description-html
-   "<p>Returns false if <code>&#40;pred x&#41;</code> is logical true for any <code>x</code> in <code>coll</code>, else true.</p>",
    :full-name "cljs.core/not-any?",
    :docstring
    "Returns false if (pred x) is logical true for any x in coll,\nelse true."},
@@ -4196,7 +3721,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/SetEntriesIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentTreeSet.EMPTY"
@@ -4204,7 +3728,6 @@
    :name "PersistentTreeSet.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentTreeSet.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ES6EntriesIterator"
@@ -4213,7 +3736,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/ES6EntriesIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "apply"
@@ -4234,9 +3756,7 @@
    :examples-strings
    [["(max 1 2 3) ;;=> 3"
      "(apply max [1 2 3]) ;;=> 3"
-     "(apply max 1 [2 3]) ;;=> 3"]],
-   :description-html
-   "<p>Applies function <code>f</code> to the argument list formed by prepending intervening arguments to <code>args</code>.</p>",
+     "(apply max 1 [2 3])"]],
    :examples
    [{:id "174052",
      :content
@@ -4254,8 +3774,6 @@
    :type "function",
    :related ["cljs.core/group-by" "cljs.core/distinct"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a map from distinct items in <code>coll</code> to the number of times they appear.</p><p><code>&#40;frequencies &#91;:a :a :b&#93;&#41;</code> => <code>{:a 2, :b 1}</code></p>",
    :full-name "cljs.core/frequencies",
    :docstring
    "Returns a map from distinct items in coll to the number of times\nthey appear."},
@@ -4267,7 +3785,6 @@
    :full-name "cljs.core/memfn",
    :docstring
    "Expands into code that creates a fn that expects to be passed an\nobject and any args and calls the named instance method on the\nobject passing the args. Use when you want to treat a Java method as\na first-class fn. name may be type-hinted with the method receiver's\ntype in order to avoid reflective calls.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array-index-of"
@@ -4276,7 +3793,6 @@
    :signature ["[arr k]"],
    :type "function",
    :full-name "cljs.core/array-index-of",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ifn?"
@@ -4289,8 +3805,6 @@
    :type "function",
    :related ["cljs.core/fn?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>f</code> implements the <code>IFn</code> protocol, false otherwise.</p><p>Functions, keywords, map, sets, and vectors can be called as functions.</p>",
    :full-name "cljs.core/ifn?",
    :docstring
    "Returns true if f returns true for fn? or satisfies IFn."},
@@ -4300,7 +3814,6 @@
    :type "protocol",
    :full-name "cljs.core/ILookup",
    :docstring "Protocol for looking up a value in a data structure.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ArrayIter"
@@ -4309,7 +3822,6 @@
    :signature ["[arr i]"],
    :type "type",
    :full-name "cljs.core/ArrayIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "partition-by"
@@ -4325,8 +3837,6 @@
     "cljs.core/partition-all"
     "cljs.core/group-by"],
    :examples-strings [],
-   :description-html
-   "<p>Applies <code>f</code> to each value in <code>coll</code>, splitting it each time <code>f</code> returns a new value. Returns a lazy sequence of partitions.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/partition-by",
    :docstring
    "Applies f to each value in coll, splitting it each time f returns a\nnew value.  Returns a lazy seq of partitions.  Returns a stateful\ntransducer when no collection is provided."},
@@ -4336,7 +3846,6 @@
    :signature ["[chunk more meta __hash]"],
    :type "type",
    :full-name "cljs.core/ChunkedCons",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "some?"
@@ -4348,8 +3857,6 @@
    :type "function",
    :related ["cljs.core/true?" "cljs.core/nil?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is not nil, false otherwise.</p>",
    :full-name "cljs.core/some?",
    :docstring "Returns true if x is not nil, false otherwise."},
   "rem"
@@ -4362,8 +3869,6 @@
    :type "function",
    :related ["cljs.core/quot" "cljs.core/mod"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the remainder of dividing numerator <code>n</code> by denominator <code>d</code>.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p>",
    :full-name "cljs.core/rem",
    :docstring "remainder of dividing numerator by denominator."},
   "*print-err-fn*"
@@ -4373,7 +3878,6 @@
    :full-name "cljs.core/*print-err-fn*",
    :docstring
    "Each runtime environment provides a different way to print error output.\nWhatever function *print-fn* is bound to will be passed any\nStrings which should be printed.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "areduce"
@@ -4387,10 +3891,7 @@
    :type "macro",
    :related ["cljs.core/reduce"],
    :examples-strings
-   [["(def a #js [1 2 3])"
-     "(areduce a i ret 0 (+ ret (aget a i))) ;;=> 6"]],
-   :description-html
-   "<p>For quickly reducing an expression <code>expr</code> across a JavaScript array <code>a</code>.  The expression can use <code>ret</code> as the current result, which is initialized to <code>init</code>. It can also use <code>idx</code> to get the current index.</p>",
+   [["(def a #js [1 2 3])" "(areduce a i ret 0 (+ ret (aget a i)))"]],
    :examples
    [{:id "20a389",
      :content
@@ -4406,7 +3907,6 @@
    :full-name "cljs.core/transient",
    :docstring
    "Returns a new, transient version of the collection, in constant time.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*1"
@@ -4419,17 +3919,7 @@
    :type "var",
    :related ["cljs.core/*2" "cljs.core/*3" "cljs.core/*e"],
    :examples-strings
-   [["(+ 1 2 3 4) ;;=> 10"
-     "*1 ;;=> 10"
-     "(inc *1) ;;=> 11"
-     ":first ;;=> :first"
-     ":second ;;=> :second"
-     ":third ;;=> :third"
-     "*3 ;;=> :first"
-     "*2 ;;=> :second"
-     "*1 ;;=> :third"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Holds the result of the last expression.</p>",
+   [["(+ 1 2 3 4) ;;=> 10\n\n*1\n;;=> 10" "(inc *1)"]],
    :examples
    [{:id "30a861",
      :content
@@ -4453,8 +3943,6 @@
     "cljs.core/array-map"
     "cljs.core/hash-map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new sorted map with supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
    :full-name "cljs.core/sorted-map",
    :docstring
    "keyval => key val\nReturns a new sorted map with supplied mappings."},
@@ -4464,7 +3952,6 @@
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/ES6Iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Range"
@@ -4473,7 +3960,6 @@
    :signature ["[meta start end step __hash]"],
    :type "type",
    :full-name "cljs.core/Range",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentQueueSeq"
@@ -4482,7 +3968,6 @@
    :signature ["[meta front rear __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentQueueSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "completing"
@@ -4493,7 +3978,6 @@
    :full-name "cljs.core/completing",
    :docstring
    "Takes a reducing function f of 2 args and returns a fn suitable for\ntransduce by adding an arity-1 signature that calls cf (default -\nidentity) on the result argument.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Box"
@@ -4502,7 +3986,6 @@
    :signature ["[val]"],
    :type "type",
    :full-name "cljs.core/Box",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "distinct"
@@ -4515,8 +3998,6 @@
    :type "function",
    :related ["cljs.core/distinct?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the elements of <code>coll</code> with duplicates removed.</p>",
    :full-name "cljs.core/distinct",
    :docstring
    "Returns a lazy sequence of the elements of coll with duplicates removed.\nReturns a stateful transducer when no collection is provided."},
@@ -4526,7 +4007,6 @@
    :signature ["[b]"],
    :type "function",
    :full-name "cljs.core/chunk",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "symbol-identical?"
@@ -4537,7 +4017,6 @@
    :full-name "cljs.core/symbol-identical?",
    :docstring
    "Efficient test to determine that two symbol are identical.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISequential"
@@ -4547,7 +4026,6 @@
    :full-name "cljs.core/ISequential",
    :docstring
    "Marker interface indicating a persistent collection of sequential items",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "es6-iterator-seq"
@@ -4558,7 +4036,6 @@
    :full-name "cljs.core/es6-iterator-seq",
    :docstring
    "EXPERIMENTAL: Given an ES2015 compatible iterator return a seq.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentQueue.EMPTY"
@@ -4566,7 +4043,6 @@
    :name "PersistentQueue.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentQueue.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "parents"
@@ -4577,7 +4053,6 @@
    :full-name "cljs.core/parents",
    :docstring
    "Returns the immediate parents of tag, either via a JavaScript type\ninheritance relationship or a relationship established via derive. h\nmust be a hierarchy obtained from make-hierarchy, if not supplied\ndefaults to the global hierarchy",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentArrayMap.fromArray"
@@ -4586,7 +4061,6 @@
    :signature ["[arr no-clone no-check]"],
    :type "function",
    :full-name "cljs.core/PersistentArrayMap.fromArray",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-and"
@@ -4598,11 +4072,7 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-or"],
-   :examples-strings
-   [["(bit-and 2r1100 2r1010) ;;=> 8 ;; 8 = 2r1000"
-     "(bit-and 12 10) ;;=> 8"]],
-   :description-html
-   "<p>Bitwise \"and\".  Same as <code>x &amp; y</code> in JavaScript.</p>",
+   :examples-strings [["(bit-and 2r1100 2r1010)" "(bit-and 12 10)"]],
    :examples
    [{:id "3c0470",
      :content
@@ -4621,13 +4091,11 @@
    :related ["cljs.core/namespace"],
    :examples-strings
    [["(name :foo/bar) ;;=> \"bar\""
-     "(name 'foo/bar) ;;=> \"bar\""
+     "(name 'foo/bar)"
      "(name :foo) ;;=> \"foo\""
-     "(name 'foo) ;;=> \"foo\""
+     "(name 'foo)"
      "(name \"foo/bar\") ;;=> \"foo/bar\""
-     "(name \"foo\") ;;=> \"foo\""]],
-   :description-html
-   "<p>Returns the name string of a possibly namespace-qualified keyword or symbol.</p><p>Equivalent to [doc:cljs.core/identity] for strings.</p>",
+     "(name \"foo\")"]],
    :examples
    [{:id "363fb7",
      :content
@@ -4645,8 +4113,6 @@
    :related
    ["cljs.core/true?" "cljs.core/false?" "cljs.core/identity"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is nil, false otherwise.</p>",
    :full-name "cljs.core/nil?",
    :docstring "Returns true if x is nil, false otherwise."},
   "unchecked-add-int"
@@ -4656,7 +4122,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-add-int",
    :docstring "Returns the sum of nums. (+) returns 0.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunk-buffer"
@@ -4665,7 +4130,6 @@
    :signature ["[capacity]"],
    :type "function",
    :full-name "cljs.core/chunk-buffer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "record?"
@@ -4675,7 +4139,6 @@
    :type "function",
    :full-name "cljs.core/record?",
    :docstring "Return true if x satisfies IRecord",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "underive"
@@ -4686,7 +4149,6 @@
    :full-name "cljs.core/underive",
    :docstring
    "Removes a parent/child relationship between parent and\ntag. h must be a hierarchy obtained from make-hierarchy, if not\nsupplied defaults to, and modifies, the global hierarchy.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-dec"
@@ -4696,7 +4158,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-dec",
    :docstring "Returns a number one less than x, an int.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-and-not"
@@ -4710,11 +4171,9 @@
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-not"],
    :examples-strings
-   [["(bit-and-not 2r1100 2r1010) ;;=> 4 ;; 4 = 2r0100"
-     "(bit-and-not 12 10) ;;=> 4"
-     "(bit-and 12 (bit-not 10)) ;;=> 4"]],
-   :description-html
-   "<p>Bitwise \"and\" <code>x</code> with bitwise \"not\" <code>y</code>.  Same as <code>x &amp; &#126;y</code> in JavaScript.</p>",
+   [["(bit-and-not 2r1100 2r1010)"
+     "(bit-and-not 12 10)"
+     "(bit-and 12 (bit-not 10))"]],
    :examples
    [{:id "16f35d",
      :content
@@ -4731,8 +4190,6 @@
    :type "function",
    :related ["cljs.core/map" "cljs.core/keep-indexed"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence consisting of the result of applying <code>f</code> to 0 and the first item of <code>coll</code>, followed by applying <code>f</code> to 1 and the second item in <code>coll</code>, etc, until <code>coll</code> is exhausted.</p><p>Function <code>f</code> should accept 2 arguments, index and item.</p>",
    :full-name "cljs.core/map-indexed",
    :docstring
    "Returns a lazy sequence consisting of the result of applying f to 0\nand the first item of coll, followed by applying f to 1 and the second\nitem in coll, etc, until coll is exhausted. Thus function f should\naccept 2 arguments, index and item. Returns a stateful transducer when\nno collection is provided."},
@@ -4747,12 +4204,14 @@
    :type "macro",
    :related ["cljs.core/macroexpand" "cljs.core/defmacro"],
    :examples-strings
-   [["(macroexpand-1 '(-> 2 inc)) ;;=> (inc 2)"
-     "(macroexpand-1 '(inc 2)) ;;=> (cljs.core/+ 2 1)"
-     "(macroexpand-1 '(cljs.core/+ 2 1)) ;;=> (js* \"(~{} + ~{})\" 2 1)"
-     "(macroexpand-1 '(inc (inc 2))) ;;=> (cljs.core/+ (inc 2) 1)"]],
-   :description-html
-   "<p>(only intended as a REPL utility)</p><p>If the given quoted form is a macro call, expand it once. NOTE: subforms are <i>not</i> expanded.</p><p>See [doc:cljs.core/macroexpand] if you wish to repeatedly expand a form.</p>",
+   [["(macroexpand-1 '(-> 2 inc)) ;;=>"
+     "(inc 2)"
+     "(macroexpand-1 '(inc 2)) ;;=>"
+     "(cljs.core/+ 2 1)"
+     "(macroexpand-1 '(cljs.core/+ 2 1)) ;;=>"
+     "(js* \"(~{} + ~{})\" 2 1)"
+     "(macroexpand-1 '(inc (inc 2))) ;;=>"
+     "(cljs.core/+ (inc 2) 1)"]],
    :examples
    [{:id "1bc6af",
      :content
@@ -4766,7 +4225,6 @@
    :signature ["[vec node i off meta __hash]"],
    :type "type",
    :full-name "cljs.core/ChunkedSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unreduced"
@@ -4776,7 +4234,6 @@
    :type "function",
    :full-name "cljs.core/unreduced",
    :docstring "If x is reduced?, returns (deref x), else returns x",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "split-at"
@@ -4788,24 +4245,19 @@
    :type "function",
    :related ["cljs.core/split-with" "clojure.string/split"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a vector of <code>&#91;&#40;take n coll&#41; &#40;drop n coll&#41;&#93;</code>.</p>",
    :full-name "cljs.core/split-at",
    :docstring "Returns a vector of [(take n coll) (drop n coll)]"},
   "counted?"
   {:description
    "Returns true if `x` executes `count` in constant time, false otherwise.\n\nLists, maps, sets, strings, and vectors can be counted in constant time.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "counted?",
    :signature ["[x]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> executes <code>count</code> in constant time, false otherwise.</p><p>Lists, maps, sets, strings, and vectors can be counted in constant time.</p>",
    :full-name "cljs.core/counted?",
-   :docstring
-   "Returns true if coll implements count in constant time"},
+   :docstring "Returns true if coll implements count in constant time",
+   :examples-strings [],
+   :examples-htmls []},
   "replace"
   {:description
    "Given a map of replacement pairs `smap` and a vector/collection `coll`, returns\na vector/seq with any elements `=` to a key in `smap` replaced with the\ncorresponding val in `smap`.\n\nReturns a transducer when `coll` is not provided.",
@@ -4819,8 +4271,6 @@
     "clojure.walk/prewalk-replace"
     "clojure.walk/postwalk-replace"],
    :examples-strings [],
-   :description-html
-   "<p>Given a map of replacement pairs <code>smap</code> and a vector/collection <code>coll</code>, returns a vector/seq with any elements <code>=</code> to a key in <code>smap</code> replaced with the corresponding val in <code>smap</code>.</p><p>Returns a transducer when <code>coll</code> is not provided.</p>",
    :full-name "cljs.core/replace",
    :docstring
    "Given a map of replacement pairs and a vector/collection, returns a\nvector/seq with any elements = a key in smap replaced with the\ncorresponding val in smap.  Returns a transducer when no collection\nis provided."},
@@ -4837,9 +4287,7 @@
    [["(associative? [1 2 3]) ;;=> true"
      "(associative? {:a 1 :b 2}) ;;=> true"
      "(associative? #{1 2 3}) ;;=> false"
-     "(associative? '(1 2 3)) ;;=> false"]],
-   :description-html
-   "<p>Returns true if <code>coll</code> implements the <code>IAssociative</code> protocol, false otherwise.</p><p>Maps and vectors are associative.</p>",
+     "(associative? '(1 2 3))"]],
    :examples
    [{:id "29a37f",
      :content
@@ -4852,7 +4300,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/doubles",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "uuid"
@@ -4867,10 +4314,8 @@
    :related ["cljs.core/random-uuid" "syntax/uuid-literal"],
    :examples-strings
    [["(uuid \"00000000-0000-0000-0000-000000000000\") ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
-     "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\") ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
-     "(uuid \"\") ;;=> #uuid \"\""]],
-   :description-html
-   "<p>Creates a universally unique identifier (UUID) from the given string, using the [doc:cljs.core/UUID] type.</p><p>The string has an expected format <code>8-4-4-12</code> where the numbers represent the number of hex digits.  No validation is performed.</p><p>To create a UUID literal (parsed and validated at compile time), use [doc:syntax/uuid-literal].</p>",
+     "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")"
+     "(uuid \"\")"]],
    :examples
    [{:id "d6491d",
      :content
@@ -4888,13 +4333,7 @@
    :related ["cljs.core/condp" "cljs.core/case" "special/if"],
    :examples-strings
    [["(def a 42)"
-     "(cond"
-     "  (< a 10) \"a is less than 10\""
-     "  (= a 10) \"a is 10\""
-     "  (> a 10) \"a is bigger than 10\""
-     "  :else \"a is not a number!\") ;;=> \"a is bigger than 10\""]],
-   :description-html
-   "<p><code>clauses</code> must be an even number of forms, ie: <code>&#40;cond t1 e1, t2 e2, t3 e3&#41;</code>. Each test <code>t</code> is evaluated one at a time. If a test returns logical true, <code>cond</code> evaluates and returns the corresponding expression <code>e</code> and does not evaluate any of the other tests or expressions.</p><p>It is idiomatic to provide a default case as the last test pair using the keyword <code>:else</code> (a keyword always evaluates to logical true).</p><p><code>&#40;cond&#41;</code> returns nil.</p>",
+     "(cond\n  (< a 10) \"a is less than 10\"\n  (= a 10) \"a is 10\"\n  (> a 10) \"a is bigger than 10\"\n  :else \"a is not a number!\")"]],
    :examples
    [{:id "0cc9ac",
      :content
@@ -4912,8 +4351,6 @@
    :type "function",
    :related ["cljs.core/lazy-seq"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if a value has been produced for a lazy sequence.</p>",
    :full-name "cljs.core/realized?",
    :docstring
    "Returns true if a value has been produced for a delay or lazy sequence."},
@@ -4923,7 +4360,6 @@
    :type "protocol",
    :full-name "cljs.core/Fn",
    :docstring "Marker protocol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentVector.EMPTY"
@@ -4931,7 +4367,6 @@
    :name "PersistentVector.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentVector.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "es6-entries-iterator"
@@ -4940,7 +4375,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/es6-entries-iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISorted"
@@ -4950,7 +4384,6 @@
    :full-name "cljs.core/ISorted",
    :docstring
    "Protocol for a collection which can represent their items\n  in a sorted manner. ",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "sequence"
@@ -4961,7 +4394,6 @@
    :full-name "cljs.core/sequence",
    :docstring
    "Coerces coll to a (possibly empty) sequence, if it is not already\none. Will not force a lazy seq. (sequence nil) yields (), When a\ntransducer is supplied, returns a lazy sequence of applications of\nthe transform to the items in coll(s), i.e. to the set of first\nitems of each coll, followed by the set of second\nitems in each coll, until any one of the colls is exhausted.  Any\nremaining items in other colls are ignored. The transform should accept\nnumber-of-colls arguments",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ISeq"
@@ -4971,7 +4403,6 @@
    :full-name "cljs.core/ISeq",
    :docstring
    "Protocol for collections to provide access to their items as sequences.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "obj-map"
@@ -4982,7 +4413,6 @@
    :full-name "cljs.core/obj-map",
    :docstring
    "keyval => key val\nReturns a new object map with supplied mappings.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "if"
@@ -5002,10 +4432,7 @@
    :examples-strings
    [["(def v [1 2])"
      "(if (empty? v) \"empty!\" \"filled!\") ;;=> \"filled!\""
-     "(str \"This vector is \""
-     "  (if (empty? v) \"empty!\" \"filled!\")) ;;=> \"This vector is filled!\""]],
-   :description-html
-   "<p>If <code>test</code> is not false or nil, <code>then</code> is evaluated and returned. Otherwise, <code>else?</code> is evaluated and returned. <code>else?</code> defaults to nil if not provided.</p><p><code>if</code> is one of ClojureScript's <a href='http://clojure.org/special_forms'>special forms</a> and is a fundamental building block of the language. All other conditionals in ClojureScript are based on <code>if</code>s notion of truthiness (ie: anything other than false or nil).</p>",
+     "(str \"This vector is \"\n  (if (empty? v) \"empty!\" \"filled!\"))"]],
    :examples
    [{:id "e591ff",
      :content
@@ -5023,8 +4450,6 @@
    :type "macro",
    :related ["cljs.core/letfn" "cljs.core/if-let"],
    :examples-strings [],
-   :description-html
-   "<p>Binds expressions to symbols and makes those symbols available only within <code>body</code>.</p><p><code>bindings</code> should be a vector with an even number of forms, ie: `[a1 b1, a2 b2, a3 b3]<code>. The first item in a pair &#40;the </code>a`s) should be a symbol that is assigned the evaluation of the second item (the <code>b</code>s). These symbols (the <code>a</code>s) are then available within <code>body</code> (and not outside of <code>body</code>).</p><p>Another way to think about this is that the binding symbols in <code>let</code> are like local <code>def</code>s that are only available within <code>let</code>'s scope.</p><p>In addition to direct symbol binding, <code>let</code> supports a destructuring syntax to \"break apart\" collections into multiple symbols. This destructuring syntax is like it's own [mini-language] and allows for succinct code.</p><p><code>let</code> is a wrapper over one of ClojureScript's [special forms] and is a fundamental building block of the language. Many macros rely on <code>let</code>s binding syntax and scope rules.</p><p>[mini-language]: http://blog.jayfields.com/2010/07/clojure-destructuring.html [special forms]: http://clojure.org/special_forms</p>",
    :full-name "cljs.core/let",
    :docstring
    "binding => binding-form init-expr\n\nEvaluates the exprs in a lexical context in which the symbols in\nthe binding-forms are bound to their respective init-exprs or parts\ntherein."},
@@ -5034,7 +4459,6 @@
    :signature ["[meta nodes i s __hash]"],
    :type "type",
    :full-name "cljs.core/ArrayNodeSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunked-seq?"
@@ -5044,7 +4468,6 @@
    :type "function",
    :full-name "cljs.core/chunked-seq?",
    :docstring "Return true if x is satisfies IChunkedSeq.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "keyword-identical?"
@@ -5055,7 +4478,6 @@
    :full-name "cljs.core/keyword-identical?",
    :docstring
    "Efficient test to determine that two keywords are identical.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "drop"
@@ -5073,8 +4495,6 @@
     "cljs.core/nthnext"
     "cljs.core/nthrest"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of all but the first <code>n</code> items in <code>coll</code>.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/drop",
    :docstring
    "Returns a lazy sequence of all but the first n items in coll.\nReturns a stateful transducer when no collection is provided."},
@@ -5088,13 +4508,9 @@
    :signature ["[obj s & args]"],
    :type "function",
    :examples-strings
-   [["// JavaScript"
-     "var obj = {"
-     "  \"my sum\": function(a,b) { return a+b; }"
-     "};"
-     "(js-invoke js/obj \"my sum\" 1 2) ;=> 3"]],
-   :description-html
-   "<p>Invoke JavaScript object <code>obj</code> method via string <code>s</code>. Needed when the string is not a valid unquoted property name.</p>",
+   [["// JavaScript\nvar obj = {\n  \"my sum\": function"
+     "(a,b)"
+     "(js-invoke js/obj \"my sum\" 1 2)"]],
    :examples
    [{:id "373cce",
      :content
@@ -5108,7 +4524,6 @@
    :signature ["[mseq _meta]"],
    :type "type",
    :full-name "cljs.core/KeySeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-inc"
@@ -5117,7 +4532,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-inc",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "List.EMPTY"
@@ -5125,7 +4539,6 @@
    :name "List.EMPTY",
    :type "var",
    :full-name "cljs.core/List.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reify"
@@ -5136,7 +4549,6 @@
    :full-name "cljs.core/reify",
    :docstring
    "reify is a macro with the following structure:\n\n(reify options* specs*)\n\n Currently there are no options.\n\n Each spec consists of the protocol name followed by zero\n or more method bodies:\n\n protocol\n (methodName [args+] body)*\n\n Methods should be supplied for all methods of the desired\n protocol(s). You can also define overrides for Object methods. Note that\n the first parameter must be supplied to correspond to the target object\n ('this' in JavaScript parlance). Note also that recur calls\n to the method head should *not* pass the target object, it will be supplied\n automatically and can not be substituted.\n\n recur works to method heads The method bodies of reify are lexical\n closures, and can refer to the surrounding local scope:\n\n (str (let [f \"foo\"]\n      (reify Object\n        (toString [this] f))))\n == \"foo\"\n\n (seq (let [f \"foo\"]\n      (reify ISeqable\n        (-seq [this] (-seq f)))))\n == (\\f \\o \\o))\n\n reify always implements IMeta and IWithMeta and transfers meta\n data of the form to the created object.\n\n (meta ^{:k :v} (reify Object (toString [this] \"foo\")))\n == {:k :v}",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vals"
@@ -5148,8 +4560,6 @@
    :type "function",
    :related ["cljs.core/keys"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence of the values in <code>hash-map</code>.</p>",
    :full-name "cljs.core/vals",
    :docstring "Returns a sequence of the map's values."},
   "seq-iter"
@@ -5158,7 +4568,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/seq-iter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "inc"
@@ -5170,8 +4579,6 @@
    :type "function/macro",
    :related ["cljs.core/dec"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a number one greater than <code>x</code>.</p>",
    :full-name "cljs.core/inc",
    :docstring "Returns a number one greater than num."},
   "TransientVector"
@@ -5180,7 +4587,6 @@
    :signature ["[cnt shift root tail]"],
    :type "type",
    :full-name "cljs.core/TransientVector",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Stepper"
@@ -5189,7 +4595,6 @@
    :signature ["[xform iter]"],
    :type "type",
    :full-name "cljs.core/Stepper",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "sort-by"
@@ -5202,8 +4607,6 @@
    :type "function",
    :related ["cljs.core/sort" "cljs.core/compare"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sorted sequence of the items in <code>coll</code>, where the sort order is determined by comparing <code>&#40;keyfn item&#41;</code>.</p><p><code>comp</code> can be boolean-valued comparison function, or a -/0/+ valued comparator.</p><p><code>comp</code> defaults to <code>compare</code>.</p>",
    :full-name "cljs.core/sort-by",
    :docstring
    "Returns a sorted sequence of the items in coll, where the sort\norder is determined by comparing (keyfn item).  Comp can be\nboolean-valued comparison funcion, or a -/0/+ valued comparator.\nComp defaults to compare."},
@@ -5215,7 +4618,6 @@
    :full-name "cljs.core/defmulti",
    :docstring
    "Creates a new multimethod with the associated dispatch function.\nThe docstring and attribute-map are optional.\n\nOptions are key-value pairs and may be one of:\n  :default    the default dispatch value, defaults to :default\n  :hierarchy  the isa? hierarchy to use for dispatching\n              defaults to the global hierarchy",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunk-first"
@@ -5224,7 +4626,6 @@
    :signature ["[s]"],
    :type "function",
    :full-name "cljs.core/chunk-first",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "when-let"
@@ -5242,8 +4643,6 @@
     "special/if"
     "cljs.core/when-first"],
    :examples-strings [],
-   :description-html
-   "<p>When <code>test</code> is logical true, evaluates <code>body</code> with the value of <code>test</code> bound to <code>x</code>.</p>",
    :full-name "cljs.core/when-let",
    :docstring
    "bindings => binding-form test\n\nWhen test is true, evaluates body with binding-form bound to the value of test"},
@@ -5252,7 +4651,6 @@
    :name "m3-C1",
    :type "var",
    :full-name "cljs.core/m3-C1",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "println"
@@ -5262,7 +4660,6 @@
    :type "function",
    :full-name "cljs.core/println",
    :docstring "Same as print followed by (newline)",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ex-info"
@@ -5273,7 +4670,6 @@
    :full-name "cljs.core/ex-info",
    :docstring
    "Alpha - subject to change.\nCreate an instance of ExceptionInfo, an Error type that carries a\nmap of additional data.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ns-unmap"
@@ -5284,7 +4680,6 @@
    :full-name "cljs.core/ns-unmap",
    :docstring
    "Removes the mappings for the symbol from the namespace.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "char"
@@ -5299,9 +4694,7 @@
    :examples-strings
    [["(char 81) ;;=> \"Q\""
      "(char \"Q\") ;;=> \"Q\""
-     "(char \"foo\") ;; Error: Argument to char must be a character or number"]],
-   :description-html
-   "<p>Converts a number <code>x</code> to a character using <code>String.fromCharCode&#40;x&#41;</code> from JavaScript.</p>",
+     "(char \"foo\")"]],
    :examples
    [{:id "4e1a56",
      :content
@@ -5318,8 +4711,6 @@
    :type "function",
    :related ["cljs.core/=" "cljs.core/not"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the opposite of <code>=</code>.</p><p>Same as <code>&#40;not &#40;= x y&#41;&#41;</code></p>",
    :full-name "cljs.core/not=",
    :docstring "Same as (not (= obj1 obj2))"},
   "doto"
@@ -5330,7 +4721,6 @@
    :full-name "cljs.core/doto",
    :docstring
    "Evaluates x then calls all of the methods and functions with the\nvalue of x supplied at the front of the given arguments.  The forms\nare evaluated in order.  Returns x.\n\n(doto (new java.util.HashMap) (.put \"a\" 1) (.put \"b\" 2))",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "random-uuid"
@@ -5339,7 +4729,6 @@
    :signature ["[]"],
    :type "function",
    :full-name "cljs.core/random-uuid",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-char"
@@ -5348,7 +4737,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-char",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IndexedSeqIterator"
@@ -5357,7 +4745,6 @@
    :signature ["[arr i]"],
    :type "type",
    :full-name "cljs.core/IndexedSeqIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ICollection"
@@ -5366,7 +4753,6 @@
    :type "protocol",
    :full-name "cljs.core/ICollection",
    :docstring "Protocol for adding to a collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*target*"
@@ -5376,7 +4762,6 @@
    :full-name "cljs.core/*target*",
    :docstring
    "Var bound to the name value of the compiler build :target option.\nFor example, if the compiler build :target is :nodejs, *target* will be bound\nto \"nodejs\". *target* is a Google Closure define and can be set by compiler\n:closure-defines option.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*ns*"
@@ -5386,7 +4771,6 @@
    :full-name "cljs.core/*ns*",
    :docstring
    "Var bound to the current namespace. Only used for bootstrapping.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "atom"
@@ -5406,13 +4790,10 @@
     "cljs.core/get-validator"],
    :examples-strings
    [["(def a (atom 1))"
-     "@a ;;=> 1"
+     "@a\n;;=> 1"
      "(reset! a 2)"
-     "@a ;;=> 2"
-     "(swap! a inc)"
-     "@a ;;=> 3"]],
-   :description-html
-   "<p>Creates and returns an atom with an initial value of <code>x</code>.</p><p><code>opts</code> is an optional map with optional keys <code>:meta</code> and <code>:validator</code>.</p><p><code>:meta</code> should be a <a href='http://clojure.org/metadata'>metadata-map</a> for the atom.</p><p><code>:validator</code> should be a validator function for the atom. See <code>set-validator!</code> for more information.</p>",
+     "@a\n;;=> 2"
+     "(swap! a inc)"]],
    :examples
    [{:id "e6a38a",
      :content
@@ -5425,7 +4806,6 @@
    :name "Set.EMPTY",
    :type "var",
    :full-name "cljs.core/Set.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "loop*"
@@ -5433,7 +4813,6 @@
    :name "loop*",
    :type "special form",
    :full-name "special/loop*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "this-as"
@@ -5444,7 +4823,6 @@
    :full-name "cljs.core/this-as",
    :docstring
    "Defines a scope where JavaScript's implicit \"this\" is bound to the name provided.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vector"
@@ -5460,8 +4838,6 @@
     "cljs.core/pop"
     "cljs.core/into"],
    :examples-strings [],
-   :description-html
-   "<p>Creates a new vector containing <code>args</code>.</p>",
    :full-name "cljs.core/vector",
    :docstring "Creates a new vector containing the args."},
   "specify"
@@ -5472,7 +4848,6 @@
    :full-name "cljs.core/specify",
    :docstring
    "Identical to specify but does not mutate its first argument. The first\nargument must be an ICloneable instance.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "if-some"
@@ -5485,8 +4860,6 @@
    :type "macro",
    :related ["cljs.core/when-some"],
    :examples-strings [],
-   :description-html
-   "<p>If <code>test</code> is not nil, evaluates <code>then</code> with <code>x</code> bound to the value of <code>test</code>. If not, yields <code>else</code>.</p>",
    :full-name "cljs.core/if-some",
    :docstring
    "bindings => binding-form test\n\nIf test is not nil, evaluates then with binding-form bound to the\nvalue of test, if not, yields else"},
@@ -5500,8 +4873,6 @@
    :type "function",
    :related ["cljs.core/drop-while" "cljs.core/split-with"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of successive items from <code>coll</code> while <code>&#40;pred item&#41;</code> returns true. <code>pred</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
    :full-name "cljs.core/take-while",
    :docstring
    "Returns a lazy sequence of successive items from coll while\n(pred item) returns true. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
@@ -5512,7 +4883,6 @@
    :type "function",
    :full-name "cljs.core/indexed?",
    :docstring "Returns true if coll implements nth in constant time",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IHash"
@@ -5521,7 +4891,6 @@
    :type "protocol",
    :full-name "cljs.core/IHash",
    :docstring "Protocol for adding hashing functionality to a type.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IndexedSeq"
@@ -5530,28 +4899,25 @@
    :signature ["[arr i]"],
    :type "type",
    :full-name "cljs.core/IndexedSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "extend-protocol"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "extend-protocol",
    :signature ["[p & specs]"],
    :type "macro",
    :related ["cljs.core/extend-type"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/extend-protocol",
    :docstring
-   "Useful when you want to provide several implementations of the same\nprotocol all at once. Takes a single protocol and the implementation\nof that protocol for one or more types. Expands into calls to\nextend-type:\n\n(extend-protocol Protocol\n  AType\n    (foo [x] ...)\n    (bar [x y] ...)\n  BType\n    (foo [x] ...)\n    (bar [x y] ...)\n  AClass\n    (foo [x] ...)\n    (bar [x y] ...)\n  nil\n    (foo [x] ...)\n    (bar [x y] ...))\n\nexpands into:\n\n(do\n (clojure.core/extend-type AType Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type BType Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type AClass Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type nil Protocol \n   (foo [x] ...) \n   (bar [x y] ...)))"},
+   "Useful when you want to provide several implementations of the same\nprotocol all at once. Takes a single protocol and the implementation\nof that protocol for one or more types. Expands into calls to\nextend-type:\n\n(extend-protocol Protocol\n  AType\n    (foo [x] ...)\n    (bar [x y] ...)\n  BType\n    (foo [x] ...)\n    (bar [x y] ...)\n  AClass\n    (foo [x] ...)\n    (bar [x y] ...)\n  nil\n    (foo [x] ...)\n    (bar [x y] ...))\n\nexpands into:\n\n(do\n (clojure.core/extend-type AType Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type BType Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type AClass Protocol \n   (foo [x] ...) \n   (bar [x y] ...))\n (clojure.core/extend-type nil Protocol \n   (foo [x] ...) \n   (bar [x y] ...)))",
+   :examples-strings [],
+   :examples-htmls []},
   "chunk-next"
   {:ns "cljs.core",
    :name "chunk-next",
    :signature ["[s]"],
    :type "function",
    :full-name "cljs.core/chunk-next",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "or"
@@ -5571,14 +4937,12 @@
      "(or true) ;;=> true"
      "(or true true) ;;=> true"
      "(or true false) ;;=> true"
-     "(or false false) ;;=> false"]
+     "(or false false)"]
     ["(or \"foo\" \"bar\") ;;=> \"bar\""
      "(or \"foo\" nil) ;;=> \"foo\""
      "(or \"foo\" false) ;;=> \"foo\""
      "(or nil \"foo\") ;;=> \"foo\""
-     "(or false \"foo\") ;;=> \"foo\""]],
-   :description-html
-   "<p>Evaluates arguments one at a time from left to right. If an argument returns logical true, <code>or</code> returns that value and doesn't evaluate any of the other arguments, otherwise it returns the value of the last argument.</p><p><code>&#40;or&#41;</code> returns nil.</p>",
+     "(or false \"foo\")"]],
    :examples
    [{:id "d50433",
      :content
@@ -5598,7 +4962,6 @@
    :type "function",
    :related ["cljs.core/nil?"],
    :examples-strings [],
-   :description-html "<p>Returns its argument.</p>",
    :full-name "cljs.core/identity",
    :docstring "Returns its argument."},
   "list?"
@@ -5611,8 +4974,6 @@
    :related
    ["cljs.core/seq?" "cljs.core/sequential?" "cljs.core/coll?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a list, false otherwise.</p>",
    :full-name "cljs.core/list?",
    :docstring "Returns true if x implements IList"},
   "implements?"
@@ -5622,7 +4983,6 @@
    :type "macro",
    :full-name "cljs.core/implements?",
    :docstring "EXPERIMENTAL",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "odd?"
@@ -5635,8 +4995,6 @@
    :type "function",
    :related ["cljs.core/even?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is an odd number.</p><p>Throws an exception if <code>n</code> is not an integer.</p>",
    :full-name "cljs.core/odd?",
    :docstring
    "Returns true if n is odd, throws an exception if n is not an integer"},
@@ -5645,7 +5003,6 @@
    :name "Vector.EMPTY",
    :type "var",
    :full-name "cljs.core/Vector.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "case"
@@ -5661,19 +5018,9 @@
    :examples-strings
    [["(def a 1)"
      "(def b 2)"
-     "(case a"
-     "  0 \"zero\""
-     "  1 \"one\""
-     "  \"default\") ;;=> \"one\""
-     "(case b"
-     "  0 \"zero\""
-     "  1 \"one\""
-     "  \"default\") ;;=> \"default\""
-     "(case b"
-     "  0 \"zero\""
-     "  1 \"one\") ;; Error: No matching clause: 2"]],
-   :description-html
-   "<p>Takes an expression and a set of clauses. Each clause can take the form of either:</p><p><code>test-constant result-expr</code></p><p><code>&#40;test-constant1 ... test-constantN&#41;  result-expr</code></p><p>The test-constants are not evaluated. They must be compile-time literals, and need not be quoted. If the expression is equal to a test-constant, the corresponding <code>result-expr</code> is returned. A single default expression can follow the clauses, and its value will be returned if no clause matches. If no default expression is provided and no clause matches, an Error is thrown.</p><p>Unlike <code>cond</code> and <code>condp</code>, <code>case</code> does a constant-time dispatch, the clauses are not considered sequentially. All manner of constant expressions are acceptable in <code>case</code>, including numbers, strings, symbols, keywords, and ClojureScript composites thereof. Note that since lists are used to group multiple constants that map to the same expression, a vector can be used to match a list if needed. The test-constants need not be all of the same type.</p>",
+     "(case a\n  0 \"zero\"\n  1 \"one\"\n  \"default\") ;;=> \"one\""
+     "(case b\n  0 \"zero\"\n  1 \"one\"\n  \"default\") ;;=> \"default\""
+     "(case b\n  0 \"zero\"\n  1 \"one\")"]],
    :examples
    [{:id "09a90c",
      :content
@@ -5689,7 +5036,6 @@
    :full-name "cljs.core/int-array",
    :docstring
    "Creates an array of ints. Does not coerce array, provided for compatibility\nwith Clojure.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "HashSetIter"
@@ -5698,7 +5044,6 @@
    :signature ["[iter]"],
    :type "type",
    :full-name "cljs.core/HashSetIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "keyword?"
@@ -5708,7 +5053,6 @@
    :type "function/macro",
    :full-name "cljs.core/keyword?",
    :docstring "Return true if x is a Keyword",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentArrayMapIterator"
@@ -5717,7 +5061,6 @@
    :signature ["[arr i cnt]"],
    :type "type",
    :full-name "cljs.core/PersistentArrayMapIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ExceptionInfo"
@@ -5726,7 +5069,6 @@
    :signature ["[message data cause]"],
    :type "type",
    :full-name "cljs.core/ExceptionInfo",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "keyword"
@@ -5737,7 +5079,6 @@
    :full-name "cljs.core/keyword",
    :docstring
    "Returns a Keyword with the given namespace and name.  Do not use :\nin the keyword strings, it will be added automatically.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr-str"
@@ -5748,7 +5089,6 @@
    :full-name "cljs.core/pr-str",
    :docstring
    "pr to a string, returning it. Fundamental entrypoint to IPrintWithWriter.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "remove"
@@ -5761,8 +5101,6 @@
    :type "function",
    :related ["cljs.core/filter"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the items in <code>coll</code> for which <code>&#40;pred item&#41;</code> returns false.</p><p><code>pred</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
    :full-name "cljs.core/remove",
    :docstring
    "Returns a lazy sequence of the items in coll for which\n(pred item) returns false. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
@@ -5773,7 +5111,6 @@
    :type "function",
    :full-name "cljs.core/delay?",
    :docstring "returns true if x is a Delay created with delay",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "iteration"
@@ -5784,7 +5121,6 @@
    :full-name "cljs.core/iteration",
    :docstring
    "Returns an iterable/seqable/reducible sequence of applications of\nthe transducer to the items in coll. Note that these applications\nwill be performed every time iterator/seq/reduce is called.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Namespace"
@@ -5793,7 +5129,6 @@
    :signature ["[obj name]"],
    :type "type",
    :full-name "cljs.core/Namespace",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ranged-iterator"
@@ -5802,7 +5137,6 @@
    :signature ["[v start end]"],
    :type "function",
    :full-name "cljs.core/ranged-iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "interleave"
@@ -5815,8 +5149,6 @@
    :type "function",
    :related ["cljs.core/interpose" "cljs.core/zipmap"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy seq of the first item in each collection, then the second items, then the third, etc.</p>",
    :full-name "cljs.core/interleave",
    :docstring
    "Returns a lazy seq of the first item in each coll, then the second etc."},
@@ -5829,8 +5161,6 @@
    :type "function",
    :related ["cljs.core/hash-map" "cljs.core/sorted-map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a map, false otherwise.</p>",
    :full-name "cljs.core/map?",
    :docstring "Return true if x satisfies IMap"},
   "bit-not"
@@ -5841,10 +5171,7 @@
    :name "bit-not",
    :signature ["[x]"],
    :type "function/macro",
-   :examples-strings
-   [["(bit-not 2r1100) ;;=> -13" "(bit-not 12) ;;=> -13"]],
-   :description-html
-   "<p>Bitwise complement.  Same as <code>&#126;x</code> in JavaScript.</p>",
+   :examples-strings [["(bit-not 2r1100)" "(bit-not 12)"]],
    :examples
    [{:id "d4c5e3",
      :content
@@ -5861,8 +5188,6 @@
    :type "function",
    :related ["cljs.core/rand"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a random element from a sequential collection <code>coll</code>.</p><p>Has the same performance characteristics as <code>nth</code>.</p>",
    :full-name "cljs.core/rand-nth",
    :docstring
    "Return a random element of the (sequential) collection. Will have\nthe same performance characteristics as nth for the given\ncollection."},
@@ -5872,7 +5197,6 @@
    :signature ["[comp tree cnt meta __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentTreeMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentTreeMapSeq"
@@ -5881,7 +5205,6 @@
    :signature ["[meta stack ascending? cnt __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentTreeMapSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ints"
@@ -5890,7 +5213,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/ints",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "BitmapIndexedNode.EMPTY"
@@ -5898,7 +5220,6 @@
    :name "BitmapIndexedNode.EMPTY",
    :type "var",
    :full-name "cljs.core/BitmapIndexedNode.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ES6IteratorSeq"
@@ -5907,7 +5228,6 @@
    :signature ["[value iter _rest]"],
    :type "type",
    :full-name "cljs.core/ES6IteratorSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentHashSet.EMPTY"
@@ -5915,7 +5235,6 @@
    :name "PersistentHashSet.EMPTY",
    :type "var",
    :full-name "cljs.core/PersistentHashSet.EMPTY",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "entries-iterator"
@@ -5924,7 +5243,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/entries-iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "lazy-seq"
@@ -5940,7 +5258,6 @@
     "cljs.core/doall"
     "cljs.core/iterate"],
    :examples-strings [],
-   :description-html "<p>Returns a new lazy sequence.</p>",
    :full-name "cljs.core/lazy-seq",
    :docstring
    "Takes a body of expressions that returns an ISeq or nil, and yields\na ISeqable object that will invoke the body only the first time seq\nis called, and will cache the result and return it on all subsequent\nseq calls."},
@@ -5954,8 +5271,6 @@
    :type "function",
    :related ["cljs.core/partition" "cljs.core/partition-by"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of lists like <code>partition</code>, but may include partitions with fewer than <code>n</code> items at the end.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/partition-all",
    :docstring
    "Returns a lazy sequence of lists like partition, but may include\npartitions with fewer than n items at the end.  Returns a stateful\ntransducer when no collection is provided."},
@@ -5969,8 +5284,6 @@
    :type "function",
    :related ["cljs.core/map" "cljs.core/concat"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the result of applying <code>concat</code> to the result of applying <code>map</code> to <code>f</code> and <code>colls</code>.</p><p>Function <code>f</code> should return a collection.</p><p>Returns a transducer when no collections are provided.</p>",
    :full-name "cljs.core/mapcat",
    :docstring
    "Returns the result of applying concat to the result of applying map\nto f and colls.  Thus function f should return a collection. Returns\na transducer when no collections are provided"},
@@ -5979,7 +5292,6 @@
    :name "*unchecked-if*",
    :type "var",
    :full-name "cljs.core/*unchecked-if*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "get-method"
@@ -5990,7 +5302,6 @@
    :full-name "cljs.core/get-method",
    :docstring
    "Given a multimethod and a dispatch value, returns the dispatch fn\nthat would apply to that value, or nil if none apply and no default",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   ">="
@@ -6007,9 +5318,7 @@
    [["(>= 2 1) ;;=> true"
      "(>= 2 2) ;;=> true"
      "(>= 1 2) ;;=> false"
-     "(>= 6 5 4 3 2) ;;=> true"]],
-   :description-html
-   "<p>Returns true if each successive number argument is less than or equal to the previous one, false otherwise.</p>",
+     "(>= 6 5 4 3 2)"]],
    :examples
    [{:id "de73d7",
      :content
@@ -6023,7 +5332,6 @@
    :signature ["[x n]"],
    :type "function",
    :full-name "cljs.core/int-rotate-left",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "exists?"
@@ -6034,7 +5342,6 @@
    :full-name "cljs.core/exists?",
    :docstring
    "Return true if argument exists, analogous to usage of typeof operator\nin JavaScript.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "goog-define"
@@ -6045,7 +5352,6 @@
    :full-name "cljs.core/goog-define",
    :docstring
    "Defines a var using `goog.define`. Passed default value must be\nstring, number or boolean.\n\nDefault value can be overridden at compile time using the\ncompiler option `:closure-defines`.\n\nExample:\n  (ns your-app.core)\n  (goog-define DEBUG! false)\n  ;; can be overridden with\n  :closure-defines {\"your_app.core.DEBUG_BANG_\" true}\n  or\n  :closure-defines {'your-app.core/DEBUG! true}",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bytes"
@@ -6054,7 +5360,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/bytes",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "missing-protocol"
@@ -6063,7 +5368,6 @@
    :signature ["[proto obj]"],
    :type "function",
    :full-name "cljs.core/missing-protocol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IChunk"
@@ -6072,7 +5376,6 @@
    :type "protocol",
    :full-name "cljs.core/IChunk",
    :docstring "Protocol for accessing the items of a chunk.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "prn"
@@ -6082,7 +5385,6 @@
    :type "function",
    :full-name "cljs.core/prn",
    :docstring "Same as pr followed by (newline).",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "concat"
@@ -6096,11 +5398,12 @@
    :type "function",
    :related ["cljs.core/conj" "cljs.core/into"],
    :examples-strings
-   [["(concat (list 1 2 3) (list 4 5 6)) ;;=> (1 2 3 4 5 6)"
-     "(concat [1 2 3] (list 4 5 6)) ;; => (1 2 3 4 5 6)"
-     "(concat [1] [2] [3]) ;; => (1 2 3)"]],
-   :description-html
-   "<p>Returns a lazy sequence representing the concatenation of the elements in the supplied collections.</p>",
+   [["(concat (list 1 2 3) (list 4 5 6)) ;;=>"
+     "(1 2 3 4 5 6)"
+     "(concat [1 2 3] (list 4 5 6)) ;; =>"
+     "(1 2 3 4 5 6)"
+     "(concat [1] [2] [3]) ;; =>"
+     "(1 2 3)"]],
    :examples
    [{:id "dcc019",
      :content
@@ -6114,7 +5417,6 @@
    :signature ["[s]"],
    :type "function",
    :full-name "cljs.core/chunk-rest",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr-sequential-writer"
@@ -6123,7 +5425,6 @@
    :signature ["[writer print-one begin sep end opts coll]"],
    :type "function",
    :full-name "cljs.core/pr-sequential-writer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "filter"
@@ -6136,8 +5437,6 @@
    :type "function",
    :related ["cljs.core/remove" "cljs.core/keep"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the non-nil results of <code>&#40;f item&#41;</code>. Note, this means false return values will be included.</p><p><code>f</code> must be free of side-effects.</p><p>Returns a transducer when no collection is provided.</p>",
    :full-name "cljs.core/filter",
    :docstring
    "Returns a lazy sequence of the items in coll for which\n(pred item) returns true. pred must be free of side-effects.\nReturns a transducer when no collection is provided."},
@@ -6152,8 +5451,6 @@
    :related
    ["cljs.core/last" "cljs.core/butlast" "cljs.core/drop-last"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a sequence of the last <code>n</code> items in <code>coll</code>.</p><p>Depending on the type of collection, <code>take-last</code> may be no faster than linear time. For vectors, please use <code>subvec</code>.</p>",
    :full-name "cljs.core/take-last",
    :docstring
    "Returns a seq of the last n items in coll.  Depending on the type\nof coll may be no better than linear time.  For vectors, see also subvec."},
@@ -6170,8 +5467,6 @@
     "cljs.core/sorted-map-by"
     "cljs.core/compare"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new sorted set with supplied <code>keys</code>, using the supplied <code>comparator</code>.</p>",
    :full-name "cljs.core/sorted-set-by",
    :docstring
    "Returns a new sorted set with supplied keys, using the supplied comparator."},
@@ -6181,7 +5476,6 @@
    :signature ["[sym]"],
    :type "function",
    :full-name "cljs.core/ns-interns*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-remainder-int"
@@ -6190,7 +5484,6 @@
    :signature ["[x n]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-remainder-int",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "symbol"
@@ -6199,7 +5492,6 @@
    :signature ["[name]" "[ns name]"],
    :type "function",
    :full-name "cljs.core/symbol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "time"
@@ -6210,7 +5502,6 @@
    :full-name "cljs.core/time",
    :docstring
    "Evaluates expr and prints the time it took. Returns the value of expr.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-in"
@@ -6226,10 +5517,8 @@
    :examples-strings
    [["(def a #js {:foo 1 :bar 2})"
      "(js-in \"foo\" a) ;;=> true"
-     "(js-in \"hello\" a) ;;=> false"
-     "(js-in \"toString\" a) ;;=> true"]],
-   :description-html
-   "<p>Determines if property <code>key</code> is in JavaScript object <code>obj</code>.</p><p>Equivalent to <code>key in obj</code> in JavaScript.</p>",
+     "(js-in \"hello\" a)"
+     "(js-in \"toString\" a)"]],
    :examples
    [{:id "a45b18",
      :content
@@ -6245,8 +5534,6 @@
    :type "function",
    :related ["cljs.core/not-empty"],
    :examples-strings [],
-   :description-html
-   "<p>Returns an empty collection of the same category as <code>coll</code>.</p><p>Returns nil if <code>coll</code> is nil.</p>",
    :full-name "cljs.core/empty",
    :docstring
    "Returns an empty collection of the same category as coll, or nil"},
@@ -6256,7 +5543,6 @@
    :signature ["[fseq riter]"],
    :type "type",
    :full-name "cljs.core/PersistentQueueIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "condp"
@@ -6269,8 +5555,6 @@
    :type "macro",
    :related ["cljs.core/cond" "special/if"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a binary predicate, an expression, and a set of clauses. There are two kinds of clauses:</p><p>Binary clause: <code>test-expr</code> <code>result-expr</code></p><p>Ternary clause: <code>test-expr</code> <code>:&gt;&gt;</code> <code>result-fn</code><br /> (Note: <code>:&gt;&gt;</code> is an ordinary keyword)</p><p>For each clause, <code>&#40;pred test-expr expr&#41;</code> is evaluated. If it returns logical true, the clause is a match.</p><p>If a binary clause matches, its <code>result-expr</code> is returned.</p><p>If a ternary clause matches, its <code>result-fn</code> is called with the result of the predicate and returned by <code>condp</code>. <code>result-fn</code> should take one argument.</p><p>A single default expression can follow the clauses, and its value will be returned if no clause matches.</p><p>If no default expression is provided and no clause matches, an Error is thrown.</p>",
    :full-name "cljs.core/condp",
    :docstring
    "Takes a binary predicate, an expression, and a set of clauses.\nEach clause can take the form of either:\n\ntest-expr result-expr\n\ntest-expr :>> result-fn\n\nNote :>> is an ordinary keyword.\n\nFor each clause, (pred test-expr expr) is evaluated. If it returns\nlogical true, the clause is a match. If a binary clause matches, the\nresult-expr is returned, if a ternary clause matches, its result-fn,\nwhich must be a unary function, is called with the result of the\npredicate as its argument, the result of that call being the return\nvalue of condp. A single default expression can follow the clauses,\nand its value will be returned if no clause matches. If no default\nexpression is provided and no clause matches, an\nIllegalArgumentException is thrown."},
@@ -6282,7 +5566,6 @@
    :full-name "cljs.core/hash-ordered-coll",
    :docstring
    "Returns the hash code, consistent with =, for an external ordered\ncollection implementing Iterable.\nSee http://clojure.org/data_structures#hash for full algorithms.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unsigned-bit-shift-right"
@@ -6294,7 +5577,6 @@
    :type "function/macro",
    :related ["cljs.core/bit-shift-right"],
    :examples-strings [],
-   :description-html "<p>Bitwise shift right with zero fill</p>",
    :full-name "cljs.core/unsigned-bit-shift-right",
    :docstring "Bitwise shift right with zero fill"},
   "RSeq"
@@ -6303,7 +5585,6 @@
    :signature ["[ci i meta]"],
    :type "type",
    :full-name "cljs.core/RSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "comparator"
@@ -6314,7 +5595,6 @@
    :full-name "cljs.core/comparator",
    :docstring
    "Returns an JavaScript compatible comparator based upon pred.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "INamed"
@@ -6323,7 +5603,6 @@
    :type "protocol",
    :full-name "cljs.core/INamed",
    :docstring "Protocol for adding a name.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "complement"
@@ -6336,10 +5615,7 @@
    :signature ["[f]"],
    :type "function",
    :related ["cljs.core/not"],
-   :examples-strings
-   [["(def a 10)" "((complement #(= a %)) 12) ;;=> true"]],
-   :description-html
-   "<p>Takes a function <code>f</code> and returns a function that takes the same arguments as <code>f</code>, has the same effects, if any, and returns the opposite truth value.</p>",
+   :examples-strings [["(def a 10)" "((complement #(= a %)) 12)"]],
    :examples
    [{:id "69e359",
      :content
@@ -6353,7 +5629,6 @@
    :signature ["[meta array __hash]"],
    :type "type",
    :full-name "cljs.core/Vector",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "when"
@@ -6366,8 +5641,6 @@
    :type "macro",
    :related ["cljs.core/when-not" "cljs.core/when-let" "special/if"],
    :examples-strings [],
-   :description-html
-   "<p>Evaluates <code>test</code>. If logical true, evaluates <code>body</code> in an implicit <code>do</code>.</p><p><code>when</code> is often used instead of <code>if</code> for conditions that do not have an \"else\".</p>",
    :full-name "cljs.core/when",
    :docstring
    "Evaluates test. If logical true, evaluates body in an implicit do."},
@@ -6376,7 +5649,6 @@
    :name "let*",
    :type "special form",
    :full-name "special/let*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "lazy-transformer"
@@ -6385,7 +5657,6 @@
    :signature ["[stepper]"],
    :type "function",
    :full-name "cljs.core/lazy-transformer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "chunked-seq"
@@ -6395,7 +5666,6 @@
    ["[vec i off]" "[vec node i off]" "[vec node i off meta]"],
    :type "function",
    :full-name "cljs.core/chunked-seq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "symbol?"
@@ -6405,7 +5675,6 @@
    :type "function/macro",
    :full-name "cljs.core/symbol?",
    :docstring "Return true if x is a Symbol",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "every-pred"
@@ -6418,8 +5687,6 @@
    :type "function",
    :related ["cljs.core/some-fn" "cljs.core/and"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a set of predicate functions and returns a function <code>f</code> that returns true if all of its composing predicates return a logical true value against all of its arguments, else it returns false.</p><p>Note that <code>f</code> is short-circuiting in that it will stop execution on the first argument that triggers a logical false result against the original predicates.</p>",
    :full-name "cljs.core/every-pred",
    :docstring
    "Takes a set of predicates and returns a function f that returns true if all of its\ncomposing predicates return a logical true value against all of its arguments, else it returns\nfalse. Note that f is short-circuiting in that it will stop execution on the first\nargument that triggers a logical false result against the original predicates."},
@@ -6439,8 +5706,6 @@
     "cljs.core/sorted-map-by"
     "cljs.core/sorted-set-by"],
    :examples-strings [],
-   :description-html
-   "<p><code>sc</code> must be a sorted collection.</p><p><code>test</code>, <code>start-test</code>, <code>end-test</code> must be <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> or <code>&gt;=</code>.</p><p>Returns a sequence of those entries with keys <code>ek</code> for which <code>&#40;test &#40;.. sc comparator &#40;compare ek key&#41;&#41; 0&#41;</code> is true.</p>",
    :full-name "cljs.core/subseq",
    :docstring
    "sc must be a sorted collection, test(s) one of <, <=, > or\n>=. Returns a seq of those entries with keys ek for\nwhich (test (.. sc comparator (compare ek key)) 0) is true"},
@@ -6455,8 +5720,6 @@
    :related
    ["cljs.core/swap!" "cljs.core/compare-and-set!" "cljs.core/atom"],
    :examples-strings [],
-   :description-html
-   "<p>Sets the value of atom <code>a</code> to <code>new-value</code> without regard for the current value.</p><p>Returns <code>new-value</code>.</p>",
    :full-name "cljs.core/reset!",
    :docstring
    "Sets the value of atom to newval without regard for the\ncurrent value. Returns newval."},
@@ -6466,7 +5729,6 @@
    :signature ["[objs writer opts]"],
    :type "function",
    :full-name "cljs.core/pr-seq-writer",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentArrayMap"
@@ -6475,7 +5737,6 @@
    :signature ["[meta cnt arr __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentArrayMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "StringIter"
@@ -6484,7 +5745,6 @@
    :signature ["[s i]"],
    :type "type",
    :full-name "cljs.core/StringIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-substract"
@@ -6495,7 +5755,6 @@
    :full-name "cljs.core/unchecked-substract",
    :docstring
    "If no ys are supplied, returns the negation of x, else subtracts\nthe ys from x and returns the result.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Keyword"
@@ -6504,7 +5763,6 @@
    :signature ["[ns name fqn _hash]"],
    :type "type",
    :full-name "cljs.core/Keyword",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "neg?"
@@ -6516,8 +5774,6 @@
    :type "function/macro",
    :related ["cljs.core/pos?" "cljs.core/zero?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is less than 0, false otherwise.</p>",
    :full-name "cljs.core/neg?",
    :docstring "Returns true if num is less than zero, else false"},
   "PersistentArrayMap.HASHMAP_THRESHOLD"
@@ -6525,7 +5781,6 @@
    :name "PersistentArrayMap.HASHMAP_THRESHOLD",
    :type "var",
    :full-name "cljs.core/PersistentArrayMap.HASHMAP_THRESHOLD",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentHashSet"
@@ -6534,28 +5789,24 @@
    :signature ["[meta hash-map __hash]"],
    :type "type",
    :full-name "cljs.core/PersistentHashSet",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "string?"
   {:description "Returns true if `x` is a string, false otherwise.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "string?",
    :signature ["[x]"],
    :type "function/macro",
-   :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a string, false otherwise.</p>",
    :full-name "cljs.core/string?",
-   :docstring "Returns true if x is a JavaScript string."},
+   :docstring "Returns true if x is a JavaScript string.",
+   :examples-strings [],
+   :examples-htmls []},
   "m3-mix-H1"
   {:ns "cljs.core",
    :name "m3-mix-H1",
    :signature ["[h1 k1]"],
    :type "function",
    :full-name "cljs.core/m3-mix-H1",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "sorted?"
@@ -6568,8 +5819,6 @@
    :type "function",
    :related ["cljs.core/sorted-map" "cljs.core/sorted-set"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>coll</code> implements the <code>ISorted</code> protocol, false otherwise.</p><p>Sorted maps and sorted sets implement <code>ISorted</code>.</p>",
    :full-name "cljs.core/sorted?",
    :docstring "Returns true if coll satisfies ISorted"},
   "->"
@@ -6586,29 +5835,11 @@
    :related ["cljs.core/->>"],
    :examples-strings
    [["(first (.split (.replace (.toUpperCase \"a b c d\") \"A\" \"X\") \" \")) ;;=> \"X\""
-     "(-> \"a b c d\""
-     "    .toUpperCase"
-     "    (.replace \"A\" \"X\")"
-     "    (.split \" \")"
-     "    first) ;;=> \"X\""]
-    ["(def person"
-     "  {:name \"Mark Volkmann\""
-     "   :address {:street \"644 Glen Summit\""
-     "             :city \"St. Charles\""
-     "             :state \"Missouri\""
-     "             :zip 63304}"
-     "   :employer {:name \"Object Computing, Inc.\""
-     "              :address {:street \"12140 Woodcrest Dr.\""
-     "                        :city \"Creve Coeur\""
-     "                        :state \"Missouri\""
-     "                        :zip 63141}}})"
-     "(-> person :employer :address :city) ;;=> \"Creve Coeur\""
-     "(:city (:address (:employer person))) ;;=> \"Creve Coeur\""]
-    ["(def c 5)"
-     "(-> c (+ 3) (/ 2) (- 1)) ;;=> 3"
-     "(- (/ (+ c 3) 2) 1) ;;=> 3"]],
-   :description-html
-   "<p>The thread-first macro \"threads\" an expression through several forms as the second item in a list.</p><p>Inserts <code>x</code> as the second item in the first form, making a list of it if it is not a list already. If there are more forms, inserts the first form as the second item in second form, etc.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(-> x   (a b c)   d   (x y z))</pre></td><pre><code>  &lt;td&gt;&lt;pre&gt; \n</code></pre>(x (d (a x b c)) y z)</pre></td></tr></tbody></table></p>",
+     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\")\n    (.split \" \")\n    first)"]
+    ["(def person\n  {:name \"Mark Volkmann\"\n   :address {:street \"644 Glen Summit\"\n             :city \"St. Charles\"\n             :state \"Missouri\"\n             :zip 63304}\n   :employer {:name \"Object Computing, Inc.\"\n              :address {:street \"12140 Woodcrest Dr.\"\n                        :city \"Creve Coeur\"\n                        :state \"Missouri\"\n                        :zip 63141}}})"
+     "(-> person :employer :address :city)"
+     "(:city (:address (:employer person)))"]
+    ["(def c 5)" "(-> c (+ 3) (/ 2) (- 1))" "(- (/ (+ c 3) 2) 1)"]],
    :examples
    [{:id "19b460",
      :content
@@ -6632,8 +5863,6 @@
    :type "function",
    :related ["cljs.core/atom" "cljs.core/get-validator"],
    :examples-strings [],
-   :description-html
-   "<p>Sets a validator function for atom <code>a</code>.</p><p><code>fn</code> must be nil or a side-effect-free function of one argument, which will be passed the intended new state on any state change. <code>fn</code> should return false or throw an Error if the new state is unacceptable.</p><p>If the current value of <code>a</code> is unacceptable to <code>fn</code> when <code>set-validator!</code> is called, an Error will be thrown and the validator will not be set.</p><p><code>&#40;set-validator! my-atom nil&#41;</code> will remove the validator from <code>my-atom</code>.</p>",
    :full-name "cljs.core/set-validator!",
    :docstring
    "Sets the validator-fn for an atom. validator-fn must be nil or a\nside-effect-free fn of one argument, which will be passed the intended\nnew state on any state change. If the new state is unacceptable, the\nvalidator-fn should return false or throw an Error. If the current state\nis not acceptable to the new validator, an Error will be thrown and the\nvalidator will not be changed."},
@@ -6654,14 +5883,12 @@
      "(and true) ;;=> true"
      "(and true true) ;;=> true"
      "(and true false) ;;=> false"
-     "(and false false) ;;=> false"]
+     "(and false false)"]
     ["(and \"foo\" \"bar\") ;;=> \"bar\""
      "(and \"foo\" nil) ;;=> nil"
      "(and \"foo\" false) ;;=> false"
      "(and nil \"foo\") ;;=> nil"
-     "(and false \"foo\") ;;=> false"]],
-   :description-html
-   "<p>Evaluates arguments one at a time from left to right. If an argument returns logical false (nil or false), <code>and</code> returns that value and doesn't evaluate any of the other arguments, otherwise it returns the value of the last argument.</p><p><code>&#40;and&#41;</code> returns true.</p>",
+     "(and false \"foo\")"]],
    :examples
    [{:id "a39a73",
      :content
@@ -6682,8 +5909,6 @@
    :type "function/macro",
    :related ["cljs.core/set" "cljs.core/sorted-set"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new hash set with supplied <code>keys</code>.</p><p>Any equal keys are handled as if by repeated uses of <code>conj</code>.</p>",
    :full-name "cljs.core/hash-set",
    :docstring
    "Returns a new hash set with supplied keys.  Any equal keys are\nhandled as if by repeated uses of conj."},
@@ -6696,8 +5921,6 @@
    :type "function",
    :related ["cljs.core/set"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a set, false otherwise.</p>",
    :full-name "cljs.core/set?",
    :docstring "Returns true if x satisfies ISet"},
   "defmethod"
@@ -6708,7 +5931,6 @@
    :full-name "cljs.core/defmethod",
    :docstring
    "Creates and installs a new method of multimethod associated with dispatch-value. ",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "group-by"
@@ -6721,8 +5943,6 @@
    :type "function",
    :related ["cljs.core/partition-by" "cljs.core/frequencies"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a map of the elements of <code>coll</code> keyed by the result of running <code>f</code> on each element.</p><p>The value at each key will be a vector of the corresponding elements in the order they appeared in <code>coll</code>.</p>",
    :full-name "cljs.core/group-by",
    :docstring
    "Returns a map of the elements of coll keyed by the result of\nf on each element. The value at each key will be a vector of the\ncorresponding elements, in the order they appeared in coll."},
@@ -6736,8 +5956,6 @@
    :type "function",
    :related ["cljs.core/atom"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the current value of atom <code>x</code>.</p><p>The <code>@</code> reader macro is often used instead of <code>deref</code>. <code>@foo</code> is the same thing as <code>&#40;deref foo&#41;</code>.</p>",
    :full-name "cljs.core/deref",
    :docstring
    "Also reader macro: @var/@atom/@delay. Returns the\nmost-recently-committed value of ref. When applied to a var\nor atom, returns its current state. When applied to a delay, forces\nit if not already forced. See also - realized?."},
@@ -6747,7 +5965,6 @@
    :signature ["[nil-val root-iter seen]"],
    :type "type",
    :full-name "cljs.core/HashMapIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "mod"
@@ -6761,9 +5978,7 @@
    :type "function",
    :related ["cljs.core/rem"],
    :examples-strings
-   [["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0) ;;=> NaN"]],
-   :description-html
-   "<p>Returns the modulus of dividing numerator <code>n</code> by denominator <code>d</code>.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p><p>Truncates toward negative infinity.</p>",
+   [["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0)"]],
    :examples
    [{:id "8165e8",
      :content
@@ -6779,7 +5994,6 @@
    :full-name "special/do",
    :docstring
    "Evaluates the expressions in order and returns the value of\nthe last. If no expressions are supplied, returns nil.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "some->>"
@@ -6796,8 +6010,6 @@
     "cljs.core/some->"
     "cljs.core/some"],
    :examples-strings [],
-   :description-html
-   "<p>When <code>expr</code> is not nil, threads it into the first form (via <code>-&gt;&gt;</code>), and when that result is not nil, through the next, etc.</p>",
    :full-name "cljs.core/some->>",
    :docstring
    "When expr is not nil, threads it into the first form (via ->>),\nand when that result is not nil, through the next etc"},
@@ -6810,8 +6022,6 @@
    :type "function",
    :related ["cljs.core/empty"],
    :examples-strings [],
-   :description-html
-   "<p>Returns nil if <code>coll</code> is empty, else returns <code>coll</code>.</p>",
    :full-name "cljs.core/not-empty",
    :docstring "If coll is empty, returns nil, else coll"},
   "fn*"
@@ -6819,7 +6029,6 @@
    :name "fn*",
    :type "special form",
    :full-name "special/fn*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "last"
@@ -6841,9 +6050,7 @@
    [["(last [1 2 3]) ;;=> 3"
      "(last [1 2]) ;;=> 2"
      "(last [1]) ;;=> 1"
-     "(last []) ;;=> nil"]],
-   :description-html
-   "<p>Returns the last item in <code>coll</code> in linear time.</p><p><code>peek</code> is much faster than <code>last</code> for a vector.</p>",
+     "(last [])"]],
    :examples
    [{:id "eb0836",
      :content
@@ -6856,7 +6063,6 @@
    :type "protocol",
    :full-name "cljs.core/IComparable",
    :docstring "Protocol for values that can be compared.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "delay"
@@ -6867,7 +6073,6 @@
    :full-name "cljs.core/delay",
    :docstring
    "Takes a body of expressions and yields a Delay object that will\ninvoke the body only the first time it is forced (with force or deref/@), and\nwill cache the result and return it on all subsequent force\ncalls.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "hash-string*"
@@ -6876,7 +6081,6 @@
    :signature ["[s]"],
    :type "function",
    :full-name "cljs.core/hash-string*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "interpose"
@@ -6889,8 +6093,6 @@
    :type "function",
    :related ["cljs.core/interleave" "clojure.string/join"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy seq of the elements of <code>coll</code> separated by <code>sep</code>.</p>",
    :full-name "cljs.core/interpose",
    :docstring
    "Returns a lazy seq of the elements of coll separated by sep.\nReturns a stateful transducer when no collection is provided."},
@@ -6901,7 +6103,6 @@
    :type "function",
    :full-name "cljs.core/reduceable?",
    :docstring "Returns true if coll satisfies IReduce",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "HashMap"
@@ -6910,7 +6111,6 @@
    :signature ["[meta count hashobj __hash]"],
    :type "type",
    :full-name "cljs.core/HashMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "<"
@@ -6927,9 +6127,7 @@
    [["(< 1 2) ;;=> true"
      "(< 2 1) ;;=> false"
      "(< 1 1) ;;=> false"
-     "(< 2 3 4 5 6) ;;=> true"]],
-   :description-html
-   "<p>Returns true if each successive number argument is greater than the previous one, false otherwise.</p>",
+     "(< 2 3 4 5 6)"]],
    :examples
    [{:id "02e6d3",
      :content
@@ -6947,8 +6145,6 @@
    :type "function/macro",
    :related ["cljs.core/neg?" "cljs.core/zero?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is greater than 0, false otherwise.</p>",
    :full-name "cljs.core/pos?",
    :docstring "Returns true if num is greater than zero, else false"},
   "type"
@@ -6958,7 +6154,6 @@
    :type "function",
    :full-name "cljs.core/type",
    :docstring "Return x's constructor.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "HashCollisionNode"
@@ -6967,7 +6162,6 @@
    :signature ["[edit collision-hash cnt arr]"],
    :type "type",
    :full-name "cljs.core/HashCollisionNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "NodeSeq"
@@ -6976,7 +6170,6 @@
    :signature ["[meta nodes i s __hash]"],
    :type "type",
    :full-name "cljs.core/NodeSeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-substract-int"
@@ -6987,7 +6180,6 @@
    :full-name "cljs.core/unchecked-substract-int",
    :docstring
    "If no ys are supplied, returns the negation of x, else subtracts\nthe ys from x and returns the result.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "print-str"
@@ -6997,7 +6189,6 @@
    :type "function",
    :full-name "cljs.core/print-str",
    :docstring "print to a string, returning it",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "min-key"
@@ -7010,8 +6201,6 @@
    :type "function",
    :related ["cljs.core/min" "cljs.core/max-key"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the <code>x</code> for which <code>&#40;k x&#41;</code> is least.</p><p><code>&#40;k x&#41;</code> should return a number.</p>",
    :full-name "cljs.core/min-key",
    :docstring "Returns the x for which (k x), a number, is least."},
   "alength"
@@ -7029,9 +6218,7 @@
      "(alength a) ;;=> 3"
      "(.-length a) ;;=> 3"
      "(aget a \"length\") ;;=> 3"
-     "(count a) ;;=> 3"]],
-   :description-html
-   "<p>For interop, it returns the length of a JavaScript array or string.</p>",
+     "(count a)"]],
    :examples
    [{:id "26f79f",
      :content
@@ -7051,27 +6238,19 @@
    :type "special form",
    :related ["cljs.core/.." "cljs.core/aget"],
    :examples-strings
-   [["// JavaScript"
-     "var m = \"Hello World\";"
-     "m.length;"
-     "//=> 11"
-     " ;; ClojureScript"
+   [[" ;; ClojureScript"
      "(def m \"Hello World\")"
-     "(.-length m) ;;=> 11"
-     "// JavaScript"
-     "m.toUpperCase();"
-     "//=> \"HELLO WORLD\""
-     "m.replace(\"H\", \"\");"
-     "//=> \"ello World\";"
+     "(.-length m)"
+     "// JavaScript\nm.toUpperCase"
+     "() ;\n//=> \"HELLO WORLD\"\n\nm.replace"
+     "(\"H\", \"\")"
      " ;; ClojureScript"
      "(.toUpperCase m) ;;=> \"HELLO WORLD\""
-     "(.replace m \"H\" \"\") ;;=> \"ello World\""]
+     "(.replace m \"H\" \"\")"]
     ["(def o #js {:foo \"bar\"})"
      "(. o -foo) ;;=> \"bar\""
      "(.-foo o) ;;=> \"bar\""
-     "(aget o \"foo\") ;;=> \"bar\""]],
-   :description-html
-   "<p>For interop, the <code>.</code> special form allows access to member properties of the given JavaScript object <code>o</code>.</p><p>If the second operand is a symbol preceded with a hyphen as in <code>-p</code>, the expression will result in the value of the property named <code>p</code>.</p><p>If the second operand is a symbol that is not preceded with a hyphen as in <code>m</code>, the expression will evaluate to a call of the method named <code>m</code>.  Any additional operands will be passed as arguments to the method.</p><p>The <b>preferred, idiomatic</b> way to access members of a JavaScript object is to use the following sugar:</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Sugar&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt; \n</code></pre>  </thead>   <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.-p o&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o -p&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt;\n&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.m o&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o m&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt;\n&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;.m o 1 2&#41;&lt;/pre&gt;&lt;/td&gt;\n  &lt;td&gt;&lt;pre&gt;&#40;. o m 1 2&#41;&lt;/pre&gt;&lt;/td&gt;\n&lt;/tr&gt; \n</code></pre>  </tbody> </table></p>",
+     "(aget o \"foo\")"]],
    :examples
    [{:id "22ccbb",
      :content
@@ -7091,8 +6270,6 @@
    :type "function/macro",
    :related ["cljs.core/aclone" "cljs.core/array"],
    :examples-strings [],
-   :description-html
-   "<p>Creates an empty JavaScript array of size <code>size</code>.</p>",
    :full-name "cljs.core/make-array",
    :docstring
    "Construct a JavaScript array of specified size. Accepts ignored type\nargument for compatibility with Clojure."},
@@ -7110,13 +6287,13 @@
    [["(def a ^:foo [1 2 3])"
      "(meta a) ;;=> {:foo true}"
      "(alter-meta! a assoc :bar true)"
-     "(meta a) ;;=> {:foo true, :bar true}"
+     "(meta a)"
      "(def a [1 2 3])"
-     "(meta #'a) ;;=> {:arglists (), :test nil, :name a, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"
+     "(meta #'a) ;;=> {:arglists"
+     "()"
+     ", :test nil, :name a, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"
      "(alter-meta! #'a assoc :bar true)"
-     "(:bar (meta #'a)) ;;=> nil"]],
-   :description-html
-   "<p>Alter the metadata of <code>data</code> to be <code>&#40;apply f its-current-meta args&#41;</code>.</p><p>Metadata of vars cannot be altered since they are statically determined at compile-time.</p>",
+     "(:bar (meta #'a))"]],
    :examples
    [{:id "8378a0",
      :content
@@ -7130,7 +6307,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/es6-set-entries-iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "conj"
@@ -7148,13 +6324,14 @@
     "cljs.core/peek"
     "cljs.core/pop"],
    :examples-strings
-   [["(conj [1 2 3] 4) ;;=> [1 2 3 4]"
-     "(conj (list 1 2 3) 0) ;;=> (0 1 2 3)"
-     "(def x (range 1 4)) ;;=> (1 2 3)"
-     "(conj x 0) ;;=> (0 1 2 3)"
-     "(conj #{\"a\" \"b\" \"c\"} \"d\") ;;=> #{\"a\" \"b\" \"c\" \"d\"}"]],
-   :description-html
-   "<p>conj(oin)</p><p>Returns a new collection with the <code>x</code>s \"added\" to <code>coll</code>.</p><p>The \"addition\" may happen at different \"places\" depending on the collection type.</p><p><code>&#40;conj nil item&#41;</code> returns <code>&#40;item&#41;</code>.</p>",
+   [["(conj [1 2 3] 4)"
+     "(conj (list 1 2 3) 0) ;;=>"
+     "(0 1 2 3)"
+     "(def x (range 1 4)) ;;=>"
+     "(1 2 3)"
+     "(conj x 0) ;;=>"
+     "(0 1 2 3)"
+     "(conj #{\"a\" \"b\" \"c\"} \"d\")"]],
    :examples
    [{:id "8c2a84",
      :content
@@ -7168,7 +6345,6 @@
    :type "protocol",
    :full-name "cljs.core/ASeq",
    :docstring "Marker protocol indicating an array sequence.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "List"
@@ -7177,7 +6353,6 @@
    :signature ["[meta first rest count __hash]"],
    :type "type",
    :full-name "cljs.core/List",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ObjMap.fromObject"
@@ -7186,7 +6361,6 @@
    :signature ["[ks obj]"],
    :type "function",
    :full-name "cljs.core/ObjMap.fromObject",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "check-string-hash-cache"
@@ -7195,7 +6369,6 @@
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/check-string-hash-cache",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "clj->js"
@@ -7211,9 +6384,7 @@
    :examples-strings
    [["(clj->js {:foo 1 :bar 2}) ;;=> #js {:foo 1, :bar 2}"
      "(clj->js [:foo \"bar\" 'baz]) ;;=> #js [\"foo\" \"bar\" \"baz\"]"
-     "(clj->js [1 {:foo \"bar\"} 4]) ;;=> #js [1 #js {:foo \"bar\"} 4]"]],
-   :description-html
-   "<p>Recursively transforms ClojureScript values to JavaScript.</p><p>| ClojureScript |        | JavaScript |         | |---------------|--------|------------|---------| | Set           | <code>#{}</code>  | Array      | <code>&#91;&#93;</code>    | | Vector        | <code>&#91;&#93;</code>   | Array      | <code>&#91;&#93;</code>    | | List          | <code>&#40;&#41;</code>   | Array      | <code>&#91;&#93;</code>    | | Keyword       | <code>:foo</code> | String     | <code>&quot;foo&quot;</code> | | Symbol        | <code>bar</code>  | String     | <code>&quot;bar&quot;</code> | | Map           | <code>{}</code>   | Object     | <code>{}</code>    |</p>",
+     "(clj->js [1 {:foo \"bar\"} 4])"]],
    :examples
    [{:id "2b1057",
      :content
@@ -7227,7 +6398,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/double",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IPrintWithWriter"
@@ -7237,7 +6407,6 @@
    :full-name "cljs.core/IPrintWithWriter",
    :docstring
    "The old IPrintable protocol's implementation consisted of building a giant\n   list of strings to concatenate.  This involved lots of concat calls,\n   intermediate vectors, and lazy-seqs, and was very slow in some older JS\n   engines.  IPrintWithWriter implements printing via the IWriter protocol, so it\n   be implemented efficiently in terms of e.g. a StringBuffer append.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-multiply"
@@ -7247,7 +6416,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-multiply",
    :docstring "Returns the product of nums. (*) returns 1.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "DEMUNGE_PATTERN"
@@ -7255,7 +6423,6 @@
    :name "DEMUNGE_PATTERN",
    :type "var",
    :full-name "cljs.core/DEMUNGE_PATTERN",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IChunkedSeq"
@@ -7265,23 +6432,20 @@
    :full-name "cljs.core/IChunkedSeq",
    :docstring
    "Protocol for accessing a collection as sequential chunks.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "tree-seq"
   {:description
    "Returns a lazy sequence of the nodes in a tree, via a depth-first walk.\n\n`branch?` must be a function of one argument that returns true if passed a node\nthat can have children (but may not).\n\n`children` must be a function of one argument that returns a sequence of the\nchildren. `children` will only be called on nodes for which `branch?` returns\ntrue.\n\n`root` is the root node of the tree.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "tree-seq",
    :signature ["[branch? children root]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the nodes in a tree, via a depth-first walk.</p><p><code>branch?</code> must be a function of one argument that returns true if passed a node that can have children (but may not).</p><p><code>children</code> must be a function of one argument that returns a sequence of the children. <code>children</code> will only be called on nodes for which <code>branch?</code> returns true.</p><p><code>root</code> is the root node of the tree.</p>",
    :full-name "cljs.core/tree-seq",
    :docstring
-   "Returns a lazy sequence of the nodes in a tree, via a depth-first walk.\n branch? must be a fn of one arg that returns true if passed a node\n that can have children (but may not).  children must be a fn of one\n arg that returns a sequence of the children. Will only be called on\n nodes for which branch? returns true. Root is the root node of the\ntree."},
+   "Returns a lazy sequence of the nodes in a tree, via a depth-first walk.\n branch? must be a fn of one arg that returns true if passed a node\n that can have children (but may not).  children must be a fn of one\n arg that returns a sequence of the children. Will only be called on\n nodes for which branch? returns true. Root is the root node of the\ntree.",
+   :examples-strings [],
+   :examples-htmls []},
   "meta"
   {:ns "cljs.core",
    :name "meta",
@@ -7290,7 +6454,6 @@
    :full-name "cljs.core/meta",
    :docstring
    "Returns the metadata of obj, returns nil if there is no metadata.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "defonce"
@@ -7299,7 +6462,6 @@
    :signature ["[x init]"],
    :type "macro",
    :full-name "cljs.core/defonce",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array-list"
@@ -7308,7 +6470,6 @@
    :signature ["[]"],
    :type "function",
    :full-name "cljs.core/array-list",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-subtract-int"
@@ -7319,7 +6480,6 @@
    :full-name "cljs.core/unchecked-subtract-int",
    :docstring
    "If no ys are supplied, returns the negation of x, else subtracts\nthe ys from x and returns the result.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IIndexed"
@@ -7329,7 +6489,6 @@
    :full-name "cljs.core/IIndexed",
    :docstring
    "Protocol for collections to provide idexed-based access to their items.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "RangeIterator"
@@ -7338,7 +6497,6 @@
    :signature ["[i end step]"],
    :type "type",
    :full-name "cljs.core/RangeIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "TransientHashMap"
@@ -7347,7 +6505,6 @@
    :signature ["[edit root count has-nil? nil-val]"],
    :type "type",
    :full-name "cljs.core/TransientHashMap",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "divide"
@@ -7356,7 +6513,6 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "macro",
    :full-name "cljs.core/divide",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "clone"
@@ -7367,7 +6523,6 @@
    :full-name "cljs.core/clone",
    :docstring
    "Clone the supplied value which must implement ICloneable.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*main-cli-fn*"
@@ -7377,7 +6532,6 @@
    :full-name "cljs.core/*main-cli-fn*",
    :docstring
    "When compiled for a command-line target, whatever function\n*main-cli-fn* is set to will be called with the command-line\nargv as arguments",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentVector.EMPTY_NODE"
@@ -7385,7 +6539,6 @@
    :name "PersistentVector.EMPTY_NODE",
    :type "var",
    :full-name "cljs.core/PersistentVector.EMPTY_NODE",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "write-all"
@@ -7394,7 +6547,6 @@
    :signature ["[writer & ss]"],
    :type "function",
    :full-name "cljs.core/write-all",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IIterable"
@@ -7403,7 +6555,6 @@
    :type "protocol",
    :full-name "cljs.core/IIterable",
    :docstring "Protocol for iterating over a collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "hash-string"
@@ -7412,7 +6563,6 @@
    :signature ["[k]"],
    :type "function",
    :full-name "cljs.core/hash-string",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "StringBufferWriter"
@@ -7421,7 +6571,6 @@
    :signature ["[sb]"],
    :type "type",
    :full-name "cljs.core/StringBufferWriter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "while"
@@ -7434,8 +6583,6 @@
    :type "macro",
    :related ["cljs.core/loop"],
    :examples-strings [],
-   :description-html
-   "<p>Repeatedly executes <code>body</code> while <code>test</code> expression is true. Presumes some side-effect will cause <code>test</code> to become false or nil.</p><p>Returns nil.</p>",
    :full-name "cljs.core/while",
    :docstring
    "Repeatedly executes body while test expression is true. Presumes\nsome side-effect will cause test to become false/nil. Returns nil"},
@@ -7445,7 +6592,6 @@
    :signature ["[xs no-clone]"],
    :type "function",
    :full-name "cljs.core/PersistentVector.fromArray",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "set-print-fn!"
@@ -7455,7 +6601,6 @@
    :type "function",
    :full-name "cljs.core/set-print-fn!",
    :docstring "Set *print-fn* to f.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "floats"
@@ -7464,7 +6609,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/floats",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reset-meta!"
@@ -7474,7 +6618,6 @@
    :type "function",
    :full-name "cljs.core/reset-meta!",
    :docstring "Atomically resets the metadata for an atom",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-shift-right"
@@ -7489,10 +6632,7 @@
    :related
    ["cljs.core/bit-shift-left" "cljs.core/unsigned-bit-shift-right"],
    :examples-strings
-   [["(bit-shift-right 2r1010 1) ;;=> 5 ;; 5 = 2r0101"
-     "(bit-shift-right 10 1) ;;=> 5"]],
-   :description-html
-   "<p>Bitwise shift right <code>n</code> bits.  Same as <code>x &gt;&gt; n</code> in JavaScript.</p>",
+   [["(bit-shift-right 2r1010 1)" "(bit-shift-right 10 1)"]],
    :examples
    [{:id "5b75af",
      :content
@@ -7510,18 +6650,8 @@
    :type "macro",
    :related ["cljs.core/->"],
    :examples-strings
-   [["(->> (range)"
-     "     (map #(* % %))"
-     "     (filter even?)"
-     "     (take 10)"
-     "     (reduce +)) ;;=> 1140"
-     "(reduce +"
-     "  (take 10"
-     "    (filter even?"
-     "      (map #(* % %)"
-     "        (range))))) ;;=> 1140"]],
-   :description-html
-   "<p>The thread-last macro \"threads\" an expression through several forms as the last item in a list.</p><p>Inserts <code>x</code> as the last item in the first form, making a list of it if it is not a list already. If there are more forms, inserts the first form as the last item in second form, etc.</p><p><table class=\"code-tbl-9bef6\">   <thead><pre><code>&lt;tr&gt;\n  &lt;th&gt;Code&lt;/th&gt;\n  &lt;th&gt;Expands To&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt; \n</code></pre>  <tbody><pre><code>&lt;tr&gt;\n  &lt;td&gt;&lt;pre&gt; \n</code></pre>(->> x   (a b c)   d   (x y z))</pre></td><pre><code>  &lt;td&gt;&lt;pre&gt; \n</code></pre>(x y z (d (a b c x)))</pre></td></tr></tbody></table></p>",
+   [["(->> (range)\n     (map #(* % %))\n     (filter even?)\n     (take 10)\n     (reduce +))"
+     "(reduce +\n  (take 10\n    (filter even?\n      (map #(* % %)\n        (range)))))"]],
    :examples
    [{:id "1dc72c",
      :content
@@ -7536,7 +6666,6 @@
    :full-name "cljs.core/print",
    :docstring
    "Prints the object(s) using string-print.\nprint and println produce output for human consumption.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*print-length*"
@@ -7546,7 +6675,6 @@
    :full-name "cljs.core/*print-length*",
    :docstring
    "When set to logical true, objects will be printed in a way that preserves\ntheir type when read in later.\n\nDefaults to false.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IAssociative"
@@ -7555,7 +6683,6 @@
    :type "protocol",
    :full-name "cljs.core/IAssociative",
    :docstring "Protocol for adding associativity to collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "instance?"
@@ -7568,14 +6695,11 @@
    :type "function/macro",
    :related ["cljs.core/type"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>o</code> is an instance of type <code>t</code>, false otherwise.</p>",
    :full-name "cljs.core/instance?",
    :docstring
    "Evaluates x and tests if it is an instance of the type\nc. Returns true or false"},
   "volatile!"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "volatile!",
    :signature ["[val]"],
    :type "function",
@@ -7584,18 +6708,17 @@
     "cljs.core/vswap!"
     "cljs.core/vreset!"
     "cljs.core/Volatile"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/volatile!",
    :docstring
-   "Creates and returns a Volatile with an initial value of val."},
+   "Creates and returns a Volatile with an initial value of val.",
+   :examples-strings [],
+   :examples-htmls []},
   "IAtom"
   {:ns "cljs.core",
    :name "IAtom",
    :type "protocol",
    :full-name "cljs.core/IAtom",
    :docstring "Marker protocol indicating an atom.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "stepper"
@@ -7604,7 +6727,6 @@
    :signature ["[xform iter]"],
    :type "function",
    :full-name "cljs.core/stepper",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-multiply-int"
@@ -7614,7 +6736,6 @@
    :type "function/macro",
    :full-name "cljs.core/unchecked-multiply-int",
    :docstring "Returns the product of nums. (*) returns 1.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "quote"
@@ -7624,7 +6745,6 @@
    :type "special form",
    :full-name "special/quote",
    :docstring "Yields the unevaluated form.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array-seq"
@@ -7637,10 +6757,10 @@
    :signature ["[array]" "[array i]"],
    :type "function",
    :examples-strings
-   [["(array-seq #js [1 2 3]) ;;=> (1 2 3)"
-     "(array-seq #js [1 2 3] 1) ;;=> (2 3)"]],
-   :description-html
-   "<p>Creates a <code>seq</code> from a JavaScript array, starting at index <code>i</code> if given.</p>",
+   [["(array-seq #js [1 2 3]) ;;=>"
+     "(1 2 3)"
+     "(array-seq #js [1 2 3] 1) ;;=>"
+     "(2 3)"]],
    :examples
    [{:id "9ef6de",
      :content
@@ -7650,17 +6770,15 @@
   "memoize"
   {:description
    "Returns a memoized version of a referentially transparent function.\n\nA memoized version of a function keeps a cache of the mappings from arguments to\nresults in memory. When calls with the same arguments are repeated often, a\nmemoized function has higher performance at the expense of higher memory usage.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "memoize",
    :signature ["[f]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a memoized version of a referentially transparent function.</p><p>A memoized version of a function keeps a cache of the mappings from arguments to results in memory. When calls with the same arguments are repeated often, a memoized function has higher performance at the expense of higher memory usage.</p>",
    :full-name "cljs.core/memoize",
    :docstring
-   "Returns a memoized version of a referentially transparent function. The\nmemoized version of the function keeps a cache of the mapping from arguments\nto results and, when calls with the same arguments are repeated often, has\nhigher performance at the expense of higher memory use."},
+   "Returns a memoized version of a referentially transparent function. The\nmemoized version of the function keeps a cache of the mapping from arguments\nto results and, when calls with the same arguments are repeated often, has\nhigher performance at the expense of higher memory use.",
+   :examples-strings [],
+   :examples-htmls []},
   "array-map"
   {:description
    "Returns a new array map (a map implemented with arrays) with the supplied mappings.\n\n`keyvals` must be an even number of forms.",
@@ -7673,10 +6791,7 @@
    :related
    ["cljs.core/assoc" "cljs.core/hash-map" "cljs.core/sorted-map"],
    :examples-strings
-   [["(array-map :a 10) ;;=> {:a 10}"
-     "(array-map :a 10 :b 20) ;;=> {:a 10 :b 20}"]],
-   :description-html
-   "<p>Returns a new array map (a map implemented with arrays) with the supplied mappings.</p><p><code>keyvals</code> must be an even number of forms.</p>",
+   [["(array-map :a 10) ;;=> {:a 10}" "(array-map :a 10 :b 20)"]],
    :examples
    [{:id "198026",
      :content
@@ -7692,7 +6807,6 @@
    :full-name "cljs.core/defprotocol",
    :docstring
    "A protocol is a named set of named methods and their signatures:\n\n(defprotocol AProtocolName\n  ;optional doc string\n  \"A doc string for AProtocol abstraction\"\n\n;method signatures\n  (bar [this a b] \"bar docs\")\n  (baz [this a] [this a b] [this a b c] \"baz docs\"))\n\nNo implementations are provided. Docs can be specified for the\nprotocol overall and for each method. The above yields a set of\npolymorphic functions and a protocol object. All are\nnamespace-qualified by the ns enclosing the definition The resulting\nfunctions dispatch on the type of their first argument, which is\nrequired and corresponds to the implicit target object ('this' in\nJavaScript parlance). defprotocol is dynamic, has no special compile-time\neffect, and defines no new types.\n\n(defprotocol P\n  (foo [this])\n  (bar-me [this] [this y]))\n\n(deftype Foo [a b c]\n  P\n  (foo [this] a)\n  (bar-me [this] b)\n  (bar-me [this y] (+ c y)))\n\n(bar-me (Foo. 1 2 3) 42)\n=> 45\n\n(foo\n  (let [x 42]\n    (reify P\n      (foo [this] 17)\n      (bar-me [this] x)\n      (bar-me [this y] x))))\n=> 17",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "add-watch"
@@ -7707,13 +6821,8 @@
    :related ["cljs.core/remove-watch"],
    :examples-strings
    [["(def a (atom {}))"
-     "(add-watch a :logger"
-     "  (fn [_key _atom old-state new-state]"
-     "    (println \"old:\" old-state)"
-     "    (println \"new:\" new-state)))"
-     "(swap! a assoc :foo \"bar\") ;;=> will print the following: ;; old: {} ;; new: {:foo \"bar\"}"]],
-   :description-html
-   "<p>Adds a watch function <code>f</code> to atom <code>a</code> that will execute when the value of <code>a</code> changes.</p><p>The watch function takes 4 arguments: a key, the atom, its old state, and its new state.</p><p><code>key</code> should be a keyword and can be used with <code>remove-watch</code> to remove the watch function.</p>",
+     "(add-watch a :logger\n  (fn [_key _atom old-state new-state]\n    (println \"old:\" old-state)\n    (println \"new:\" new-state)))"
+     "(swap! a assoc :foo \"bar\")"]],
    :examples
    [{:id "2f2fe0",
      :content
@@ -7730,8 +6839,6 @@
    :type "function/macro",
    :related ["cljs.core/pos?" "cljs.core/neg?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is 0, false otherwise.</p>",
    :full-name "cljs.core/zero?",
    :docstring "Returns true if num is zero, else false"},
   "ITransientAssociative"
@@ -7741,7 +6848,6 @@
    :full-name "cljs.core/ITransientAssociative",
    :docstring
    "Protocol for adding associativity to transient collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "extend-type"
@@ -7754,14 +6860,11 @@
    :type "macro",
    :related ["cljs.core/extend-protocol"],
    :examples-strings [],
-   :description-html
-   "<p>Extend a [type] to implement one or more [protocols].</p><p><code>type-sym</code> can be the result of a [doc:cljs.core/deftype] or any JS constructor function (e.g. <code>js/Date</code>).  But when targetting JS base types (e.g. <code>js/Number</code>, <code>js/String</code>), you must use special <i>type symbols</i> instead.  These type symbols are associated with type strings deduced by [<code>goog/typeOf</code>]:</p><p>| type symbol  | corresponding <code>goog/typeOf</code> value | |--------------|-------------| | <code>nil</code>        | <code>&quot;null&quot;</code> | | <code>object</code>     | <code>&quot;object&quot;</code> | | <code>string</code>     | <code>&quot;string&quot;</code> | | <code>number</code>     | <code>&quot;number&quot;</code> | | <code>array</code>      | <code>&quot;array&quot;</code> | | <code>function</code>   | <code>&quot;function&quot;</code> | | <code>boolean</code>    | <code>&quot;boolean&quot;</code> |</p><p><code>type-sym</code> can also be specified as <code>default</code> in order to provide default implementations for protocols.</p><p>[<code>goog/typeOf</code>]:http://google.github.io/closure-library/api/namespace_goog.html#typeOf</p>",
    :full-name "cljs.core/extend-type",
    :docstring
    "Extend a type to a series of protocols. Useful when you are\n supplying the definitions explicitly inline. Propagates the\n type as a type hint on the first argument of all fns.\n\n(extend-type MyType\n  ICounted\n  (-count [c] ...)\n  Foo\n  (bar [x y] ...)\n  (baz ([x] ...) ([x y & zs] ...))"},
   "make-hierarchy"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "make-hierarchy",
    :signature ["[]"],
    :type "function",
@@ -7770,18 +6873,17 @@
     "cljs.core/descendants"
     "cljs.core/isa?"
     "cljs.core/derive"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/make-hierarchy",
    :docstring
-   "Creates a hierarchy object for use with derive, isa? etc."},
+   "Creates a hierarchy object for use with derive, isa? etc.",
+   :examples-strings [],
+   :examples-htmls []},
   "array-iter"
   {:ns "cljs.core",
    :name "array-iter",
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/array-iter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "defn-"
@@ -7794,8 +6896,6 @@
    :type "macro",
    :related ["cljs.core/defn"],
    :examples-strings [],
-   :description-html
-   "<p>Same as <code>defn</code>, but adds <code>{:private true}</code> metadata to the definition.</p><p>Note: <code>:private</code> metadata is not currently enforced by the ClojureScript compiler.</p>",
    :full-name "cljs.core/defn-",
    :docstring "same as defn, yielding non-public def"},
   "IVector"
@@ -7805,7 +6905,6 @@
    :full-name "cljs.core/IVector",
    :docstring
    "Protocol for adding vector functionality to collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "set"
@@ -7832,8 +6931,6 @@
     "clojure.set/rename-keys"
     "clojure.set/map-invert"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a set of the distinct elements of <code>coll</code>.</p>",
    :full-name "cljs.core/set",
    :docstring "Returns a set of the distinct elements of coll."},
   "double-array"
@@ -7844,7 +6941,6 @@
    :full-name "cljs.core/double-array",
    :docstring
    "Creates an array of doubles. Does not coerce array, provided for compatibility\nwith Clojure.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "*3"
@@ -7859,17 +6955,8 @@
    :examples-strings
    [["(+ 1 2 3 4) ;;=> 10"
      "(+ 4 8) ;;=> 12"
-     "(+ 1 2) ;;=> 3"
-     "*3 ;;=> 10"
-     "(inc *3) ;;=> 11"
-     ":first ;;=> :first"
-     ":second ;;=> :second"
-     ":third ;;=> :third"
-     "*3 ;;=> :first"
-     "*2 ;;=> :second"
-     "*1 ;;=> :third"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Holds the result of the third to last expression.</p>",
+     "(+ 1 2) ;;=> 3\n\n*3\n;;=> 10"
+     "(inc *3)"]],
    :examples
    [{:id "d7a6e9",
      :content
@@ -7882,7 +6969,6 @@
    :name "string-hash-cache",
    :type "var",
    :full-name "cljs.core/string-hash-cache",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "unchecked-inc-int"
@@ -7891,7 +6977,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-inc-int",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "some"
@@ -7909,8 +6994,6 @@
     "cljs.core/keep-indexed"
     "cljs.core/some-fn"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the first logical true value of <code>&#40;pred x&#41;</code> for any <code>x</code> in <code>coll</code>, else nil.</p><p>A common idiom is to use a set as pred, for example this will return <code>:fred</code> if <code>:fred</code> is in the sequence, otherwise nil: <code>&#40;some #{:fred} coll&#41;</code></p>",
    :full-name "cljs.core/some",
    :docstring
    "Returns the first logical true value of (pred x) for any x in coll,\nelse nil.  One common idiom is to use a set as pred, for example\nthis will return :fred if :fred is in the sequence, otherwise nil:\n(some #{:fred} coll)"},
@@ -7920,7 +7003,6 @@
    :signature ["[items no-clone]"],
    :type "function",
    :full-name "cljs.core/PersistentHashSet.fromArray",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "var?"
@@ -7930,7 +7012,6 @@
    :type "function",
    :full-name "cljs.core/var?",
    :docstring "Returns true if v is of type cljs.core.Var",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "INext"
@@ -7939,7 +7020,6 @@
    :type "protocol",
    :full-name "cljs.core/INext",
    :docstring "Protocol for accessing the next items of a collection.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "fn?"
@@ -7951,8 +7031,6 @@
    :type "function",
    :related ["cljs.core/ifn?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>f</code> is a function, false otherwise.</p>",
    :full-name "cljs.core/fn?",
    :docstring
    "Return true if f is a JavaScript function or satisfies the Fn protocol."},
@@ -7962,7 +7040,6 @@
    :type "protocol",
    :full-name "cljs.core/IReset",
    :docstring "Protocol for adding resetting functionality.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "string-print"
@@ -7971,7 +7048,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/string-print",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "macroexpand"
@@ -7985,11 +7061,12 @@
    :type "macro",
    :related ["cljs.core/macroexpand-1" "cljs.core/defmacro"],
    :examples-strings
-   [["(macroexpand '(when true :foo)) ;;=> (if true (do :foo))"
-     "(macroexpand '(-> 2 inc)) ;;=> (js* \"(~{} + ~{})\" 2 1)"
-     "(macroexpand '(inc (inc 2))) ;;=> (js* \"(~{} + ~{})\" (inc 2) 1)"]],
-   :description-html
-   "<p>(only intended as a REPL utility)</p><p>If the given quoted form is a macro call, expand it once, then repeat until a subsequent result is <i>not</i> a macro call.  NOTE: nested forms are <i>not</i> expanded.</p><p>See [doc:cljs.core/macroexpand-1] if you only wish to expand a form once.</p>",
+   [["(macroexpand '(when true :foo)) ;;=>"
+     "(if true (do :foo))"
+     "(macroexpand '(-> 2 inc)) ;;=>"
+     "(js* \"(~{} + ~{})\" 2 1)"
+     "(macroexpand '(inc (inc 2))) ;;=>"
+     "(js* \"(~{} + ~{})\" (inc 2) 1)"]],
    :examples
    [{:id "b773af",
      :content
@@ -8005,7 +7082,6 @@
    :full-name "cljs.core/ns-interns",
    :docstring
    "Returns a map of the intern mappings for the namespace.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Atom"
@@ -8014,7 +7090,6 @@
    :signature ["[state meta validator watches]"],
    :type "type",
    :full-name "cljs.core/Atom",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "aset"
@@ -8027,8 +7102,6 @@
    :type "function/macro",
    :related ["cljs.core/aget" "special/set!" "cljs.core/assoc-in"],
    :examples-strings [],
-   :description-html
-   "<p>Sets <code>val</code> at index <code>i</code> in a JavaScript array.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 3&#93;&#41;\n&#40;aset a 0 &quot;foo&quot;&#41;\na\n;;=&gt; #js &#91;&quot;foo&quot; 2 3&#93;\n</code></pre><p>Set nested elements with the additional <code>idxs</code> arguments.</p><pre><code class=\"clj\">&#40;def a #js &#91;1 2 #js &#91;3 4&#93;&#93;&#41;\n&#40;aset a 2 0 &quot;foo&quot;&#41;\na\n;;=&gt; #js &#91;1 2 #js &#91;&quot;foo&quot; 4&#93;&#93;\n</code></pre><p>For JavaScript objects, use [<code>goog.object/set</code>].</p><p>[<code>goog.object/set</code>]:http://google.github.io/closure-library/api/namespace<i>goog</i>object.html#set</p><pre><code class=\"clj\">&#40;require 'goog.object&#41;\n&#40;def obj #js {:foo 1}&#41;\n\n&#40;goog.object/set obj &quot;foo&quot; &quot;bar&quot;&#41;\nobj\n;;=&gt; #js {:foo &quot;bar&quot;}\n</code></pre>",
    :full-name "cljs.core/aset",
    :docstring "Sets the value at the index."},
   "*print-newline*"
@@ -8038,7 +7111,6 @@
    :full-name "cljs.core/*print-newline*",
    :docstring
    "When set to logical false will drop newlines from printing calls.\nThis is to work around the implicit newlines emitted by standard JavaScript\nconsole objects.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "juxt"
@@ -8051,8 +7123,6 @@
    :type "function",
    :related ["cljs.core/partial" "cljs.core/comp"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a set of functions and returns a function that is the juxtaposition of those functions.</p><p>The returned function takes a variable number of arguments, and returns a vector containing the result of applying each function to the arguments (left-to- right).</p><p><code>&#40;&#40;juxt a b c&#41; x&#41;</code> => <code>&#91;&#40;a x&#41; &#40;b x&#41; &#40;c x&#41;&#93;</code></p>",
    :full-name "cljs.core/juxt",
    :docstring
    "Takes a set of functions and returns a fn that is the juxtaposition\nof those fns.  The returned fn takes a variable number of args, and\nreturns a vector containing the result of applying each fn to the\nargs (left-to-right).\n((juxt a b c) x) => [(a x) (b x) (c x)]"},
@@ -8073,24 +7143,20 @@
     "cljs.core/map?"
     "cljs.core/set?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>x</code> is a sequence, false otherwise.</p><p>All collections can be converted into a sequence using <code>seq</code>.</p>",
    :full-name "cljs.core/seq?",
    :docstring "Return true if s satisfies ISeq"},
   "filterv"
   {:description
    "Returns a vector of the items in `coll` for which `(pred item)` returns true.\n\n`pred` must be free of side-effects.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "filterv",
    :signature ["[pred coll]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns a vector of the items in <code>coll</code> for which <code>&#40;pred item&#41;</code> returns true.</p><p><code>pred</code> must be free of side-effects.</p>",
    :full-name "cljs.core/filterv",
    :docstring
-   "Returns a vector of the items in coll for which\n(pred item) returns true. pred must be free of side-effects."},
+   "Returns a vector of the items in coll for which\n(pred item) returns true. pred must be free of side-effects.",
+   :examples-strings [],
+   :examples-htmls []},
   "bit-set"
   {:description
    "Set bit at index `n`.  Same as `x | (1 << y)` in JavaScript.",
@@ -8101,11 +7167,7 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-clear"],
-   :examples-strings
-   [["(bit-set 2r1100 1) ;;=> 14 ;; 14 = 2r1110"
-     "(bit-set 12 1) ;;=> 14"]],
-   :description-html
-   "<p>Set bit at index <code>n</code>.  Same as <code>x | &#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
+   :examples-strings [["(bit-set 2r1100 1)" "(bit-set 12 1)"]],
    :examples
    [{:id "6a8a49",
      :content
@@ -8122,8 +7184,6 @@
    :type "function",
    :related ["cljs.core/rem" "cljs.core/mod"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the quotient of dividing numerator <code>n</code> by denominator <code>d</code>.</p><p>Returns <code>NaN</code> when <code>d</code> is 0 (divide by 0 error).</p>",
    :full-name "cljs.core/quot",
    :docstring "quot[ient] of dividing numerator by denominator."},
   "def"
@@ -8142,13 +7202,10 @@
     "cljs.core/defmulti"],
    :examples-strings
    [["(def a)"
-     "a ;;=> nil"
+     "a\n;;=> nil"
      "(def b 42)"
-     "b ;;=> 42"
-     "(def c \"an optional docstring\" 42)"
-     "c ;;=> 42"]],
-   :description-html
-   "<p>Creates a global variable with the name of <code>symbol</code> and a namespace of the current namespace.</p><p>If <code>init</code> is supplied, it is evaluated and the result is assigned to <code>symbol</code>.</p><p><code>doc-string</code> is an optional documentation string.</p><p><code>def</code> is one of ClojureScript's <a href='http://clojure.org/special_forms'>special forms</a> and is used by many macros to define common elements (ie: <code>defn</code>, <code>defmacro</code>, etc).</p><p>Supported metadata:</p><ul><li><code>&#94;:private boolean</code> - make non-accessible from other namespaces</li><li><code>&#94;:dynamic boolean</code> - make [dynamically bindable][doc:cljs.core/binding] (usually named with [doc:syntax/earmuffs])</li><li><code>&#94;:const boolean</code> - prevents redef and allows it to be used in [doc:cljs.core/case].</li><li><code>&#94;:jsdoc &#91;&quot;&quot;&#93;</code> - vector of JSDoc Tags for [Google Closure][closure-jsdoc] or [standard][other-jsdoc].</li><li><code>&#94;:test &#40;fn &#91;&#93; &#40;assert ...&#41;&#41;</code> - allows function to be tested with [doc:cljs.core/test].</li><li><code>&#94;:doc &quot;&quot;</code> - doc-string (prefer the use of the <code>&#40;def symbol doc-string init&#41;</code>)</li></ul><p>[closure-jsdoc]:https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en#tags [other-jsdoc]:http://usejsdoc.org/#block-tags</p><p>Compiler will also add metadata:</p><ul><li><code>:ns</code></li><li><code>:name</code></li><li><code>:file</code></li><li><code>:line</code>, <code>:end-line</code></li><li><code>:column</code>, <code>:end-column</code></li><li><code>:source</code></li><li><code>:arglists</code></li></ul>",
+     "b\n;;=> 42"
+     "(def c \"an optional docstring\" 42)"]],
    :examples
    [{:id "a5f898",
      :content
@@ -8162,7 +7219,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/unchecked-byte",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "coll?"
@@ -8180,12 +7236,10 @@
    [["(coll? [1 2 3]) ;;=> true"
      "(coll? '(1 2 3)) ;;=> true"
      "(coll? #{1 2 3}) ;;=> true"
-     "(coll? {:foo 1 :bar 2}) ;;=> true"
+     "(coll? {:foo 1 :bar 2})"
      "(coll? \"foo\") ;;=> false"
      "(coll? 123) ;;=> false"
-     "(coll? nil) ;;=> false"]],
-   :description-html
-   "<p>Returns true if <code>x</code> is a collection, false otherwise.</p><p>Lists, maps, sets, and vectors are collections.</p>",
+     "(coll? nil)"]],
    :examples
    [{:id "d30884",
      :content
@@ -8203,8 +7257,6 @@
    :related
    ["cljs.core/reductions" "cljs.core/apply" "cljs.core/frequencies"],
    :examples-strings [],
-   :description-html
-   "<p><code>f</code> should be a function of 2 arguments. If <code>val</code> is not supplied, returns the result of applying <code>f</code> to the first 2 items in <code>coll</code>, then applying <code>f</code> to that result and the 3rd item, etc.</p><p>If <code>coll</code> contains no items, <code>f</code> must accept no arguments as well, and <code>reduce</code> returns the result of calling <code>f</code> with no arguments.</p><p>If <code>coll</code> has only 1 item, it is returned and <code>f</code> is not called.</p><p>If <code>val</code> is supplied, returns the result of applying <code>f</code> to <code>val</code> and the first item in <code>coll</code>, then applying <code>f</code> to that result and the 2nd item, etc.</p><p>If <code>coll</code> contains no items, returns <code>val</code> and <code>f</code> is not called.</p>",
    :full-name "cljs.core/reduce",
    :docstring
    "f should be a function of 2 arguments. If val is not supplied,\nreturns the result of applying f to the first 2 items in coll, then\napplying f to that result and the 3rd item, etc. If coll contains no\nitems, f must accept no arguments as well, and reduce returns the\nresult of calling f with no arguments.  If coll has only 1 item, it\nis returned and f is not called.  If val is supplied, returns the\nresult of applying f to val and the first item in coll, then\napplying f to that result and the 2nd item, etc. If coll contains no\nitems, returns val and f is not called."},
@@ -8213,7 +7265,6 @@
    :name "not-native",
    :type "var",
    :full-name "cljs.core/not-native",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-shift-left"
@@ -8227,10 +7278,7 @@
    :type "function/macro",
    :related ["cljs.core/bit-shift-right"],
    :examples-strings
-   [["(bit-shift-left 2r0101 1) ;;=> 10 ;; 10 = 2r1010"
-     "(bit-shift-left 5 1) ;;=> 10"]],
-   :description-html
-   "<p>Bitwise shift left <code>n</code> bits.  Same as <code>x &lt;&lt; n</code> in JavaScript.</p>",
+   [["(bit-shift-left 2r0101 1)" "(bit-shift-left 5 1)"]],
    :examples
    [{:id "67c34a",
      :content
@@ -8248,17 +7296,8 @@
    :related ["cljs.core/*1" "cljs.core/*3" "cljs.core/*e"],
    :examples-strings
    [["(+ 1 2 3 4) ;;=> 10"
-     "(+ 4 8) ;;=> 12"
-     "*2 ;;=> 10"
-     "(inc *2) ;;=> 11"
-     ":first ;;=> :first"
-     ":second ;;=> :second"
-     ":third ;;=> :third"
-     "*3 ;;=> :first"
-     "*2 ;;=> :second"
-     "*1 ;;=> :third"]],
-   :description-html
-   "<p>Only usable from a REPL.</p><p>Holds the result of the second to last expression.</p>",
+     "(+ 4 8) ;;=> 12\n\n*2\n;;=> 10"
+     "(inc *2)"]],
    :examples
    [{:id "208d41",
      :content
@@ -8269,39 +7308,34 @@
   "re-matches"
   {:description
    "Returns the result of `(re-find re s)` if `re` fully matches `s`.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "re-matches",
    :signature ["[re s]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns the result of <code>&#40;re-find re s&#41;</code> if <code>re</code> fully matches <code>s</code>.</p>",
    :full-name "cljs.core/re-matches",
    :docstring
-   "Returns the result of (re-find re s) if re fully matches s."},
+   "Returns the result of (re-find re s) if re fully matches s.",
+   :examples-strings [],
+   :examples-htmls []},
   "case*"
   {:ns "special",
    :name "case*",
    :type "special form",
    :full-name "special/case*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "flatten"
   {:description
    "Takes any nested combination of sequential things (lists, vectors, etc.) and\nreturns their contents as a single, flat sequence.\n\n`(flatten nil)` returns nil.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "flatten",
    :signature ["[x]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Takes any nested combination of sequential things (lists, vectors, etc.) and returns their contents as a single, flat sequence.</p><p><code>&#40;flatten nil&#41;</code> returns nil.</p>",
    :full-name "cljs.core/flatten",
    :docstring
-   "Takes any nested combination of sequential things (lists, vectors,\netc.) and returns their contents as a single, flat sequence.\n(flatten nil) returns nil."},
+   "Takes any nested combination of sequential things (lists, vectors,\netc.) and returns their contents as a single, flat sequence.\n(flatten nil) returns nil.",
+   :examples-strings [],
+   :examples-htmls []},
   "nnext"
   {:description "Same as `(next (next coll))`.",
    :examples-htmls [],
@@ -8311,8 +7345,6 @@
    :type "function",
    :related ["cljs.core/next"],
    :examples-strings [],
-   :description-html
-   "<p>Same as <code>&#40;next &#40;next coll&#41;&#41;</code>.</p>",
    :full-name "cljs.core/nnext",
    :docstring "Same as (next (next x))"},
   "ITransientVector"
@@ -8322,7 +7354,6 @@
    :full-name "cljs.core/ITransientVector",
    :docstring
    "Protocol for adding vector functionality to transient collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "LazyTransformer.createMulti"
@@ -8331,7 +7362,6 @@
    :signature ["[xform colls]"],
    :type "function",
    :full-name "cljs.core/LazyTransformer.createMulti",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "multi-stepper"
@@ -8340,7 +7370,6 @@
    :signature ["[xform iters]" "[xform iters nexts]"],
    :type "function",
    :full-name "cljs.core/multi-stepper",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "bit-clear"
@@ -8353,11 +7382,7 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-flip"],
-   :examples-strings
-   [["(bit-clear 2r1111 2) ;;=> 11 ;; 11 = 2r1011"
-     "(bit-clear 15 2) ;;=> 11"]],
-   :description-html
-   "<p>Clear bit at index <code>n</code>.  Same as <code>x &amp; &#126;&#40;1 &lt;&lt; y&#41;</code> in JavaScript.</p>",
+   :examples-strings [["(bit-clear 2r1111 2)" "(bit-clear 15 2)"]],
    :examples
    [{:id "0f6748",
      :content
@@ -8371,7 +7396,6 @@
    ["[name dispatch-fn default-dispatch-val hierarchy method-table prefer-table method-cache cached-hierarchy]"],
    :type "type",
    :full-name "cljs.core/MultiFn",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ensure-reduced"
@@ -8382,7 +7406,6 @@
    :full-name "cljs.core/ensure-reduced",
    :docstring
    "If x is already reduced?, returns it, else returns (reduced x)",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "namespace"
@@ -8397,12 +7420,10 @@
    :related ["cljs.core/name"],
    :examples-strings
    [["(namespace :foo/bar) ;;=> \"foo\""
-     "(namespace 'foo/bar) ;;=> \"foo\""
+     "(namespace 'foo/bar)"
      "(namespace :foo) ;;=> nil"
-     "(namespace 'foo) ;;=> nil"
-     "(name \"foo/bar\") ;;=> nil"]],
-   :description-html
-   "<p>Returns the namespace string of a possibly namespace-qualified keyword or symbol.</p><p>Returns [doc:syntax/nil] if not present.</p>",
+     "(namespace 'foo)"
+     "(name \"foo/bar\")"]],
    :examples
    [{:id "5bd3b4",
      :content
@@ -8425,8 +7446,6 @@
     "cljs.core/dotimes"
     "cljs.core/constantly"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a function <code>f</code> of no args, presumably with side effects, and returns an infinite (or length <code>n</code> if supplied) lazy sequence of calls to it.</p>",
    :full-name "cljs.core/repeatedly",
    :docstring
    "Takes a function of no args, presumably with side effects, and\nreturns an infinite (or length n if supplied) lazy sequence of calls\nto it"},
@@ -8436,7 +7455,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/iter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "comment"
@@ -8450,13 +7468,9 @@
    :type "macro",
    :examples-strings
    [["(comment 123) ;;=> nil"
-     "(comment"
-     "  (foo 1 2 3)"
-     "  (bar \"hello\")) ;;=> nil"
+     "(comment\n  (foo 1 2 3)\n  (bar \"hello\"))"
      "(comment [1 2 3]]) ;; Error: Unmatched delimiter ]"
-     "(comment a : b) ;; Error: Invalid token :"]],
-   :description-html
-   "<p>Ignores all <code>body</code> forms (i.e. \"commenting out\"). Returns nil.</p><p>This is often used near the bottom of a file to hold expressions that test different functions during development.  Specific expressions within the <code>comment</code> can then be selected and evaluated from some editors.</p><p>You can also use <code>;</code> to \"comment out\" code until the end of a line.</p>",
+     "(comment a : b)"]],
    :examples
    [{:id "482fd7",
      :content
@@ -8471,7 +7485,6 @@
    :full-name "special/recur",
    :docstring
    "Evaluates the exprs in order, then, in parallel, rebinds\nthe bindings of the recursion point to the values of the exprs.\nExecution then jumps back to the recursion point, a loop or fn method.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Vector.fromArray"
@@ -8480,7 +7493,6 @@
    :signature ["[xs]"],
    :type "function",
    :full-name "cljs.core/Vector.fromArray",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IPrintable"
@@ -8490,7 +7502,6 @@
    :full-name "cljs.core/IPrintable",
    :docstring
    "Do not use this.  It is kept for backwards compatibility with existing\n   user code that depends on it, but it has been superceded by IPrintWithWriter\n   User code that depends on this should be changed to use -pr-writer instead.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "find-ns"
@@ -8499,7 +7510,6 @@
    :signature ["[ns]"],
    :type "function",
    :full-name "cljs.core/find-ns",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ObjMap.HASHMAP_THRESHOLD"
@@ -8507,7 +7517,6 @@
    :name "ObjMap.HASHMAP_THRESHOLD",
    :type "var",
    :full-name "cljs.core/ObjMap.HASHMAP_THRESHOLD",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "dotimes"
@@ -8520,8 +7529,6 @@
    :type "macro",
    :related ["cljs.core/repeat" "cljs.core/for" "cljs.core/doseq"],
    :examples-strings [],
-   :description-html
-   "<p>Repeatedly executes <code>body</code> (presumably for side-effects) with <code>name</code> bound to integers from 0 through <code>n</code>-1.</p>",
    :full-name "cljs.core/dotimes",
    :docstring
    "bindings => name n\n\nRepeatedly executes body (presumably for side-effects) with name\nbound to integers from 0 through n-1."},
@@ -8530,7 +7537,6 @@
    :name "CHAR_MAP",
    :type "var",
    :full-name "cljs.core/CHAR_MAP",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "set-entries-iterator"
@@ -8539,7 +7545,6 @@
    :signature ["[coll]"],
    :type "function",
    :full-name "cljs.core/set-entries-iterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "iterable?"
@@ -8549,7 +7554,6 @@
    :type "function",
    :full-name "cljs.core/iterable?",
    :docstring "Return true if x implements IIterable protocol.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js-comment"
@@ -8560,7 +7564,6 @@
    :full-name "cljs.core/js-comment",
    :docstring
    "Emit a top-level JavaScript multi-line comment. New lines will create a\nnew comment line. Comment block will be preceded and followed by a newline",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "nfirst"
@@ -8573,12 +7576,12 @@
    :type "function",
    :related ["cljs.core/next"],
    :examples-strings
-   [["(nfirst [[1 2 3] [4 5]]) ;;=> (2 3)"
-     "(nfirst [[1 2] [3 4]]) ;;=> (2)"
+   [["(nfirst [[1 2 3] [4 5]]) ;;=>"
+     "(2 3)"
+     "(nfirst [[1 2] [3 4]]) ;;=>"
+     "(2)"
      "(nfirst [[1] [2 3]]) ;;=> nil"
-     "(nfirst [[] [1 2]]) ;;=> nil"]],
-   :description-html
-   "<p>Same as <code>&#40;next &#40;first coll&#41;&#41;</code>.</p>",
+     "(nfirst [[] [1 2]])"]],
    :examples
    [{:id "60b8a4",
      :content
@@ -8593,7 +7596,6 @@
    :full-name "cljs.core/prefer-method",
    :docstring
    "Causes the multimethod to prefer matches of dispatch-val-x over dispatch-val-y\nwhen there is a conflict",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "assoc-in"
@@ -8608,12 +7610,9 @@
    :related
    ["cljs.core/assoc" "cljs.core/update-in" "cljs.core/get-in"],
    :examples-strings
-   [["(def users [{:name \"James\" :age 26}"
-     "            {:name \"John\" :age 43}])"
-     "(assoc-in users [1 :age] 44) ;;=> [{:name \"James\", :age 26} ;;    {:name \"John\", :age 44}]"
-     "(assoc-in users [1 :password] \"nhoJ\") ;;=> [{:name \"James\", :age 26} ;;    {:password \"nhoJ\", :name \"John\", :age 43}]"]],
-   :description-html
-   "<p>Associates a value in a nested associative structure, where <code>ks</code> is a sequence of keys and <code>v</code> is the new value. Returns a new nested structure.</p><p>If any levels do not exist, hash-maps will be created.</p>",
+   [["(def users [{:name \"James\" :age 26}\n            {:name \"John\" :age 43}])"
+     "(assoc-in users [1 :age] 44)"
+     "(assoc-in users [1 :password] \"nhoJ\")"]],
    :examples
    [{:id "e76f20",
      :content
@@ -8626,7 +7625,6 @@
    :name "js-reserved",
    :type "var",
    :full-name "cljs.core/js-reserved",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "assoc"
@@ -8645,13 +7643,12 @@
    [["(def my-map {:foo 1})"
      "(assoc my-map :foo 2) ;;=> {:foo 2}"
      "(assoc my-map :bar 2) ;;=> {:foo 1 :bar 2}"
-     "(assoc my-map :a 3 :b 4 :c 5 :d 6) ;;=> {:foo 1 :a 3 :b 4 :c 5 :d 6} ;; you must pass a value for every key"
-     "(assoc my-map :foo) ;;=> WARNING: Wrong number of args (2) passed to cljs.core/assoc"]
+     "(assoc my-map :a 3 :b 4 :c 5 :d 6) ;;=> {:foo 1 :a 3 :b 4 :c 5 :d 6}\n\n;; you must pass a value for every key"
+     "(assoc my-map :foo) ;;=> WARNING: Wrong number of args"
+     "(2)"]
     ["(def my-vec [1 2 3])"
      "(assoc my-vec 0 \"foo\") ;;=> [\"foo\" 2 3]"
-     "(assoc my-vec 3 \"foo\") ;;=> Error: Index 3 out of bounds  [0,0]"]],
-   :description-html
-   "<p>assoc(iate)</p><p>When applied to a map, returns a new map that contains the mapping of key(s) to val(s).</p><p>Has no effect on the map type (hashed/sorted).</p><p>When applied to a vector, returns a new vector that contains value <code>v</code> at index <code>k</code>.</p>",
+     "(assoc my-vec 3 \"foo\")"]],
    :examples
    [{:id "2fa7e0",
      :content
@@ -8670,7 +7667,6 @@
    :full-name "cljs.core/unchecked-long",
    :docstring
    "Coerce to long by stripping decimal places. Identical to `int'.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "mapv"
@@ -8684,8 +7680,6 @@
    :type "function",
    :related ["cljs.core/map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a vector consisting of the result of applying <code>f</code> to the set of first items of each coll, followed by applying <code>f</code> to the set of second items in each coll, until any one of the colls is exhausted. Any remaining items in other colls are ignored.</p><p>Function <code>f</code> should accept number-of-colls arguments.</p>",
    :full-name "cljs.core/mapv",
    :docstring
    "Returns a vector consisting of the result of applying f to the\nset of first items of each coll, followed by applying f to the set\nof second items in each coll, until any one of the colls is\nexhausted.  Any remaining items in other colls are ignored. Function\nf should accept number-of-colls arguments."},
@@ -8699,8 +7693,6 @@
    :type "function",
    :related ["cljs.core/conj"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a new collection consisting of <code>to</code> with all of the items of <code>from</code> \"added\" using <code>conj</code>.</p><p>A transducer may be supplied as <code>xform</code>.</p>",
    :full-name "cljs.core/into",
    :docstring
    "Returns a new coll consisting of to-coll with all of the items of\nfrom-coll conjoined. A transducer may be supplied."},
@@ -8709,7 +7701,6 @@
    :name "*clojurescript-version*",
    :type "var",
    :full-name "cljs.core/*clojurescript-version*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IEncodeClojure"
@@ -8717,7 +7708,6 @@
    :name "IEncodeClojure",
    :type "protocol",
    :full-name "cljs.core/IEncodeClojure",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "special-symbol?"
@@ -8726,7 +7716,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/special-symbol?",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "when-not"
@@ -8739,8 +7728,6 @@
    :type "macro",
    :related ["cljs.core/when" "cljs.core/when-let" "special/if"],
    :examples-strings [],
-   :description-html
-   "<p>Evaluates <code>test</code>. If logical false, evaluates <code>body</code> in an implicit <code>do</code>.</p>",
    :full-name "cljs.core/when-not",
    :docstring
    "Evaluates test. If logical false, evaluates body in an implicit do."},
@@ -8753,8 +7740,6 @@
    :type "function/macro",
    :related ["cljs.core/inc"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a number one less than <code>x</code>.</p>",
    :full-name "cljs.core/dec",
    :docstring "Returns a number one less than num."},
   "disj"
@@ -8768,8 +7753,6 @@
    :related
    ["cljs.core/dissoc" "cljs.core/disj!" "clojure.set/difference"],
    :examples-strings [],
-   :description-html
-   "<p>disj(oin). Returns a new set of the same (hashed/sorted) type, that does not contain key(s).</p>",
    :full-name "cljs.core/disj",
    :docstring
    "disj[oin]. Returns a new set of the same (hashed/sorted) type, that\ndoes not contain key(s)."},
@@ -8780,7 +7763,6 @@
    :type "function",
    :full-name "cljs.core/default-dispatch-val",
    :docstring "Given a multimethod, return it's default-dispatch-val.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "=="
@@ -8793,9 +7775,7 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/=" "cljs.core/identical?"],
-   :examples-strings [["(== 1 1) ;;=> true" "(== 1 2) ;;=> false"]],
-   :description-html
-   "<p>This is an equality check for numbers of different types that was carried over from Clojure, to allow compatibility when converting code to ClojureScript.</p><p>Since there is only a single number type in JavaScript, 64-bit floating point, there is no reason to use the <code>==</code> operator in ClojureScript.</p><p>Behavior on non-number arguments is undefined.</p>",
+   :examples-strings [["(== 1 1) ;;=> true" "(== 1 2)"]],
    :examples
    [{:id "5ac342",
      :content
@@ -8813,8 +7793,6 @@
    :type "function",
    :related ["cljs.core/get-in"],
    :examples-strings [],
-   :description-html
-   "<p>Returns the value mapped to key <code>k</code>.</p><p>Returns <code>not-found</code> or nil if <code>k</code> is not present in <code>o</code>.</p>",
    :full-name "cljs.core/get",
    :docstring
    "Returns the value mapped to key, not-found or nil if key not present."},
@@ -8826,7 +7804,6 @@
    :full-name "cljs.core/ex-cause",
    :docstring
    "Alpha - subject to change.\nReturns exception cause (an Error / ExceptionInfo) if ex is an\nExceptionInfo.\nOtherwise returns nil.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Cons"
@@ -8835,7 +7812,6 @@
    :signature ["[meta first rest __hash]"],
    :type "type",
    :full-name "cljs.core/Cons",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "distinct?"
@@ -8852,11 +7828,9 @@
      "(distinct? 1 2) ;;=> true"
      "(distinct? 1 1) ;;=> false"
      "(distinct? 1 2 3) ;;=> true"
-     "(distinct? 1 2 1) ;;=> false"
+     "(distinct? 1 2 1)"
      "(apply distinct? [1 2 3]) ;;=> true"
-     "(apply distinct? [1 2 1]) ;;=> false"]],
-   :description-html
-   "<p>Returns true if no two of the arguments are <code>=</code></p>",
+     "(apply distinct? [1 2 1])"]],
    :examples
    [{:id "b32799",
      :content
@@ -8873,8 +7847,6 @@
    :type "function",
    :related ["cljs.core/merge-with" "cljs.core/hash-map"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a map that consists of the rest of the maps <code>conj</code>-ed onto the first.</p><p>If a key occurs in more than one map, the mapping from the rightmost map will \"win\".</p>",
    :full-name "cljs.core/merge",
    :docstring
    "Returns a map that consists of the rest of the maps conj-ed onto\nthe first.  If a key occurs in more than one map, the mapping from\nthe latter (left-to-right) will be the mapping in the result."},
@@ -8884,7 +7856,6 @@
    :signature ["[val sym _meta]"],
    :type "type",
    :full-name "cljs.core/Var",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "BitmapIndexedNode"
@@ -8893,7 +7864,6 @@
    :signature ["[edit bitmap arr]"],
    :type "type",
    :full-name "cljs.core/BitmapIndexedNode",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "+"
@@ -8910,9 +7880,7 @@
      "(+ 1) ;;=> 1"
      "(+ -10) ;;=> -10"
      "(+ 1 2) ;;=> 3"
-     "(+ 1 2 3) ;;=> 6"]],
-   :description-html
-   "<p>Returns the sum of nums.</p><p><code>&#40;+&#41;</code> returns 0.</p>",
+     "(+ 1 2 3)"]],
    :examples
    [{:id "650668",
      :content
@@ -8934,8 +7902,6 @@
    :type "function",
    :related ["cljs.core/list"],
    :examples-strings [],
-   :description-html
-   "<p>Creates a new list containing the items prepended to the rest, the last of which will be treated as a sequence.</p>",
    :full-name "cljs.core/list*",
    :docstring
    "Creates a new list containing the items prepended to the rest, the\nlast of which will be treated as a sequence."},
@@ -8946,7 +7912,6 @@
    :full-name "cljs.core/IEquiv",
    :docstring
    "Protocol for adding value comparison functionality to a type.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "LazySeq"
@@ -8955,7 +7920,6 @@
    :signature ["[meta fn s __hash]"],
    :type "type",
    :full-name "cljs.core/LazySeq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "even?"
@@ -8968,8 +7932,6 @@
    :type "function",
    :related ["cljs.core/odd?"],
    :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>n</code> is an even number.</p><p>Throws an exception if <code>n</code> is not an integer.</p>",
    :full-name "cljs.core/even?",
    :docstring
    "Returns true if n is even, throws an exception if n is not an integer"},
@@ -8979,7 +7941,6 @@
    :signature ["[arglist]"],
    :type "function",
    :full-name "cljs.core/spread",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IWriter"
@@ -8989,7 +7950,6 @@
    :full-name "cljs.core/IWriter",
    :docstring
    "Protocol for writing. Currently only implemented by StringBufferWriter.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "NeverEquiv"
@@ -8998,7 +7958,6 @@
    :signature ["[]"],
    :type "type",
    :full-name "cljs.core/NeverEquiv",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array"
@@ -9014,13 +7973,9 @@
    :related
    ["cljs.core/aclone" "cljs.core/make-array" "cljs.core/clj->js"],
    :examples-strings
-   [["(array 1 2 3) ;;=> #js [1 2 3]"
-     "(apply array [1 2 3]) ;;=> #js [1 2 3]"
-     "#js [1 2 3] ;;=> #js [1 2 3]"]
+   [["(array 1 2 3) ;;=> #js [1 2 3]" "(apply array [1 2 3])"]
     ["(array 1 2 (array 3 4)) ;;=> #js [1 2 #js [3 4]]"
-     "(clj->js [1 2 [3 4]]) ;;=> #js [1 2 #js [3 4]]"]],
-   :description-html
-   "<p>Creates a JavaScript array containing <code>args</code>.</p><p>The tagged literal <code>#js &#91;1 2 3&#93;</code> is equivalent to <code>&#40;array 1 2 3&#41;</code></p>",
+     "(clj->js [1 2 [3 4]])"]],
    :examples
    [{:id "3a546d",
      :content
@@ -9037,7 +7992,6 @@
    :type "protocol",
    :full-name "cljs.core/ICloneable",
    :docstring "Protocol for cloning a value.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "cond->>"
@@ -9057,11 +8011,7 @@
    :examples-strings
    [["(def filter? true)"
      "(def sum? true)"
-     "(cond->> [1 2 3 4]"
-     "  filter? (filter even?)"
-     "  sum?    (reduce +)) ;;=> 6"]],
-   :description-html
-   "<p>Takes an expression and a set of test/form pairs. Threads <code>expr</code> (via <code>-&gt;&gt;</code>) through each form for which the corresponding test expression is true.</p><p>Note that, unlike <code>cond</code> branching, <code>cond-&gt;&gt;</code> threading does not short circuit after the first true test expression.</p>",
+     "(cond->> [1 2 3 4]\n  filter? (filter even?)\n  sum?    (reduce +))"]],
    :examples
    [{:id "e07a05",
      :content
@@ -9080,8 +8030,6 @@
    :type "function",
    :related ["cljs.core/subseq"],
    :examples-strings [],
-   :description-html
-   "<p><code>sc</code> must be a sorted collection.</p><p><code>test</code>, <code>start-test</code>, <code>end-test</code> must be <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> or <code>&gt;=</code>.</p><p>Returns a reverse sequence of those entries with keys <code>ek</code> for which <code>&#40;test &#40;.. sc comparator &#40;compare ek key&#41;&#41; 0&#41;</code> is true.</p>",
    :full-name "cljs.core/rsubseq",
    :docstring
    "sc must be a sorted collection, test(s) one of <, <=, > or\n>=. Returns a reverse seq of those entries with keys ek for\nwhich (test (.. sc comparator (compare ek key)) 0) is true"},
@@ -9091,7 +8039,6 @@
    :type "protocol",
    :full-name "cljs.core/IList",
    :docstring "Marker interface indicating a persistent list",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "throw"
@@ -9104,8 +8051,6 @@
    :type "special form",
    :related ["special/try" "special/catch" "special/finally"],
    :examples-strings [],
-   :description-html
-   "<p><code>expr</code> is evaluated and thrown, hopefully to be caught by a <code>try</code> expression.</p><p><code>&#40;throw &#40;js/Error. &quot;Oops!&quot;&#41;&#41;</code></p>",
    :full-name "special/throw",
    :docstring "The expr is evaluated and thrown."},
   "ITransientMap"
@@ -9115,7 +8060,6 @@
    :full-name "cljs.core/ITransientMap",
    :docstring
    "Protocol for adding mapping functionality to transient collections.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "cat"
@@ -9126,7 +8070,6 @@
    :full-name "cljs.core/cat",
    :docstring
    "A transducer which concatenates the contents of each input, which must be a\ncollection, into the reduction.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "mk-bound-fn"
@@ -9135,7 +8078,6 @@
    :signature ["[sc test key]"],
    :type "function",
    :full-name "cljs.core/mk-bound-fn",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "char?"
@@ -9145,7 +8087,6 @@
    :type "function",
    :full-name "cljs.core/char?",
    :docstring "Returns true if x is a JavaScript char.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr"
@@ -9156,7 +8097,6 @@
    :full-name "cljs.core/pr",
    :docstring
    "Prints the object(s) using string-print.  Prints the\nobject(s), separated by spaces if there is more than one.\nBy default, pr and prn print in a way that objects can be\nread by the reader",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "js*"
@@ -9164,7 +8104,6 @@
    :name "js*",
    :type "special form",
    :full-name "special/js*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Eduction"
@@ -9173,7 +8112,6 @@
    :signature ["[xform coll]"],
    :type "type",
    :full-name "cljs.core/Eduction",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "SeqIter"
@@ -9182,7 +8120,6 @@
    :signature ["[_seq _next]"],
    :type "type",
    :full-name "cljs.core/SeqIter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Iteration"
@@ -9191,66 +8128,58 @@
    :signature ["[xform coll]"],
    :type "type",
    :full-name "cljs.core/Iteration",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "tagged-literal"
   {:description
    "Internal use only.  Create tagged literals with their [syntax form][doc:syntax/tagged-literal] instead.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "tagged-literal",
    :signature ["[tag form]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Internal use only.  Create tagged literals with their [syntax form][doc:syntax/tagged-literal] instead.</p>",
    :full-name "cljs.core/tagged-literal",
    :docstring
-   "Construct a data representation of a tagged literal from a\ntag symbol and a form."},
+   "Construct a data representation of a tagged literal from a\ntag symbol and a form.",
+   :examples-strings [],
+   :examples-htmls []},
   "load-file*"
   {:ns "cljs.core",
    :name "load-file*",
    :signature ["[f]"],
    :type "macro",
    :full-name "cljs.core/load-file*",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "vreset!"
-  {:examples-htmls [],
-   :ns "cljs.core",
+  {:ns "cljs.core",
    :name "vreset!",
    :signature ["[vol newval]"],
    :type "function",
    :related ["cljs.core/vswap!" "cljs.core/volatile!"],
-   :examples-strings [],
-   :description-html nil,
    :full-name "cljs.core/vreset!",
    :docstring
-   "Sets the value of volatile to newval without regard for the\ncurrent value. Returns newval."},
+   "Sets the value of volatile to newval without regard for the\ncurrent value. Returns newval.",
+   :examples-strings [],
+   :examples-htmls []},
   "EntriesIterator"
   {:ns "cljs.core",
    :name "EntriesIterator",
    :signature ["[s]"],
    :type "type",
    :full-name "cljs.core/EntriesIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reversible?"
   {:description
    "Returns true if `coll` implements the `IReversible` protocol, false otherwise.\n\nVectors, sorted maps, and sorted sets implement `IReversible`.",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "reversible?",
    :signature ["[coll]"],
    :type "function",
-   :examples-strings [],
-   :description-html
-   "<p>Returns true if <code>coll</code> implements the <code>IReversible</code> protocol, false otherwise.</p><p>Vectors, sorted maps, and sorted sets implement <code>IReversible</code>.</p>",
    :full-name "cljs.core/reversible?",
-   :docstring "Returns true if coll satisfies? IReversible."},
+   :docstring "Returns true if coll satisfies? IReversible.",
+   :examples-strings [],
+   :examples-htmls []},
   "assert"
   {:description
    "Evaluates expression `expr` and throws an exception if it does not evaluate to\nlogical true.  Exception will include `message` if given.\n\nReturns `nil`.",
@@ -9263,9 +8192,8 @@
    :examples-strings
    [["(assert true) ;;=> nil"
      "(assert false) ;;=> Uncaught Error: Assert failed: false"
-     "(assert (= 1 2) \"1 is not 2\") ;;=> Uncaught Error: Assert failed: 1 is not 2 ;;   (= 1 2)"]],
-   :description-html
-   "<p>Evaluates expression <code>expr</code> and throws an exception if it does not evaluate to logical true.  Exception will include <code>message</code> if given.</p><p>Returns <code>nil</code>.</p>",
+     "(assert (= 1 2) \"1 is not 2\") ;;=> Uncaught Error: Assert failed: 1 is not 2\n;;"
+     "(= 1 2)"]],
    :examples
    [{:id "1dc16f",
      :content
@@ -9283,8 +8211,6 @@
    :type "special form",
    :related ["special/try" "special/catch" "special/throw"],
    :examples-strings [],
-   :description-html
-   "<p><code>finally</code> should be the last form inside of a <code>try</code> expression. It is optional.</p><p><code>finally</code> clauses are always evaluated for their side effects whether there was an error or not, but they are never the return value of a <code>try</code> expression.</p>",
    :full-name "special/finally",
    :docstring
    "catch-clause => (catch classname name expr*)\nfinally-clause => (finally expr*)\nCatches and handles JavaScript exceptions."},
@@ -9294,7 +8220,6 @@
    :signature ["[x]"],
    :type "function/macro",
    :full-name "cljs.core/byte",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "prefers"
@@ -9305,7 +8230,6 @@
    :full-name "cljs.core/prefers",
    :docstring
    "Given a multimethod, returns a map of preferred value -> set of other values",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "array-chunk"
@@ -9314,7 +8238,6 @@
    :signature ["[arr]" "[arr off]" "[arr off end]"],
    :type "function",
    :full-name "cljs.core/array-chunk",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "keep-indexed"
@@ -9327,8 +8250,6 @@
    :type "function",
    :related ["cljs.core/map-indexed" "cljs.core/keep"],
    :examples-strings [],
-   :description-html
-   "<p>Returns a lazy sequence of the non-nil results of <code>&#40;f index item&#41;</code>. Note, this means false return values will be included.</p><p><code>f</code> must be free of side-effects.</p><p>Returns a stateful transducer when no collection is provided.</p>",
    :full-name "cljs.core/keep-indexed",
    :docstring
    "Returns a lazy sequence of the non-nil results of (f index item). Note,\nthis means false return values will be included.  f must be free of\nside-effects.  Returns a stateful transducer when no collection is\nprovided."},
@@ -9342,8 +8263,6 @@
    :type "macro",
    :related ["cljs.core/let"],
    :examples-strings [],
-   :description-html
-   "<p>Takes a vector of function definitions <code>fnspecs</code> and binds the functions to their names. All of the names are available in all of the definitions of the functions as well as <code>body</code>.</p><p><code>fnspecs</code> must be a vector with an even number of forms. See <code>let</code>.</p><p><code>letfn</code> is a wrapper over one of ClojureScript's [special forms].</p><p>[special forms]:http://clojure.org/special_forms</p>",
    :full-name "cljs.core/letfn",
    :docstring
    "fnspec ==> (fname [params*] exprs) or (fname ([params*] exprs)+)\n\nTakes a vector of function specs and a body, and generates a set of\nbindings of functions to their names. All of the names are available\nin all of the definitions of the functions, as well as the body."},
@@ -9353,7 +8272,6 @@
    :signature ["[x]"],
    :type "function",
    :full-name "cljs.core/string-iter",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ArrayNodeIterator"
@@ -9362,7 +8280,6 @@
    :signature ["[arr i next-iter]"],
    :type "type",
    :full-name "cljs.core/ArrayNodeIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "TransientHashSet"
@@ -9371,7 +8288,6 @@
    :signature ["[transient-map]"],
    :type "type",
    :full-name "cljs.core/TransientHashSet",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ArrayList"
@@ -9380,7 +8296,6 @@
    :signature ["[arr]"],
    :type "type",
    :full-name "cljs.core/ArrayList",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "test"
@@ -9391,7 +8306,6 @@
    :full-name "cljs.core/test",
    :docstring
    "test [v] finds fn at key :test in var metadata and calls it,\npresuming failure will throw exception",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IMapEntry"
@@ -9400,23 +8314,20 @@
    :type "protocol",
    :full-name "cljs.core/IMapEntry",
    :docstring "Protocol for examining a map entry.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "UUID"
   {:description
    "A type representing a universally unique identifier ([UUID]).\n\nUse [doc:cljs.core/uuid] or [doc:syntax/uuid-literal] to create one.\n\n[UUID]:https://en.wikipedia.org/wiki/Universally_unique_identifier",
-   :examples-htmls [],
    :ns "cljs.core",
    :name "UUID",
    :signature ["[uuid __hash]"],
    :type "type",
    :related
    ["syntax/uuid-literal" "cljs.core/random-uuid" "cljs.core/uuid"],
+   :full-name "cljs.core/UUID",
    :examples-strings [],
-   :description-html
-   "<p>A type representing a universally unique identifier ([UUID]).</p><p>Use [doc:cljs.core/uuid] or [doc:syntax/uuid-literal] to create one.</p><p>[UUID]:https://en.wikipedia.org/wiki/Universally<i>unique</i>identifier</p>",
-   :full-name "cljs.core/UUID"},
+   :examples-htmls []},
   "format"
   {:ns "cljs.core",
    :name "format",
@@ -9424,7 +8335,6 @@
    :type "function",
    :full-name "cljs.core/format",
    :docstring "Formats a string using goog.string.format.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "key-test"
@@ -9433,7 +8343,6 @@
    :signature ["[key other]"],
    :type "function",
    :full-name "cljs.core/key-test",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ns"
@@ -9451,8 +8360,6 @@
     "specialrepl/require"
     "specialrepl/require-macros"],
    :examples-strings [],
-   :description-html
-   "<p>Sets the namespace of the file.</p><p><code>ns</code> must be the first form in a <code>.cljs</code> file and there can only be one <code>ns</code> declaration per file. Namespaces must match the file name of their respective <code>.cljs</code> files, with the exception that dashes in namespaces become underscores in filenames. Thus, <code>&#40;ns foo.bar-biz.baz&#41;</code> should be the first form in file <code>foo/bar&#95;biz/baz.cljs</code>.</p><p><code>references</code> can be zero or more forms used to import other namespaces, symbols, and libraries into the current namespace.</p><pre><code class=\"clj\">&#40;ns example.core\n\n  ;; for excluding clojure symbols\n  &#40;:refer-clojure :exclude &#91;&#93;&#41;\n\n  ;; for importing goog classes and enums\n  &#40;:import\n    lib.ns\n    &#91;lib.ns Ctor&#42;&#93;&#41;\n\n  &#40;:require-macros\n    &#91;lib.ns :refer &#91;&#93;\n            :as alias\n            :reload\n            :reload-all&#93;&#41;\n\n  &#40;:require\n    &#91;lib.ns :refer &#91;&#93;\n            :refer-macros &#91;&#93;\n            :include-macros true|false\n            :as alias\n            :reload\n            :reload-all&#93;&#41;\n\n  &#40;:use\n    &#91;lib.ns :only &#91;&#93;\n            :reload\n            :reload-all&#93;&#41;\n\n  &#40;:use-macros\n    &#91;lib.ns :only &#91;&#93;\n            :reload\n            :reload-all&#93;&#41;&#41;\n</code></pre>",
    :full-name "special/ns",
    :docstring
    "You must currently use the ns form only with the following caveats\n\n  * You must use the :only form of :use\n  * :require supports :as and :refer\n    - both options can be skipped\n    - in this case a symbol can be used as a libspec directly\n      - that is, (:require lib.foo) and (:require [lib.foo]) are both\n        supported and mean the same thing\n    - prefix lists are not supported\n  * The only option for :refer-clojure is :exclude\n  * :import is available for importing Google Closure classes\n    - ClojureScript types and records should be brought in with :use\n      or :require :refer, not :import ed\n  * Macros are written in Clojure, and are referenced via the new\n    :require-macros / :use-macros options to ns\n    - :require-macros and :use-macros support the same forms that\n      :require and :use do\n\nImplicit macro loading: If a namespace is required or used, and that\nnamespace itself requires or uses macros from its own namespace, then\nthe macros will be implicitly required or used using the same\nspecifications. This oftentimes leads to simplified library usage,\nsuch that the consuming namespace need not be concerned about\nexplicitly distinguishing between whether certain vars are functions\nor macros.\n\nInline macro specification: As a convenience, :require can be given\neither :include-macros true or :refer-macros [syms...]. Both desugar\ninto forms which explicitly load the matching Clojure file containing\nmacros. (This works independently of whether the namespace being\nrequired internally requires or uses its own macros.) For example:\n\n(ns testme.core\n(:require [foo.core :as foo :refer [foo-fn] :include-macros true]\n          [woz.core :as woz :refer [woz-fn] :refer-macros [app jx]]))\n\nis sugar for\n\n(ns testme.core\n(:require [foo.core :as foo :refer [foo-fn]]\n          [woz.core :as woz :refer [woz-fn]])\n(:require-macros [foo.core :as foo]\n                 [woz.core :as woz :refer [app jx]]))"},
@@ -9461,7 +8368,6 @@
    :name "PersistentArrayMap.HASHMAP-THRESHOLD",
    :type "var",
    :full-name "cljs.core/PersistentArrayMap.HASHMAP-THRESHOLD",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "reduced?"
@@ -9471,7 +8377,6 @@
    :type "function",
    :full-name "cljs.core/reduced?",
    :docstring "Returns true if x is the result of a call to reduced",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ffirst"
@@ -9483,9 +8388,7 @@
    :signature ["[coll]"],
    :type "function",
    :related ["cljs.core/first" "cljs.core/fnext" "cljs.core/nfirst"],
-   :examples-strings [["(ffirst [[1 2] [3 4] [5 6]]) ;;=> 1"]],
-   :description-html
-   "<p>Same as <code>&#40;first &#40;first coll&#41;&#41;</code>.</p>",
+   :examples-strings [["(ffirst [[1 2] [3 4] [5 6]])"]],
    :examples
    [{:id "575ba2",
      :content "```clj\n(ffirst [[1 2] [3 4] [5 6]])\n;;=> 1\n```"}],
@@ -9498,7 +8401,6 @@
    :type "function",
    :full-name "cljs.core/remove-all-methods",
    :docstring "Removes all of the methods of multimethod.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "flatmap"
@@ -9509,7 +8411,6 @@
    :full-name "cljs.core/flatmap",
    :docstring
    "maps f over coll and concatenates the results.  Thus function f\nshould return a collection.  Returns a transducer when no collection\nis provided.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "pr-str*"
@@ -9520,7 +8421,6 @@
    :full-name "cljs.core/pr-str*",
    :docstring
    "Support so that collections can implement toString without\nloading all the printing machinery.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "first"
@@ -9539,10 +8439,7 @@
     "cljs.core/second"
     "cljs.core/take"
     "cljs.core/ffirst"],
-   :examples-strings
-   [["(first [1 2 3]) ;;=> 1" "(first []) ;;=> nil"]],
-   :description-html
-   "<p>Returns the first item in <code>coll</code> and calls <code>seq</code> on its argument.</p><p>Returns nil when <code>coll</code> is nil.</p>",
+   :examples-strings [["(first [1 2 3]) ;;=> 1" "(first [])"]],
    :examples
    [{:id "40e413",
      :content
@@ -9557,7 +8454,6 @@
    :type "function",
    :full-name "cljs.core/prim-seq",
    :docstring "Create seq from a primitive JavaScript Array-like.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Volatile"
@@ -9567,7 +8463,6 @@
    :type "type",
    :related ["cljs.core/volatile!" "cljs.core/volatile?"],
    :full-name "cljs.core/Volatile",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "IEncodeJS"
@@ -9575,7 +8470,6 @@
    :name "IEncodeJS",
    :type "protocol",
    :full-name "cljs.core/IEncodeJS",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "Set"
@@ -9584,7 +8478,6 @@
    :signature ["[meta hash-map]"],
    :type "type",
    :full-name "cljs.core/Set",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "val"
@@ -9596,7 +8489,6 @@
    :type "function",
    :related ["cljs.core/vals"],
    :examples-strings [],
-   :description-html "<p>Returns the value in the map entry.</p>",
    :full-name "cljs.core/val",
    :docstring "Returns the value in the map entry."},
   "ex-message"
@@ -9607,7 +8499,6 @@
    :full-name "cljs.core/ex-message",
    :docstring
    "Alpha - subject to change.\nReturns the message attached to the given Error / ExceptionInfo object.\nFor non-Errors returns nil.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "set-from-indexed-seq"
@@ -9616,7 +8507,6 @@
    :signature ["[iseq]"],
    :type "function",
    :full-name "cljs.core/set-from-indexed-seq",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "deftype"
@@ -9627,7 +8517,6 @@
    :full-name "cljs.core/deftype",
    :docstring
    "(deftype name [fields*]  options* specs*)\n\nCurrently there are no options.\n\nEach spec consists of a protocol or interface name followed by zero\nor more method bodies:\n\nprotocol-or-Object\n(methodName [args*] body)*\n\nThe type will have the (by default, immutable) fields named by\nfields, which can have type hints. Protocols and methods\nare optional. The only methods that can be supplied are those\ndeclared in the protocols/interfaces.  Note that method bodies are\nnot closures, the local environment includes only the named fields,\nand those fields can be accessed directly. Fields can be qualified\nwith the metadata :mutable true at which point (set! afield aval) will be\nsupported in method bodies. Note well that mutable fields are extremely\ndifficult to use correctly, and are present only to facilitate the building\nof higherlevel constructs, such as ClojureScript's reference types, in\nClojureScript itself. They are for experts only - if the semantics and\nimplications of :mutable are not immediately apparent to you, you should not\nbe using them.\n\nMethod definitions take the form:\n\n(methodname [args*] body)\n\nThe argument and return types can be hinted on the arg and\nmethodname symbols. If not supplied, they will be inferred, so type\nhints should be reserved for disambiguation.\n\nMethods should be supplied for all methods of the desired\nprotocol(s). You can also define overrides for methods of Object. Note that\na parameter must be supplied to correspond to the target object\n('this' in JavaScript parlance). Note also that recur calls to the method\nhead should *not* pass the target object, it will be supplied\nautomatically and can not be substituted.\n\nIn the method bodies, the (unqualified) name can be used to name the\nclass (for calls to new, instance? etc).\n\nOne constructor will be defined, taking the designated fields.  Note\nthat the field names __meta and __extmap are currently reserved and\nshould not be used when defining your own types.\n\nGiven (deftype TypeName ...), a factory function called ->TypeName\nwill be defined, taking positional parameters for the fields",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "defmacro"
@@ -9649,15 +8538,10 @@
    :examples-strings
    [[" ;; in macros.clj"
      "(ns foo.macros) ;; expands to a runtime call"
-     "(defmacro str->int [s]"
-     "  `(js/parseInt s))"
+     "(defmacro str->int [s]\n  `(js/parseInt s))"
      " ;; in macros.cljc"
      "(ns foo.macros) ;; expands to the result of the conversion"
-     "(defmacro str->int [s]"
-     "  #?(:clj  (Integer/parseInt s)"
-     "     :cljs (js/parseInt s)))"]],
-   :description-html
-   "<p>Defines a macro, which is essentially a function that runs at compile time. Macros can be used to define syntactic constructs which would require primitives or built-in support in other languages.</p><p>Using macros is as easy as using functions, but writing them is a little more difficult.  Also, creating macros is generally discouraged if you can accomplish the same goal with a function.</p><h2>Rules and Details</h2><p>There is a strict rule for when you can use <code>defmacro</code> -- you can only use it in what we call a <i>macro namespace</i>, effectively forcing you to separate your compile time and runtime code.</p><p>A side effect of this is that you cannot use <code>defmacro</code> from a REPL.  Sorry!</p><p>This strict rule is due to the nature of differing compile time environments for the optimized \"ClojureScript JVM\" compiler and the newer bootstrapped \"ClojureScript JS\" compiler.</p><p>In order to create macros that are portable between either compiler version, you must place macros in a <code>.cljc</code> file, but a <code>.clj</code> file is sufficient if no [reader conditionals][doc:syntax/cond] are needed.  Why would they be needed? Because ClojureScript macro namespaces may be handed off to Clojure for evaluation, depending on the compiler version:</p><p>| compiler version  | macro namespaces evaluated by | |-------------------|-------------------------------| | ClojureScript JVM | Clojure                       | | ClojureScript JS  | ClojureScript                 |</p><p>Please see the examples section below for a more concrete look.</p>",
+     "(defmacro str->int [s]\n  #?(:clj  (Integer/parseInt s)\n     :cljs (js/parseInt s)))"]],
    :examples
    [{:id "8040c8",
      :content
@@ -9671,7 +8555,6 @@
    :signature ["[arr i next-entry next-iter]"],
    :type "type",
    :full-name "cljs.core/NodeIterator",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "ex-data"
@@ -9682,7 +8565,6 @@
    :full-name "cljs.core/ex-data",
    :docstring
    "Alpha - subject to change.\nReturns exception data (a map) if ex is an ExceptionInfo.\nOtherwise returns nil.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   ">"
@@ -9699,9 +8581,7 @@
    [["(> 1 2) ;;=> false"
      "(> 2 1) ;;=> true"
      "(> 2 2) ;;=> false"
-     "(> 6 5 4 3 2) ;;=> true"]],
-   :description-html
-   "<p>Returns true if each successive number argument is less than the previous one, false otherwise.</p>",
+     "(> 6 5 4 3 2)"]],
    :examples
    [{:id "67180c",
      :content
@@ -9716,7 +8596,6 @@
    :type "macro",
    :full-name "cljs.core/specify!",
    :docstring "Identical to reify but mutates its first argument.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "PersistentHashMap.fromArrays"
@@ -9725,7 +8604,6 @@
    :signature ["[ks vs]"],
    :type "function",
    :full-name "cljs.core/PersistentHashMap.fromArrays",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []},
   "fnext"
@@ -9741,9 +8619,7 @@
    [["(fnext [1 2 3]) ;;=> 2"
      "(fnext [1 2]) ;;=> 2"
      "(fnext [1]) ;;=> nil"
-     "(fnext []) ;;=> nil"]],
-   :description-html
-   "<p>Same as <code>&#40;first &#40;next coll&#41;&#41;</code></p>",
+     "(fnext [])"]],
    :examples
    [{:id "92383f",
      :content
@@ -9758,7 +8634,6 @@
    :full-name "cljs.core/with-out-str",
    :docstring
    "Evaluates exprs in a context in which *print-fn* is bound to .append\non a fresh StringBuffer.  Returns the string created by any nested\nprinting calls.",
-   :description-html nil,
    :examples-strings [],
    :examples-htmls []}},
  :release
