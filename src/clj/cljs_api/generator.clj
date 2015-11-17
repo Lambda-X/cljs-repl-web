@@ -122,7 +122,7 @@
   keys (in the form of a req of keyseq)"
   [cljs-api-edn]
   (let [filtered-map (filter-kv api-edn-keyseqs cljs-api-edn)
-        selected-symbols (filter #(selected-namespaces (-> % second :ns)) (:symbols cljs-api-edn))
+        selected-symbols (filter #(get selected-namespaces (-> % second :ns)) (:symbols filtered-map))
         symbol-name-map (into {} (api-symbols->name-map selected-symbols))]
     (assoc filtered-map
            :symbols (reduce (fn [symbol-map [symbol-k symbol-v]]
