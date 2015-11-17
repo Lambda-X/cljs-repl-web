@@ -14,21 +14,34 @@
 
 (def clojuredocs-url "http://clojuredocs.org/")
 
+;; Some namespaces in cljs don't have a match in clj
+;; we could also use :clj-symbol in the generator, but
+;; for now it's just one namepsace
+(def cljs-special-ns->clj-ns {"special" "clojure.core"})
+
+;; We need to convert some special characters to generate the url
+(def url-special-characters { #"/"    "_fs"
+                              #"\?$"  "_q"
+                              #"^\."  "_." })
+
 (defn strip-namespace
-  "Given a cljs symbol, strip the namespace part."
+  "Given a cljs symbol, strip the namespace part. `sym` must be 
+  fully qualified."
   [sym]
-  (string/join (drop-while #(re-find #"\." %) (string/split (str sym) #"/" 2))))
+  (second (string/split (str sym) #"/" 2)))
 
 (defn symbol->clojuredocs-url
   "Given a cljs symbol (with fully qualified ns or without, in which
   case it defaults to clojure.core), returns the url to ClojureDocs
   documentation."
   [cljs-symbol]
-  (let [[ns symbol] (string/split (str cljs-symbol) #"/" 2)]
-    (str clojuredocs-url (if ns
-                           (string/replace ns #"cljs" "clojure")
+  (let [[ns symbol] (string/split (str cljs-symbol) #"/" 2)
+        url-ns (or (cljs-special-ns->clj-ns ns) ns)
+        url-symbol (reduce #(apply string/replace %1 %2) symbol url-special-characters)]
+    (str clojuredocs-url (if url-ns
+                           (string/replace url-ns #"cljs" "clojure")
                            "clojure.core")
-         "/" symbol)))
+         "/" url-symbol)))
 
 (defn number->word
   "From: http://clojurescriptmadeeasy.com/blog/how-to-humanize-text-cl-format.html
