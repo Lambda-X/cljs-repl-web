@@ -160,7 +160,7 @@
     (assoc filtered-map
            :symbols (reduce (fn [symbol-map [symbol-k symbol-v]]
                               (assoc symbol-map symbol-k (-> symbol-v
-                                                             assoc-description-html
+                                                             ;; assoc-description-html ;; AR - not used anymore
                                                              assoc-example-strings
                                                              assoc-example-htmls)))
                             {} symbol-name-map))))
