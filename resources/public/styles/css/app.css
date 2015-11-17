@@ -32,15 +32,6 @@ body,html {
 
 /***************console*******************/
 
-#app-center > .rc-h-box {
-    left: 50%;
-    margin-left: -320px;
-    top: -160px;
-}
-
-#app-center .rc-box {
-    width: auto;
-}
 
 .cljs-console {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
@@ -76,6 +67,10 @@ body,html {
 
 #app-center {
     height: 100px;
+    width: 620px;
+    left: 50%;
+    margin-left: -320px;
+    top: -160px;
 }
 
 /***************************************/
