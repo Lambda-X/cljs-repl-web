@@ -199,19 +199,10 @@
   [v-box
    :size "0 0 auto"
    :gap "4px"
-   :children [[h-box
-               :gap      "4px"
-               :children [[title
-                           :label "Description"
-                           :level :level4
-                           :class "api-panel-popup-section-title"]
-                          [md-icon-button
-                           :md-icon-name "zmdi-info"
-                           :tooltip "See online documentation"
-                           :tooltip-position :right-center
-                           :size :smaller
-                           :style {:justify-content :center}
-                           :on-click #(.open js/window (utils/symbol->clojuredocs-url sym) "_blank")]]]
+   :children [[title
+               :label "Description"
+               :level :level4
+               :class "api-panel-popup-section-title"]
               ;; we can use `dangerouslySetInnerHTML` or construct the edn from
               ;; the html string (using eg. hickory)
               ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
@@ -337,7 +328,19 @@
              :max-width (str popover-width)}
      :backdrop-opacity 0.1
      :close-button? false
-     :title name
+     :title [h-box
+             :gap "6px"
+             :align :center
+             :children [[title
+                         :label name
+                         :level :level4]
+                        [md-icon-button
+                         :md-icon-name "zmdi-info"
+                         :tooltip "See online documentation"
+                         :tooltip-position :below-right
+                         :size :smaller
+                         :style {:justify-content :center}
+                         :on-click #(.open js/window (utils/symbol->clojuredocs-url name) "_blank")]]]
      :body [(fn []
               [scroller
                :size "1 1 auto"
