@@ -187,11 +187,7 @@
   [v-box
    :size "0 0 auto"
    :gap "2px"
-   :children [[title
-               :label "Signatures"
-               :level :level4
-               :class "api-panel-popup-section-title"]
-              (for [s signatures]
+   :children [(for [s signatures]
                 [label
                  :label s
                  :class "api-panel-signature"])]])
@@ -203,19 +199,10 @@
   [v-box
    :size "0 0 auto"
    :gap "4px"
-   :children [[h-box
-               :gap      "4px"
-               :children [[title
-                           :label "Docs"
-                           :level :level4
-                           :class "api-panel-popup-section-title"]
-                          [md-icon-button
-                           :md-icon-name "zmdi-info"
-                           :tooltip "See online documentation"
-                           :tooltip-position :right-center
-                           :size :smaller
-                           :style {:justify-content :center}
-                           :on-click #(.open js/window (utils/symbol->clojuredocs-url sym) "_blank")]]]
+   :children [[title
+               :label "Description"
+               :level :level4
+               :class "api-panel-popup-section-title"]
               ;; we can use `dangerouslySetInnerHTML` or construct the edn from
               ;; the html string (using eg. hickory)
               ;; [:div (map hickory/as-hiccup (hickory/parse-fragment desc))]
@@ -319,14 +306,20 @@
   (let [{name :name
          full-name :full-name
          desc :description
+         docstring :docstring
          examples-htmls :examples-htmls
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-        examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-        popover-width  400
-        popover-height 400
-        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+         desc (or desc docstring)       ; some symbols don't have a description so we use
+                                        ; the docstring instead; docstring is a regular string,
+                                        ; without markdown. Nonetheless, it will be passed to
+                                        ; md->react->component function to gain some basic html
+                                        ; formatting (like paragraphs)
+         examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+         popover-width  400
+         popover-height 400
+         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
     [popover-content-wrapper
      :showing? showing?
      :position @popover-position
@@ -335,7 +328,19 @@
              :max-width (str popover-width)}
      :backdrop-opacity 0.1
      :close-button? false
-     :title name
+     :title [h-box
+             :gap "6px"
+             :align :center
+             :children [[title
+                         :label name
+                         :level :level4]
+                        [md-icon-button
+                         :md-icon-name "zmdi-info"
+                         :tooltip "See online documentation"
+                         :tooltip-position :below-right
+                         :size :smaller
+                         :style {:justify-content :center}
+                         :on-click #(.open js/window (utils/symbol->clojuredocs-url name) "_blank")]]]
      :body [(fn []
               [scroller
                :size "1 1 auto"
