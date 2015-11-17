@@ -76,7 +76,7 @@
                             (conj top-levels (str top-level c))
                             top-levels))
           :else (recur paren-count (str top-level c) top-levels))
-        top-levels))))
+        (conj top-levels top-level)))))
 
 (defn lift-up-comments
   "Given lines of code, merges each commented line (;) with the

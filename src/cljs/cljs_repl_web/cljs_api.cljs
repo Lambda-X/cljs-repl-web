@@ -23,7 +23,7 @@
      "(butlast [1 2]) ;;=>"
      "(1)"
      "(butlast [1]) ;;=> nil"
-     "(butlast [])"]],
+     "(butlast []) ;;=> nil"]],
    :examples
    [{:id "7a4676",
      :content
@@ -94,7 +94,9 @@
    :type "function/macro",
    :related ["cljs.core/mod"],
    :examples-strings
-   [["(js-mod -5 3) ;;=> -2" "(js-mod 5 3) ;;=> 2" "(js-mod 5 0)"]],
+   [["(js-mod -5 3) ;;=> -2"
+     "(js-mod 5 3) ;;=> 2"
+     "(js-mod 5 0) ;;=> NaN"]],
    :examples
    [{:id "75fa6d",
      :content
@@ -139,7 +141,9 @@
    :type "function",
    :related ["special/if"],
    :examples-strings
-   [["(boolean 1) ;;=> true" "(boolean 0) ;;=> true" "(boolean nil)"]],
+   [["(boolean 1) ;;=> true"
+     "(boolean 0) ;;=> true"
+     "(boolean nil) ;;=> false"]],
    :examples
    [{:id "9edf3a",
      :content
@@ -288,7 +292,7 @@
      "(compare 12 10) ;;=> 1"
      "(compare 10 10) ;;=> 0"
      "(compare 10 nil) ;;=>  1"
-     "(compare 10 (list 1 2 3))"]],
+     "(compare 10 (list 1 2 3)) ;; Error: compare on non-nil objects of different types"]],
    :examples
    [{:id "e13fa0",
      :content
@@ -341,7 +345,7 @@
    :examples-strings
    [["(def ^:dynamic *foo* 1)"
      "(defn do-something []\n  (println *foo*))"
-     "(binding [*foo* 2]\n  (do-something))"]],
+     "(binding [*foo* 2]\n  (do-something)) ;;=> prints 2\n\n*foo*\n;;=> 1"]],
    :examples
    [{:id "7dd17f",
      :content
@@ -386,9 +390,10 @@
    :type "macro",
    :related ["cljs.core/map"],
    :examples-strings
-   [["(def a #js [1 2 3])" "(amap a i ret (* 10 (aget a i)))"]
+   [["(def a #js [1 2 3])"
+     "(amap a i ret (* 10 (aget a i))) ;;=> #js [10 20 30]"]
     ["(def a #js [1 2 3])"
-     "(amap a i ret (+ (if (pos? i)\n                   (aget ret (dec i))\n                   0)\n                 (* 10 (aget a i))))"]],
+     "(amap a i ret (+ (if (pos? i)\n                   (aget ret (dec i))\n                   0)\n                 (* 10 (aget a i)))) ;;=> #js [10 30 60]"]],
    :examples
    [{:id "3a7471",
      :content
@@ -456,7 +461,7 @@
     "cljs.core/cond"],
    :examples-strings
    [["(def a 12)"
-     "(cond-> a\n  (> a 10) (str \" is greater than 10\")\n  (< a 20) (str \" and less than 20\"))"]],
+     "(cond-> a\n  (> a 10) (str \" is greater than 10\")\n  (< a 20) (str \" and less than 20\")) ;;=> \"12 is greater than 10 and less than 20\""]],
    :examples
    [{:id "f08338",
      :content
@@ -505,7 +510,7 @@
    :type "macro",
    :examples-strings
    [["(defn foo []\n  (println \"HI\")\n  (js-debugger)\n  (println \"WORLD\"))"
-     "(foo)"]],
+     "(foo) ;; will print \"HI\" then pause JS inside this function\n;; if browser devtools are open."]],
    :examples
    [{:id "87f2fa",
      :content
@@ -561,11 +566,11 @@
    [["(peek [1 2 3]) ;;=> 3"
      "(peek [1 2]) ;;=> 2"
      "(peek [1]) ;;=> 1"
-     "(peek [])"]
+     "(peek []) ;;=> nil"]
     ["(peek '(1 2 3)) ;;=> 1"
      "(peek '(1 2)) ;;=> 1"
      "(peek '(1)) ;;=> 1"
-     "(peek '())"]],
+     "(peek '()) ;;=> nil"]],
    :examples
    [{:id "4abc4c",
      :content
@@ -628,7 +633,7 @@
    :related ["cljs.core/*1" "cljs.core/*2" "cljs.core/*3"],
    :examples-strings
    [["(defn cause-error []\n  (throw \"Error: something went wrong\"))"
-     "(cause-error)"]],
+     "(cause-error) ;; Error: something went wrong\n\n*e\n;;=> \"Error: something went wrong\""]],
    :examples
    [{:id "bea858",
      :content
@@ -713,7 +718,7 @@
     "cljs.core/some->"
     "cljs.core/some->>"],
    :examples-strings
-   [["(as-> [1 2 3 4] x\n  (reduce + x)\n  (/ x 2))"]],
+   [["(as-> [1 2 3 4] x\n  (reduce + x)\n  (/ x 2)) ;;=> 5"]],
    :examples
    [{:id "5e7eef",
      :content
@@ -752,9 +757,9 @@
    :related ["cljs.core/clj->js"],
    :examples-strings
    [["(def json \"{\\\"foo\\\": 1, \\\"bar\\\": 2, \\\"baz\\\": [1,2,3]}\")"
-     "(def a (.parse js/JSON json))"
+     "(def a (.parse js/JSON json)) ;;=> #js {:foo 1, :bar 2, :baz #js [1 2 3]}"
      "(js->clj a) ;;=> {\"foo\" 1, \"bar\" 2, \"baz\" [1 2 3]}"
-     "(js->clj a :keywordize-keys true)"]],
+     "(js->clj a :keywordize-keys true) ;;=> {:foo 1, :bar 2, :baz [1 2 3]}"]],
    :examples
    [{:id "61d263",
      :content
@@ -782,7 +787,7 @@
    :type "macro",
    :related ["special/recur"],
    :examples-strings
-   [["(loop [x 0]\n  (when (< x 10)\n    (println x)\n    (recur (+ x 2))))"]],
+   [["(loop [x 0]\n  (when (< x 10)\n    (println x)\n    (recur (+ x 2)))) ;; Prints:\n;; 0\n;; 2\n;; 4\n;; 6\n;; 8\n;;\n;;=> nil"]],
    :examples
    [{:id "60291e",
      :content
@@ -808,7 +813,8 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/max" "cljs.core/min-key"],
-   :examples-strings [["(min 1 2 3 4)" "(apply min [1 2 3 4])"]],
+   :examples-strings
+   [["(min 1 2 3 4) ;; => 1" "(apply min [1 2 3 4]) ;; => 1"]],
    :examples
    [{:id "ab2de5",
      :content
@@ -834,7 +840,9 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-clear"],
-   :examples-strings [["(bit-flip 2r1111 2)" "(bit-flip 15 2)"]],
+   :examples-strings
+   [["(bit-flip 2r1111 2) ;;=> 11\n;; 11 = 2r1011"
+     "(bit-flip 15 2) ;;=> 11"]],
    :examples
    [{:id "5d7ee0",
      :content
@@ -940,20 +948,20 @@
      "(= 1 1) ;;=> true"
      "(= 1 2) ;;=> false"
      "(= 1 1 1) ;;=> true"
-     "(= 1 1 2)"]
-    ["(= '(1 2) [1 2])"
+     "(= 1 1 2) ;;=> false"]
+    ["(= '(1 2) [1 2]) ;;=> true"
      "(def a #js [1 2])"
      "(def b #js [1 2])"
      "(= a b) ;;=> false"
-     "(= (seq a) (seq b))"]
+     "(= (seq a) (seq b)) ;;=> true"]
     ["(def a {:foo {:bar \"baz\"}})"
      "(def b {:foo {:bar \"baz\"}})"
      "(= a b) ;;=> true"
-     "(= [a b] [a b])"
+     "(= [a b] [a b]) ;=> true"
      "(def a #js {:foo #js {:bar \"baz\"}})"
      "(def b #js {:foo #js {:bar \"baz\"}})"
      "(= a b) ;;=> false"
-     "(= (js->clj a)\n   (js->clj b))"]],
+     "(= (js->clj a)\n   (js->clj b)) ;;=> true"]],
    :examples
    [{:id "edffb6",
      :content
@@ -1000,7 +1008,7 @@
    [["(def ten (constantly 10))"
      "(ten \"hi\") ;;=> 10"
      "(ten 123) ;;=> 10"
-     "(ten :whatever)"]],
+     "(ten :whatever) ;;=> 10"]],
    :examples
    [{:id "9d5c25",
      :content
@@ -1086,7 +1094,8 @@
    :name "bit-count",
    :signature ["[x]"],
    :type "function",
-   :examples-strings [["(bit-count 2r1011)" "(bit-count 11)"]],
+   :examples-strings
+   [["(bit-count 2r1011) ;;=> 3" "(bit-count 11) ;;=> 3"]],
    :examples
    [{:id "35c78c",
      :content
@@ -1107,7 +1116,7 @@
      "(*) ;;=> 1\n\n;; the implicit 1 comes into play"
      "(* 6) ;;=> 6"
      "(* 2 3) ;;=> 6"
-     "(* 2 3 4)"]],
+     "(* 2 3 4) ;;=> 24"]],
    :examples
    [{:id "bc4a1f",
      :content
@@ -1130,7 +1139,7 @@
      "(next [1 2]) ;;=>"
      "(2)"
      "(next [1]) ;;=> nil"
-     "(next [])"]],
+     "(next []) ;;=> nil"]],
    :examples
    [{:id "7db59a",
      :content
@@ -1157,9 +1166,9 @@
    :type "function/macro",
    :examples-strings
    [["(bit-test 2r0100 2) ;;=> true"
-     "(bit-test 2r0100 1)"
+     "(bit-test 2r0100 1) ;;=> false"
      "(bit-test 4 2) ;;=> true"
-     "(bit-test 4 1)"]],
+     "(bit-test 4 1) ;;=> false"]],
    :examples
    [{:id "f64664",
      :content
@@ -1237,12 +1246,12 @@
    :examples-strings
    [["(contains? #{:a :b} :a) ;;=> true"
      "(contains? {:a 1, :b 2} :a) ;;=> true"
-     "(contains? {:a 1, :b 2} 1)"
+     "(contains? {:a 1, :b 2} 1) ;;=> false"
      "(contains? [:a :b] :b) ;;=> false"
-     "(contains? [:a :b] 1)"
+     "(contains? [:a :b] 1) ;;=> true"
      "(contains? '(:a :b) :a) ;;=> false"
      "(contains? '(:a :b) 1) ;;=> false"
-     "(contains? (range 3) 1)"]],
+     "(contains? (range 3) 1) ;;=> false"]],
    :examples
    [{:id "2991f0",
      :content
@@ -1264,7 +1273,7 @@
    [["(<= 1 2) ;;=> true"
      "(<= 2 2) ;;=> true"
      "(<= 3 2) ;;=> false"
-     "(<= 2 3 4 5 6)"]],
+     "(<= 2 3 4 5 6) ;;=> true"]],
    :examples
    [{:id "adb3fd",
      :content
@@ -1367,7 +1376,8 @@
    :signature ["[obj]"],
    :type "function",
    :related ["cljs.core/keys"],
-   :examples-strings [["(js-keys #js {:foo 1 :bar 2})"]],
+   :examples-strings
+   [["(js-keys #js {:foo 1 :bar 2}) ;;=> #js [\"foo\" \"bar\"]"]],
    :examples
    [{:id "5dd933",
      :content
@@ -1395,7 +1405,9 @@
    :type "macro",
    :related ["special/def"],
    :examples-strings
-   [["a\n;; WARNING: Use of undeclared Var" "(declare a)"]],
+   [["a\n;; WARNING: Use of undeclared Var"
+     "(declare a)"
+     "a\n;;=> nil"]],
    :examples
    [{:id "5a2dc2",
      :content
@@ -1623,7 +1635,7 @@
    :related
    ["cljs.core/assoc" "cljs.core/disj" "cljs.core/select-keys"],
    :examples-strings
-   [["(dissoc {:key \"value\" :key2 \"value2\"} :key)"]],
+   [["(dissoc {:key \"value\" :key2 \"value2\"} :key) ;;=> {:key2 \"value2\"}"]],
    :examples
    [{:id "fd6ae9",
      :content
@@ -1672,7 +1684,8 @@
    :type "function/macro",
    :related
    ["syntax/js-literal" "cljs.core/array" "cljs.core/clj->js"],
-   :examples-strings [["(js-obj \"foo\" 1 \"bar\" 2)"]],
+   :examples-strings
+   [["(js-obj \"foo\" 1 \"bar\" 2) ;;=> #js {:foo 1, :bar 2}"]],
    :examples
    [{:id "657cd7",
      :content
@@ -1697,7 +1710,7 @@
      "tcoll\n;;=> #<[object Object]>"
      "(:a tcoll) ;;=> 1"
      "(:b tcoll) ;;=> 2"
-     "(def a (persistent! tcoll))"]],
+     "(def a (persistent! tcoll)) ;;=> {:a 1 :b 2}"]],
    :examples
    [{:id "7d1e6b",
      :content
@@ -1716,7 +1729,9 @@
    :type "function/macro",
    :related ["cljs.core/dissoc"],
    :examples-strings
-   [["(def a #js {:foo 1 :bar 2})" "(js-delete a \"foo\")"]],
+   [["(def a #js {:foo 1 :bar 2})"
+     "(js-delete a \"foo\")"
+     "a\n;;=> #js {:bar 2}"]],
    :examples
    [{:id "5b24ea",
      :content
@@ -1782,7 +1797,7 @@
      "(add-watch a :logger\n  (fn [_key _atom old-state new-state]\n    (println \"old:\" old-state)\n    (println \"new:\" new-state)))"
      "(swap! a assoc :foo \"bar\") ;;=> will print the following:\n;; old: {}\n;; new: {:foo \"bar\"}"
      "(remove-watch a :logger)"
-     "(swap! a assoc :foo 3)"]],
+     "(swap! a assoc :foo 3) ;;=> nothing will be printed..."]],
    :examples
    [{:id "70044a",
      :content
@@ -1808,7 +1823,9 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-xor"],
-   :examples-strings [["(bit-or 2r1100 2r1010)" "(bit-or 12 10)"]],
+   :examples-strings
+   [["(bit-or 2r1100 2r1010) ;;=> 14\n;; 14 = 2r1110"
+     "(bit-or 12 10) ;;=> 14"]],
    :examples
    [{:id "ecea10",
      :content
@@ -2192,7 +2209,10 @@
    :type "function/macro",
    :related ["cljs.core/*" "cljs.core/quot"],
    :examples-strings
-   [["(/ 6 3) ;;=> 2" "(/ 6 3 2) ;;=> 1" "(/ 10) ;;=> 0.1" "(/ 1 3)"]],
+   [["(/ 6 3) ;;=> 2"
+     "(/ 6 3 2) ;;=> 1"
+     "(/ 10) ;;=> 0.1"
+     "(/ 1 3) ;;=> 0.3333333333333333"]],
    :examples
    [{:id "824bb7",
      :content
@@ -2235,14 +2255,14 @@
    [["(pop [1 2 3]) ;;=> [1 2]"
      "(pop [1 2]) ;;=> [1]"
      "(pop [1]) ;;=> []"
-     "(pop [])"]
+     "(pop []) ;; Error: Can't pop empty vector"]
     ["(pop '(1 2 3)) ;;=>"
      "(2 3)"
      "(pop '(1 2)) ;;=>"
      "(2)"
      "(pop '(1)) ;;=>"
      "()"
-     "(pop '())"]],
+     "(pop '()) ;; Error: Can't pop empty list"]],
    :examples
    [{:id "6bd9f7",
      :content
@@ -2356,11 +2376,12 @@
      "()"
      ".replace"
      "(\"A\", \"X\")"
+     "//=> \"X B C D\""
      " ;; ClojureScript"
-     "(.. \"a b c d\"\n    toUpperCase\n    (replace \"A\" \"X\"))"
+     "(.. \"a b c d\"\n    toUpperCase\n    (replace \"A\" \"X\")) ;;=> \"X B C D\""
      "(. (. \"a b c d\" toUpperCase) (replace \"A\" \"X\"))"
-     "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\")"
-     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\"))"]],
+     "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\") ;;=> \"X B C D\""
+     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\")) ;;=> \"X B C D\""]],
    :examples
    [{:id "500658",
      :content
@@ -2403,7 +2424,8 @@
    :type "macro",
    :related ["cljs.core/str"],
    :examples-strings
-   [["(js-str 23) ;;=> \"23\"" "(js-str #js {:foo 1})"]],
+   [["(js-str 23) ;;=> \"23\""
+     "(js-str #js {:foo 1}) ;;=> \"[Object object]\""]],
    :examples
    [{:id "e92009",
      :content
@@ -2491,7 +2513,8 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/+"],
-   :examples-strings [["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2)"]],
+   :examples-strings
+   [["(- 1) ;;=> -1" "(- 6 3) ;;=> 3" "(- 10 3 2) ;;=> 5"]],
    :examples
    [{:id "0a974e",
      :content
@@ -2646,7 +2669,7 @@
      "(def b (vary-meta a assoc :bar true))"
      "(= a b) ;;=> true"
      "(meta a) ;;=> {:foo true}"
-     "(meta b)"]],
+     "(meta b) ;;=> {:foo true, :bar true}"]],
    :examples
    [{:id "8cca62",
      :content
@@ -3016,7 +3039,7 @@
    :examples-strings
    [["(def a (atom \"abc\"))"
      "(compare-and-set! a \"abc\" \"def\") ;;=> true\n\n@a\n;;=> \"def\""
-     "(compare-and-set! a \"abc\" \"def\")"]],
+     "(compare-and-set! a \"abc\" \"def\") ;;=> false\n\n@a\n;;=> \"def\""]],
    :examples
    [{:id "1fa306",
      :content
@@ -3046,7 +3069,8 @@
    :signature ["[& fns]"],
    :type "function",
    :related ["cljs.core/partial" "cljs.core/juxt"],
-   :examples-strings [["(def f (comp str inc +))" "(f 1 2 3)"]],
+   :examples-strings
+   [["(def f (comp str inc +))" "(f 1 2 3) ;;=> \"7\""]],
    :examples
    [{:id "5d3250",
      :content
@@ -3191,7 +3215,9 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-or"],
-   :examples-strings [["(bit-xor 2r1100 2r1010)" "(bit-xor 12 10)"]],
+   :examples-strings
+   [["(bit-xor 2r1100 2r1010) ;;=> 6\n;; 6 = 2r0110"
+     "(bit-xor 12 10) ;;=> 6"]],
    :examples
    [{:id "3ccd99",
      :content
@@ -3248,7 +3274,7 @@
      "(def b (with-meta a {:bar true}))"
      "(= a b) ;;=> true"
      "(meta a) ;;=> {:foo true}"
-     "(meta b)"]],
+     "(meta b) ;;=> {:bar true}"]],
    :examples
    [{:id "f189d4",
      :content
@@ -3289,7 +3315,10 @@
    :type "function",
    :related ["cljs.core/array" "cljs.core/make-array"],
    :examples-strings
-   [["(def a #js [1 2 3])" "(def b (aclone a))" "(aset b 0 4)"]],
+   [["(def a #js [1 2 3])"
+     "(def b (aclone a))"
+     "(aset b 0 4)"
+     "a\n;;=> #js [1 2 3]\n\nb\n;;=> #js [4 2 3]"]],
    :examples
    [{:id "422c4e",
      :content
@@ -3441,7 +3470,7 @@
      "(count []) ;;=> 0"
      "(count nil) ;;=> 0"
      "(count #{:a :b}) ;;=> 2"
-     "(count {:key \"value\" :key2 \"value2\"})"]],
+     "(count {:key \"value\" :key2 \"value2\"}) ;;=> 2"]],
    :examples
    [{:id "96e470",
      :content
@@ -3566,7 +3595,7 @@
    :examples-strings
    [["(array? #js [1 2 3]) ;;=> true"
      "(array? [1 2 3]) ;;=> false"
-     "(array? \"hi\")"]],
+     "(array? \"hi\") ;;=> false"]],
    :examples
    [{:id "39913c",
      :content
@@ -3756,7 +3785,7 @@
    :examples-strings
    [["(max 1 2 3) ;;=> 3"
      "(apply max [1 2 3]) ;;=> 3"
-     "(apply max 1 [2 3])"]],
+     "(apply max 1 [2 3]) ;;=> 3"]],
    :examples
    [{:id "174052",
      :content
@@ -3891,7 +3920,8 @@
    :type "macro",
    :related ["cljs.core/reduce"],
    :examples-strings
-   [["(def a #js [1 2 3])" "(areduce a i ret 0 (+ ret (aget a i)))"]],
+   [["(def a #js [1 2 3])"
+     "(areduce a i ret 0 (+ ret (aget a i))) ;;=> 6"]],
    :examples
    [{:id "20a389",
      :content
@@ -3919,7 +3949,9 @@
    :type "var",
    :related ["cljs.core/*2" "cljs.core/*3" "cljs.core/*e"],
    :examples-strings
-   [["(+ 1 2 3 4) ;;=> 10\n\n*1\n;;=> 10" "(inc *1)"]],
+   [["(+ 1 2 3 4) ;;=> 10\n\n*1\n;;=> 10"
+     "(inc *1) ;;=> 11"
+     ":first\n;;=> :first\n\n:second\n;;=> :second\n\n:third\n;;=> :third\n\n*3\n;;=> :first\n\n*2\n;;=> :second\n\n*1\n;;=> :third"]],
    :examples
    [{:id "30a861",
      :content
@@ -4072,7 +4104,9 @@
    :signature ["[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/bit-or"],
-   :examples-strings [["(bit-and 2r1100 2r1010)" "(bit-and 12 10)"]],
+   :examples-strings
+   [["(bit-and 2r1100 2r1010) ;;=> 8\n;; 8 = 2r1000"
+     "(bit-and 12 10) ;;=> 8"]],
    :examples
    [{:id "3c0470",
      :content
@@ -4091,11 +4125,11 @@
    :related ["cljs.core/namespace"],
    :examples-strings
    [["(name :foo/bar) ;;=> \"bar\""
-     "(name 'foo/bar)"
+     "(name 'foo/bar) ;;=> \"bar\""
      "(name :foo) ;;=> \"foo\""
-     "(name 'foo)"
+     "(name 'foo) ;;=> \"foo\""
      "(name \"foo/bar\") ;;=> \"foo/bar\""
-     "(name \"foo\")"]],
+     "(name \"foo\") ;;=> \"foo\""]],
    :examples
    [{:id "363fb7",
      :content
@@ -4171,9 +4205,9 @@
    :type "function/macro",
    :related ["cljs.core/bit-and" "cljs.core/bit-not"],
    :examples-strings
-   [["(bit-and-not 2r1100 2r1010)"
-     "(bit-and-not 12 10)"
-     "(bit-and 12 (bit-not 10))"]],
+   [["(bit-and-not 2r1100 2r1010) ;;=> 4\n;; 4 = 2r0100"
+     "(bit-and-not 12 10) ;;=> 4"
+     "(bit-and 12 (bit-not 10)) ;;=> 4"]],
    :examples
    [{:id "16f35d",
      :content
@@ -4287,7 +4321,7 @@
    [["(associative? [1 2 3]) ;;=> true"
      "(associative? {:a 1 :b 2}) ;;=> true"
      "(associative? #{1 2 3}) ;;=> false"
-     "(associative? '(1 2 3))"]],
+     "(associative? '(1 2 3)) ;;=> false"]],
    :examples
    [{:id "29a37f",
      :content
@@ -4314,8 +4348,8 @@
    :related ["cljs.core/random-uuid" "syntax/uuid-literal"],
    :examples-strings
    [["(uuid \"00000000-0000-0000-0000-000000000000\") ;;=> #uuid \"00000000-0000-0000-0000-000000000000\""
-     "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\")"
-     "(uuid \"\")"]],
+     "(uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\") ;;=> #uuid \"97bda55b-6175-4c39-9e04-7c0205c709dc\""
+     "(uuid \"\") ;;=> #uuid \"\""]],
    :examples
    [{:id "d6491d",
      :content
@@ -4333,7 +4367,7 @@
    :related ["cljs.core/condp" "cljs.core/case" "special/if"],
    :examples-strings
    [["(def a 42)"
-     "(cond\n  (< a 10) \"a is less than 10\"\n  (= a 10) \"a is 10\"\n  (> a 10) \"a is bigger than 10\"\n  :else \"a is not a number!\")"]],
+     "(cond\n  (< a 10) \"a is less than 10\"\n  (= a 10) \"a is 10\"\n  (> a 10) \"a is bigger than 10\"\n  :else \"a is not a number!\") ;;=> \"a is bigger than 10\""]],
    :examples
    [{:id "0cc9ac",
      :content
@@ -4432,7 +4466,7 @@
    :examples-strings
    [["(def v [1 2])"
      "(if (empty? v) \"empty!\" \"filled!\") ;;=> \"filled!\""
-     "(str \"This vector is \"\n  (if (empty? v) \"empty!\" \"filled!\"))"]],
+     "(str \"This vector is \"\n  (if (empty? v) \"empty!\" \"filled!\")) ;;=> \"This vector is filled!\""]],
    :examples
    [{:id "e591ff",
      :content
@@ -4510,7 +4544,8 @@
    :examples-strings
    [["// JavaScript\nvar obj = {\n  \"my sum\": function"
      "(a,b)"
-     "(js-invoke js/obj \"my sum\" 1 2)"]],
+     "{ return a+b; }\n};"
+     "(js-invoke js/obj \"my sum\" 1 2) ;=> 3"]],
    :examples
    [{:id "373cce",
      :content
@@ -4694,7 +4729,7 @@
    :examples-strings
    [["(char 81) ;;=> \"Q\""
      "(char \"Q\") ;;=> \"Q\""
-     "(char \"foo\")"]],
+     "(char \"foo\") ;; Error: Argument to char must be a character or number"]],
    :examples
    [{:id "4e1a56",
      :content
@@ -4793,7 +4828,8 @@
      "@a\n;;=> 1"
      "(reset! a 2)"
      "@a\n;;=> 2"
-     "(swap! a inc)"]],
+     "(swap! a inc)"
+     "@a\n;;=> 3"]],
    :examples
    [{:id "e6a38a",
      :content
@@ -4937,12 +4973,12 @@
      "(or true) ;;=> true"
      "(or true true) ;;=> true"
      "(or true false) ;;=> true"
-     "(or false false)"]
+     "(or false false) ;;=> false"]
     ["(or \"foo\" \"bar\") ;;=> \"bar\""
      "(or \"foo\" nil) ;;=> \"foo\""
      "(or \"foo\" false) ;;=> \"foo\""
      "(or nil \"foo\") ;;=> \"foo\""
-     "(or false \"foo\")"]],
+     "(or false \"foo\") ;;=> \"foo\""]],
    :examples
    [{:id "d50433",
      :content
@@ -5020,7 +5056,7 @@
      "(def b 2)"
      "(case a\n  0 \"zero\"\n  1 \"one\"\n  \"default\") ;;=> \"one\""
      "(case b\n  0 \"zero\"\n  1 \"one\"\n  \"default\") ;;=> \"default\""
-     "(case b\n  0 \"zero\"\n  1 \"one\")"]],
+     "(case b\n  0 \"zero\"\n  1 \"one\") ;; Error: No matching clause: 2"]],
    :examples
    [{:id "09a90c",
      :content
@@ -5171,7 +5207,8 @@
    :name "bit-not",
    :signature ["[x]"],
    :type "function/macro",
-   :examples-strings [["(bit-not 2r1100)" "(bit-not 12)"]],
+   :examples-strings
+   [["(bit-not 2r1100) ;;=> -13" "(bit-not 12) ;;=> -13"]],
    :examples
    [{:id "d4c5e3",
      :content
@@ -5318,7 +5355,7 @@
    [["(>= 2 1) ;;=> true"
      "(>= 2 2) ;;=> true"
      "(>= 1 2) ;;=> false"
-     "(>= 6 5 4 3 2)"]],
+     "(>= 6 5 4 3 2) ;;=> true"]],
    :examples
    [{:id "de73d7",
      :content
@@ -5517,8 +5554,8 @@
    :examples-strings
    [["(def a #js {:foo 1 :bar 2})"
      "(js-in \"foo\" a) ;;=> true"
-     "(js-in \"hello\" a)"
-     "(js-in \"toString\" a)"]],
+     "(js-in \"hello\" a) ;;=> false"
+     "(js-in \"toString\" a) ;;=> true"]],
    :examples
    [{:id "a45b18",
      :content
@@ -5615,7 +5652,8 @@
    :signature ["[f]"],
    :type "function",
    :related ["cljs.core/not"],
-   :examples-strings [["(def a 10)" "((complement #(= a %)) 12)"]],
+   :examples-strings
+   [["(def a 10)" "((complement #(= a %)) 12) ;;=> true"]],
    :examples
    [{:id "69e359",
      :content
@@ -5835,11 +5873,13 @@
    :related ["cljs.core/->>"],
    :examples-strings
    [["(first (.split (.replace (.toUpperCase \"a b c d\") \"A\" \"X\") \" \")) ;;=> \"X\""
-     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\")\n    (.split \" \")\n    first)"]
+     "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\")\n    (.split \" \")\n    first) ;;=> \"X\""]
     ["(def person\n  {:name \"Mark Volkmann\"\n   :address {:street \"644 Glen Summit\"\n             :city \"St. Charles\"\n             :state \"Missouri\"\n             :zip 63304}\n   :employer {:name \"Object Computing, Inc.\"\n              :address {:street \"12140 Woodcrest Dr.\"\n                        :city \"Creve Coeur\"\n                        :state \"Missouri\"\n                        :zip 63141}}})"
-     "(-> person :employer :address :city)"
-     "(:city (:address (:employer person)))"]
-    ["(def c 5)" "(-> c (+ 3) (/ 2) (- 1))" "(- (/ (+ c 3) 2) 1)"]],
+     "(-> person :employer :address :city) ;;=> \"Creve Coeur\""
+     "(:city (:address (:employer person))) ;;=> \"Creve Coeur\""]
+    ["(def c 5)"
+     "(-> c (+ 3) (/ 2) (- 1)) ;;=> 3"
+     "(- (/ (+ c 3) 2) 1) ;;=> 3"]],
    :examples
    [{:id "19b460",
      :content
@@ -5883,12 +5923,12 @@
      "(and true) ;;=> true"
      "(and true true) ;;=> true"
      "(and true false) ;;=> false"
-     "(and false false)"]
+     "(and false false) ;;=> false"]
     ["(and \"foo\" \"bar\") ;;=> \"bar\""
      "(and \"foo\" nil) ;;=> nil"
      "(and \"foo\" false) ;;=> false"
      "(and nil \"foo\") ;;=> nil"
-     "(and false \"foo\")"]],
+     "(and false \"foo\") ;;=> false"]],
    :examples
    [{:id "a39a73",
      :content
@@ -5978,7 +6018,7 @@
    :type "function",
    :related ["cljs.core/rem"],
    :examples-strings
-   [["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0)"]],
+   [["(mod -5 3) ;;=> 1" "(mod 5 3) ;;=> 2" "(mod 5 0) ;;=> NaN"]],
    :examples
    [{:id "8165e8",
      :content
@@ -6050,7 +6090,7 @@
    [["(last [1 2 3]) ;;=> 3"
      "(last [1 2]) ;;=> 2"
      "(last [1]) ;;=> 1"
-     "(last [])"]],
+     "(last []) ;;=> nil"]],
    :examples
    [{:id "eb0836",
      :content
@@ -6127,7 +6167,7 @@
    [["(< 1 2) ;;=> true"
      "(< 2 1) ;;=> false"
      "(< 1 1) ;;=> false"
-     "(< 2 3 4 5 6)"]],
+     "(< 2 3 4 5 6) ;;=> true"]],
    :examples
    [{:id "02e6d3",
      :content
@@ -6218,7 +6258,7 @@
      "(alength a) ;;=> 3"
      "(.-length a) ;;=> 3"
      "(aget a \"length\") ;;=> 3"
-     "(count a)"]],
+     "(count a) ;;=> 3"]],
    :examples
    [{:id "26f79f",
      :content
@@ -6238,19 +6278,20 @@
    :type "special form",
    :related ["cljs.core/.." "cljs.core/aget"],
    :examples-strings
-   [[" ;; ClojureScript"
+   [["// JavaScript\nvar m = \"Hello World\";\nm.length;\n//=> 11"
+     " ;; ClojureScript"
      "(def m \"Hello World\")"
-     "(.-length m)"
+     "(.-length m) ;;=> 11"
      "// JavaScript\nm.toUpperCase"
      "() ;\n//=> \"HELLO WORLD\"\n\nm.replace"
-     "(\"H\", \"\")"
+     "(\"H\", \"\") ;\n//=> \"ello World\";"
      " ;; ClojureScript"
      "(.toUpperCase m) ;;=> \"HELLO WORLD\""
-     "(.replace m \"H\" \"\")"]
+     "(.replace m \"H\" \"\") ;;=> \"ello World\""]
     ["(def o #js {:foo \"bar\"})"
      "(. o -foo) ;;=> \"bar\""
      "(.-foo o) ;;=> \"bar\""
-     "(aget o \"foo\")"]],
+     "(aget o \"foo\") ;;=> \"bar\""]],
    :examples
    [{:id "22ccbb",
      :content
@@ -6287,13 +6328,13 @@
    [["(def a ^:foo [1 2 3])"
      "(meta a) ;;=> {:foo true}"
      "(alter-meta! a assoc :bar true)"
-     "(meta a)"
+     "(meta a) ;;=> {:foo true, :bar true}"
      "(def a [1 2 3])"
      "(meta #'a) ;;=> {:arglists"
      "()"
      ", :test nil, :name a, :column 1, :line 1, :file \"<cljs repl>\", :doc nil, :ns cljs.user}"
      "(alter-meta! #'a assoc :bar true)"
-     "(:bar (meta #'a))"]],
+     "(:bar (meta #'a)) ;;=> nil"]],
    :examples
    [{:id "8378a0",
      :content
@@ -6324,14 +6365,14 @@
     "cljs.core/peek"
     "cljs.core/pop"],
    :examples-strings
-   [["(conj [1 2 3] 4)"
+   [["(conj [1 2 3] 4) ;;=> [1 2 3 4]"
      "(conj (list 1 2 3) 0) ;;=>"
      "(0 1 2 3)"
      "(def x (range 1 4)) ;;=>"
      "(1 2 3)"
      "(conj x 0) ;;=>"
      "(0 1 2 3)"
-     "(conj #{\"a\" \"b\" \"c\"} \"d\")"]],
+     "(conj #{\"a\" \"b\" \"c\"} \"d\") ;;=> #{\"a\" \"b\" \"c\" \"d\"}"]],
    :examples
    [{:id "8c2a84",
      :content
@@ -6384,7 +6425,7 @@
    :examples-strings
    [["(clj->js {:foo 1 :bar 2}) ;;=> #js {:foo 1, :bar 2}"
      "(clj->js [:foo \"bar\" 'baz]) ;;=> #js [\"foo\" \"bar\" \"baz\"]"
-     "(clj->js [1 {:foo \"bar\"} 4])"]],
+     "(clj->js [1 {:foo \"bar\"} 4]) ;;=> #js [1 #js {:foo \"bar\"} 4]"]],
    :examples
    [{:id "2b1057",
      :content
@@ -6632,7 +6673,8 @@
    :related
    ["cljs.core/bit-shift-left" "cljs.core/unsigned-bit-shift-right"],
    :examples-strings
-   [["(bit-shift-right 2r1010 1)" "(bit-shift-right 10 1)"]],
+   [["(bit-shift-right 2r1010 1) ;;=> 5\n;; 5 = 2r0101"
+     "(bit-shift-right 10 1) ;;=> 5"]],
    :examples
    [{:id "5b75af",
      :content
@@ -6650,8 +6692,8 @@
    :type "macro",
    :related ["cljs.core/->"],
    :examples-strings
-   [["(->> (range)\n     (map #(* % %))\n     (filter even?)\n     (take 10)\n     (reduce +))"
-     "(reduce +\n  (take 10\n    (filter even?\n      (map #(* % %)\n        (range)))))"]],
+   [["(->> (range)\n     (map #(* % %))\n     (filter even?)\n     (take 10)\n     (reduce +)) ;;=> 1140"
+     "(reduce +\n  (take 10\n    (filter even?\n      (map #(* % %)\n        (range))))) ;;=> 1140"]],
    :examples
    [{:id "1dc72c",
      :content
@@ -6791,7 +6833,8 @@
    :related
    ["cljs.core/assoc" "cljs.core/hash-map" "cljs.core/sorted-map"],
    :examples-strings
-   [["(array-map :a 10) ;;=> {:a 10}" "(array-map :a 10 :b 20)"]],
+   [["(array-map :a 10) ;;=> {:a 10}"
+     "(array-map :a 10 :b 20) ;;=> {:a 10 :b 20}"]],
    :examples
    [{:id "198026",
      :content
@@ -6822,7 +6865,7 @@
    :examples-strings
    [["(def a (atom {}))"
      "(add-watch a :logger\n  (fn [_key _atom old-state new-state]\n    (println \"old:\" old-state)\n    (println \"new:\" new-state)))"
-     "(swap! a assoc :foo \"bar\")"]],
+     "(swap! a assoc :foo \"bar\") ;;=> will print the following:\n;; old: {}\n;; new: {:foo \"bar\"}"]],
    :examples
    [{:id "2f2fe0",
      :content
@@ -6956,7 +6999,8 @@
    [["(+ 1 2 3 4) ;;=> 10"
      "(+ 4 8) ;;=> 12"
      "(+ 1 2) ;;=> 3\n\n*3\n;;=> 10"
-     "(inc *3)"]],
+     "(inc *3) ;;=> 11"
+     ":first\n;;=> :first\n\n:second\n;;=> :second\n\n:third\n;;=> :third\n\n*3\n;;=> :first\n\n*2\n;;=> :second\n\n*1\n;;=> :third"]],
    :examples
    [{:id "d7a6e9",
      :content
@@ -7167,7 +7211,9 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-clear"],
-   :examples-strings [["(bit-set 2r1100 1)" "(bit-set 12 1)"]],
+   :examples-strings
+   [["(bit-set 2r1100 1) ;;=> 14\n;; 14 = 2r1110"
+     "(bit-set 12 1) ;;=> 14"]],
    :examples
    [{:id "6a8a49",
      :content
@@ -7205,7 +7251,8 @@
      "a\n;;=> nil"
      "(def b 42)"
      "b\n;;=> 42"
-     "(def c \"an optional docstring\" 42)"]],
+     "(def c \"an optional docstring\" 42)"
+     "c\n;;=> 42"]],
    :examples
    [{:id "a5f898",
      :content
@@ -7236,10 +7283,10 @@
    [["(coll? [1 2 3]) ;;=> true"
      "(coll? '(1 2 3)) ;;=> true"
      "(coll? #{1 2 3}) ;;=> true"
-     "(coll? {:foo 1 :bar 2})"
+     "(coll? {:foo 1 :bar 2}) ;;=> true"
      "(coll? \"foo\") ;;=> false"
      "(coll? 123) ;;=> false"
-     "(coll? nil)"]],
+     "(coll? nil) ;;=> false"]],
    :examples
    [{:id "d30884",
      :content
@@ -7278,7 +7325,8 @@
    :type "function/macro",
    :related ["cljs.core/bit-shift-right"],
    :examples-strings
-   [["(bit-shift-left 2r0101 1)" "(bit-shift-left 5 1)"]],
+   [["(bit-shift-left 2r0101 1) ;;=> 10\n;; 10 = 2r1010"
+     "(bit-shift-left 5 1) ;;=> 10"]],
    :examples
    [{:id "67c34a",
      :content
@@ -7297,7 +7345,8 @@
    :examples-strings
    [["(+ 1 2 3 4) ;;=> 10"
      "(+ 4 8) ;;=> 12\n\n*2\n;;=> 10"
-     "(inc *2)"]],
+     "(inc *2) ;;=> 11"
+     ":first\n;;=> :first\n\n:second\n;;=> :second\n\n:third\n;;=> :third\n\n*3\n;;=> :first\n\n*2\n;;=> :second\n\n*1\n;;=> :third"]],
    :examples
    [{:id "208d41",
      :content
@@ -7382,7 +7431,9 @@
    :signature ["[x n]"],
    :type "function/macro",
    :related ["cljs.core/bit-set" "cljs.core/bit-flip"],
-   :examples-strings [["(bit-clear 2r1111 2)" "(bit-clear 15 2)"]],
+   :examples-strings
+   [["(bit-clear 2r1111 2) ;;=> 11\n;; 11 = 2r1011"
+     "(bit-clear 15 2) ;;=> 11"]],
    :examples
    [{:id "0f6748",
      :content
@@ -7420,10 +7471,10 @@
    :related ["cljs.core/name"],
    :examples-strings
    [["(namespace :foo/bar) ;;=> \"foo\""
-     "(namespace 'foo/bar)"
+     "(namespace 'foo/bar) ;;=> \"foo\""
      "(namespace :foo) ;;=> nil"
-     "(namespace 'foo)"
-     "(name \"foo/bar\")"]],
+     "(namespace 'foo) ;;=> nil"
+     "(name \"foo/bar\") ;;=> nil"]],
    :examples
    [{:id "5bd3b4",
      :content
@@ -7468,9 +7519,9 @@
    :type "macro",
    :examples-strings
    [["(comment 123) ;;=> nil"
-     "(comment\n  (foo 1 2 3)\n  (bar \"hello\"))"
+     "(comment\n  (foo 1 2 3)\n  (bar \"hello\")) ;;=> nil"
      "(comment [1 2 3]]) ;; Error: Unmatched delimiter ]"
-     "(comment a : b)"]],
+     "(comment a : b) ;; Error: Invalid token :"]],
    :examples
    [{:id "482fd7",
      :content
@@ -7581,7 +7632,7 @@
      "(nfirst [[1 2] [3 4]]) ;;=>"
      "(2)"
      "(nfirst [[1] [2 3]]) ;;=> nil"
-     "(nfirst [[] [1 2]])"]],
+     "(nfirst [[] [1 2]]) ;;=> nil"]],
    :examples
    [{:id "60b8a4",
      :content
@@ -7611,8 +7662,8 @@
    ["cljs.core/assoc" "cljs.core/update-in" "cljs.core/get-in"],
    :examples-strings
    [["(def users [{:name \"James\" :age 26}\n            {:name \"John\" :age 43}])"
-     "(assoc-in users [1 :age] 44)"
-     "(assoc-in users [1 :password] \"nhoJ\")"]],
+     "(assoc-in users [1 :age] 44) ;;=> [{:name \"James\", :age 26}\n;;    {:name \"John\", :age 44}]"
+     "(assoc-in users [1 :password] \"nhoJ\") ;;=> [{:name \"James\", :age 26}\n;;    {:password \"nhoJ\", :name \"John\", :age 43}]"]],
    :examples
    [{:id "e76f20",
      :content
@@ -7645,10 +7696,11 @@
      "(assoc my-map :bar 2) ;;=> {:foo 1 :bar 2}"
      "(assoc my-map :a 3 :b 4 :c 5 :d 6) ;;=> {:foo 1 :a 3 :b 4 :c 5 :d 6}\n\n;; you must pass a value for every key"
      "(assoc my-map :foo) ;;=> WARNING: Wrong number of args"
-     "(2)"]
+     "(2)"
+     "passed to cljs.core/assoc"]
     ["(def my-vec [1 2 3])"
      "(assoc my-vec 0 \"foo\") ;;=> [\"foo\" 2 3]"
-     "(assoc my-vec 3 \"foo\")"]],
+     "(assoc my-vec 3 \"foo\") ;;=> Error: Index 3 out of bounds  [0,0]"]],
    :examples
    [{:id "2fa7e0",
      :content
@@ -7775,7 +7827,7 @@
    :signature ["[x]" "[x y]" "[x y & more]"],
    :type "function/macro",
    :related ["cljs.core/=" "cljs.core/identical?"],
-   :examples-strings [["(== 1 1) ;;=> true" "(== 1 2)"]],
+   :examples-strings [["(== 1 1) ;;=> true" "(== 1 2) ;;=> false"]],
    :examples
    [{:id "5ac342",
      :content
@@ -7828,9 +7880,9 @@
      "(distinct? 1 2) ;;=> true"
      "(distinct? 1 1) ;;=> false"
      "(distinct? 1 2 3) ;;=> true"
-     "(distinct? 1 2 1)"
+     "(distinct? 1 2 1) ;;=> false"
      "(apply distinct? [1 2 3]) ;;=> true"
-     "(apply distinct? [1 2 1])"]],
+     "(apply distinct? [1 2 1]) ;;=> false"]],
    :examples
    [{:id "b32799",
      :content
@@ -7880,7 +7932,7 @@
      "(+ 1) ;;=> 1"
      "(+ -10) ;;=> -10"
      "(+ 1 2) ;;=> 3"
-     "(+ 1 2 3)"]],
+     "(+ 1 2 3) ;;=> 6"]],
    :examples
    [{:id "650668",
      :content
@@ -7973,9 +8025,10 @@
    :related
    ["cljs.core/aclone" "cljs.core/make-array" "cljs.core/clj->js"],
    :examples-strings
-   [["(array 1 2 3) ;;=> #js [1 2 3]" "(apply array [1 2 3])"]
+   [["(array 1 2 3) ;;=> #js [1 2 3]"
+     "(apply array [1 2 3]) ;;=> #js [1 2 3]\n\n#js [1 2 3]\n;;=> #js [1 2 3]"]
     ["(array 1 2 (array 3 4)) ;;=> #js [1 2 #js [3 4]]"
-     "(clj->js [1 2 [3 4]])"]],
+     "(clj->js [1 2 [3 4]]) ;;=> #js [1 2 #js [3 4]]"]],
    :examples
    [{:id "3a546d",
      :content
@@ -8011,7 +8064,7 @@
    :examples-strings
    [["(def filter? true)"
      "(def sum? true)"
-     "(cond->> [1 2 3 4]\n  filter? (filter even?)\n  sum?    (reduce +))"]],
+     "(cond->> [1 2 3 4]\n  filter? (filter even?)\n  sum?    (reduce +)) ;;=> 6"]],
    :examples
    [{:id "e07a05",
      :content
@@ -8388,7 +8441,7 @@
    :signature ["[coll]"],
    :type "function",
    :related ["cljs.core/first" "cljs.core/fnext" "cljs.core/nfirst"],
-   :examples-strings [["(ffirst [[1 2] [3 4] [5 6]])"]],
+   :examples-strings [["(ffirst [[1 2] [3 4] [5 6]]) ;;=> 1"]],
    :examples
    [{:id "575ba2",
      :content "```clj\n(ffirst [[1 2] [3 4] [5 6]])\n;;=> 1\n```"}],
@@ -8439,7 +8492,8 @@
     "cljs.core/second"
     "cljs.core/take"
     "cljs.core/ffirst"],
-   :examples-strings [["(first [1 2 3]) ;;=> 1" "(first [])"]],
+   :examples-strings
+   [["(first [1 2 3]) ;;=> 1" "(first []) ;;=> nil"]],
    :examples
    [{:id "40e413",
      :content
@@ -8581,7 +8635,7 @@
    [["(> 1 2) ;;=> false"
      "(> 2 1) ;;=> true"
      "(> 2 2) ;;=> false"
-     "(> 6 5 4 3 2)"]],
+     "(> 6 5 4 3 2) ;;=> true"]],
    :examples
    [{:id "67180c",
      :content
@@ -8619,7 +8673,7 @@
    [["(fnext [1 2 3]) ;;=> 2"
      "(fnext [1 2]) ;;=> 2"
      "(fnext [1]) ;;=> nil"
-     "(fnext [])"]],
+     "(fnext []) ;;=> nil"]],
    :examples
    [{:id "92383f",
      :content
