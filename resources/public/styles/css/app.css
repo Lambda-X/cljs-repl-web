@@ -1,7 +1,84 @@
-.app-main {
-    padding: 0 20px 0;
+body,html {
+    font-family: "Roboto";
+    background: #65b58c;
+    color: #ffffff;
 }
 
+.app-main {
+    padding: 0 20px 0;
+    position: relative;
+}
+
+
+/*************** header *****************/
+
+.page-header {
+    margin: 0px;
+    padding: 20px 0px 200px 0px;
+    border-bottom: 10px solid #ffffff;
+    background: #363636 url(../../img/header-bg.png) no-repeat center bottom;
+    text-align: center;
+}
+
+.page-header a {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.page-header h1, .page-header h1 small {
+    color: #ffffff;
+    font-weight: 300;
+}
+
+/***************console*******************/
+
+#app-center > .rc-h-box {
+    left: 50%;
+    margin-left: -320px;
+    top: -160px;
+}
+
+#app-center .rc-box {
+    width: auto;
+}
+
+.cljs-console {
+    /*  Note that this element must be explicity sized and positioned absolute or relative. */
+    position: relative;
+    width: 560px;
+    height: 250px;
+    min-width: 300px;
+    min-height: 185px;
+}
+
+/* This overrides hljs's style, therefore it must go after */
+.hljs {
+    display: inline;
+    overflow-x: auto;
+    padding: 0;
+    border: 0;
+    background: #ffffff;
+}
+
+.cljs-console pre {
+    background: #ffffff;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.rc-md-icon-button > i {
+    color: #ffffff;
+}
+
+
+#app-center {
+    height: 100px;
+}
+
+/***************************************/
 #app-bottom {
     margin-top: 18px;
 }
@@ -12,30 +89,17 @@
     margin: auto;
 }
 
-.cljs-console {
-    /*  Note that this element must be explicity sized and positioned absolute or relative. */
-    position: relative;
-    width: 720px;
-    height: 220px;
-    min-width: 300px;
-    min-height: 185px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    border: 1px solid #d5ceb4;
+.page-width {
+    width: 1080px;
+    margin: auto auto;
 }
 
-/* This overrides hljs's style, therefore it must go after */
-.hljs {
-    display: inline;
-    overflow-x: auto;
-    padding: 0;
-    border: 0;
-    background: #f5f5f5;
-}
 
 /*********************/
 /***   API Panel   ***/
 /*********************/
+
+.rc-line { display: none }
 
 .api-panel-column {
     background-color: #FFF;
