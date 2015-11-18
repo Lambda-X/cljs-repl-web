@@ -5,11 +5,10 @@
             [re-frame.core :refer [subscribe dispatch]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
-                                 popover-tooltip title label scroller line]]
+                                 popover-tooltip title label scroller line modal-panel]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
             [cljs-repl-web.app :as app]
-            [cljs-repl-web.gist :as gist]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.console.cljs :as cljs]
             [cljs-repl-web.cljs-api :as api]
@@ -63,107 +62,141 @@
 ;;;      Buttons       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn gist-login-popover-dialog-body
-  [showing? auth-data ok-fn cancel-fn]
-  [popover-content-wrapper
-   :showing? showing?
-   :on-cancel cancel-fn
-   :position :right-center
-   :width "280"
-   :backdrop-opacity 0.4
-   :title "Github login"
-   :body [(fn []
-            [v-box
-             :children [[v-box
-                         :size "auto"
-                         :children [[:label {:for "pf-username"} "Username"]
-                                    [input-text
-                                     :model (:username @auth-data)
-                                     :on-change #(swap! auth-data assoc :username %)
-                                     :placeholder "Enter username"
-                                     :class "form-control"
-                                     :attr {:id "pf-username"}]
-                                    [:label {:for "pf-password"} "Password"]
-                                    [input-text
-                                     :model (:password @auth-data)
-                                     :on-change #(swap! auth-data assoc :password %)
-                                     :placeholder "Enter password"
-                                     :class "form-control"
-                                     :attr {:id "pf-password" :type "password"}]]]
-                        [gap :size "20px"]
-                        [h-box
-                         :gap      "10px"
-                         :children [[button
-                                     :label [:span [:i {:class "zmdi zmdi-check" }] " Login"]
-                                     :on-click ok-fn
-                                     :class "btn-primary"]
-                                    [button
-                                     :label [:span [:i {:class "zmdi zmdi-close" }] " Cancel"]
-                                     :on-click cancel-fn]]]]])]])
+(def login-focus-wrapper
+  ;; see http://stackoverflow.com/questions/27602592/reagent-component-did-mount?rq=1
+  (with-meta identity
+    {:component-did-mount (fn []
+                            (let [usr (.getElementById js/document "pf-username")
+                                  pwd (.getElementById js/document "pf-password")]
+                              (if (empty? (.-value usr))
+                                (.focus usr)
+                                (.focus pwd))))}))
+
+(defn login-key-down-handler
+  [event ok-fn cancel-fn]
+  (case (.-which event)
+    13 (ok-fn)
+    27 (cancel-fn)
+    nil))
+
+(defn gist-error-modal-dialog
+  []
+  (let [message (subscribe [:gist-error-msg])]
+    (fn []
+      (when (not-empty @message)
+        [modal-panel
+         :backdrop-opacity 0.5
+         :child [v-box
+                 :padding  "10px"
+                 :align :center
+                 :children [[title :label @message :level :level2]
+                            [button
+                             :label    "OK"
+                             :class    "btn-danger"
+                             :on-click #(dispatch [:reset-gist-error-msg])]]]]))))
 
 (defn gist-error-handler [{:keys [status status-text]}]
-  (js/alert (str "An error occurred: " status " " status-text)) )
+  (dispatch [:set-gist-error-msg (str "An error occurred: " status " " status-text)]))
 
 (defn on-gist-created [[ok response]]
   "Handles the response after a gist has been created (or not)."
   (if ok
-    (.open js/window (:html_url response) "_blank")
-    (js/alert "An error occured: unable to create gist.")))
+    (utils/open-new-window (:html_url response))
+    (dispatch [:set-gist-error-msg "An error occured: unable to create gist."])))
 
-(defn gist-login-popover-dialog
+(defn gist-login-dialog-body
   []
-  (let [console (subscribe [:get-console :cljs-console])
-        console-created? (subscribe [:console-created? :cljs-console])
-        showing? (reagent/atom false)
-        auth-data (reagent/atom {:username "" :password ""})
-        save-auth-data (reagent/atom nil)
-        ok-fn #(do (reset! showing? false)
-                   (let [{:keys [username password]} @auth-data
-                         text (console/dump-console! @console)]
-                     (gist/create-gist username password text on-gist-created gist-error-handler)))
-        cancel-fn #(do
-                     (reset! auth-data @save-auth-data)
-                     (reset! showing? false))]
-    [popover-anchor-wrapper
-     :showing? showing?
-     :position :right-center
-     :anchor   [md-icon-button
-                :md-icon-name "zmdi-github"
-                :on-click #(do (reset! showing? true)
-                               (swap! auth-data  merge {:password "" })
-                               (reset! save-auth-data @auth-data))
-                :class "cljs-btn"
-                :tooltip "Create Gist"
-                :tooltip-position :below-center
-                :disabled? (not @console-created?)]
-     :popover  [gist-login-popover-dialog-body showing? auth-data ok-fn cancel-fn]]))
+  (let [showing? (subscribe [:gist-showing?])
+        auth-data (subscribe [:gist-auth-data])
+        ok-fn #(dispatch [:create-gist :cljs-console auth-data on-gist-created gist-error-handler])
+        cancel-fn #(dispatch [:hide-gist-login])]
+    (fn []
+     [login-focus-wrapper
+      [popover-content-wrapper
+       :showing? showing?
+       :on-cancel cancel-fn
+       :position :right-center
+       :width "280"
+       :backdrop-opacity 0.4
+       :title "Github login"
+       :body [(fn []
+                [v-box
+                 :children [[v-box
+                             :size "auto"
+                             :children [[:label {:for "pf-username"} "Username"]
+                                        [input-text
+                                         :model (:username @auth-data)
+                                         :change-on-blur? false
+                                         :on-change #(swap! auth-data assoc :username %)
+                                         :placeholder "Enter username"
+                                         :class "form-control"
+                                         :status (when (empty? (:username @auth-data)) :error)
+                                         :attr {:id "pf-username"
+                                                :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]
+                                        [:label {:for "pf-password"} "Password"]
+                                        [input-text
+                                         :model (:password @auth-data)
+                                         :change-on-blur? false
+                                         :on-change #(swap! auth-data assoc :password %)
+                                         :placeholder "Enter password"
+                                         :class "form-control"
+                                         :status (when (empty? (:password @auth-data)) :error)
+                                         :attr {:id "pf-password" :type "password"
+                                                :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]]]
+                            [gap :size "20px"]
+                            [h-box
+                             :gap      "10px"
+                             :children [[button
+                                         :label [:span [:i {:class "zmdi zmdi-check" }] " Login"]
+                                         :on-click ok-fn
+                                         :class "btn-primary"]
+                                        [button
+                                         :label [:span [:i {:class "zmdi zmdi-close" }] " Cancel"]
+                                         :on-click cancel-fn]]]]])]]])))
+
+(defn gist-login-dialog
+  []
+  (let [is-console-empty? (subscribe [:is-console-empty? :cljs-console])
+        showing? (subscribe [:gist-showing?])]
+    (fn []
+     [popover-anchor-wrapper
+      :showing? showing?
+      :position :right-center
+      :anchor   [md-icon-button
+                 :md-icon-name "zmdi-github"
+                 :on-click #(dispatch [:show-gist-login])
+                 :class "cljs-btn"
+                 :tooltip "Create Gist"
+                 :tooltip-position :below-center
+                 :disabled? @is-console-empty?]
+      :popover  [gist-login-dialog-body]])))
 
 (defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
    To place them in a layout, call the function (it does not return a
    component)."
   []
-  (let [console  (subscribe [:get-console :cljs-console])
-        console-created? (subscribe [:console-created? :cljs-console])
+  (let [console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:example-mode? :cljs-console])]
     (fn []
       [v-box
        :gap "8px"
        :children [[md-icon-button
                    :md-icon-name "zmdi-delete"
-                   :on-click #(cljs/cljs-reset-console-and-prompt! @console)
+                   :on-click #(dispatch [:reset-console :cljs-console])
                    :class "cljs-btn"
                    :tooltip "Reset"
                    :tooltip-position :right-center
                    :disabled? (not @console-created?)]
                   [md-icon-button
                    :md-icon-name "zmdi-format-clear-all"
-                   :on-click #(cljs/cljs-clear-console! @console)
+                   :on-click #(dispatch [:clear-console :cljs-console])
                    :class "cljs-btn"
                    :tooltip "Clear"
                    :tooltip-position :right-center
                    :disabled? (not @console-created?)]
-                  [gist-login-popover-dialog]
+                  [gist-login-dialog]
+                  [gist-error-modal-dialog]
                   [md-icon-button
                    :md-icon-name "zmdi-stop"
                    :on-click #(dispatch [:exit-interactive-examples :cljs-console])
@@ -188,14 +221,14 @@
    :size "0 0 auto"
    :gap "2px"
    :children [(for [s signatures]
-                [label
-                 :label s
-                 :class "api-panel-signature"])]])
+                ^{:key s} [label
+                           :label s
+                           :class "api-panel-signature"])]])
 
 (defn build-symbol-description-ui
   "Builds the UI for the symbol's description in the popover. Desc needs
   to be markdown."
-  [sym desc]
+  [desc]
   [v-box
    :size "0 0 auto"
    :gap "4px"
@@ -280,8 +313,9 @@
                                :align :center
                                :children [[example-number-icon example-index]
                                           [example-send-to-repl-button-label example-index example-map]]]
-                       :on-click #(do (reset! showing? false)
-                                      (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
+                       :on-click (handler-fn
+                                  (reset! showing? false)
+                                  (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
               [example-ui example-map]]])
 
 (defn build-examples-ui
@@ -340,7 +374,7 @@
                          :tooltip-position :below-right
                          :size :smaller
                          :style {:justify-content :center}
-                         :on-click #(.open js/window (utils/symbol->clojuredocs-url name) "_blank")]]]
+                         :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
      :body [(fn []
               [scroller
                :size "1 1 auto"
@@ -355,7 +389,7 @@
                        :children [(when (not-empty sign)
                                     [build-signatures-ui sign])
                                   (when (not-empty desc)
-                                    [build-symbol-description-ui full-name desc])
+                                    [build-symbol-description-ui desc])
                                   (when (not-empty related)
                                     [build-related-symbols-ui related])
                                   (when (not-empty examples)

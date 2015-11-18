@@ -64,6 +64,21 @@
                     :else "left")]
     (keyword (str v-position \- h-position))))
 
+(defn message-box
+  "Displays a popup with a message."
+  [message]
+  ;; we can later modify it to use re-com
+  (js/alert message))
+
+(defn open-new-window
+  "Opens a new window in the browser (or tab - depends on browser)."
+  ([url target] (.open js/window url target))
+  ([url] (open-new-window url "_blank")))
+
+(defn scroll-to-top
+  []
+  (.scrollTo js/window 0 0))
+
 (defn unescape-html
   "Walk a given Hiccup form and remove all pure whitespace."
   [hiccup]
