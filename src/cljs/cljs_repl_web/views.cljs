@@ -373,7 +373,7 @@
                ;; we use `:input` instead of `button` because button's `on-click` accepts
                ;; a parametless function and we need the mouse click coordinates
                :anchor [:input {:type "button"
-                                :class "btn btn-default api-panel-symbol-button"
+                                :class "btn btn-default api-panel-symbol"
                                 :value (:name symbol)
                                 :on-click #(do
                                              (reset! popover-position
@@ -382,7 +382,7 @@
                :popover [symbol-popover showing? popover-position symbol]])
             [label
              :label (str symbol)
-             :class "api-panel-symbol-button"
+             :class "api-panel-symbol api-panel-symbol-label"
              :style (flex-child-style "80 1 auto")])])
 
 (defn section-title-component

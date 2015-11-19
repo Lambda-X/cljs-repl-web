@@ -1,7 +1,6 @@
 body,html {
     font-family: "Roboto";
     background: #65b58c;
-    color: #ffffff;
 }
 
 .app-main {
@@ -147,10 +146,14 @@ body,html {
     flex: 0 1 auto !important;
 }
 
-.api-panel-symbol-button {
+.api-panel-symbol {
     font-family: monospace,monospace;
     font-size:0.8125em;
     margin-top: 2px;
+}
+
+.api-panel-symbol-label {
+    color: #FFF;
 }
 
 .api-panel-signature {
