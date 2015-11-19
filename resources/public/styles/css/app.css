@@ -8,6 +8,42 @@ body,html {
     position: relative;
 }
 
+/*************** loading *****************/
+
+#loading-div {
+    text-align: center;
+}
+
+/*
+  https://css-tricks.com/snippets/css/keyframe-animation-syntax/
+*/
+
+@-moz-keyframes spin {
+    25%  { -moz-transform: translate(200px,0px) rotate(360deg); }
+    50%  { -moz-transform: translate(0px,0px) rotate(0deg); }
+    75%  { -moz-transform: translate(-200px,0px) rotate(-360deg); }
+    100% { -moz-transform: translate(0px,0px) rotate(0deg); }
+}
+
+@-webkit-keyframes spin {
+    25%  { -webkit-transform: translate(200px,0px) rotate(360deg); }
+    50%  { -webkit-transform: translate(0px,0px) rotate(0deg); }
+    75%  { -webkit-transform: translate(-200px,0px) rotate(-360deg); }
+    100% { -webkit-transform: translate(0px,0px) rotate(0deg); }
+}
+
+@keyframes spin {
+    25%  { transform: translate(200px,0px) rotate(360deg); }
+    50%  { transform: translate(0px,0px) rotate(0deg); }
+    75%  { transform: translate(-200px,0px) rotate(-360deg); }
+    100% { transform: translate(0px,0px) rotate(0deg); }
+}
+
+#loading-img {
+    -webkit-animation: spin 16s linear infinite;
+    -moz-animation: spin 16s linear infinite;
+    animation: spin 16s linear infinite;
+}
 
 /*************** header *****************/
 

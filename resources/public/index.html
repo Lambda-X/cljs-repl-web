@@ -22,16 +22,9 @@
       <h1>A ClojureScript REPL <small>featuring replumb</small></h1>
     </div>
     <div id="app-center" class="app-main">
-      <div class="app-progress-bar panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">Cleaning up parens...</h2>
-        </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped active" role="progressbar"
-               aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-               style="width: 100%">
-          </div>
-        </div>
+      <div id="loading-div">
+        <h2>Loading parenthesis...</h2>
+        <img src="img/loading_cljs.png" id="loading-img" alt="ClojureScript" />
       </div>
     </div>
     <div id="app-bottom" class="app-main page-width">
