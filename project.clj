@@ -30,7 +30,7 @@
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :figwheel {:on-jsload "launcher.test/run"}
+                        :figwheel {:on-jsload "cljs-repl-web.core/main"}
                         :compiler {:main cljs-repl-web.core
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out"
