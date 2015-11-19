@@ -98,7 +98,24 @@
   [console]
   (.Focus console))
 
+(defn move-to-start!
+  "jqconsole wrapper, moves the cursor to the start of the current line."
+  [console]
+  (.MoveToStart console))
+
+(defn move-to-end!
+  "jqconsole wrapper, moves the cursor to the end of the current line."
+  [console]
+  (.MoveToEnd console))
+
 (defn set-prompt-text!
   "jqconsole wrapper, sets the current prompt."
   [console text]
   (.SetPromptText console text))
+
+(defn register-shortcut
+  "jqconsole wrapper, registers a callback for a keyboard shortcut.
+  `cb` is executed when Ctrl and `keyCode` is held.
+  `cb` is passed as the first argument the console itself."
+  [console keyCode cb & args]
+  (.RegisterShortcut console keyCode (partial cb console args)))

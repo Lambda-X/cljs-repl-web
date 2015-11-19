@@ -44,6 +44,8 @@
                                        :continue-label "  "}
                                       console-opts))
     ;; (console/register-matchings! default-matchings)
+    (console/register-shortcut "A" console/move-to-start!)
+    (console/register-shortcut "E" console/move-to-end!)
     (highlight/highlight-hack!)))
 
 (defn cljs-reset-console-and-prompt!
