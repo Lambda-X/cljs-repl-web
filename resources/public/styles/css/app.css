@@ -99,6 +99,9 @@ body,html {
     color: #ffffff;
 }
 
+.rc-icon-disabled {
+    opacity: 0.4;
+}
 
 #app-center {
     height: 100px;
@@ -141,29 +144,11 @@ body,html {
     font-size: 1.5em;
 }
 
-/* TO FIX */
-/* .api-panel-signature:nth-child(odd) { */
-/*     background-color: rgb(235,235,235); */
-/* } */
-
-/* .api-panel-signature:nth-child(even) { */
-/*     background-color: rgb(250,250,250); */
-/* } */
-
 .api-panel-popup-section-title {
     font-family: "Roboto";
     text-align: center;
     text-transform: uppercase;
 }
-
-/* TO FIX */
-/* .api-panel-topics-table tr:nth-child(odd) { */
-/*     background-color: rgb(245,245,245); */
-/* } */
-
-/* .api-panel-topics-table tr:nth-child(even) { */
-/*     background-color: rgb(250,250,250); */
-/* } */
 
 .api-panel-topic {
     text-transform: uppercase;
