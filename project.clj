@@ -1,7 +1,7 @@
 (defproject cljs-repl-web "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
-                 [replumb/replumb "0.1.0"]
+                 [replumb/replumb "0.1.2"]
                  [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
