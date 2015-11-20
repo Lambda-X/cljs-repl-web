@@ -15,14 +15,15 @@ body,html {
 
 #app-center {
     height: 100px;
-    width: 620px;
+    width: 720px;
     left: 50%;
-    margin-left: -320px;
+    margin-left: -360px;
     top: -160px;
 }
 
 #app-bottom {
     margin-top: 18px;
+    margin-bottom: 30px;
 }
 
 /*************** loading *****************/
@@ -74,7 +75,7 @@ body,html {
 
 .page-header a {
     display: block;
-    margin-bottom: 30px;
+    margin-top: 20px;
 }
 
 .page-header h1, .page-header h1 small {
@@ -87,7 +88,7 @@ body,html {
 .cljs-console {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
     position: relative;
-    width: 560px;
+    width: 660px;
     height: 250px;
     min-width: 300px;
     min-height: 185px;
@@ -121,15 +122,17 @@ body,html {
 
 /*************** footer *****************/
 
-#app-footer {
+#app-footer-container {
     color: #FFFFFF;
     margin-top: 10px;
+    background: #475b51;
 }
 
 .page-footer {
-    border-top: 10px solid #FFFFFF;
-    padding: 10px;
+    padding: 15px;
 }
+
+
 
 .app-footer-btn {
     color: #FFFFFF;
