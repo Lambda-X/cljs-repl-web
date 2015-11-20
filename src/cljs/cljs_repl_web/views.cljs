@@ -111,48 +111,49 @@
         ok-fn #(dispatch [:create-gist :cljs-console auth-data on-gist-created gist-error-handler])
         cancel-fn #(dispatch [:hide-gist-login])]
     (fn []
-     [login-focus-wrapper
-      [popover-content-wrapper
-       :showing? showing?
-       :on-cancel cancel-fn
-       :position :right-center
-       :width "280"
-       :backdrop-opacity 0.4
-       :title "Github login"
-       :body [(fn []
-                [v-box
-                 :children [[v-box
-                             :size "auto"
-                             :children [[:label {:for "pf-username"} "Username"]
-                                        [input-text
-                                         :model (:username @auth-data)
-                                         :change-on-blur? false
-                                         :on-change #(swap! auth-data assoc :username %)
-                                         :placeholder "Enter username"
-                                         :class "form-control"
-                                         :status (when (empty? (:username @auth-data)) :error)
-                                         :attr {:id "pf-username"
-                                                :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]
-                                        [:label {:for "pf-password"} "Password"]
-                                        [input-text
-                                         :model (:password @auth-data)
-                                         :change-on-blur? false
-                                         :on-change #(swap! auth-data assoc :password %)
-                                         :placeholder "Enter password"
-                                         :class "form-control"
-                                         :status (when (empty? (:password @auth-data)) :error)
-                                         :attr {:id "pf-password" :type "password"
-                                                :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]]]
-                            [gap :size "20px"]
-                            [h-box
-                             :gap      "10px"
-                             :children [[button
-                                         :label [:span [:i {:class "zmdi zmdi-check" }] " Login"]
-                                         :on-click ok-fn
-                                         :class "btn-primary"]
-                                        [button
-                                         :label [:span [:i {:class "zmdi zmdi-close" }] " Cancel"]
-                                         :on-click cancel-fn]]]]])]]])))
+      [login-focus-wrapper
+       [popover-content-wrapper
+        :showing? showing?
+        :on-cancel cancel-fn
+        :position :right-center
+        :width "280"
+        :backdrop-opacity 0.4
+        :title "Github login"
+        :body [(fn []
+                 [v-box
+                  :children [[gist-error-modal-dialog]
+                             [v-box
+                              :size "auto"
+                              :children [[:label {:for "pf-username"} "Username"]
+                                         [input-text
+                                          :model (:username @auth-data)
+                                          :change-on-blur? false
+                                          :on-change #(swap! auth-data assoc :username %)
+                                          :placeholder "Enter username"
+                                          :class "form-control"
+                                          :status (when (empty? (:username @auth-data)) :error)
+                                          :attr {:id "pf-username"
+                                                 :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]
+                                         [:label {:for "pf-password"} "Password"]
+                                         [input-text
+                                          :model (:password @auth-data)
+                                          :change-on-blur? false
+                                          :on-change #(swap! auth-data assoc :password %)
+                                          :placeholder "Enter password"
+                                          :class "form-control"
+                                          :status (when (empty? (:password @auth-data)) :error)
+                                          :attr {:id "pf-password" :type "password"
+                                                 :on-key-down #(login-key-down-handler % ok-fn cancel-fn)}]]]
+                             [gap :size "20px"]
+                             [h-box
+                              :gap      "10px"
+                              :children [[button
+                                          :label [:span [:i {:class "zmdi zmdi-check" }] " Login"]
+                                          :on-click ok-fn
+                                          :class "btn-primary"]
+                                         [button
+                                          :label [:span [:i {:class "zmdi zmdi-close" }] " Cancel"]
+                                          :on-click cancel-fn]]]]])]]])))
 
 (defn gist-login-dialog
   []
@@ -196,7 +197,7 @@
                    :tooltip-position :right-center
                    :disabled? (not @console-created?)]
                   [gist-login-dialog]
-                  [gist-error-modal-dialog]
+
                   [md-icon-button
                    :md-icon-name "zmdi-stop"
                    :on-click #(dispatch [:exit-interactive-examples :cljs-console])
@@ -486,6 +487,49 @@
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
 
+(defn footer-component []
+  [h-box
+   :size "1 1 auto"
+   :justify :between
+   :align :center
+   :class "page-footer"
+   :children [[box
+               :size "0 1 50%"
+               :child [:strong "© Scalac Sp. z o.o. 2015"]]
+              [h-box
+               :size "0 1 50%"
+               :justify :end
+               :align :center
+               :gap "4px"
+               :children [[:span "Connect with us at"]
+                          [hyperlink-href
+                           :href "https://www.facebook.com/scalac.io"
+                           :target "_blank"
+                           :class "btn app-footer-btn"
+                           :label [md-icon-button
+                                   :md-icon-name "zmdi-facebook"
+                                   :class "app-footer-btn-icon"]]
+                          [hyperlink-href
+                           :href "https://twitter.com/scalac_io"
+                           :target "_blank"
+                           :class "btn app-footer-btn"
+                           :label [md-icon-button
+                                   :md-icon-name "zmdi-twitter"
+                                   :class "app-footer-btn-icon"]]
+                          [hyperlink-href
+                           :href "https://www.linkedin.com/company/scalac"
+                           :target "_blank"
+                           :class "btn app-footer-btn"
+                           :label [md-icon-button
+                                   :md-icon-name "zmdi-linkedin"
+                                   :class "app-footer-btn-icon"]]
+                          [:span "and check out our"]
+                          [hyperlink-href
+                           :href "http://blog.scalac.io"
+                           :target "_blank"
+                           :class "btn app-footer-btn"
+                           :label "BLOG"]]]]])
+
 (defn bottom-panel []
   []
   [v-box
@@ -493,11 +537,7 @@
    :size "1 1 auto"
    :gap "4px"
    :align :stretch
-   :children [[line
-               :size "2px"
-               :color "#96ca4b"
-               :style {:opacity "0.5"}]
-              [api-panel]]])
+   :children [[api-panel]]])
 
 (defn repl-component []
   [anim/pop-when true
