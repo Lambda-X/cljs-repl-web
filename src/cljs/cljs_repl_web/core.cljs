@@ -16,4 +16,5 @@
   (println "In cljs-browser-repl.core/main")
   (dispatch-sync [:initialize])
   (reagent/render [views/repl-component] (.getElementById js/document "app-center"))
-  (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom")))
+  (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
+  (reagent/render [views/footer-component] (.getElementById js/document "app-footer")))
