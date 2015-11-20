@@ -18,8 +18,7 @@
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
-            [lein-simpleton "1.4.0-SNAPSHOT"]
-            ]
+            [lein-simpleton "1.4.0-SNAPSHOT"]]
 
   ;; from https://github.com/technomancy/leiningen/wiki/Faster
   ;; :eval-in :nrepl ;; enable this only if you know what you are doing
@@ -47,7 +46,7 @@
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
-                                   :optimizations :advanced
+                                   :optimizations :simple
                                    :pretty-print false}}]}
 
   ;; :prep-tasks ["run" "-m cljs-api.generator/-main"]
