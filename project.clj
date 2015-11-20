@@ -13,11 +13,12 @@
                  [markdown-clj "0.9.78"]
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
-                 [org.clojure/tools.reader "1.0.0-alpha1"]]
+                 [org.clojure/tools.reader "1.0.0-alpha1"]
+                 [cljsjs/bootstrap "3.3.5-0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
-            ;; [lein-simpleton "1.4.0-SNAPSHOT"]
+            [lein-simpleton "1.4.0-SNAPSHOT"]
             ]
 
   ;; from https://github.com/technomancy/leiningen/wiki/Faster
@@ -63,8 +64,8 @@
             "auto-slimer" ^{:doc "Clean and execute automatic unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "auto"]]
             "tests" ^{:doc "Execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["doo" "headless" "test" "once"]
             "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
-            "serve" ^{:doc "Compile and start a server on port 5042 at resources/public"} ["do" "cljsbuild" "once" "dev" ["simpleton" "5042" ":from" "resources/public"]]
-            "serve*" ^{:doc "Clean, compile and start a server on port 5042 at resources/public"} ["do" "clean" ["cljsbuild" "once" "dev"] ["simpleton" "5042" ":from" "resources/public"]]}
+            "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "min" ["simpleton" "9090" ":from" "resources/public"]]
+            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
