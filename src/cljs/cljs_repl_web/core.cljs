@@ -2,6 +2,7 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :refer [dispatch-sync]]
             [re-com.core :refer [p h-box v-box box gap line]]
+            [cljsjs.bootstrap]
             [cljs-repl-web.handlers]
             [cljs-repl-web.subscriptions]
             [cljs-repl-web.views :as views]))
