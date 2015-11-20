@@ -5,7 +5,8 @@
             [cljs-repl-web.console :as console]
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
-            [cljs-repl-web.gist :as gist]))
+            [cljs-repl-web.gist :as gist]
+            [cljs-repl-web.highlight :as highlight]))
 
 (def initial-state {:consoles {}
                     :gist-data {:gist-showing? false
@@ -119,6 +120,9 @@
          lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
      (utils/scroll-to-top) ; in case we are at the bottom of the page
      (console/set-prompt-text! console (first lines))
+     ;; hack after hack: the set-prompt-text! function does not trigger
+     ;; the syntax highlight, so we need to invoke it manually
+     (highlight/highlight-prompt-line! (.-$prompt_left console) (atom "") )
      (console/focus-console! console)
      (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
 
