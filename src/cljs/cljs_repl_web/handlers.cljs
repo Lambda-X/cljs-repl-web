@@ -116,8 +116,7 @@
 (register-handler
  :send-to-console
  (fn [db [_ console-key lines]]
-   (let [console (app/console db console-key)
-         lines   (filter #(re-seq #"^[^;]" (clojure.string/trim %)) lines)]
+   (let [console (app/console db console-key)]
      (utils/scroll-to-top) ; in case we are at the bottom of the page
      (console/set-prompt-text! console (first lines))
      ;; hack after hack: the set-prompt-text! function does not trigger

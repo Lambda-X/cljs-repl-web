@@ -99,19 +99,28 @@
                             (cons line merged-lines)))
                         () lines))))
 
+(defn remove-comments
+  "Remove the comments. Takes a string as input and returns a string
+  as output, without comments."
+  [edn-str]
+  (let [lines (s/split-lines edn-str)
+        no-comments (filter #(re-find #"^[^;]" %) lines)]
+    (s/join \newline no-comments)))
+
 (defn clj-node-seq->strings
   "Nodes as used in clojure.xml and in the enlive HTML library.
   Nodes can be lists of nodes."
   [clj-node-seq]
   (let [code-content #(-> % :content first :content first)
         code-nodes (filter #(and (= :pre (:tag %)) (= :code (-> % :content first :tag))) clj-node-seq)]
-    ;; AR - Thanks Thomas for spotting the nested vector problem!
+    ;; AR - Thanks Tomasz for spotting the nested vector problem!
+
     (into [] (flatten
-              (mapv (comp lift-up-comments          ;; see docstring
-                          (partial filterv seq)     ;; filter out empty lines
-                          (partial map #(s/trim %)) ;; trim spaces
-                          top-level-sexps           ;; split in top level forms
-                          code-content)             ;; fetch content
+              (mapv (comp (partial filterv seq)        ;; filter out empty lines
+                          (partial map #(s/trim %))    ;; trim spaces
+                          top-level-sexps              ;; split in top level forms
+                          remove-comments              ;; remove the comments
+                          code-content)                ;; fetch content
                     code-nodes)))))
 
 (defn assoc-example-strings
