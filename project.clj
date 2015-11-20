@@ -13,8 +13,7 @@
                  [markdown-clj "0.9.78"]
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
-                 [org.clojure/tools.reader "1.0.0-alpha1"]
-                 [cljsjs/bootstrap "3.3.5-0"]]
+                 [org.clojure/tools.reader "1.0.0-alpha1"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
@@ -44,10 +43,13 @@
                                    :pretty-print false}}
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler { ;; :main cljs-repl-web.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
+                        :compiler { ;; :main cljs-repl-web.core ;; AR - No main! https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
+                                   :output-dir "resources/public/js/compiled/out/min"
                                    :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
-                                   :optimizations :advanced
+                                   :source-map-path "public/js/compiled"
+                                   :source-map-timestamp true
+                                   :optimizations :simple
                                    :pretty-print false}}]}
 
   ;; :prep-tasks ["run" "-m cljs-api.generator/-main"]
