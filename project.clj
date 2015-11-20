@@ -46,7 +46,8 @@
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
-                                   :optimizations :simple
+                                   :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
+                                   :optimizations :advanced
                                    :pretty-print false}}]}
 
   ;; :prep-tasks ["run" "-m cljs-api.generator/-main"]
@@ -66,10 +67,10 @@
             "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "min" ["simpleton" "9090" ":from" "resources/public"]]
             "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]}
 
-  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.5"]
+  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
-                             [lein-figwheel "0.5.0" :exclusions [cider/cider-nrepl]]]
+                             [lein-figwheel "0.5.0-1" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
                               :repl true
