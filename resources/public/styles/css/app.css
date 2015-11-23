@@ -251,3 +251,17 @@ body,html {
     background-color: inherit;
     border: none;
 }
+
+/* Some examples contains tables in their markdown.
+ * These tables have a class of "code-tbl-9bef6"
+ * see: http://stackoverflow.com/questions/5110249/wildcard-in-css-for-classes
+ */
+
+table[class^="code-tbl-"], table[class*=" code-tbl-"] {
+    width: 100%;
+}
+
+table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
+    padding-right: 5px;
+    vertical-align: top;
+}
