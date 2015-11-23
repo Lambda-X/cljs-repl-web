@@ -104,8 +104,22 @@
   as output, without comments."
   [edn-str]
   (let [lines (s/split-lines edn-str)
-        no-comments (filter #(re-find #"^[^;]" %) lines)]
+        no-comments (filterv #(re-find #"^[^;]" %) lines)]
     (s/join \newline no-comments)))
+
+(defn remove-js-examples
+  "Removes JavaScript code, which in this specific case are lines between
+  \"// JavaScript\" (included) and \";; ClojureScript\". Takes a string as
+  input and returns a string as output."
+  [edn-str]
+  (loop [lines (s/split-lines edn-str)
+         new-lines []]
+    (if (empty? lines)
+      (s/join \newline new-lines)
+      (let [first (first lines)]
+        (if (.startsWith first "// JavaScript")
+          (recur (drop-while (complement #(.startsWith % ";; ClojureScript")) lines) new-lines)
+          (recur (rest lines) (conj new-lines first)))))))
 
 (defn clj-node-seq->strings
   "Nodes as used in clojure.xml and in the enlive HTML library.
@@ -120,6 +134,7 @@
                           (partial map #(s/trim %))    ;; trim spaces
                           top-level-sexps              ;; split in top level forms
                           remove-comments              ;; remove the comments
+                          remove-js-examples           ;; remove javascript examples
                           code-content)                ;; fetch content
                     code-nodes)))))
 

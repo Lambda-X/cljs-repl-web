@@ -2316,12 +2316,7 @@
    :type "macro",
    :related ["special/." "cljs.core/->" "cljs.core/doto"],
    :examples-strings
-   [["// JavaScript\n\"a b c d\".toUpperCase"
-     "()"
-     ".replace"
-     "(\"A\", \"X\")"
-     "//=> \"X B C D\""
-     "(.. \"a b c d\"\n    toUpperCase\n    (replace \"A\" \"X\"))"
+   [["(.. \"a b c d\"\n    toUpperCase\n    (replace \"A\" \"X\"))"
      "(. (. \"a b c d\" toUpperCase) (replace \"A\" \"X\"))"
      "(.replace (.toUpperCase \"a b c d\") \"A\" \"X\")"
      "(-> \"a b c d\"\n    .toUpperCase\n    (.replace \"A\" \"X\"))"]],
@@ -4459,11 +4454,7 @@
    :name "js-invoke",
    :signature ["[obj s & args]"],
    :type "function",
-   :examples-strings
-   [["// JavaScript\nvar obj = {\n  \"my sum\": function"
-     "(a,b)"
-     "{ return a+b; }\n};"
-     "(js-invoke js/obj \"my sum\" 1 2)"]],
+   :examples-strings [["(js-invoke js/obj \"my sum\" 1 2)"]],
    :examples
    [{:id "373cce",
      :content
@@ -6175,14 +6166,8 @@
    :type "special form",
    :related ["cljs.core/.." "cljs.core/aget"],
    :examples-strings
-   [["// JavaScript\nvar m = \"Hello World\";\nm.length;\n//=> 11"
-     "(def m \"Hello World\")"
+   [["(def m \"Hello World\")"
      "(.-length m)"
-     "// JavaScript\nm.toUpperCase"
-     "()"
-     ";\n//=> \"HELLO WORLD\"\nm.replace"
-     "(\"H\", \"\")"
-     ";\n//=> \"ello World\";"
      "(.toUpperCase m)"
      "(.replace m \"H\" \"\")"]
     ["(def o #js {:foo \"bar\"})"
