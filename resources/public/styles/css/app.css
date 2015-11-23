@@ -14,7 +14,7 @@ body,html {
 }
 
 #app-center {
-    height: 100px;
+    height: 150px;
     width: 720px;
     left: 50%;
     margin-left: -360px;
@@ -30,6 +30,10 @@ body,html {
 
 #loading-div {
     text-align: center;
+}
+
+#loading-h2 {
+    color: #DDD;
 }
 
 /*
@@ -89,7 +93,7 @@ body,html {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
     position: relative;
     width: 660px;
-    height: 250px;
+    height: 300px;
     min-width: 300px;
     min-height: 185px;
 }
@@ -112,7 +116,7 @@ body,html {
     padding: 20px;
 }
 
-.rc-md-icon-button > i {
+.cljs-btn > i {
     color: #FFFFFF;
 }
 
