@@ -168,7 +168,7 @@
                  :on-click #(dispatch [:show-gist-login])
                  :class "cljs-btn"
                  :tooltip "Create Gist"
-                 :tooltip-position :below-center
+                 :tooltip-position :left-center
                  :disabled? @is-console-empty?]
       :popover  [gist-login-dialog-body]])))
 
@@ -187,23 +187,22 @@
                    :on-click #(dispatch [:reset-console :cljs-console])
                    :class "cljs-btn"
                    :tooltip "Reset"
-                   :tooltip-position :right-center
+                   :tooltip-position :left-center
                    :disabled? (not @console-created?)]
                   [md-icon-button
                    :md-icon-name "zmdi-format-clear-all"
                    :on-click #(dispatch [:clear-console :cljs-console])
                    :class "cljs-btn"
                    :tooltip "Clear"
-                   :tooltip-position :right-center
+                   :tooltip-position :left-center
                    :disabled? (not @console-created?)]
                   [gist-login-dialog]
-
                   [md-icon-button
                    :md-icon-name "zmdi-stop"
                    :on-click #(dispatch [:exit-interactive-examples :cljs-console])
                    :class "cljs-btn"
                    :tooltip "Stop interactive example mode"
-                   :tooltip-position :right-center
+                   :tooltip-position :below-center
                    :disabled? (not @example-mode?)]]])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -372,7 +371,7 @@
                         [md-icon-button
                          :md-icon-name "zmdi-info"
                          :tooltip "See online documentation"
-                         :tooltip-position :below-right
+                         :tooltip-position :right-center
                          :size :smaller
                          :style {:justify-content :center}
                          :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
@@ -398,32 +397,34 @@
 (defn build-symbol-ui
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
-  [box
-   :size "0 1 auto"
-   :align :center
-   :class "api-panel-symbol-label-box"
-   :child (if-let [symbol (get-symbol-doc-map (str symbol))]
-            (let [showing? (reagent/atom false)
-                  popover-position (reagent/atom :below-center)]
-              [popover-anchor-wrapper
-               :showing? showing?
-               ;; we initialize the position but it does not matter because we will
-               ;; recalculate it, but we have to specify an initial value
-               :position :below-center
-               ;; we use `:input` instead of `button` because button's `on-click` accepts
-               ;; a parametless function and we need the mouse click coordinates
-               :anchor [:input {:type "button"
-                                :class "btn btn-default api-panel-symbol"
-                                :value (:name symbol)
-                                :on-click #(do
-                                             (reset! popover-position
-                                                     (utils/calculate-popover-position [(.-clientX %) (.-clientY %)]))
-                                             (reset! showing? true))}]
-               :popover [symbol-popover showing? popover-position symbol]])
-            [label
-             :label (str symbol)
-             :class "api-panel-symbol api-panel-symbol-label"
-             :style (flex-child-style "80 1 auto")])])
+  (let [showing? (reagent/atom false)
+        popover-position (reagent/atom :below-center)]
+    (fn []
+     [box
+      :size "0 1 auto"
+      :align :center
+      :class "api-panel-symbol-label-box"
+      :child (if-let [symbol (get-symbol-doc-map (str symbol))]
+               [popover-anchor-wrapper
+                :showing? showing?
+                :position @popover-position
+                :anchor [button
+                         :class "btn btn-default api-panel-symbol"
+                         :label (:name symbol)
+                         ;; we use :attr's `:on-click` because button's `on-click` accepts
+                         ;; a parametless function and we need the mouse click coordinates
+                         :attr { :on-click
+                                (handler-fn
+                                 ;; later we can refactor it into re-frame
+                                 ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                                 (reset! popover-position
+                                         (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                                 (reset! showing? true))}]
+                :popover [symbol-popover showing? popover-position symbol]]
+               [label
+                :label (str symbol)
+                :class "api-panel-symbol api-panel-symbol-label"
+                :style (flex-child-style "80 1 auto")])])))
 
 (defn section-title-component
   [section-title]
