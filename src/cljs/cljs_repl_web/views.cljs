@@ -479,11 +479,11 @@
      :size (str "0 1 " (quot 100 cols) "%")
      :gap "10px"
      :children (for [sections partitioned-sections]
-                 [v-box
-                  :size "1 1 auto"
-                  :gap "10px"
-                  :children (for [section sections]
-                              [build-section-ui section])])]))
+                 ^{:key sections} [v-box
+                                   :size "1 1 auto"
+                                   :gap "10px"
+                                   :children (for [section sections]
+                                               [build-section-ui section])])]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
