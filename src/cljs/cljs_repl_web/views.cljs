@@ -468,9 +468,10 @@
 (defn build-api-panel-ui
   "Builds the UI for the api panel. Expects the numer of columns in which place the sections
   of the tutorial and the sections themselves. `cols` must be a divisor of 12."
-  [cols sections]
-  (let [secs (count sections)
-        secs-per-col (quot secs cols)
+  [sections]
+  (let [cols (subscribe [:api-panel-columns])
+        secs (count sections)
+        secs-per-col (quot secs @cols)
         partitioned-sections (partition-all (if (zero? (rem secs cols))
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
@@ -485,7 +486,7 @@
                                                [build-section-ui section])])]))
 
 (defn api-panel []
-  [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
+  [build-api-panel-ui (:sections api-utils/custom-api-map)])
 
 (defn footer-component []
   [h-box

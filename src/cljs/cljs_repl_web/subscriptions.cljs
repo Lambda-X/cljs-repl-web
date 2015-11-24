@@ -59,3 +59,12 @@
  :gist-error-msg
  (fn [db [_]]
    (reaction (app/gist-error-msg @db))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;  Media Queries   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(register-sub
+ :api-panel-columns
+ (fn [db [_]]
+   (reaction (app/api-panel-columns @db))))

@@ -1,5 +1,6 @@
 (ns cljs-repl-web.app
   (:require [reagent.core :as reagent]
+            cljsjs.enquire
             [re-frame.core :refer [dispatch]]))
 
 ;; AR - we are going to use re-frame
@@ -52,8 +53,30 @@
   (get-in db [:gist-data :save-auth-data]))
 
 (defn gist-error-msg
-  "Given a db, returns the error after an unsuccessful attempt 
+  "Given a db, returns the error after an unsuccessful attempt
   to create a gist. It is not bound to any specific console."
   [db]
   (get-in db [:gist-data :error-msg]))
 
+(defn register-media-queries!
+  []
+  (js/enquire.register "only screen and (max-width: 480px)"
+                       (clj->js {:match #(dispatch [:media-match :narrow])}))
+  (js/enquire.register "only screen and (min-width: 481px) and (max-width: 960px)"
+                       (clj->js {:match #(dispatch [:media-match :medium])}))
+  (js/enquire.register "only screen and (min-width: 961px)"
+                       (clj->js {:match #(dispatch [:media-match :wide])})
+                       true
+                       ;; AR - degrade gracefully to this if browser does
+                       ;; not support CSS3 Media queries
+                       ))
+
+(defn api-panel-columns
+  "Given a db, returns the number of columns necessary for the api
+  panel. Defaults to 2 if no media query matches."
+  [db]
+  (let [mq (or (get db :media-query-size) :wide)]
+    (case mq
+      :narrow 1
+      :medium 1
+      :wide 2)))
