@@ -9,12 +9,13 @@
 (def custom-api-map
   {:sections [(Section. "Useful Macros" ""
                         [(Topic. "conditionals"
-                                 '(if if-let cond condp and or when when-let))
+                                 '(if if-not if-let cond condp and or not when when-let
+                                   when-not case))
                          (Topic. "nesting, chaining, and interop"
                                  '(-> ->> doto .. .))
                          (Topic. "defining things"
-                                 '(def defn fn let binding defmulti defmethod
-                                    deftype defrecord reify this-as))])
+                                 '(def defn fn let letfn binding defmulti defmethod
+                                    deftype defrecord reify this-as declare ns))])
               (Section. "Datatypes" ""
                         [(Topic. "maps " '({:key1 val1 :key2 val2}))
                          (Topic. "vectors" '([1 2 3] [:a :b :c]))
@@ -36,16 +37,21 @@
                          (Topic. "comparison"
                                  '(= == not= < > <= >=))
                          (Topic. "predicates"
-                                 '(nil? identical? zero? pos? neg? even? odd? true? false?))
+                                 '(nil? identical? zero? pos? neg? even? odd? true? false?
+                                   distinct? empty? every? not-every? some not-any?))
                          (Topic. "data processing"
-                                 '(map reduce filter partition split-at split-with))
+                                 '(map map-indexed mapcat reduce filter partition split-at
+                                   split-with))
                          (Topic. "data create"
-                                 '(vector vec hash-map set for list list*))
+                                 '(vector vec hash-map set for list list* repeat range iterate cycle))
                          (Topic. "data inspection"
-                                 '(first rest get get-in keys vals count nth contains? find))
+                                 '(first second last rest get get-in keys vals count nth contains? find
+                                   take take-while ))
                          (Topic. "data manipulation"
                                  '(seq into conj cons assoc assoc-in dissoc zipmap
-                                   merge merge-with select-keys update-in))])
+                                   merge merge-with select-keys update-in reverse))
+                         (Topic. "function creation"
+                                 '(apply partial comp complement juxt))])
               (Section. "JavaScript Interop" ""
                         [(Topic. "method call" '("(.the-method target-object args...)"))
                          (Topic. "property access" '("(.-property target-object -property)"))
