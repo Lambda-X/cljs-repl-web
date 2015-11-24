@@ -7,7 +7,6 @@
                  [reagent "0.5.1"]
                  [re-frame "0.5.0"]
                  [re-com "0.7.0-alpha2"]
-                 [timothypratley/reanimated "0.1.1"]
                  [cljs-ajax "0.5.1"]
                  [endophile "0.1.2"]
                  [markdown-clj "0.9.78"]
