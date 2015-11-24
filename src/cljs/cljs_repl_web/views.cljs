@@ -468,27 +468,25 @@
 (defn build-api-panel-ui
   "Builds the UI for the api panel. Expects the numer of columns in which place the sections
   of the tutorial and the sections themselves. `cols` must be a divisor of 12."
-  [cols sections]
-  (let [secs (count sections)
-        bootstrap-class-nr (quot 12 cols)
-        secs-per-col (quot secs cols)
+  [sections]
+  (let [cols (subscribe [:api-panel-columns])
+        secs (count sections)
+        secs-per-col (quot secs @cols)
         partitioned-sections (partition-all (if (zero? (rem secs cols))
                                               secs-per-col
                                               (inc secs-per-col)) sections)]
-
-    ;; here we prefer clean reagent components because
-    ;; easier to integrate with bootstrap
-    [:div.container
-     [:div.row
-      (for [[ind1 sections] (map-indexed vector partitioned-sections)]
-        ^{:key ind1}
-        [:div.api-panel-column {:class (str "col-md-" bootstrap-class-nr)}
-         (for [[ind2 section] (map-indexed vector sections)]
-           ^{:key (+ (* secs-per-col ind1) ind2)}
-           [build-section-ui section])])]]))
+    [h-box
+     :size (str "0 1 " (quot 100 cols) "%")
+     :gap "10px"
+     :children (for [sections partitioned-sections]
+                 ^{:key sections} [v-box
+                                   :size "1 1 auto"
+                                   :gap "10px"
+                                   :children (for [section sections]
+                                               [build-section-ui section])])]))
 
 (defn api-panel []
-  [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
+  [build-api-panel-ui (:sections api-utils/custom-api-map)])
 
 (defn footer-component []
   [h-box
