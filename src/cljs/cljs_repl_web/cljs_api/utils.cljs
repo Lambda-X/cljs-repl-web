@@ -7,15 +7,21 @@
 ;;; We can easily add or remove sections/topics and they will be automatically
 ;;; displayed in the API panel.
 (def custom-api-map
-  {:sections [(Section. "Useful Macros" ""
-                        [(Topic. "conditionals"
-                                 '(if if-not if-let cond condp and or not when when-let
-                                      when-not case))
-                         (Topic. "nesting, chaining, and interop"
-                                 '(-> ->> doto .. .))
-                         (Topic. "defining things"
-                                 '(def defn fn let letfn binding defmulti defmethod
-                                    deftype defrecord reify this-as declare ns))])
+  {:sections [(Section. "Useful Functions" ""
+                        [(Topic. "math"
+                                 '(+ - * / quot rem mod inc dec max min rand))
+                         (Topic. "comparison"
+                                 '(= == not= < > <= >=))
+                         (Topic. "predicates"
+                                 '(nil? identical? zero? pos? neg? even? odd? true? false?
+                                        distinct? empty? every? not-every? some not-any?))
+                         (Topic. "higher-order functions"
+                                 '(map map-indexed mapcat reduce filter partition-by
+                                       take-while keep remove merge-with mapcat iterate repeatedly))
+
+                         (Topic. "functions as data"
+                                 '(apply partial comp complement juxt))])
+
               (Section. "Datatypes" ""
                         [(Topic. "maps " '({:key1 val1 :key2 val2}))
                          (Topic. "vectors" '([1 2 3] [:a :b :c]))
@@ -31,28 +37,27 @@
                                  '("(fn |NAME| [<ARGS*>] |CONSTRAINTS| <ACTIONS*>)"))
                          (Topic. "anonymous inline funcion"
                                  '("#(<ACTION> |% %2 %3 OR %&|)"))])
-              (Section. "Useful Functions" ""
-                        [(Topic. "math"
-                                 '(+ - * / quot rem mod inc dec max min rand))
-                         (Topic. "comparison"
-                                 '(= == not= < > <= >=))
-                         (Topic. "predicates"
-                                 '(nil? identical? zero? pos? neg? even? odd? true? false?
-                                        distinct? empty? every? not-every? some not-any?))
-                         (Topic. "higher-order functions"
-                                 '(map map-indexed mapcat reduce filter partition-by
-                                       take-while keep remove merge-with mapcat iterate repeatedly))
-                         (Topic. "data creation"
+              (Section. "Sequences" ""
+                        [(Topic. "creation"
                                  '(vector vec hash-map set for list list* sorted-map
                                           repeat range cycle))
-                         (Topic. "data inspection"
+                         (Topic. "inspection"
                                  '(first last rest next get get-in count keys
                                          vals nth contains? find take ))
-                         (Topic. "data manipulation"
+                         (Topic. "manipulation"
                                  '(seq into conj cons assoc flatten merge assoc-in
-                                       dissoc zipmap partition update-in reverse))
-                         (Topic. "functions as data"
-                                 '(apply partial comp complement juxt))])
+                                       dissoc zipmap partition update-in reverse))])
+              (Section. "Useful Macros" ""
+                        [(Topic. "conditionals"
+                                 '(if if-not if-let cond condp and or not when when-let
+                                      when-not case))
+                         (Topic. "nesting, chaining, and interop"
+                                 '(-> ->> doto .. .))
+                         (Topic. "defining things"
+                                 '(def defn fn let letfn binding defmulti defmethod
+                                    deftype defrecord reify this-as declare ns))])
+
+
               (Section. "JavaScript Interop" ""
                         [(Topic. "method call" '("(.the-method target-object args...)"))
                          (Topic. "property access" '("(.-property target-object -property)"))
