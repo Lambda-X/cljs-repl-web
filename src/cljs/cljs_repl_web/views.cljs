@@ -1,7 +1,6 @@
 (ns cljs-repl-web.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
-            [timothypratley.reanimated.core :as anim]
             [re-frame.core :refer [subscribe dispatch]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
@@ -479,11 +478,11 @@
      :size (str "0 1 " (quot 100 cols) "%")
      :gap "10px"
      :children (for [sections partitioned-sections]
-                 [v-box
-                  :size "1 1 auto"
-                  :gap "10px"
-                  :children (for [section sections]
-                              [build-section-ui section])])]))
+                 ^{:key sections} [v-box
+                                   :size "1 1 auto"
+                                   :gap "10px"
+                                   :children (for [section sections]
+                                               [build-section-ui section])])]))
 
 (defn api-panel []
   [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
@@ -541,14 +540,13 @@
    :children [[api-panel]]])
 
 (defn repl-component []
-  [anim/pop-when true
-   [h-box
-    :class "app-main"
-    :size "1 1 auto"
-    :justify :center
-    :gap "10px"
-    :children [[cljs-buttons]
-               [box
-                :size "1"
-                :style {:overflow "hidden"}
-                :child [cljs-console-component]]]]])
+  [h-box
+   :class "app-main"
+   :size "1 1 auto"
+   :justify :center
+   :gap "10px"
+   :children [[cljs-buttons]
+              [box
+               :size "1"
+               :style {:overflow "hidden"}
+               :child [cljs-console-component]]]])
