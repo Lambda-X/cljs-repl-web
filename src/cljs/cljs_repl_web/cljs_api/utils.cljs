@@ -54,7 +54,7 @@
                          (Topic. "nesting, chaining, and interop"
                                  '(-> ->> doto .. .))
                          (Topic. "defining things"
-                                 '(def defn fn let letfn binding defmulti defmethod
+                                 '(def defn fn let letfn defmulti defmethod
                                     deftype defrecord reify this-as declare ns))])
 
 
