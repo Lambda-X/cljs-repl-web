@@ -21,7 +21,6 @@
 
                          (Topic. "functions as data"
                                  '(apply partial comp complement juxt))])
-
               (Section. "Datatypes" ""
                         [(Topic. "maps " '({:key1 val1 :key2 val2}))
                          (Topic. "vectors" '([1 2 3] [:a :b :c]))
@@ -39,14 +38,15 @@
                                  '("#(<ACTION> |% %2 %3 OR %&|)"))])
               (Section. "Sequences" ""
                         [(Topic. "creation"
-                                 '(vector vec hash-map set for list list* sorted-map
-                                          repeat range cycle))
+                                 '(vec hash-map set for list list* sorted-map
+                                       repeat range cycle seq rseq))
                          (Topic. "inspection"
                                  '(first last rest next get get-in count keys
-                                         vals nth contains? find take ))
+                                         vals nth contains? find))
                          (Topic. "manipulation"
-                                 '(seq into conj cons assoc flatten merge assoc-in
-                                       dissoc zipmap partition update-in reverse))])
+                                 '(into conj cons assoc flatten merge assoc-in
+                                        dissoc zipmap partition update-in reverse
+                                        take drop distinct))])
               (Section. "Useful Macros" ""
                         [(Topic. "conditionals"
                                  '(if if-not if-let cond condp and or not when when-let
