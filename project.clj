@@ -1,4 +1,4 @@
-(defproject cljs-repl-web "0.1.0-SNAPSHOT"
+(defproject cljs-repl-web "0.1.0"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [replumb/replumb "0.1.2"]
@@ -67,7 +67,13 @@
             "tests" ^{:doc "Execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["doo" "headless" "test" "once"]
             "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
             "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "min" ["simpleton" "9090" ":from" "resources/public"]]
-            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]}
+            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]
+            "bump" ^{:doc "Bump version and tags it, without any deployment on Clojars or website" } ["do" ["vcs" "assert-committed"]
+                                                                                                      ["change" "version" "leiningen.release/bump-version" "release"]
+                                                                                                      ["vcs" "commit"]
+                                                                                                      ["vcs" "tag"]
+                                                                                                      ["change" "version" "leiningen.release/bump-version"]
+                                                                                                      ["vcs" "commit"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.11"]]
