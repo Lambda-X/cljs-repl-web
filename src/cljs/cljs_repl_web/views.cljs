@@ -440,7 +440,7 @@
            :level :level4
            :class "api-panel-topic"]])
 
-(trace-forms {:tracer (tracer :color "orange")}
+;; (trace-forms {:tracer (tracer :color "orange")}
 
 (defn api-section
   "Builds the UI for a section."
@@ -491,50 +491,80 @@
                     :children (for [section sections]
                                 [api-section section])])])))
 
-)
+
+;;;;;;;;;;;;;;;;;;
+;;   Footer    ;;;
+;;;;;;;;;;;;;;;;;;
+
+(defn footer-links
+  [media-query-atom]
+  (let [links [[:span "Connect with us at"]
+               [h-box
+                :size "0 0 auto"
+                :gap "4px"
+                :children [[hyperlink-href
+                            :href "https://www.facebook.com/scalac.io"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-facebook"
+                                    :class "app-footer-btn-icon"]]
+                           [hyperlink-href
+                            :href "https://twitter.com/scalac_io"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-twitter"
+                                    :class "app-footer-btn-icon"]]
+                           [hyperlink-href
+                            :href "https://www.linkedin.com/company/scalac"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-linkedin"
+                                    :class "app-footer-btn-icon"]]]]
+               [:span "and check out our"]
+               [hyperlink-href
+                :href "http://blog.scalac.io"
+                :target "_blank"
+                :class "btn app-footer-btn"
+                :label "BLOG"]]]
+    (if (= :wide @media-query-atom)
+      [h-box
+       :size "0 1 50%"
+       :justify :end
+       :align :center
+       :gap "4px"
+       :children links]
+      [v-box
+       :size "0 1 50%"
+       :justify :center
+       :align :center
+       :gap "4px"
+       :children links])))
 
 (defn footer-component []
-  [h-box
-   :size "1 1 auto"
-   :justify :between
-   :align :center
-   :class "page-footer"
-   :children [[box
-               :size "0 1 50%"
-               :child [:strong "© Scalac Sp. z o.o. 2015"]]
-              [h-box
-               :size "0 1 50%"
-               :justify :end
-               :align :center
-               :gap "4px"
-               :children [[:span "Connect with us at"]
-                          [hyperlink-href
-                           :href "https://www.facebook.com/scalac.io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-facebook"
-                                   :class "app-footer-btn-icon"]]
-                          [hyperlink-href
-                           :href "https://twitter.com/scalac_io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-twitter"
-                                   :class "app-footer-btn-icon"]]
-                          [hyperlink-href
-                           :href "https://www.linkedin.com/company/scalac"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-linkedin"
-                                   :class "app-footer-btn-icon"]]
-                          [:span "and check out our"]
-                          [hyperlink-href
-                           :href "http://blog.scalac.io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label "BLOG"]]]]])
+  (let [media-query (subscribe [:media-query-size])
+        children [[box
+                   :size "0 1 50%"
+                   :child [:strong "© Scalac Sp. z o.o. 2015"]]
+                  [footer-links media-query]]]
+    (fn footer-component-form2 []
+      (if (= :wide @media-query)
+        [h-box
+         :size "1 1 auto"
+         :justify :between
+         :align :center
+         :class "page-footer"
+         :children children]
+        [v-box
+         :size "1 1 auto"
+         :justify :between
+         :align :center
+         :class "page-footer"
+         :children children]))))
+
+;; )
 
 (defn bottom-panel []
   []

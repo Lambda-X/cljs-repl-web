@@ -70,6 +70,19 @@
                     (not (empty? (app/interactive-examples @db console-key)))))))
 
 ;;;;;;;;;;;;;;;;;;
+;;   Footer    ;;;
+;;;;;;;;;;;;;;;;;;
+
+(register-sub
+ :footer-column-number
+ (fn [db [_]]
+   (let [mq (subscribe [:media-query-size])]
+     (make-reaction (fn footer-column-number []
+                      (case @mq
+                        :narrow 1
+                        :medium 1
+                        :wide 2))))))
+;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
 ;;;;;;;;;;;;;;;;;;
 
