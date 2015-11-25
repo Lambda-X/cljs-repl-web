@@ -217,7 +217,7 @@
   [symbol]
   (get-in api/cljs-api-edn [:symbols symbol]))
 
-(defn build-signatures-ui
+(defn api-signatures
   "Builds a table for the provided signatures of a symbol."
   [signatures]
   [v-box
@@ -228,7 +228,7 @@
                            :label s
                            :class "api-panel-signature"])]])
 
-(defn build-symbol-description-ui
+(defn api-symbol-description
   "Builds the UI for the symbol's description in the popover. Desc needs
   to be markdown."
   [desc]
@@ -246,7 +246,7 @@
               ;; AR - markdown->react component solves issue #
               [label :label [md/md->react-component desc]]]])
 
-(defn build-related-symbols-ui
+(defn api-related-symbols
   "Builds the UI for related symbols in the popover."
   [related]
   [v-box
@@ -266,7 +266,7 @@
                             :href (utils/symbol->clojuredocs-url rel)
                             :target "_blank"])]]])
 
-(defn example-ui
+(defn api-example
   "The (single) example, usually monospaced, html UI. Wants a map {:html ... :strings}."
   [example-map]
   {:pre [(:strings example-map) (:html example-map)]}
@@ -292,9 +292,9 @@
           :src "styles/images/cljs.svg"
           :alt "Load the example in the REPL"}]])
 
-(defn example-panel
+(defn api-example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [example-index example-map showing?]
+  [showing-atom example-index example-map]
   {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
@@ -317,13 +317,13 @@
                                :children [[example-number-icon example-index]
                                           [example-send-to-repl-button-label example-index example-map]]]
                        :on-click (handler-fn
-                                  (reset! showing? false)
+                                  (reset! showing-atom false)
                                   (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
-              [example-ui example-map]]])
+              [api-example example-map]]])
 
-(defn build-examples-ui
+(defn api-examples
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
-  [examples-map showing?]
+  [showing-atom examples-map]
   [v-box
    :size "0 1 auto"
    :children [
@@ -335,11 +335,11 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed #(example-panel %1 %2 showing?) examples-map)]]])
+               :children (map-indexed (partial api-example-panel showing-atom) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing? popover-position sym-doc-map]
+  [showing-atom position-atom sym-doc-map]
   (let [{name :name
          full-name :full-name
          desc :description
@@ -348,55 +348,57 @@
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-         desc (or desc docstring)       ; some symbols don't have a description so we use
+        desc (or desc docstring) ; some symbols don't have a description so we use
                                         ; the docstring instead; docstring is a regular string,
                                         ; without markdown. Nonetheless, it will be passed to
                                         ; md->react->component function to gain some basic html
                                         ; formatting (like paragraphs)
-         examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-         popover-width  400
-         popover-height 400
-         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
-    [popover-content-wrapper
-     :showing? showing?
-     :position @popover-position
-     :on-cancel (handler-fn (reset! showing? false))
-     :style {:max-height (str popover-height)
-             :max-width (str popover-width)}
-     :backdrop-opacity 0.1
-     :close-button? false
-     :title [h-box
-             :gap "6px"
-             :align :center
-             :children [[title
-                         :label name
-                         :level :level4]
-                        [md-icon-button
-                         :md-icon-name "zmdi-info"
-                         :tooltip "See online documentation"
-                         :tooltip-position :right-center
-                         :size :smaller
-                         :style {:justify-content :center}
-                         :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
-     :body [(fn []
-              [scroller
-               :size "1 1 auto"
-               :max-width (str popover-width)
-               :max-height (str (- popover-height 50))
-               :scroll :auto
-               :child [v-box
-                       :size "1 1 auto"
-                       :gap "8px"
-                       :width (str popover-content-width)
-                       :style {:padding "4px"}
-                       :children [(when (not-empty sign)
-                                    [build-signatures-ui sign])
-                                  (when (not-empty desc)
-                                    [build-symbol-description-ui desc])
-                                  (when (not-empty related)
-                                    [build-related-symbols-ui related])
-                                  (when (not-empty examples)
-                                    [build-examples-ui examples showing?])]]])]]))
+        examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+        popover-width  400
+        popover-height 400
+        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+    (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
+      [popover-content-wrapper
+       :showing? showing-atom
+       :position @position-atom
+       :on-cancel (handler-fn (reset! showing-atom false))
+       :style {:max-height (str popover-height)
+               :max-width (str popover-width)}
+       :backdrop-opacity 0.1
+       :close-button? false
+       :title [h-box
+               :gap "6px"
+               :align :center
+               :children [[title
+                           :label name
+                           :level :level4]
+                          [md-icon-button
+                           :md-icon-name "zmdi-info"
+                           :tooltip "See online documentation"
+                           :tooltip-position :right-center
+                           :size :smaller
+                           :style {:justify-content :center}
+                           :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
+       :body [(fn []
+                [scroller
+                 :size "1 1 auto"
+                 :max-width (str popover-width)
+                 :max-height (str (- popover-height 50))
+                 :scroll :auto
+                 :child [v-box
+                         :size "1 1 auto"
+                         :gap "8px"
+                         :width (str popover-content-width)
+                         :style {:padding "4px"}
+                         :children [(when (not-empty sign)
+                                      [api-signatures sign])
+                                    (when (not-empty desc)
+                                      [api-symbol-description desc])
+                                    (when (not-empty related)
+                                      [api-related-symbols related])
+                                    (when (not-empty examples)
+                                      [api-examples showing-atom examples])]]])]])))
+
 (defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
@@ -470,8 +472,6 @@
                                                     :style {:flex-flow "wrap"}
                                                     :children (for [symbol (:symbols topic)]
                                                                 [api-symbol symbol])]]])]]]]])
-
-
 
 (defn api-panel
   "Builds the UI for the api panel."
