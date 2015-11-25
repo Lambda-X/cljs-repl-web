@@ -87,12 +87,8 @@
                        ;; not support CSS3 Media queries
                        ))
 
-(defn api-panel-columns
-  "Given a db, returns the number of columns necessary for the api
-  panel. Defaults to 2 if no media query matches."
+(defn media-query-size
+  "Given a db, returns one in :wide :medium or :narrow, defaults
+  to :wide."
   [db]
-  (let [mq (or (get db :media-query-size) :wide)]
-    (case mq
-      :narrow 1
-      :medium 1
-      :wide 2)))
+  (or (get db :media-query-size) :wide))

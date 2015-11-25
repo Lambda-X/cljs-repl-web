@@ -17,8 +17,6 @@
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]))
 
-;;
-
 ;; (set! re-com.box/debug true)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -447,49 +445,51 @@
 (defn api-section
   "Builds the UI for a section."
   [section]
-  [v-box
-   :size "1 1 auto"
-   :gap "4px"
-   :children [[title
-               :label (:title section)
-               :level :level3
-               :class "api-panel-section-title"]
-              [h-box
-               :size "0 1 auto"
-               :gap "4px"
-               :children [[v-box
-                           :size "1 1 auto"
-                           :gap "2px"
-                           :children (for [topic (:topics section)]
-                                       [h-box
-                                        :size "1 1 auto"
-                                        :gap "2px"
-                                        :children [[section-title-component (:title topic)]
-                                                   [h-box
-                                                    :size "1 1 auto"
-                                                    :gap "2px"
-                                                    :justify :start
-                                                    :style {:flex-flow "wrap"}
-                                                    :children (for [symbol (:symbols topic)]
-                                                                [api-symbol symbol])]]])]]]]])
+  (let [media-query (subscribe [:media-query-size])]
+    (fn api-section-form2 []
+      [v-box
+       :size "1 1 auto"
+       :gap "4px"
+       :children [[title
+                   :label (:title section)
+                   :level :level3
+                   :class "api-panel-section-title"]
+                  [h-box
+                   :size "0 1 auto"
+                   :gap "4px"
+                   :children [[v-box
+                               :size "1 1 auto"
+                               :gap "2px"
+                               :children (for [topic (:topics section)]
+                                           [h-box
+                                            :size "1 1 auto"
+                                            :gap "2px"
+                                            :children [(when (= :wide @media-query)
+                                                         [section-title-component (:title topic)])
+                                                       [h-box
+                                                        :size "1 1 auto"
+                                                        :gap "2px"
+                                                        :justify :start
+                                                        :style {:flex-flow "wrap"}
+                                                        :children (for [symbol (:symbols topic)]
+                                                                    [api-symbol symbol])]]])]]]]])))
 
 (defn api-panel
   "Builds the UI for the api panel."
   [sections]
-  (let [cols (subscribe [:api-panel-columns]) ;; must be a divisor of 12
-        secs (count sections)]
-    (fn api-panel-form2 [sections]
+  (let [column-number (subscribe [:api-panel-column-number])
+        sections-by-column (subscribe [:api-panel-section-columns sections])]
+    (fn api-panel-form2 []
       [h-box
        :size "1 1 auto"
        :gap "10px"
-       :children (for [sections (partition-all (if (zero? (rem secs @cols))
-                                                 (quot secs @cols)
-                                                 (inc (quot secs @cols))) sections)]
-                   ^{:key sections} [v-box
-                                     :size (str "0 1 " (quot 100 @cols) "%")
-                                     :gap "10px"
-                                     :children (for [section sections]
-                                                 [api-section section])])])))
+       :children (for [sections @sections-by-column]
+                   ^{:key sections}
+                   [v-box
+                    :size (str "0 1 " (quot 100 @column-number) "%")
+                    :gap "10px"
+                    :children (for [section sections]
+                                [api-section section])])])))
 
 )
 
@@ -556,5 +556,3 @@
                :size "1"
                :style {:overflow "hidden"}
                :child [cljs-console-component]]]])
-
-;; )

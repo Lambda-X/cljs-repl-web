@@ -1,11 +1,11 @@
 (ns cljs-repl-web.subs
   (:require [reagent.ratom :refer [make-reaction]]
-            [re-frame.core :refer [register-sub]]
+            [re-frame.core :refer [register-sub subscribe]]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]))
 
-(trace-forms {:tracer (tracer :color "brown")}
+;; (trace-forms {:tracer (tracer :color "brown")}
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Console   ;;;
@@ -28,6 +28,30 @@
  (fn [db [_ console-key]]
    (make-reaction (fn is-console-empty? []
                     (app/is-console-empty? @db console-key)))))
+
+;;;;;;;;;;;;;;;;;;
+;;     APIs    ;;;
+;;;;;;;;;;;;;;;;;;
+
+(register-sub
+ :api-panel-section-columns
+ (fn [db [_ sections]]
+   (let [cols (subscribe [:api-panel-column-number])]
+     (make-reaction (fn api-panel-section-columns []
+                      (into [] (partition-all (let [secs (count sections)]
+                                        (if (zero? (rem secs @cols))
+                                          (quot secs @cols)
+                                          (inc (quot secs @cols)))) sections)))))))
+
+(register-sub
+ :api-panel-column-number
+ (fn [db [_]]
+   (let [mq (subscribe [:media-query-size])]
+     (make-reaction (fn api-panel-column-number []
+                      (case @mq
+                        :narrow 1
+                        :medium 1
+                        :wide 2))))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Examples  ;;;
@@ -78,9 +102,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (register-sub
- :api-panel-columns
+ :media-query-size
  (fn [db [_]]
-   (make-reaction (fn api-panel-columns []
-                    (app/api-panel-columns @db)))))
+   (make-reaction (fn media-query-size []
+                    (app/media-query-size @db)))))
 
-)
+;; )
