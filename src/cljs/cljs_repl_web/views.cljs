@@ -472,14 +472,13 @@
         secs (count sections)]
     (fn [sections]
       [h-box
-       :size (str "0 1 " (quot 100 @cols) "%")
+       :size "1 1 auto"
        :gap "10px"
-       :children [[label :label (str "Columns: " @cols)]
-                  (for [sections (partition-all (if (zero? (rem secs @cols))
+       :children [(for [sections (partition-all (if (zero? (rem secs @cols))
                                                   (quot secs @cols)
                                                   (inc (quot secs @cols))) sections)]
                     ^{:key sections} [v-box
-                                      :size "1 1 auto"
+                                      :size (str "0 1 " (quot 100 @cols) "%")
                                       :gap "10px"
                                       :children (for [section sections]
                                                   [build-section-ui section])])]])))

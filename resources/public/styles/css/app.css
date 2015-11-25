@@ -4,10 +4,12 @@ body,html {
 }
 
 .app-main {
+    padding: 0 20px 0;
     position: relative;
 }
 
 .page-width {
+    margin: auto auto;
 }
 
 #app-center {
@@ -185,8 +187,20 @@ body,html {
 .api-panel-section-title {
 }
 
-/* Center the section title only when we display 1 column */
-@media all and (max-width: 991px) {
+/* :narrow */
+@media only screen and (max-width: 480px) {
+    /* Center the section title only when we display 1 column */
+    /* AR - changed to follow the other media queries */
+    .api-panel-section-title {
+        text-align: center;
+        display:block;
+    }
+}
+
+/* :medium */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+    /* Center the section title only when we display 1 column */
+    /* AR - changed to follow the other media queries */
     .api-panel-section-title {
         text-align: center;
         display:block;
