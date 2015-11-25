@@ -10,7 +10,8 @@
 
 (def initial-state {:consoles {}
                     :gist-data {:gist-showing? false
-                                :auth-data {:username "" :password ""}}})
+                                :auth-data {:username "" :password ""}}
+                    :media-query-size :wide})
 
 ;; TODO Middleware
 
@@ -29,6 +30,7 @@
  :initialize
  (fn [_ _]
    (println "Initializing app...")
+   (app/register-media-queries!)
    initial-state))
 
 (register-handler
@@ -91,7 +93,7 @@
          empty-pwd? (empty? password)
          empty-txt? (empty? text)
          valid (not (or empty-usr? empty-pwd? empty-txt?))]
-     
+
      (if valid
        (gist/create-gist username password text success-handler error-handler))
 
@@ -138,3 +140,19 @@
      (console/set-prompt-text! console "")
      (console/focus-console! console)
      (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;  Media Queries   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(register-handler
+ :media-match
+ (fn [db [_ media-matched]]
+   (println "Media query match: " media-matched)
+   (assoc db :media-query-size media-matched)))
+
+(register-handler
+ :media-unmatch
+ (fn [db [_ media-unmatched]]
+   (println "Media query unmatch: " media-unmatched)
+   (dissoc db :media-query-size media-unmatched)))
