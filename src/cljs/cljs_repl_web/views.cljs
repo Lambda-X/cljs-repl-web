@@ -17,7 +17,7 @@
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]))
 
-(trace-forms {:tracer (tracer :color "orange")}
+;;
 
 ;; (set! re-com.box/debug true)
 
@@ -397,12 +397,12 @@
                                     [build-related-symbols-ui related])
                                   (when (not-empty examples)
                                     [build-examples-ui examples showing?])]]])]]))
-(defn build-symbol-ui
+(defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)]
-    (fn []
+    (fn api-symbol-form2 [symbol]
      [box
       :size "0 1 auto"
       :align :center
@@ -440,7 +440,9 @@
            :level :level4
            :class "api-panel-topic"]])
 
-(defn build-section-ui
+(trace-forms {:tracer (tracer :color "orange")}
+
+(defn api-section
   "Builds the UI for a section."
   [section]
   [v-box
@@ -467,14 +469,16 @@
                                                     :justify :start
                                                     :style {:flex-flow "wrap"}
                                                     :children (for [symbol (:symbols topic)]
-                                                                [build-symbol-ui symbol])]]])]]]]])
+                                                                [api-symbol symbol])]]])]]]]])
 
-(defn build-api-panel-ui
+
+
+(defn api-panel
   "Builds the UI for the api panel."
   [sections]
   (let [cols (subscribe [:api-panel-columns]) ;; must be a divisor of 12
         secs (count sections)]
-    (fn [sections]
+    (fn api-panel-form2 [sections]
       [h-box
        :size "1 1 auto"
        :gap "10px"
@@ -485,10 +489,9 @@
                                       :size (str "0 1 " (quot 100 @cols) "%")
                                       :gap "10px"
                                       :children (for [section sections]
-                                                  [build-section-ui section])])]])))
+                                                  [api-section section])])]])))
 
-(defn api-panel []
-  [build-api-panel-ui (:sections api-utils/custom-api-map)])
+)
 
 (defn footer-component []
   [h-box
@@ -540,7 +543,7 @@
    :size "1 1 auto"
    :gap "4px"
    :align :stretch
-   :children [[api-panel]]])
+   :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
 (defn repl-component []
   [h-box
@@ -554,4 +557,4 @@
                :style {:overflow "hidden"}
                :child [cljs-console-component]]]])
 
-)
+;; )
