@@ -4,13 +4,10 @@ body,html {
 }
 
 .app-main {
-    padding: 0 20px 0;
     position: relative;
 }
 
 .page-width {
-    width: 1080px;
-    margin: auto auto;
 }
 
 #app-center {
@@ -171,7 +168,6 @@ body,html {
 .rc-line { display: none }
 
 .api-panel-column {
-    background-color: #FFFFFF;
 }
 
 .api-panel-section-title {
@@ -184,6 +180,17 @@ body,html {
     font-family: "Roboto";
     text-align: center;
     text-transform: uppercase;
+}
+
+.api-panel-section-title {
+}
+
+/* Center the section title only when we display 1 column */
+@media all and (max-width: 991px) {
+    .api-panel-section-title {
+        text-align: center;
+        display:block;
+    }
 }
 
 .api-panel-topic {
