@@ -482,14 +482,14 @@
       [h-box
        :size "1 1 auto"
        :gap "10px"
-       :children [(for [sections (partition-all (if (zero? (rem secs @cols))
-                                                  (quot secs @cols)
-                                                  (inc (quot secs @cols))) sections)]
-                    ^{:key sections} [v-box
-                                      :size (str "0 1 " (quot 100 @cols) "%")
-                                      :gap "10px"
-                                      :children (for [section sections]
-                                                  [api-section section])])]])))
+       :children (for [sections (partition-all (if (zero? (rem secs @cols))
+                                                 (quot secs @cols)
+                                                 (inc (quot secs @cols))) sections)]
+                   ^{:key sections} [v-box
+                                     :size (str "0 1 " (quot 100 @cols) "%")
+                                     :gap "10px"
+                                     :children (for [section sections]
+                                                 [api-section section])])])))
 
 )
 
