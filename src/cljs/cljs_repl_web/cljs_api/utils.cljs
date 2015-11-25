@@ -17,7 +17,7 @@
                                         distinct? empty? every? not-every? some not-any?))
                          (Topic. "higher-order functions"
                                  '(map map-indexed mapcat reduce filter partition-by
-                                       take-while keep remove merge-with mapcat iterate repeatedly))
+                                       take-while keep remove merge-with iterate repeatedly))
 
                          (Topic. "functions as data"
                                  '(apply partial comp complement juxt))])
