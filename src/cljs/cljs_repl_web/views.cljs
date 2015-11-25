@@ -412,7 +412,7 @@
                 :showing? showing?
                 :position @popover-position
                 :anchor [button
-                         :class "btn btn-default api-panel-symbol"
+                         :class "btn btn-default api-panel-symbol-button"
                          :label (:name symbol)
                          ;; we use :attr's `:on-click` because button's `on-click` accepts
                          ;; a parametless function and we need the mouse click coordinates
@@ -426,14 +426,13 @@
                 :popover [symbol-popover showing? popover-position symbol]]
                [label
                 :label (str symbol)
-                :class "api-panel-symbol api-panel-symbol-label"
+                :class "api-panel-symbol-label"
                 :style (flex-child-style "80 1 auto")])])))
 
 (defn section-title-component
   [section-title]
   [box
-   :size "0 0 120px"
-   :min-width "120px"
+   :size "1 1 auto"
    :class "api-panel-topic-box"
    :child [title
            :label section-title
@@ -450,18 +449,19 @@
       [v-box
        :size "1 1 auto"
        :gap "4px"
+       :class "api-panel-section"
        :children [[title
                    :label (:title section)
                    :level :level3
                    :class "api-panel-section-title"]
-                  [h-box
+                  [v-box
                    :size "0 1 auto"
                    :gap "4px"
                    :children [[v-box
                                :size "1 1 auto"
                                :gap "2px"
                                :children (for [topic (:topics section)]
-                                           [h-box
+                                           [v-box
                                             :size "1 1 auto"
                                             :gap "2px"
                                             :children [(when (= :wide @media-query)
@@ -469,7 +469,7 @@
                                                        [h-box
                                                         :size "1 1 auto"
                                                         :gap "2px"
-                                                        :justify :start
+                                                        :justify :center
                                                         :style {:flex-flow "wrap"}
                                                         :children (for [symbol (:symbols topic)]
                                                                     [api-symbol symbol])]]])]]]]])))
@@ -490,7 +490,6 @@
                     :gap "10px"
                     :children (for [section sections]
                                 [api-section section])])])))
-
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Footer    ;;;

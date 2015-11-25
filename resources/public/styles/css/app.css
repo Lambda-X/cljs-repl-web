@@ -1,6 +1,6 @@
 body,html {
     font-family: "Roboto";
-    background: #65B58C;
+    background: #87D7AE;
 }
 
 .app-main {
@@ -95,6 +95,8 @@ body,html {
     height: 300px;
     min-width: 300px;
     min-height: 185px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
 }
 
 /* This overrides hljs's style, therefore it must go after */
@@ -169,13 +171,11 @@ body,html {
 
 .rc-line { display: none }
 
-.api-panel-column {
-}
-
-.api-panel-section-title {
-    text-align: center;
-    font-family: "Roboto";
-    font-size: 1.5em;
+.api-panel-section {
+    background-color: #65B58C;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .api-panel-popup-section-title {
@@ -184,7 +184,12 @@ body,html {
     text-transform: uppercase;
 }
 
+/* :wide */
 .api-panel-section-title {
+    text-align: center;
+    display: block;
+    font-family: "Roboto";
+    font-size: 1.5em;
 }
 
 /* :narrow */
@@ -210,6 +215,8 @@ body,html {
 .api-panel-topic {
     text-transform: uppercase;
     font-family: "Roboto";
+    text-align: center;
+    display:block;
 }
 
 /* problem here, see https://github.com/Day8/re-com/issues/76 */
@@ -224,13 +231,19 @@ body,html {
     flex: 0 1 auto !important;
 }
 
-.api-panel-symbol {
-    font-family: monospace,monospace;
-    font-size:0.8125em;
-    margin-top: 2px;
+.api-panel-symbol-button {
+    margin: 2px 5px;
+    border: 2px solid #439A6A;
+    border-radius: 8px;
+    min-width: 100px;
+    padding:5px;
+    cursor:pointer;
+    font-family: monospace;
 }
 
 .api-panel-symbol-label {
+    font-weigth: bold;
+    font-family: monospace;
     color: #FFFFFF;
 }
 
