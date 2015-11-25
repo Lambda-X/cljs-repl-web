@@ -7,6 +7,8 @@
                                  popover-tooltip title label scroller line modal-panel]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
+            [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.console.cljs :as cljs]
@@ -14,6 +16,8 @@
             [cljs-repl-web.cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]))
+
+(trace-forms {:tracer (tracer :color "orange")}
 
 ;; (set! re-com.box/debug true)
 
@@ -178,7 +182,7 @@
   []
   (let [console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:example-mode? :cljs-console])]
-    (fn []
+    (fn cljs-buttons-form2 []
       [v-box
        :gap "8px"
        :children [[md-icon-button
@@ -549,3 +553,5 @@
                :size "1"
                :style {:overflow "hidden"}
                :child [cljs-console-component]]]])
+
+)

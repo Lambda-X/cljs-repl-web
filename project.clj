@@ -44,6 +44,7 @@
                        {:id "min"
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; AR - No main! https://github.com/emezeske/lein-cljsbuild/issues/420
+                                   :closure-defines {:goog.DEBUG false}
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out/min"
                                    :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
@@ -76,7 +77,10 @@
                                                                                                       ["vcs" "commit"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.11"]]
+                                  [org.clojure/tools.nrepl "0.2.11"]
+                                  [binaryage/devtools "0.4.1"]
+                                  [org.clojars.stumitchell/clairvoyant "0.1.0-SNAPSHOT"]
+                                  [day8/re-frame-tracer "0.1.0-SNAPSHOT"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
                              [lein-figwheel "0.5.0-1" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
