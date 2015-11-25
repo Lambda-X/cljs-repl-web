@@ -58,13 +58,29 @@
   [db]
   (get-in db [:gist-data :error-msg]))
 
+
+(def mq-string-narrow "only screen and (max-width: 480px)")
+(def mq-string-medium "only screen and (min-width: 481px) and (max-width: 960px)")
+(def mq-string-wide "only screen and (min-width: 961px)")
+
+(defn initial-media-query!
+  "Returns the initial media query state among :narrow, :medium
+  and :wide."
+  []
+  (let [match-media! #( %)]
+    (cond
+      (.-matches (js/window.matchMedia mq-string-narrow)) :narrow
+      (.-matches (js/window.matchMedia mq-string-medium )) :medium
+      (.-matches (js/window.matchMedia mq-string-wide)) :wide
+      :else :wide)))
+
 (defn register-media-queries!
   []
-  (js/enquire.register "only screen and (max-width: 480px)"
+  (js/enquire.register mq-string-narrow
                        (clj->js {:match #(dispatch [:media-match :narrow])}))
-  (js/enquire.register "only screen and (min-width: 481px) and (max-width: 960px)"
+  (js/enquire.register mq-string-medium
                        (clj->js {:match #(dispatch [:media-match :medium])}))
-  (js/enquire.register "only screen and (min-width: 961px)"
+  (js/enquire.register mq-string-wide
                        (clj->js {:match #(dispatch [:media-match :wide])})
                        true
                        ;; AR - degrade gracefully to this if browser does

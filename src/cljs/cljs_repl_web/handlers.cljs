@@ -35,7 +35,8 @@
  (fn initialize [_ _]
    (println "Initializing app...")
    (app/register-media-queries!)
-   initial-state))
+   (assoc initial-state
+          :media-query-size (app/initial-media-query!))))
 
 (register-handler
  :add-console
