@@ -1,5 +1,6 @@
 (ns cljs-repl-web.console.cljs
-  (:require [replumb.core :as replumb]
+  (:require [clojure.string :as string]
+            [replumb.core :as replumb]
             [re-frame.core :refer [subscribe dispatch]]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.highlight :as highlight]))
@@ -24,6 +25,19 @@
       (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))
 
+(defn cljs-console-set-prompt-text!
+  [console text]
+  (console/set-prompt-text! console text)
+  (dispatch [:set-console-text :cljs-console text]))
+
+(defn cljs-console-get-prompt-text!
+  "Get the current text, prompt not included, unlike jqconsole's."
+  [console]
+  (let [prompt-n-text (.GetPromptText console)]
+    (nth (remove empty? (map string/trim (string/split prompt-n-text
+                                                       (re-pattern (replumb/get-prompt)) 2)))
+         0 "")))
+
 (defn cljs-console-prompt!
   [console]
   (doto console
@@ -31,9 +45,9 @@
                     (cljs-read-eval-print! console input)
                     (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
                     (cljs-console-prompt! console)
-                    (dispatch [:text-added-to-console :cljs-console]))))
+                    (dispatch [:set-console-text :cljs-console input]))))
   (when-let [example @(subscribe [:get-next-example :cljs-console])]
-    (console/set-prompt-text! console example)
+    (cljs-console-set-prompt-text! console example)
     (dispatch [:delete-first-example :cljs-console])))
 
 (defn cljs-console!

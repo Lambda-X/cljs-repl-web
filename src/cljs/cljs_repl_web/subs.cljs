@@ -4,6 +4,7 @@
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]
+            [cljs-repl-web.console :as console]
             [cljs-repl-web.views.utils :as view-utils]))
 
 ;; (trace-forms {:tracer (tracer :color "brown")}
@@ -25,10 +26,10 @@
                     (app/console @db console-key)))))
 
 (register-sub
- :is-console-empty?
+ :console-text
  (fn [db [_ console-key]]
-   (make-reaction (fn is-console-empty? []
-                    (app/is-console-empty? @db console-key)))))
+   (make-reaction (fn console-text []
+                    (app/console-text @db console-key)))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     APIs    ;;;
@@ -110,6 +111,15 @@
  (fn [db [_]]
    (make-reaction (fn gist-error-msg []
                     (app/gist-error-msg @db)))))
+
+(register-sub
+ :can-dump-gist?
+ (fn [db [_ console-key]]
+   (let [console (subscribe [:get-console console-key])
+         console-text (subscribe [:console-text console-key])]
+     (make-reaction (fn can-save-gist? []
+                      (let [_ @console-text] ;; using this just as trigger
+                        (some-> @console (console/dump-console!) empty?)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;  Media Queries   ;;;

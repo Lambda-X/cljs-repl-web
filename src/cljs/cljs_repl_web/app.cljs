@@ -11,26 +11,36 @@
   []
   (dispatch [:reset-db]))
 
+;; AR - Console maps now are:
+;; {:console instance
+;;  :text .....}
+
 (defn console
   "Given a db and console key, returns its instance or nil if not
   found."
   [db k]
   (get-in db [:consoles (name k) :console]))
 
-(defn is-console-empty?
-  "Given a db and console key, returns whether the console
-  contains text or is empty."
+(defn console-text
+  "Given a db, returns the console text or nil if none found."
   [db k]
-  (get-in db [:consoles (name k) :empty?]))
+  (get-in db [:consoles (name k) :text]))
+
+(def console-created? "Was the console created? Returns a truey or falsey value."
+  console)
+
+(defn assoc-console-text!
+  "For the consoles in db, fetch the current text and assoc it
+  to its console map (:text keyword)"
+  [db console-key text]
+  {:post [(map? (:consoles %))]}
+  (assoc-in db [:consoles (name console-key) :text] text))
 
 (defn interactive-examples
   "Given a db and console key, returns its examples or nil if not
   found."
   [db k]
   (get-in db [:consoles (name k) :interactive-examples]))
-
-(def console-created? "Was the console created? Returns a truey or falsey value."
-  console)
 
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
@@ -58,6 +68,10 @@
   [db]
   (get-in db [:gist-data :error-msg]))
 
+
+;;;;;;;;;;;;;;;;;;;;;
+;;  Media Queries  ;;
+;;;;;;;;;;;;;;;;;;;;;
 
 (def mq-string-narrow "only screen and (max-width: 480px)")
 (def mq-string-medium "only screen and (min-width: 481px) and (max-width: 960px)")
