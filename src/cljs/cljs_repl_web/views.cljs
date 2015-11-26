@@ -178,33 +178,39 @@
    To place them in a layout, call the function (it does not return a
    component)."
   []
-  (let [console-created? (subscribe [:console-created? :cljs-console])
+  (let [media-query (subscribe [:media-query-size])
+        console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:example-mode? :cljs-console])]
     (fn cljs-buttons-form2 []
-      [v-box
-       :gap "8px"
-       :children [[md-icon-button
-                   :md-icon-name "zmdi-delete"
-                   :on-click #(dispatch [:reset-console :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Reset"
-                   :tooltip-position :left-center
-                   :disabled? (not @console-created?)]
-                  [md-icon-button
-                   :md-icon-name "zmdi-format-clear-all"
-                   :on-click #(dispatch [:clear-console :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Clear"
-                   :tooltip-position :left-center
-                   :disabled? (not @console-created?)]
-                  [gist-login-dialog]
-                  [md-icon-button
-                   :md-icon-name "zmdi-stop"
-                   :on-click #(dispatch [:exit-interactive-examples :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Stop interactive example mode"
-                   :tooltip-position :below-center
-                   :disabled? (not @example-mode?)]]])))
+      (let [children [[md-icon-button
+                       :md-icon-name "zmdi-delete"
+                       :on-click #(dispatch [:reset-console :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Reset"
+                       :tooltip-position :left-center
+                       :disabled? (not @console-created?)]
+                      [md-icon-button
+                       :md-icon-name "zmdi-format-clear-all"
+                       :on-click #(dispatch [:clear-console :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Clear"
+                       :tooltip-position :left-center
+                       :disabled? (not @console-created?)]
+                      [gist-login-dialog]
+                      [md-icon-button
+                       :md-icon-name "zmdi-stop"
+                       :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Stop interactive example mode"
+                       :tooltip-position :below-center
+                       :disabled? (not @example-mode?)]]]
+        (if-not (= :narrow @media-query)
+          [v-box
+           :gap "8px"
+           :children children]
+          [h-box
+           :gap "8px"
+           :children children])))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  API panel section  ;;;
@@ -575,13 +581,22 @@
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
 (defn repl-component []
-  [h-box
-   :class "app-main"
-   :size "1 1 auto"
-   :justify :center
-   :gap "10px"
-   :children [[cljs-buttons]
-              [box
-               :size "1"
-               :style {:overflow "hidden"}
-               :child [cljs-console-component]]]])
+  (let [media-query (subscribe [:media-query-size])]
+    (fn repl-component-form2 []
+      (let [children [[cljs-buttons]
+                      [box
+                       :size "0 0 auto"
+                       :style {:overflow "hidden"}
+                       :child [cljs-console-component]]]]
+        (if (= :narrow @media-query)
+          [v-box
+           :size "1 1 auto"
+           :align :center
+           :gap "10px"
+           :children children]
+          [h-box
+           :size "1 1 auto"
+           :justify :center
+           :gap "10px"
+           :children children])) ))
+  )
