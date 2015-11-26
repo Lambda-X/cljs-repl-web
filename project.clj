@@ -12,7 +12,8 @@
                  [markdown-clj "0.9.78"]
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
-                 [org.clojure/tools.reader "1.0.0-alpha1"]]
+                 [org.clojure/tools.reader "1.0.0-alpha1"]
+                 [cljsjs/enquire "2.1.2-0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
@@ -43,6 +44,7 @@
                        {:id "min"
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; AR - No main! https://github.com/emezeske/lein-cljsbuild/issues/420
+                                   :closure-defines {:goog.DEBUG false}
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out/min"
                                    :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
@@ -67,15 +69,20 @@
             "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
             "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "min" ["simpleton" "9090" ":from" "resources/public"]]
             "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]
-            "bump" ^{:doc "Bump version and tags it, without any deployment on Clojars or website" } ["do" ["vcs" "assert-committed"]
-                                                                                                      ["change" "version" "leiningen.release/bump-version" "release"]
-                                                                                                      ["vcs" "commit"]
-                                                                                                      ["vcs" "tag"]
-                                                                                                      ["change" "version" "leiningen.release/bump-version"]
-                                                                                                      ["vcs" "commit"]]}
+            ;; AR - does not work as expected
+            ;; "bump" ^{:doc "Bump version and tags it, without any deployment on Clojars or website" } ["do" ["vcs" "assert-committed"]
+            ;; ["change" "version" "leiningen.release/bump-version" "release"]
+            ;; ["vcs" "commit"]
+            ;; ["vcs" "tag"]
+            ;; ["change" "version" "leiningen.release/bump-version"]
+            ;; ["vcs" "commit"]]
+            }
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.11"]]
+                                  [org.clojure/tools.nrepl "0.2.11"]
+                                  [binaryage/devtools "0.4.1"]
+                                  [org.clojars.stumitchell/clairvoyant "0.1.0-SNAPSHOT"]
+                                  [day8/re-frame-tracer "0.1.0-SNAPSHOT"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
                              [lein-figwheel "0.5.0-1" :exclusions [cider/cider-nrepl]]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}

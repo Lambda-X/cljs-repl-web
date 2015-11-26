@@ -7,6 +7,8 @@
                                  popover-tooltip title label scroller line modal-panel]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
+            [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.console.cljs :as cljs]
@@ -176,33 +178,39 @@
    To place them in a layout, call the function (it does not return a
    component)."
   []
-  (let [console-created? (subscribe [:console-created? :cljs-console])
+  (let [media-query (subscribe [:media-query-size])
+        console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:example-mode? :cljs-console])]
-    (fn []
-      [v-box
-       :gap "8px"
-       :children [[md-icon-button
-                   :md-icon-name "zmdi-delete"
-                   :on-click #(dispatch [:reset-console :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Reset"
-                   :tooltip-position :left-center
-                   :disabled? (not @console-created?)]
-                  [md-icon-button
-                   :md-icon-name "zmdi-format-clear-all"
-                   :on-click #(dispatch [:clear-console :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Clear"
-                   :tooltip-position :left-center
-                   :disabled? (not @console-created?)]
-                  [gist-login-dialog]
-                  [md-icon-button
-                   :md-icon-name "zmdi-stop"
-                   :on-click #(dispatch [:exit-interactive-examples :cljs-console])
-                   :class "cljs-btn"
-                   :tooltip "Stop interactive example mode"
-                   :tooltip-position :below-center
-                   :disabled? (not @example-mode?)]]])))
+    (fn cljs-buttons-form2 []
+      (let [children [[md-icon-button
+                       :md-icon-name "zmdi-delete"
+                       :on-click #(dispatch [:reset-console :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Reset"
+                       :tooltip-position :left-center
+                       :disabled? (not @console-created?)]
+                      [md-icon-button
+                       :md-icon-name "zmdi-format-clear-all"
+                       :on-click #(dispatch [:clear-console :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Clear"
+                       :tooltip-position :left-center
+                       :disabled? (not @console-created?)]
+                      [gist-login-dialog]
+                      [md-icon-button
+                       :md-icon-name "zmdi-stop"
+                       :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                       :class "cljs-btn"
+                       :tooltip "Stop interactive example mode"
+                       :tooltip-position :below-center
+                       :disabled? (not @example-mode?)]]]
+        (if-not (= :narrow @media-query)
+          [v-box
+           :gap "8px"
+           :children children]
+          [h-box
+           :gap "8px"
+           :children children])))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  API panel section  ;;;
@@ -213,7 +221,7 @@
   [symbol]
   (get-in api/cljs-api-edn [:symbols symbol]))
 
-(defn build-signatures-ui
+(defn api-signatures
   "Builds a table for the provided signatures of a symbol."
   [signatures]
   [v-box
@@ -224,7 +232,7 @@
                            :label s
                            :class "api-panel-signature"])]])
 
-(defn build-symbol-description-ui
+(defn api-symbol-description
   "Builds the UI for the symbol's description in the popover. Desc needs
   to be markdown."
   [desc]
@@ -242,7 +250,7 @@
               ;; AR - markdown->react component solves issue #
               [label :label [md/md->react-component desc]]]])
 
-(defn build-related-symbols-ui
+(defn api-related-symbols
   "Builds the UI for related symbols in the popover."
   [related]
   [v-box
@@ -262,7 +270,7 @@
                             :href (utils/symbol->clojuredocs-url rel)
                             :target "_blank"])]]])
 
-(defn example-ui
+(defn api-example
   "The (single) example, usually monospaced, html UI. Wants a map {:html ... :strings}."
   [example-map]
   {:pre [(:strings example-map) (:html example-map)]}
@@ -288,9 +296,9 @@
           :src "styles/images/cljs.svg"
           :alt "Load the example in the REPL"}]])
 
-(defn example-panel
+(defn api-example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [example-index example-map showing?]
+  [showing-atom example-index example-map]
   {:pre [(:strings example-map) (:html example-map)]}
   [v-box
    :size "none"
@@ -313,13 +321,13 @@
                                :children [[example-number-icon example-index]
                                           [example-send-to-repl-button-label example-index example-map]]]
                        :on-click (handler-fn
-                                  (reset! showing? false)
+                                  (reset! showing-atom false)
                                   (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
-              [example-ui example-map]]])
+              [api-example example-map]]])
 
-(defn build-examples-ui
+(defn api-examples
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
-  [examples-map showing?]
+  [showing-atom examples-map]
   [v-box
    :size "0 1 auto"
    :children [
@@ -331,11 +339,11 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed #(example-panel %1 %2 showing?) examples-map)]]])
+               :children (map-indexed (partial api-example-panel showing-atom) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing? popover-position sym-doc-map]
+  [showing-atom position-atom sym-doc-map]
   (let [{name :name
          full-name :full-name
          desc :description
@@ -344,61 +352,63 @@
          examples-strings :examples-strings
          sign :signature
          related :related} sym-doc-map
-         desc (or desc docstring)       ; some symbols don't have a description so we use
+        desc (or desc docstring) ; some symbols don't have a description so we use
                                         ; the docstring instead; docstring is a regular string,
                                         ; without markdown. Nonetheless, it will be passed to
                                         ; md->react->component function to gain some basic html
                                         ; formatting (like paragraphs)
-         examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-         popover-width  400
-         popover-height 400
-         popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
-    [popover-content-wrapper
-     :showing? showing?
-     :position @popover-position
-     :on-cancel (handler-fn (reset! showing? false))
-     :style {:max-height (str popover-height)
-             :max-width (str popover-width)}
-     :backdrop-opacity 0.1
-     :close-button? false
-     :title [h-box
-             :gap "6px"
-             :align :center
-             :children [[title
-                         :label name
-                         :level :level4]
-                        [md-icon-button
-                         :md-icon-name "zmdi-info"
-                         :tooltip "See online documentation"
-                         :tooltip-position :right-center
-                         :size :smaller
-                         :style {:justify-content :center}
-                         :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
-     :body [(fn []
-              [scroller
-               :size "1 1 auto"
-               :max-width (str popover-width)
-               :max-height (str (- popover-height 50))
-               :scroll :auto
-               :child [v-box
-                       :size "1 1 auto"
-                       :gap "8px"
-                       :width (str popover-content-width)
-                       :style {:padding "4px"}
-                       :children [(when (not-empty sign)
-                                    [build-signatures-ui sign])
-                                  (when (not-empty desc)
-                                    [build-symbol-description-ui desc])
-                                  (when (not-empty related)
-                                    [build-related-symbols-ui related])
-                                  (when (not-empty examples)
-                                    [build-examples-ui examples showing?])]]])]]))
-(defn build-symbol-ui
+        examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+        popover-width  400
+        popover-height 400
+        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+    (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
+      [popover-content-wrapper
+       :showing? showing-atom
+       :position @position-atom
+       :on-cancel (handler-fn (reset! showing-atom false))
+       :style {:max-height (str popover-height)
+               :max-width (str popover-width)}
+       :backdrop-opacity 0.1
+       :close-button? false
+       :title [h-box
+               :gap "6px"
+               :align :center
+               :children [[title
+                           :label name
+                           :level :level4]
+                          [md-icon-button
+                           :md-icon-name "zmdi-info"
+                           :tooltip "See online documentation"
+                           :tooltip-position :right-center
+                           :size :smaller
+                           :style {:justify-content :center}
+                           :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
+       :body [(fn []
+                [scroller
+                 :size "1 1 auto"
+                 :max-width (str popover-width)
+                 :max-height (str (- popover-height 50))
+                 :scroll :auto
+                 :child [v-box
+                         :size "1 1 auto"
+                         :gap "8px"
+                         :width (str popover-content-width)
+                         :style {:padding "4px"}
+                         :children [(when (not-empty sign)
+                                      [api-signatures sign])
+                                    (when (not-empty desc)
+                                      [api-symbol-description desc])
+                                    (when (not-empty related)
+                                      [api-related-symbols related])
+                                    (when (not-empty examples)
+                                      [api-examples showing-atom examples])]]])]])))
+
+(defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)]
-    (fn []
+    (fn api-symbol-form2 [symbol]
      [box
       :size "0 1 auto"
       :align :center
@@ -408,7 +418,7 @@
                 :showing? showing?
                 :position @popover-position
                 :anchor [button
-                         :class "btn btn-default api-panel-symbol"
+                         :class "btn btn-default api-panel-symbol-button"
                          :label (:name symbol)
                          ;; we use :attr's `:on-click` because button's `on-click` accepts
                          ;; a parametless function and we need the mouse click coordinates
@@ -422,116 +432,144 @@
                 :popover [symbol-popover showing? popover-position symbol]]
                [label
                 :label (str symbol)
-                :class "api-panel-symbol api-panel-symbol-label"
+                :class "api-panel-symbol-label"
                 :style (flex-child-style "80 1 auto")])])))
 
 (defn section-title-component
   [section-title]
   [box
-   :size "0 0 120px"
-   :min-width "120px"
+   :size "1 1 auto"
    :class "api-panel-topic-box"
    :child [title
            :label section-title
            :level :level4
            :class "api-panel-topic"]])
 
-(defn build-section-ui
+;; (trace-forms {:tracer (tracer :color "orange")}
+
+(defn api-section
   "Builds the UI for a section."
   [section]
-  [v-box
-   :size "1 1 auto"
-   :gap "4px"
-   :children [[title
-               :label (:title section)
-               :level :level3
-               :class "api-panel-section-title"]
-              [h-box
-               :size "0 1 auto"
-               :gap "4px"
-               :children [[v-box
-                           :size "1 1 auto"
-                           :gap "2px"
-                           :children (for [topic (:topics section)]
-                                       [h-box
-                                        :size "1 1 auto"
-                                        :gap "2px"
-                                        :children [[section-title-component (:title topic)]
-                                                   [h-box
-                                                    :size "1 1 auto"
-                                                    :gap "2px"
-                                                    :justify :start
-                                                    :style {:flex-flow "wrap"}
-                                                    :children (for [symbol (:symbols topic)]
-                                                                [build-symbol-ui symbol])]]])]]]]])
+  (let [media-query (subscribe [:media-query-size])]
+    (fn api-section-form2 []
+      [v-box
+       :size "1 1 auto"
+       :gap "4px"
+       :class "api-panel-section"
+       :children [[title
+                   :label (:title section)
+                   :level :level3
+                   :class "api-panel-section-title"]
+                  [v-box
+                   :size "0 1 auto"
+                   :gap "4px"
+                   :children [[v-box
+                               :size "1 1 auto"
+                               :gap "2px"
+                               :children (for [topic (:topics section)]
+                                           [v-box
+                                            :size "1 1 auto"
+                                            :gap "2px"
+                                            :children [(when (= :wide @media-query)
+                                                         [section-title-component (:title topic)])
+                                                       [h-box
+                                                        :size "1 1 auto"
+                                                        :gap "2px"
+                                                        :justify :center
+                                                        :style {:flex-flow "wrap"}
+                                                        :children (for [symbol (:symbols topic)]
+                                                                    [api-symbol symbol])]]])]]]]])))
 
-(defn build-api-panel-ui
-  "Builds the UI for the api panel. Expects the numer of columns in which place the sections
-  of the tutorial and the sections themselves. `cols` must be a divisor of 12."
-  [cols sections]
-  (let [secs (count sections)
-        bootstrap-class-nr (quot 12 cols)
-        secs-per-col (quot secs cols)
-        partitioned-sections (partition-all (if (zero? (rem secs cols))
-                                              secs-per-col
-                                              (inc secs-per-col)) sections)]
+(defn api-panel
+  "Builds the UI for the api panel."
+  [sections]
+  (let [column-number (subscribe [:api-panel-column-number])
+        sections-by-column (subscribe [:api-panel-section-columns sections])]
+    (fn api-panel-form2 []
+      [h-box
+       :size "1 1 auto"
+       :gap "10px"
+       :children (for [sections @sections-by-column]
+                   ^{:key sections}
+                   [v-box
+                    :size (str "0 1 " (quot 100 @column-number) "%")
+                    :gap "10px"
+                    :children (for [section sections]
+                                [api-section section])])])))
 
-    ;; here we prefer clean reagent components because
-    ;; easier to integrate with bootstrap
-    [:div.container
-     [:div.row
-      (for [[ind1 sections] (map-indexed vector partitioned-sections)]
-        ^{:key ind1}
-        [:div.api-panel-column {:class (str "col-md-" bootstrap-class-nr)}
-         (for [[ind2 section] (map-indexed vector sections)]
-           ^{:key (+ (* secs-per-col ind1) ind2)}
-           [build-section-ui section])])]]))
+;;;;;;;;;;;;;;;;;;
+;;   Footer    ;;;
+;;;;;;;;;;;;;;;;;;
 
-(defn api-panel []
-  [build-api-panel-ui 2 (:sections api-utils/custom-api-map)])
+(defn footer-links
+  [media-query-atom]
+  (let [links [[:span "Connect with us at"]
+               [h-box
+                :size "0 0 auto"
+                :gap "4px"
+                :children [[hyperlink-href
+                            :href "https://www.facebook.com/scalac.io"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-facebook"
+                                    :class "app-footer-btn-icon"]]
+                           [hyperlink-href
+                            :href "https://twitter.com/scalac_io"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-twitter"
+                                    :class "app-footer-btn-icon"]]
+                           [hyperlink-href
+                            :href "https://www.linkedin.com/company/scalac"
+                            :target "_blank"
+                            :class "btn app-footer-btn"
+                            :label [md-icon-button
+                                    :md-icon-name "zmdi-linkedin"
+                                    :class "app-footer-btn-icon"]]]]
+               [:span "and check out our"]
+               [hyperlink-href
+                :href "http://blog.scalac.io"
+                :target "_blank"
+                :class "btn app-footer-btn"
+                :label "BLOG"]]]
+    (if (= :wide @media-query-atom)
+      [h-box
+       :size "1 1 50%"
+       :justify :end
+       :align :center
+       :gap "4px"
+       :children links]
+      [v-box
+       :size "1 1 50%"
+       :justify :center
+       :align :center
+       :gap "4px"
+       :children links])))
 
 (defn footer-component []
-  [h-box
-   :size "1 1 auto"
-   :justify :between
-   :align :center
-   :class "page-footer"
-   :children [[box
-               :size "0 1 50%"
-               :child [:strong "© Scalac Sp. z o.o. 2015"]]
-              [h-box
-               :size "0 1 50%"
-               :justify :end
-               :align :center
-               :gap "4px"
-               :children [[:span "Connect with us at"]
-                          [hyperlink-href
-                           :href "https://www.facebook.com/scalac.io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-facebook"
-                                   :class "app-footer-btn-icon"]]
-                          [hyperlink-href
-                           :href "https://twitter.com/scalac_io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-twitter"
-                                   :class "app-footer-btn-icon"]]
-                          [hyperlink-href
-                           :href "https://www.linkedin.com/company/scalac"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label [md-icon-button
-                                   :md-icon-name "zmdi-linkedin"
-                                   :class "app-footer-btn-icon"]]
-                          [:span "and check out our"]
-                          [hyperlink-href
-                           :href "http://blog.scalac.io"
-                           :target "_blank"
-                           :class "btn app-footer-btn"
-                           :label "BLOG"]]]]])
+  (let [media-query (subscribe [:media-query-size])
+        children [[box
+                   :size "1 1 50%"
+                   :child [:strong "© Scalac Sp. z o.o. 2015"]]
+                  [footer-links media-query]]]
+    (fn footer-component-form2 []
+      (if (= :wide @media-query)
+        [h-box
+         :size "1 1 auto"
+         :justify :between
+         :align :center
+         :class "page-footer"
+         :children children]
+        [v-box
+         :size "1 1 auto"
+         :justify :between
+         :align :center
+         :class "page-footer"
+         :children children]))))
+
+;; )
 
 (defn bottom-panel []
   []
@@ -540,16 +578,25 @@
    :size "1 1 auto"
    :gap "4px"
    :align :stretch
-   :children [[api-panel]]])
+   :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
 (defn repl-component []
-  [h-box
-   :class "app-main"
-   :size "1 1 auto"
-   :justify :center
-   :gap "10px"
-   :children [[cljs-buttons]
-              [box
-               :size "1"
-               :style {:overflow "hidden"}
-               :child [cljs-console-component]]]])
+  (let [media-query (subscribe [:media-query-size])]
+    (fn repl-component-form2 []
+      (let [children [[cljs-buttons]
+                      [box
+                       :size "0 0 auto"
+                       :style {:overflow "hidden"}
+                       :child [cljs-console-component]]]]
+        (if (= :narrow @media-query)
+          [v-box
+           :size "1 1 auto"
+           :align :center
+           :gap "10px"
+           :children children]
+          [h-box
+           :size "1 1 auto"
+           :justify :center
+           :gap "10px"
+           :children children])) ))
+  )
