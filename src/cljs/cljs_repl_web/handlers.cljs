@@ -129,6 +129,7 @@
      ;; hack after hack: the set-prompt-text! function does not trigger
      ;; the syntax highlight, so we need to invoke it manually
      (highlight/highlight-prompt-line! (.-$prompt_left console) (atom "") )
+     (highlight/highlight-prompt-lines! (.-$prompt_before console))
      (console/focus-console! console)
      (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
 

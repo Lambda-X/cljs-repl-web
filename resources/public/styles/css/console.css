@@ -37,6 +37,11 @@
     background-color: #b2ca8f;
 }
 
+.jqconsole-prompt-text > code {
+    margin-right: 0px;
+    background-color: transparent;
+}
+
 /* Additional elements */
 .cljs-buttons-container {
     margin-top: 5px;

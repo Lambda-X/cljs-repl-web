@@ -438,7 +438,8 @@
 (defn section-title-component
   [section-title]
   [box
-   :size "1 1 auto"
+   :size "0 0 120px"
+   :min-width "120px"
    :class "api-panel-topic-box"
    :child [title
            :label section-title
@@ -460,22 +461,22 @@
                    :label (:title section)
                    :level :level3
                    :class "api-panel-section-title"]
-                  [v-box
+                  [h-box
                    :size "0 1 auto"
                    :gap "4px"
                    :children [[v-box
                                :size "1 1 auto"
                                :gap "2px"
                                :children (for [topic (:topics section)]
-                                           [v-box
+                                           [h-box
                                             :size "1 1 auto"
                                             :gap "2px"
                                             :children [(when (= :wide @media-query)
                                                          [section-title-component (:title topic)])
-                                                       [h-box
+                                                       [v-box
                                                         :size "1 1 auto"
                                                         :gap "2px"
-                                                        :justify :center
+                                                        :justify (if (= :wide @media-query) :start :center)
                                                         :style {:flex-flow "wrap"}
                                                         :children (for [symbol (:symbols topic)]
                                                                     [api-symbol symbol])]]])]]]]])))
@@ -536,13 +537,13 @@
                 :label "BLOG"]]]
     (if (= :wide @media-query-atom)
       [h-box
-       :size "1 1 50%"
+       :size "1 1 auto"
        :justify :end
        :align :center
        :gap "4px"
        :children links]
       [v-box
-       :size "1 1 50%"
+       :size "1 1 auto"
        :justify :center
        :align :center
        :gap "4px"
@@ -551,7 +552,7 @@
 (defn footer-component []
   (let [media-query (subscribe [:media-query-size])
         children [[box
-                   :size "1 1 50%"
+                   :size "1 1 auto"
                    :child [:strong "© Scalac Sp. z o.o. 2015"]]
                   [footer-links media-query]]]
     (fn footer-component-form2 []

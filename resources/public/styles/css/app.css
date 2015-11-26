@@ -338,8 +338,6 @@ body,html {
 
 /* :wide */
 .api-panel-section-title {
-    text-align: center;
-    display: block;
     font-family: "Roboto";
     font-size: 1.5em;
 }
@@ -367,8 +365,6 @@ body,html {
 .api-panel-topic {
     text-transform: uppercase;
     font-family: "Roboto";
-    text-align: center;
-    display:block;
 }
 
 /* problem here, see https://github.com/Day8/re-com/issues/76 */
@@ -384,10 +380,8 @@ body,html {
 }
 
 .api-panel-symbol-button {
-    margin: 2px 5px;
-    border: 2px solid #439A6A;
-    border-radius: 8px;
-    min-width: 100px;
+    margin: 2px 2px;
+    min-width: 50px;
     padding:5px;
     cursor:pointer;
     font-family: monospace;
