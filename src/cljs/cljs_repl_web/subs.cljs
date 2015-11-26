@@ -3,7 +3,8 @@
             [re-frame.core :refer [register-sub subscribe]]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
-            [cljs-repl-web.app :as app]))
+            [cljs-repl-web.app :as app]
+            [cljs-repl-web.views.utils :as view-utils]))
 
 ;; (trace-forms {:tracer (tracer :color "brown")}
 
@@ -36,22 +37,24 @@
 (register-sub
  :api-panel-section-columns
  (fn [db [_ sections]]
-   (let [cols (subscribe [:api-panel-column-number])]
+   (let [mq (subscribe [:media-query-size])]
      (make-reaction (fn api-panel-section-columns []
-                      (into [] (partition-all (let [secs (count sections)]
-                                        (if (zero? (rem secs @cols))
-                                          (quot secs @cols)
-                                          (inc (quot secs @cols)))) sections)))))))
+                      (let [cols (view-utils/api-panel-column-number @mq)
+                            secs (if-not (= :narrow @mq)
+                                   sections
+                                   (filter #(= :symbols (get-in % [:additional-info :type])) sections))]
+                        (partition-all (let [secs (count sections)]
+                                         (if (zero? (rem secs cols))
+                                           (quot secs cols)
+                                           (inc (quot secs cols))))
+                                       secs)))))))
 
 (register-sub
  :api-panel-column-number
  (fn [db [_]]
    (let [mq (subscribe [:media-query-size])]
      (make-reaction (fn api-panel-column-number []
-                      (case @mq
-                        :narrow 1
-                        :medium 1
-                        :wide 2))))))
+                      (view-utils/api-panel-column-number @mq))))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Examples  ;;;
@@ -78,10 +81,8 @@
  (fn [db [_]]
    (let [mq (subscribe [:media-query-size])]
      (make-reaction (fn footer-column-number []
-                      (case @mq
-                        :narrow 1
-                        :medium 1
-                        :wide 2))))))
+                      (view-utils/footer-column-number @mq))))))
+
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
 ;;;;;;;;;;;;;;;;;;

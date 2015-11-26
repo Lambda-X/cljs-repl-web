@@ -25,7 +25,7 @@
                               #"^\."  "_." })
 
 (defn strip-namespace
-  "Given a cljs symbol, strip the namespace part. `sym` must be 
+  "Given a cljs symbol, strip the namespace part. `sym` must be
   fully qualified."
   [sym]
   (second (string/split (str sym) #"/" 2)))
@@ -191,3 +191,19 @@
   (assoc hiccup 1 (merge-with merge (when (map? (nth hiccup 1))
                                       (nth hiccup 1))
                               attr-map)))
+
+(defn api-panel-column-number
+  "Given a media-query, returns the number of columns for the
+  api-panel. Throws if media query is not one of the handled ones."
+  [media-query]
+  (case media-query
+    (:narrow :medium) 1
+    :wide 2))
+
+(defn footer-column-number
+  "Given a media-query, returns the number of columns for the
+  footer. Throws if media query is not one of the handled ones."
+  [media-query]
+  (case media-query
+    (:narrow :medium) 1
+    :wide 2))
