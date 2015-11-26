@@ -239,6 +239,7 @@ body,html {
     padding:5px;
     cursor:pointer;
     font-family: monospace;
+    font-size:0.8125em;
 }
 
 .api-panel-symbol-label {
