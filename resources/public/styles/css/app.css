@@ -20,37 +20,46 @@ body,html {
 }
 
 #app-center {
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    min-height: 310px;
-    height: 310px;
-    border-bottom: 10px solid #FFFFFF;
-    background: #363636 url(../images/header-bg.png) no-repeat center bottom;
-}
+    position: absolute;
+    top: 180px;
+    width: 100%;
+    min-height: 170px;
+    height: 170px;
 
-/* :narrow */
-@media only screen and (max-width: 480px) {
-    #app-center {
-        height: 136px;
-        min-height: 136px;
-        border-bottom: 2px solid #FFFFFF;
-    }
-}
-
-/* :medium */
-@media only screen and (min-width: 481px) and (max-width: 960px) {
-    #app-center {
-        height: 206px;
-        min-height: 206px;
-        border-bottom: 6px solid #FFFFFF;
-    }
 }
 
 #app-bottom {
     margin-top: 18px;
     margin-bottom: 30px;
+    padding-top: 160px;
 }
+
+/* :medium */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+    #app-center {
+        height: 130px;
+        min-height: 130px;
+    }
+
+    #app-bottom {
+        padding-top: 80px;
+    }
+}
+
+/* :narrow */
+@media only screen and (max-width: 480px) {
+    #app-center {
+        height: 85px;
+        min-height: 85px;
+        top: 100px;
+    }
+    #app-bottom {
+        padding-top: 40px;
+    }
+}
+
+
+
 
 /*************** loading *****************/
 
@@ -64,8 +73,9 @@ body,html {
 
 .loading-h2 {
     position: absolute;
+    font-size: 1.4em;
     left: 41%;
-    bottom: 50%;
+    bottom: 70%;
     margin: 0; /* or bootstrap will add it */
 }
 
@@ -146,6 +156,9 @@ body,html {
     background: #363636;
     text-align: center;
     border-bottom: 0; /* or bootstrap adds it */
+    border-bottom: 10px solid #FFFFFF;
+    padding-bottom: 200px;
+    background: #363636 url(../images/header-bg.png) no-repeat center bottom;
 }
 
 .page-header a {
@@ -169,7 +182,7 @@ body,html {
 /* :narrow */
 @media only screen and (max-width: 480px) {
     .page-header {
-        padding: 4px 0px 4px 0px;
+        padding: 4px 0px 120px 0px;
     }
 
     .page-header a {
@@ -193,6 +206,12 @@ body,html {
         margin: auto auto;
         background-position: center;
         background-repeat: no-repeat;
+    }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+    .page-header {
+        padding-bottom: 160px;
     }
 }
 
@@ -230,8 +249,6 @@ body,html {
         min-width: 220px;
         min-height: 75px;
     }
-    border: 1px solid #DDD;
-    border-radius: 5px;
 }
 
 /* This overrides hljs's style, therefore it must go after */
