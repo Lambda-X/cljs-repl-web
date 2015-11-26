@@ -537,13 +537,13 @@
                 :label "BLOG"]]]
     (if (= :wide @media-query-atom)
       [h-box
-       :size "1 1 50%"
+       :size "1 1 auto"
        :justify :end
        :align :center
        :gap "4px"
        :children links]
       [v-box
-       :size "1 1 50%"
+       :size "1 1 auto"
        :justify :center
        :align :center
        :gap "4px"
@@ -552,7 +552,7 @@
 (defn footer-component []
   (let [media-query (subscribe [:media-query-size])
         children [[box
-                   :size "1 1 50%"
+                   :size "1 1 auto"
                    :child [:strong "© Scalac Sp. z o.o. 2015"]]
                   [footer-links media-query]]]
     (fn footer-component-form2 []
