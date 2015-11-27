@@ -333,7 +333,7 @@ body,html {
 
 .api-panel-section {
     background-color: #65B58C;
-    padding: 10px;
+    padding: 10px 10px 10px 15px;
     margin-bottom: 10px;
     border-radius: 10px;
 }
@@ -357,6 +357,9 @@ body,html {
     .api-panel-section-title {
         text-align: center;
         display:block;
+    }
+    .api-panel-section {
+        padding: 10px;
     }
 }
 
