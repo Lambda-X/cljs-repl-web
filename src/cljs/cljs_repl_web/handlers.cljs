@@ -10,7 +10,7 @@
             [cljs-repl-web.gist :as gist]
             [cljs-repl-web.highlight :as highlight]))
 
-(trace-forms {:tracer (tracer :color "green")}
+;; (trace-forms {:tracer (tracer :color "green")}
 
 (def initial-state {:consoles {}
                     :gist-data {:gist-showing? false
@@ -20,9 +20,9 @@
 ;; TODO Middleware
 
 
-;;;;;;;;;;;;;;;;;;;;;;
-;;;    Console     ;;;
-;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+;;;    DB      ;;;
+;;;;;;;;;;;;;;;;;;
 
 (register-handler
  :reset-db
@@ -38,17 +38,20 @@
    (assoc initial-state
           :media-query-size (app/initial-media-query!))))
 
+;;;;;;;;;;;;;;;;;;;;;;
+;;;    Console     ;;;
+;;;;;;;;;;;;;;;;;;;;;;
+
 (register-handler
  :add-console
  (fn add-console [db [_ console-key console]]
    (assoc-in db [:consoles (name console-key)] {:console console
-                                                :empty?  true})))
+                                                :text ""})))
 
 (register-handler
- :text-added-to-console
- (fn text-added-to-console [db [_ console-key console]]
-   (assoc-in db [:consoles (name console-key) :empty?] false)))
-
+ :set-console-text
+ (fn set-console-text [db [_ console-key text]]
+   (app/assoc-console-text! db console-key text)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Console buttons ;;;
@@ -154,13 +157,6 @@
 (register-handler
  :media-match
  (fn media-match [db [_ media-matched]]
-   (println "Media query match: " media-matched)
    (assoc db :media-query-size media-matched)))
 
-(register-handler
- :media-unmatch
- (fn media-unmatch [db [_ media-unmatched]]
-   (println "Media query unmatch: " media-unmatched)
-   (dissoc db :media-query-size media-unmatched)))
-
-)
+;; )

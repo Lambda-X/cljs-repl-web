@@ -29,8 +29,7 @@
    (fn []
      (let [jqconsole (cljs/cljs-console! console-opts)]
        (dispatch [:add-console :cljs-console jqconsole])
-       (cljs/cljs-console-prompt! jqconsole)
-       (console/focus-console! jqconsole)))))
+       (cljs/cljs-console-prompt! jqconsole)))))
 
 (defn cljs-console-render []
   [:div.cljs-console.console])
@@ -159,20 +158,20 @@
 
 (defn gist-login-dialog
   []
-  (let [is-console-empty? (subscribe [:is-console-empty? :cljs-console])
+  (let [can-dump-gist? (subscribe [:can-dump-gist? :cljs-console])
         showing? (subscribe [:gist-showing?])]
     (fn []
-     [popover-anchor-wrapper
-      :showing? showing?
-      :position :right-center
-      :anchor   [md-icon-button
-                 :md-icon-name "zmdi-github"
-                 :on-click #(dispatch [:show-gist-login])
-                 :class "cljs-btn"
-                 :tooltip "Create Gist"
-                 :tooltip-position :left-center
-                 :disabled? @is-console-empty?]
-      :popover  [gist-login-dialog-body]])))
+      [popover-anchor-wrapper
+       :showing? showing?
+       :position :right-center
+       :anchor   [md-icon-button
+                  :md-icon-name "zmdi-github"
+                  :on-click #(dispatch [:show-gist-login])
+                  :class "cljs-btn"
+                  :tooltip "Create Gist"
+                  :tooltip-position :left-center
+                  :disabled? @can-dump-gist?]
+       :popover  [gist-login-dialog-body]])))
 
 (defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
