@@ -55,7 +55,7 @@
   [console-opts]
   (doto (console/new-jqconsole ".cljs-console"
                                (merge {:prompt-label (replumb/get-prompt)
-                                       :disable-auto-focus true
+                                       :disable-auto-focus false
                                        :continue-label "  "}
                                       console-opts))
     ;; (console/register-matchings! default-matchings)
