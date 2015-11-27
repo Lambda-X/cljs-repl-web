@@ -58,7 +58,6 @@
                   ["vcs" "commit"]
                   ["vcs" "tag"]
                   ["do" "clean" ["cljsbuild" "once" "min"]]
-                  ["shell" "rm" "-R" "resources/public/js/compiled/out"]
                   ["shell" "scripts/sftp-deploy-prod"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]

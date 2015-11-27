@@ -1,1 +1,2 @@
-scp -r resources/public/ arichiardi@clojurescript.io:/var/www/clojurescript.io/
+rm -RI resources/public/js/compiled/out
+rsync -rlDvz resources/public/ arichiardi@clojurescript.io:/var/www/clojurescript.io/
