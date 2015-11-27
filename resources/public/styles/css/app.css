@@ -73,8 +73,7 @@ body,html {
 
 .loading-h2 {
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     left: 0;
     right: 0;
     bottom: 70%;
@@ -86,8 +85,7 @@ body,html {
     position: absolute;
     bottom: -1px;
     border: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     left: 0;
     right: 0;
 }
@@ -103,7 +101,6 @@ body,html {
         width: 48px;
         height: 48px;
     }
-
 }
 
 /* :medium */
@@ -119,23 +116,23 @@ body,html {
 */
 
 @-moz-keyframes spin {
-    25%  { -moz-transform: translate(200px,0px) rotate(360deg); }
+    25%  { -moz-transform: translate(150px,0px) rotate(360deg); }
     50%  { -moz-transform: translate(0px,0px) rotate(0deg); }
-    75%  { -moz-transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { -moz-transform: translate(-150px,0px) rotate(-360deg); }
     100% { -moz-transform: translate(0px,0px) rotate(0deg); }
 }
 
 @-webkit-keyframes spin {
-    25%  { -webkit-transform: translate(200px,0px) rotate(360deg); }
+    25%  { -webkit-transform: translate(150px,0px) rotate(360deg); }
     50%  { -webkit-transform: translate(0px,0px) rotate(0deg); }
-    75%  { -webkit-transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { -webkit-transform: translate(-150px,0px) rotate(-360deg); }
     100% { -webkit-transform: translate(0px,0px) rotate(0deg); }
 }
 
 @keyframes spin {
-    25%  { transform: translate(200px,0px) rotate(360deg); }
+    25%  { transform: translate(150px,0px) rotate(360deg); }
     50%  { transform: translate(0px,0px) rotate(0deg); }
-    75%  { transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { transform: translate(-150px,0px) rotate(-360deg); }
     100% { transform: translate(0px,0px) rotate(0deg); }
 }
 
@@ -144,6 +141,20 @@ body,html {
     -moz-animation: spin 16s linear infinite;
     animation: spin 16s linear infinite;
 }
+
+/*
+@media only screen and (max-width: 480px) {
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    #loading-img {
+        -webkit-animation: spin 4s linear infinite;
+        -moz-animation: spin 4s linear infinite;
+        animation: spin 4s linear infinite;
+    }
+}
+*/
 
 /*************** header *****************/
 
