@@ -73,47 +73,41 @@ body,html {
 
 .loading-h2 {
     position: absolute;
-    font-size: 1.4em;
-    left: 41%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
     bottom: 70%;
     margin: 0; /* or bootstrap will add it */
+    color: #EEE;
 }
 
 #loading-div img {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     border: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 }
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
-    #loading-div {
-        position: relative;
-        width: 48px;
-        height: 100%;
-    }
-
     .loading-h2 {
-        display: none;
-        visibility: gone;
+        font-size: 0.8em;
+        bottom:90%;
     }
 
     #loading-div img {
         width: 48px;
         height: 48px;
-        bottom: 0;
-        border: 0;
     }
-
 }
 
 /* :medium */
 @media only screen and (min-width: 481px) and (max-width: 960px) {
     .loading-h2 {
-        position: absolute;
-        left: 27%;
-        bottom: 60%;
-        margin: 0; /* or bootstrap will add it */
+        font-size: 1.6em;
+        bottom: 90%;
     }
 }
 
@@ -122,23 +116,23 @@ body,html {
 */
 
 @-moz-keyframes spin {
-    25%  { -moz-transform: translate(200px,0px) rotate(360deg); }
+    25%  { -moz-transform: translate(150px,0px) rotate(360deg); }
     50%  { -moz-transform: translate(0px,0px) rotate(0deg); }
-    75%  { -moz-transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { -moz-transform: translate(-150px,0px) rotate(-360deg); }
     100% { -moz-transform: translate(0px,0px) rotate(0deg); }
 }
 
 @-webkit-keyframes spin {
-    25%  { -webkit-transform: translate(200px,0px) rotate(360deg); }
+    25%  { -webkit-transform: translate(150px,0px) rotate(360deg); }
     50%  { -webkit-transform: translate(0px,0px) rotate(0deg); }
-    75%  { -webkit-transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { -webkit-transform: translate(-150px,0px) rotate(-360deg); }
     100% { -webkit-transform: translate(0px,0px) rotate(0deg); }
 }
 
 @keyframes spin {
-    25%  { transform: translate(200px,0px) rotate(360deg); }
+    25%  { transform: translate(150px,0px) rotate(360deg); }
     50%  { transform: translate(0px,0px) rotate(0deg); }
-    75%  { transform: translate(-200px,0px) rotate(-360deg); }
+    75%  { transform: translate(-150px,0px) rotate(-360deg); }
     100% { transform: translate(0px,0px) rotate(0deg); }
 }
 
@@ -147,6 +141,20 @@ body,html {
     -moz-animation: spin 16s linear infinite;
     animation: spin 16s linear infinite;
 }
+
+/*
+@media only screen and (max-width: 480px) {
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    #loading-img {
+        -webkit-animation: spin 4s linear infinite;
+        -moz-animation: spin 4s linear infinite;
+        animation: spin 4s linear infinite;
+    }
+}
+*/
 
 /*************** header *****************/
 
@@ -232,7 +240,7 @@ body,html {
     .cljs-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
-        width: 220px;
+        width: 300px;
         height: 100px;
         min-width: 120px;
         min-height: 80px;
@@ -325,7 +333,7 @@ body,html {
 
 .api-panel-section {
     background-color: #65B58C;
-    padding: 10px;
+    padding: 10px 10px 10px 15px;
     margin-bottom: 10px;
     border-radius: 10px;
 }
@@ -349,6 +357,9 @@ body,html {
     .api-panel-section-title {
         text-align: center;
         display:block;
+    }
+    .api-panel-section {
+        padding: 10px;
     }
 }
 

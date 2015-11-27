@@ -535,16 +535,16 @@
                 :target "_blank"
                 :class "btn app-footer-btn"
                 :label "BLOG"]]]
-    (if (= :wide @media-query-atom)
-      [h-box
-       :size "1 1 auto"
-       :justify :end
-       :align :center
-       :gap "4px"
-       :children links]
+    (if (= :narrow @media-query-atom)
       [v-box
        :size "1 1 auto"
        :justify :center
+       :align :center
+       :gap "4px"
+       :children links]
+      [h-box
+       :size "1 1 auto"
+       :justify :end
        :align :center
        :gap "4px"
        :children links])))
