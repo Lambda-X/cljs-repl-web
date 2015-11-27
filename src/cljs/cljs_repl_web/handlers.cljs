@@ -79,17 +79,18 @@
  :show-gist-login
  (fn show-gist-login [db [_]]
    (let [auth-data (app/gist-auth-data db)
-         save-auth-data (app/gist-save-auth-data db)]
+         saved-username (app/gist-saved-username db)]
      (assoc db :gist-data {:gist-showing? true
                            :auth-data (assoc auth-data :password "")
-                           :save-auth-data auth-data}))))
+                           :saved-username (:username auth-data)}))))
 
 (register-handler
  :hide-gist-login
  (fn hide-gist-login [db [_]]
-   (let [save-auth-data (app/gist-save-auth-data db)]
+   (let [saved-username (app/gist-saved-username db)]
          (assoc db :gist-data {:gist-showing? false
-                               :auth-data save-auth-data}))))
+                               :auth-data {:username saved-username
+                                           :password ""}}))))
 
 (register-handler
  :create-gist
@@ -106,8 +107,8 @@
        (gist/create-gist username password text success-handler error-handler))
 
      (assoc db :gist-data {:gist-showing? false
-                           :auth-data @auth-data
-                           :save-auth-data @auth-data}))))
+                           :auth-data (dissoc @auth-data :password)
+                           :saved-username (:username @auth-data)}))))
 
 (register-handler
  :reset-gist-error-msg

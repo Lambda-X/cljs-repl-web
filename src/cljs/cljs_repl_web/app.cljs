@@ -49,18 +49,17 @@
   (get-in db [:gist-data :gist-showing?]))
 
 (defn gist-auth-data
-  "Given a db, returns the temp authorization data for gist.
+  "Given a db, returns the authorization data for gist.
   It is not bound to any specific console. It is used to
   retrieve the data from the form."
   [db]
   (get-in db [:gist-data :auth-data]))
 
-(defn gist-save-auth-data
-  "Given a db, returns the saved authorization data for gist.
-  It is not bound to any specific console. It is used to keep
-  info for the next login."
+(defn gist-saved-username
+  "Given a db, returns the saved username (gist login). It is not bound
+  to any specific console. It is used to keep info for the next login."
   [db]
-  (get-in db [:gist-data :save-auth-data]))
+  (get-in db [:gist-data :saved-username]))
 
 (defn gist-error-msg
   "Given a db, returns the error after an unsuccessful attempt
