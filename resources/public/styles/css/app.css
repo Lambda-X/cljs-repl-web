@@ -73,36 +73,35 @@ body,html {
 
 .loading-h2 {
     position: absolute;
-    font-size: 1.4em;
-    left: 41%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
     bottom: 70%;
     margin: 0; /* or bootstrap will add it */
+    color: #EEE;
 }
 
 #loading-div img {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     border: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
-    #loading-div {
-        position: relative;
-        width: 48px;
-        height: 100%;
-    }
-
     .loading-h2 {
-        display: none;
-        visibility: gone;
+        font-size: 0.8em;
+        bottom:90%;
     }
 
     #loading-div img {
         width: 48px;
         height: 48px;
-        bottom: 0;
-        border: 0;
     }
 
 }
@@ -110,10 +109,8 @@ body,html {
 /* :medium */
 @media only screen and (min-width: 481px) and (max-width: 960px) {
     .loading-h2 {
-        position: absolute;
-        left: 27%;
-        bottom: 60%;
-        margin: 0; /* or bootstrap will add it */
+        font-size: 1.6em;
+        bottom: 90%;
     }
 }
 
