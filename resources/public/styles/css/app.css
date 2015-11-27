@@ -240,7 +240,7 @@ body,html {
     .cljs-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
-        width: 220px;
+        width: 300px;
         height: 100px;
         min-width: 120px;
         min-height: 80px;
