@@ -1,0 +1,1 @@
+scp -r resources/public/ arichiardi@clojurescript.io:/var/www/clojurescript.io/
