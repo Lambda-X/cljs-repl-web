@@ -101,12 +101,6 @@
                     (app/gist-auth-data @db)))))
 
 (register-sub
- :gist-save-auth-data
- (fn [db [_]]
-   (make-reaction (fn gist-save-auth-data []
-                    (app/gist-save-auth-data @db)))))
-
-(register-sub
  :gist-error-msg
  (fn [db [_]]
    (make-reaction (fn gist-error-msg []

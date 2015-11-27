@@ -599,5 +599,4 @@
            :size "1 1 auto"
            :justify :center
            :gap "10px"
-           :children children])) ))
-  )
+           :children children])))))
