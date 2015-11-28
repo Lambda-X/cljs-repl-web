@@ -1,6 +1,7 @@
 (ns cljs-repl-web.console.cljs
   (:require [clojure.string :as string]
             [replumb.core :as replumb]
+            [replumb.repl :as replumb-repl]
             [re-frame.core :refer [subscribe dispatch]]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.highlight :as highlight]))
@@ -38,14 +39,36 @@
                                                        (re-pattern (replumb/get-prompt)) 2)))
          0 "")))
 
+(defn cljs-console-multiline?
+  "Following jq-console specs:
+
+  multiline_callback: If specified, this function is called when the
+  user presses Enter to check whether the input should continue to the
+  next line. The function must return one of the following values:
+
+    false: the input operation is completed.
+
+    0: the input continues to the next line with the current indent.
+
+    N (int): the input continues to the next line, and the current
+    indent is adjusted by N, e.g. -2 to unindent two levels."
+  [input]
+  (try
+    (replumb-repl/repl-read-string input)
+    false
+    (catch :default _
+      0)))
+
 (defn cljs-console-prompt!
   [console]
-  (doto console
-    (.Prompt true (fn [input]
-                    (cljs-read-eval-print! console input)
-                    (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
-                    (cljs-console-prompt! console)
-                    (dispatch [:set-console-text :cljs-console input]))))
+  (.Prompt console true
+           (fn [input]
+             (cljs-read-eval-print! console input)
+             (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
+             (cljs-console-prompt! console)
+             (dispatch [:set-console-text :cljs-console input]))
+           cljs-console-multiline?)
+
   (when-let [example @(subscribe [:get-next-example :cljs-console])]
     (cljs-console-set-prompt-text! console example)
     (dispatch [:delete-first-example :cljs-console])))
