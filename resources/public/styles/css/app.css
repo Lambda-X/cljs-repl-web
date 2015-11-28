@@ -58,9 +58,6 @@ body,html {
     }
 }
 
-
-
-
 /*************** loading *****************/
 
 #loading-div {
@@ -141,20 +138,6 @@ body,html {
     -moz-animation: spin 16s linear infinite;
     animation: spin 16s linear infinite;
 }
-
-/*
-@media only screen and (max-width: 480px) {
-    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-
-    #loading-img {
-        -webkit-animation: spin 4s linear infinite;
-        -moz-animation: spin 4s linear infinite;
-        animation: spin 4s linear infinite;
-    }
-}
-*/
 
 /*************** header *****************/
 
@@ -456,4 +439,64 @@ table[class^="code-tbl-"], table[class*=" code-tbl-"] {
 table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     padding-right: 5px;
     vertical-align: top;
+}
+
+.ribbon {
+    background-color: #87D7AE;
+    overflow: hidden;
+    white-space: nowrap;
+    /* top left corner */
+    position: absolute;
+    width: 220px;
+    left: -50px;
+    top: 40px;
+    /* 45 deg ccw rotation */
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    /* shadow */
+    -webkit-box-shadow: 0 0 10px #888;
+    -moz-box-shadow: 0 0 10px #888;
+    box-shadow: 0 0 10px #888;
+}
+
+.ribbon a {
+    border: 1px solid #CCD7D1;
+    color: #FFFFFF;
+    display: block;
+    font: bold 81.25% 'Roboto';
+    margin: 1px 0;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    /* shadow */
+    text-shadow: 0 0 5px #444;
+}
+
+/* :narrow */
+@media only screen and (max-width: 480px) {
+    .ribbon {
+        width: 140px;
+        left: -40px;
+        top: 16px;
+    }
+
+    .ribbon a {
+        padding: 6px 36px;
+    }
+}
+
+/* :medium */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+    .ribbon {
+        width: 180px;
+        left: -46px;
+        top: 28px;
+    }
+
+    .ribbon a {
+        padding: 6px 36px;
+    }
 }
