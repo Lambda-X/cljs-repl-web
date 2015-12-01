@@ -5,7 +5,7 @@ body,html {
 
 .app-main {
     padding: 0 20px 0 20px;
-    margin 0;
+    margin: 0;
 }
 
 /* :narrow */
@@ -40,10 +40,6 @@ body,html {
         height: 130px;
         min-height: 130px;
     }
-
-    #app-bottom {
-        padding-top: 80px;
-    }
 }
 
 /* :narrow */
@@ -54,7 +50,7 @@ body,html {
         top: 100px;
     }
     #app-bottom {
-        padding-top: 40px;
+        padding-top: 140px;
     }
 }
 
@@ -188,7 +184,7 @@ body,html {
 
     .page-header h1 small {
         display: none;
-        visibility: gone;
+        visibility: hidden;
     }
 
     .logo {
@@ -224,7 +220,7 @@ body,html {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 300px;
-        height: 100px;
+        height: 200px;
         min-width: 120px;
         min-height: 80px;
     }
@@ -235,8 +231,8 @@ body,html {
     .cljs-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
-        width: 420px;
-        height: 200px;
+        width: 460px;
+        height: 300px;
         min-width: 220px;
         min-height: 75px;
     }
@@ -258,6 +254,12 @@ body,html {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 20px;
+}
+
+@media only screen and (max-width: 960px) {
+    .cljs-console pre {
+        padding: 10px;
+    }
 }
 
 .cljs-btn > i {
