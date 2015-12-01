@@ -57,7 +57,7 @@
                                     deftype defrecord reify this-as declare ns))])
               (Section. "JavaScript Interop" {:type :texts}
                         [(Topic. "method call" '("(.the-method target-object args...)"))
-                         (Topic. "property access" '("(.-property target-object -property)"))
+                         (Topic. "property access" '("(.-property target-object)"))
                          (Topic. "property setting" '("(set! (.-title js/document) \"Hi!\")"))
                          (Topic. "direct javascript" '("(js/alert \"Hello world!\")"))
                          (Topic. "external library use" '("(.text (js/jQuery \"#title\") \"ClojureScript Rocks!\")"))])]})
