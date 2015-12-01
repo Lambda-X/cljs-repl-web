@@ -56,7 +56,7 @@
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
-                  ["vcs" "tag"]
+                  ["vcs" "tag" "--no-sign"]
                   ["do" "clean" ["cljsbuild" "once" "min"]]
                   ["shell" "scripts/sftp-deploy-prod"]
                   ["change" "version" "leiningen.release/bump-version"]
