@@ -1,4 +1,4 @@
-(defproject cljs-repl-web "0.2.2-SNAPSHOT"
+(defproject cljs-repl-web "0.2.2"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [replumb/replumb "0.1.2"]
