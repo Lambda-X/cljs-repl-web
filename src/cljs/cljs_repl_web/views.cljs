@@ -105,9 +105,15 @@
     (utils/open-new-window (:html_url response))
     (dispatch [:set-gist-error-msg "An error occured: unable to create gist."])))
 
+(defn gist-position
+  "Calulates the gist position depending on the media query"
+  [media-query]
+  (if (= :narrow @media-query) :below-center :right-center))
+
 (defn gist-login-dialog-body
   []
   (let [showing? (subscribe [:gist-showing?])
+        media-query (subscribe [:media-query-size])
         auth-data (subscribe [:gist-auth-data])
         ok-fn #(dispatch [:create-gist :cljs-console auth-data on-gist-created gist-error-handler])
         cancel-fn #(dispatch [:hide-gist-login])]
@@ -116,7 +122,7 @@
        [popover-content-wrapper
         :showing? showing?
         :on-cancel cancel-fn
-        :position :right-center
+        :position (gist-position media-query)
         :width "280"
         :backdrop-opacity 0.4
         :title "Github login"
@@ -159,11 +165,12 @@
 (defn gist-login-dialog
   []
   (let [can-dump-gist? (subscribe [:can-dump-gist? :cljs-console])
-        showing? (subscribe [:gist-showing?])]
+        showing? (subscribe [:gist-showing?])
+        media-query (subscribe [:media-query-size])]
     (fn []
       [popover-anchor-wrapper
        :showing? showing?
-       :position :right-center
+       :position (gist-position media-query)
        :anchor   [md-icon-button
                   :md-icon-name "zmdi-github"
                   :on-click #(dispatch [:show-gist-login])
@@ -344,64 +351,65 @@
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
   [showing-atom position-atom sym-doc-map]
-  (let [{name :name
-         full-name :full-name
-         desc :description
-         docstring :docstring
-         examples-htmls :examples-htmls
-         examples-strings :examples-strings
-         sign :signature
-         related :related} sym-doc-map
-        desc (or desc docstring) ; some symbols don't have a description so we use
+  (let [media-query (subscribe [:media-query-size])]
+    (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
+      (let [{name :name
+             full-name :full-name
+             desc :description
+             docstring :docstring
+             examples-htmls :examples-htmls
+             examples-strings :examples-strings
+             sign :signature
+             related :related} sym-doc-map
+             desc (or desc docstring) ; some symbols don't have a description so we use
                                         ; the docstring instead; docstring is a regular string,
                                         ; without markdown. Nonetheless, it will be passed to
                                         ; md->react->component function to gain some basic html
                                         ; formatting (like paragraphs)
-        examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-        popover-width  400
-        popover-height 400
-        popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
-    (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
-      [popover-content-wrapper
-       :showing? showing-atom
-       :position @position-atom
-       :on-cancel (handler-fn (reset! showing-atom false))
-       :style {:max-height (str popover-height)
-               :max-width (str popover-width)}
-       :backdrop-opacity 0.1
-       :close-button? false
-       :title [h-box
-               :gap "6px"
-               :align :center
-               :children [[title
-                           :label name
-                           :level :level4]
-                          [md-icon-button
-                           :md-icon-name "zmdi-info"
-                           :tooltip "See online documentation"
-                           :tooltip-position :right-center
-                           :size :smaller
-                           :style {:justify-content :center}
-                           :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
-       :body [(fn []
-                [scroller
-                 :size "1 1 auto"
-                 :max-width (str popover-width)
-                 :max-height (str (- popover-height 50))
-                 :scroll :auto
-                 :child [v-box
-                         :size "1 1 auto"
-                         :gap "8px"
-                         :width (str popover-content-width)
-                         :style {:padding "4px"}
-                         :children [(when (not-empty sign)
-                                      [api-signatures sign])
-                                    (when (not-empty desc)
-                                      [api-symbol-description desc])
-                                    (when (not-empty related)
-                                      [api-related-symbols related])
-                                    (when (not-empty examples)
-                                      [api-examples showing-atom examples])]]])]])))
+             examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+             popover-width  (if (= :narrow @media-query) 280 400)
+             popover-height (if (= :narrow @media-query) 250 400)
+             popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+        [popover-content-wrapper
+         :showing? showing-atom
+         :position @position-atom
+         :on-cancel (handler-fn (reset! showing-atom false))
+         :style {:max-height (str popover-height)
+                 :max-width (str popover-width)}
+         :backdrop-opacity 0.1
+         :close-button? (= :narrow @media-query)
+         :title [h-box
+                 :gap "6px"
+                 :align :center
+                 :children [[title
+                             :label name
+                             :level :level4]
+                            [md-icon-button
+                             :md-icon-name "zmdi-info"
+                             :tooltip "See online documentation"
+                             :tooltip-position :right-center
+                             :size :smaller
+                             :style {:justify-content :center}
+                             :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
+         :body [(fn []
+                  [scroller
+                   :size "1 1 auto"
+                   :max-width (str popover-width)
+                   :max-height (str (- popover-height 50))
+                   :scroll :auto
+                   :child [v-box
+                           :size "1 1 auto"
+                           :gap "8px"
+                           :width (str popover-content-width)
+                           :style {:padding "4px"}
+                           :children [(when (not-empty sign)
+                                        [api-signatures sign])
+                                      (when (not-empty desc)
+                                        [api-symbol-description desc])
+                                      (when (not-empty related)
+                                        [api-related-symbols related])
+                                      (when (not-empty examples)
+                                        [api-examples showing-atom examples])]]])]]))))
 
 (defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
