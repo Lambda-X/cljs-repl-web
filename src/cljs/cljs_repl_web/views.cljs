@@ -367,8 +367,8 @@
                                         ; md->react->component function to gain some basic html
                                         ; formatting (like paragraphs)
              examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-             popover-width  (if (= :narrow @media-query) 250 400)
-             popover-height (if (= :narrow @media-query) 200 400)
+             popover-width  (if (= :narrow @media-query) 280 400)
+             popover-height (if (= :narrow @media-query) 250 400)
              popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
         [popover-content-wrapper
          :showing? showing-atom
@@ -377,7 +377,7 @@
          :style {:max-height (str popover-height)
                  :max-width (str popover-width)}
          :backdrop-opacity 0.1
-         :close-button? false
+         :close-button? (= :narrow @media-query)
          :title [h-box
                  :gap "6px"
                  :align :center
