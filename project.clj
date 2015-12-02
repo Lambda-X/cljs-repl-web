@@ -49,6 +49,9 @@
                                    :output-dir "resources/public/js/compiled/out/min"
                                    :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
                                    :source-map-path "public/js/compiled"
+                                   ;; AR - from https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting
+                                   :optimize-constants true
+                                   :static-fns true
                                    :source-map-timestamp true
                                    :optimizations :simple
                                    :pretty-print false}}]}
