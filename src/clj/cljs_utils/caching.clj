@@ -6,12 +6,6 @@
 (def out-dir  "resources/public/js-cache/")
 (def filename "core.cljs.cache.aot.json")
 
-(defn mkdirp [path]
-  (let [dir (java.io.File. path)]
-    (if (.exists dir)
-      true
-      (.mkdirs dir))))
-
 (defn dump-core-analysis-cache
   [out-path]
   (let [cache (read-string
@@ -24,6 +18,5 @@
 (defn -main
   [& args]
   (println "Starting dump...")
-  (mkdirp out-dir)
   (dump-core-analysis-cache (str out-dir filename))
   (println "End."))
