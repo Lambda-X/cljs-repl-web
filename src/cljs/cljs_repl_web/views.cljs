@@ -13,7 +13,7 @@
             [cljs-repl-web.console :as console]
             [cljs-repl-web.console.cljs :as cljs]
             [cljs-repl-web.cljs-api :as api]
-            [cljs-repl-web.cljs-api.utils :as api-utils]
+            [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]))
 
