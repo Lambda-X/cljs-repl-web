@@ -53,6 +53,8 @@
                                    :optimize-constants true
                                    :static-fns true
                                    :source-map-timestamp true
+                                   ; https://github.com/clojure/clojurescript/wiki/Compiler-Options#elide-asserts
+                                   :elide-asserts true
                                    :optimizations :simple
                                    :pretty-print false}}]}
 
