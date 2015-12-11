@@ -29,7 +29,7 @@
    (fn []
      (let [jqconsole (cljs/cljs-console! console-opts)]
        (dispatch [:add-console :cljs-console jqconsole])
-       (cljs/cljs-console-prompt! jqconsole)))))
+       (cljs/cljs-console-prompt! jqconsole cljs/repl-options)))))
 
 (defn cljs-console-render []
   [:div.cljs-console.console])
