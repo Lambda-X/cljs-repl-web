@@ -61,7 +61,7 @@
       0)))
 
 (def repl-options "Static set of options for replumb.core/read-eval-call"
-  (merge (replumb/browser-options ["/js/compiled/out/min"]
+  (merge (replumb/browser-options [(str io/base-path "/js/compiled/out/min")]
                                   io/fetch-file!)
          {:warning-as-error true
           :verbose false}))

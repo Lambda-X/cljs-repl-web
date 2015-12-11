@@ -5,7 +5,10 @@
   (:import [goog.events EventType]
            [goog.net XhrIo]))
 
-(def cache-url "/js-cache/core.cljs.cache.aot.json")
+(def base-path "Website base path" "/")
+;; (def base-path "Website base path" "/test")
+
+(def cache-url (str base-path "/js-cache/core.cljs.cache.aot.json"))
 
 ;;;;;;;;;;
 ;;  IO  ;;
