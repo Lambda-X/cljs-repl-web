@@ -1,2 +1,3 @@
-rm -RI resources/public/js/compiled/out
+# AR - We need out now that replumb supports require
+# rm -RI resources/public/js/compiled/out
 rsync -rlDvz resources/public/ arichiardi@clojurescript.io:/var/www/clojurescript.io/
