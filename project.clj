@@ -1,7 +1,7 @@
 (defproject cljs-repl-web "0.2.4-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
-                 [replumb/replumb "0.1.2"]
+                 [replumb/replumb "0.1.3-SNAPSHOT"]
                  [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
@@ -47,13 +47,14 @@
                                    :closure-defines {:goog.DEBUG false}
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out/min"
+                                   :asset-path "/js/compiled/out/min"
                                    :source-map "resources/public/js/compiled/cljs-repl-web.js.map"
                                    :source-map-path "public/js/compiled"
                                    ;; AR - from https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting
                                    :optimize-constants true
                                    :static-fns true
                                    :source-map-timestamp true
-                                   ; https://github.com/clojure/clojurescript/wiki/Compiler-Options#elide-asserts
+                                   ;; https://github.com/clojure/clojurescript/wiki/Compiler-Options#elide-asserts
                                    :elide-asserts true
                                    :optimizations :simple
                                    :pretty-print false

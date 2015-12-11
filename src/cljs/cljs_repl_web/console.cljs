@@ -1,7 +1,8 @@
 (ns cljs-repl-web.console
   (:require [clojure.string :as string]
             [cljsjs.jqconsole]
-            [replumb.core :as replumb]))
+            [replumb.core :as replumb])
+  (:import goog.net.XhrIo))
 
 (defn new-jqconsole
   "Creates a new instance of JQConsole which loads on the input

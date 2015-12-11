@@ -4,6 +4,7 @@
             [replumb.repl :as replumb-repl]
             [re-frame.core :refer [subscribe dispatch]]
             [cljs-repl-web.console :as console]
+            [cljs-repl-web.io :as io]
             [cljs-repl-web.highlight :as highlight]))
 
 ;; ;TODO: commented out for now, because of hljs
@@ -19,9 +20,9 @@
     (write-fn console (replumb/unwrap-result result))))
 
 (defn cljs-read-eval-print!
-  [console line]
+  [console repl-opts line]
   (try
-    (replumb/read-eval-call (partial handle-result! console) line)
+    (replumb/read-eval-call repl-opts (partial handle-result! console) line)
     (catch js/Error err
       (println "Caught js/Error during read-eval-print: " err)
       (console/write-exception! console err))))
@@ -59,16 +60,21 @@
     (catch :default _
       0)))
 
+(def repl-options "Static set of options for replumb.core/read-eval-call"
+  (merge (replumb/browser-options [(str io/base-path "/js/compiled/out/min")]
+                                  io/fetch-file!)
+         {:warning-as-error true
+          :verbose false}))
+
 (defn cljs-console-prompt!
-  [console]
+  [console repl-opts]
   (.Prompt console true
            (fn [input]
-             (cljs-read-eval-print! console input)
+             (cljs-read-eval-print! console repl-opts input)
              (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
-             (cljs-console-prompt! console)
+             (cljs-console-prompt! console repl-opts)
              (dispatch [:set-console-text :cljs-console input]))
            cljs-console-multiline?)
-
   (when-let [example @(subscribe [:get-next-example :cljs-console])]
     (cljs-console-set-prompt-text! console example)
     (dispatch [:delete-first-example :cljs-console])))
@@ -88,10 +94,10 @@
 
 (defn cljs-reset-console-and-prompt!
   "Resets the console and forces the focus onto it."
-  [console]
+  [console repl-opts]
   (console/reset-console! console)
   (console/focus-console! console)
-  (cljs-console-prompt! console))
+  (cljs-console-prompt! console repl-opts))
 
 (defn cljs-clear-console!
   "Clears the console and put forces the focus onto it."
