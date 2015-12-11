@@ -6,7 +6,8 @@
             [clojure.java.io :as io]
             [endophile.core :as e]
             [markdown.core :as md]
-            [markdown.transformers :as mdt]))
+            [markdown.transformers :as mdt]
+            [cljs-api.utils :as api-utils]))
 
 (def api-edn-keyseqs #{[:release :cljs-version]
                        [:release :cljs-date]
@@ -175,11 +176,13 @@
   (tr-edn/read-string (slurp (io/file (io/resource "cljs-api.edn")))))
 
 (defn api-edn->api-map
-  "Given the cljs edn map, generate a new map with only interesting
-  keys (in the form of a req of keyseq)"
-  [cljs-api-edn]
+  "Given the cljs edn map and selected symbols, generate a new map for those 
+  symbols with only interesting keys (in the form of a req of keyseq)."
+  [cljs-api-edn symbols]
   (let [filtered-map (filter-kv api-edn-keyseqs cljs-api-edn)
-        selected-symbols (filter #(get selected-namespaces (-> % second :ns)) (:symbols filtered-map))
+        selected-symbols (->> (:symbols filtered-map)
+                              (filter #(get selected-namespaces (-> % second :ns)))
+                              (filter #(get symbols (-> % second :name symbol))))
         symbol-name-map (into {} (api-symbols->name-map selected-symbols))]
     (assoc filtered-map
            :symbols (reduce (fn [symbol-map [symbol-k symbol-v]]
@@ -202,13 +205,17 @@
         (exit 255)))
   (let [file-name "src/cljs/cljs_repl_web/cljs_api.cljs"
         api-edn (load-cljs-api-edn)
-        new-edn-map (api-edn->api-map api-edn)
+        sections (:sections api-utils/custom-api-map)
+        sections-with-symbols (filter #(= :symbols (-> % :additional-info :type)) sections)
+        selected-symbols (->> sections-with-symbols (mapcat :topics) (mapcat :symbols) set)
+        new-edn-map (api-edn->api-map api-edn selected-symbols)
         file-content (str "(ns cljs-repl-web.cljs-api)\n\n"
                           "(def cljs-api-edn " (with-out-str (pprint new-edn-map)) ")")]
-    (try
+    (try   
       (spit file-name file-content :encoding "UTF-8")
       (catch Exception e
         (.printStackTrace e *err*)
         (exit 254)))
-    (println "Cljs api dumped in" file-name))
+    (println "Cljs api dumped in" file-name)
+    (println "Generated docs for" (count (:symbols new-edn-map)) "symbols"))
   (exit 0))

@@ -1,4 +1,4 @@
-(ns cljs-repl-web.cljs-api.utils)
+(ns cljs-api.utils)
 
 (defrecord Section [title additional-info topics])
 (defrecord Topic [title symbols])

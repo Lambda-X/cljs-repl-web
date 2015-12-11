@@ -3,6 +3,7 @@
             [replumb.core :as replumb]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
+            [cljs-repl-web.cache :as cache]
             [cljs-repl-web.console.cljs :as cljs]
             [cljs-repl-web.console :as console]
             [cljs-repl-web.app :as app]
@@ -34,6 +35,10 @@
  :initialize
  (fn initialize [_ _]
    (println "Initializing app...")
+   ;; we load the cljs core cache manually in order to reduce the app size
+   ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
+   ;; see also related issue in replbum https://github.com/ScalaConsultants/replumb/issues/42
+   (cache/get-cljs-core-cache)
    (app/register-media-queries!)
    (assoc initial-state
           :media-query-size (app/initial-media-query!))))
