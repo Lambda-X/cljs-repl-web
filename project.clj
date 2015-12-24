@@ -65,7 +65,6 @@
                   ["vcs" "commit"]
                   ["vcs" "tag" "--no-sign"]
                   ["do" "clean" ["cljsbuild" "once" "min"]]
-                  ["shell" "scripts/sftp-deploy-prod"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
                   ["vcs" "push"]]
