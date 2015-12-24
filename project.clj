@@ -1,7 +1,7 @@
 (defproject cljs-repl-web "0.2.6-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
-                 [replumb/replumb "0.1.3-SNAPSHOT"]
+                 [replumb/replumb "0.1.4"]
                  [cljsjs/jqconsole "2.13.1-0"]
                  [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
@@ -12,7 +12,7 @@
                  [markdown-clj "0.9.78"]
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
-                 [org.clojure/tools.reader "1.0.0-alpha1"]
+                 [org.clojure/tools.reader "1.0.0-alpha2"]
                  [cljsjs/enquire "2.1.2-0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
@@ -89,7 +89,7 @@
             "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.11"]
+                                  [org.clojure/tools.nrepl "0.2.12"]
                                   [binaryage/devtools "0.4.1"]
                                   [org.clojars.stumitchell/clairvoyant "0.1.0-SNAPSHOT"]
                                   [day8/re-frame-tracer "0.1.0-SNAPSHOT"]]
