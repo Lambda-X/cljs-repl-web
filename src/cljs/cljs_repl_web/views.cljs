@@ -417,31 +417,31 @@
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)]
     (fn api-symbol-form2 [symbol]
-     [box
-      :size "0 1 auto"
-      :align :center
-      :class "api-panel-symbol-label-box"
-      :child (if-let [symbol (get-symbol-doc-map (str symbol))]
-               [popover-anchor-wrapper
-                :showing? showing?
-                :position @popover-position
-                :anchor [button
-                         :class "btn btn-default api-panel-symbol-button"
-                         :label (:name symbol)
-                         ;; we use :attr's `:on-click` because button's `on-click` accepts
-                         ;; a parametless function and we need the mouse click coordinates
-                         :attr { :on-click
-                                (handler-fn
-                                 ;; later we can refactor it into re-frame
-                                 ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
-                                 (reset! popover-position
-                                         (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
-                                 (reset! showing? true))}]
-                :popover [symbol-popover showing? popover-position symbol]]
-               [label
-                :label (str symbol)
-                :class "api-panel-symbol-label"
-                :style (flex-child-style "80 1 auto")])])))
+      [box
+       :size "0 1 auto"
+       :align :center
+       :class "api-panel-symbol-label-box"
+       :child (if-let [symbol (get-symbol-doc-map (str symbol))]
+                [popover-anchor-wrapper
+                 :showing? showing?
+                 :position @popover-position
+                 :anchor [button
+                          :class "btn btn-default api-panel-symbol-button"
+                          :label (:name symbol)
+                          ;; we use :attr's `:on-click` because button's `on-click` accepts
+                          ;; a parametless function and we need the mouse click coordinates
+                          :attr { :on-click
+                                 (handler-fn
+                                  ;; later we can refactor it into re-frame
+                                  ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                                  (reset! popover-position
+                                          (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                                  (reset! showing? true))}]
+                 :popover [symbol-popover showing? popover-position symbol]]
+                [label
+                 :label (str symbol)
+                 :class "api-panel-symbol-label"
+                 :style (flex-child-style "80 1 auto")])])))
 
 (defn section-title-component
   [section-title]
@@ -598,7 +598,8 @@
                        :style {:overflow "hidden"}
                        :child [cljs-console-component]]]]
         (if (= :narrow @media-query)
-          [v-box
+          [(with-meta v-box
+             {:component-did-mount #(dispatch [:focus-on-load %])})
            :size "1 1 auto"
            :align :center
            :gap "10px"
