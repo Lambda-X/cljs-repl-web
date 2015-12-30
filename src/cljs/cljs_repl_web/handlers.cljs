@@ -1,5 +1,6 @@
 (ns cljs-repl-web.handlers
   (:require [re-frame.core :refer [register-handler]]
+            [reagent.core :as r]
             [replumb.core :as replumb]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
@@ -166,3 +167,14 @@
    (assoc db :media-query-size media-matched)))
 
 ;; )
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+;;;  Side Effects  ;;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+(register-handler
+ :focus-on-load
+ (fn focus-on-load [db [_ id]]
+   (.scrollIntoView (r/dom-node id))
+   db))
