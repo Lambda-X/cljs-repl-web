@@ -20,8 +20,8 @@
     focus.
 
   See https://github.com/replit/jq-console#instantiating"
-  [selector {:keys [welcome-string prompt-label continue-label disable-auto-focus]}]
-  (-> (js/$ selector) (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
+  [dom-node {:keys [welcome-string prompt-label continue-label disable-auto-focus]}]
+  (-> dom-node js/$ (.jqconsole welcome-string prompt-label continue-label disable-auto-focus)))
 
 (defn write!
   "Writes a message to the input console. Type is used as class inside
