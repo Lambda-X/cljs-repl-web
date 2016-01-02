@@ -15,21 +15,27 @@
 
 (register-sub
  :console-created?
- (fn [db [_ console-key]]
+ (fn [db [_ console-id]]
    (make-reaction (fn console-created? []
-                    (app/console-created? @db console-key)))))
+                    (app/console-created? @db console-id)))))
 
 (register-sub
  :get-console
- (fn [db [_ console-key]]
+ (fn [db [_ console-id]]
    (make-reaction (fn get-console []
-                    (app/console @db console-key)))))
+                    (app/console @db console-id)))))
+
+(register-sub
+ :get-consoles
+ (fn [db _]
+   (make-reaction (fn []
+                    (:consoles @db)))))
 
 (register-sub
  :console-text
- (fn [db [_ console-key]]
+ (fn [db [_ console-id]]
    (make-reaction (fn console-text []
-                    (app/console-text @db console-key)))))
+                    (app/console-text @db console-id)))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     APIs    ;;;
@@ -69,9 +75,9 @@
 
 (register-sub
  :example-mode?
- (fn [db [_ console-key]]
+ (fn [db [_ console-id]]
    (make-reaction (fn example-mode? []
-                    (not (empty? (app/interactive-examples @db console-key)))))))
+                    (not (empty? (app/interactive-examples @db console-id)))))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Footer    ;;;
@@ -108,9 +114,9 @@
 
 (register-sub
  :can-dump-gist?
- (fn [db [_ console-key]]
-   (let [console (subscribe [:get-console console-key])
-         console-text (subscribe [:console-text console-key])]
+ (fn [db [_ console-id]]
+   (let [console (subscribe [:get-console console-id])
+         console-text (subscribe [:console-text console-id])]
      (make-reaction (fn can-save-gist? []
                       (let [_ @console-text] ;; using this just as trigger
                         (some-> @console (console/dump-console!) empty?)))))))

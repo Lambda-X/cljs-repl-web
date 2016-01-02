@@ -13,7 +13,7 @@
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
-(def initial-state {:consoles {}
+(def initial-state {:consoles {(random-uuid) nil}
                     :gist-data {:gist-showing? false
                                 :auth-data {:username "" :password ""}}
                     :media-query-size :wide})
@@ -49,14 +49,14 @@
 
 (register-handler
  :add-console
- (fn add-console [db [_ console-key console]]
-   (assoc-in db [:consoles (name console-key)] {:console console
-                                                :text ""})))
+ (fn add-console [db [_ console-id console]]
+   (assoc-in db [:consoles console-id] {:console console
+                                        :text ""})))
 
 (register-handler
  :set-console-text
- (fn set-console-text [db [_ console-key text]]
-   (app/assoc-console-text! db console-key text)))
+ (fn set-console-text [db [_ console-id text]]
+   (app/assoc-console-text! db console-id text)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Console buttons ;;;
@@ -64,17 +64,17 @@
 
 (register-handler
  :clear-console
- (fn clear-console [db [_ console-key]]
-   (let [console (app/console db console-key)]
+ (fn clear-console [db [_ console-id]]
+   (let [console (app/console db console-id)]
      (cljs/cljs-clear-console! console))
-   (assoc-in db [:consoles (name console-key) :empty?] true)))
+   (assoc-in db [:consoles console-id :empty?] true)))
 
 (register-handler
  :reset-console
- (fn reset-console [db [_ console-key]]
-   (let [console (app/console db console-key)]
-     (cljs/cljs-reset-console-and-prompt! console cljs/repl-options))
-   (assoc-in db [:consoles (name console-key) :empty?] true)))
+ (fn reset-console [db [_ console-id]]
+   (let [console (app/console db console-id)]
+     (cljs/cljs-reset-console-and-prompt! console console-id cljs/repl-options))
+   (assoc-in db [:consoles console-id :empty?] true)))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
@@ -93,15 +93,15 @@
  :hide-gist-login
  (fn hide-gist-login [db [_]]
    (let [saved-username (app/gist-saved-username db)]
-         (assoc db :gist-data {:gist-showing? false
-                               :auth-data {:username saved-username
-                                           :password ""}}))))
+     (assoc db :gist-data {:gist-showing? false
+                           :auth-data {:username saved-username
+                                       :password ""}}))))
 
 (register-handler
  :create-gist
- (fn create-gist [db [_ console-key auth-data success-handler error-handler]]
+ (fn create-gist [db [_ console-id auth-data success-handler error-handler]]
    (let [{:keys [username password]} @auth-data
-         console (app/console db console-key)
+         console (app/console db console-id)
          text (console/dump-console! console)
          empty-usr? (empty? username)
          empty-pwd? (empty? password)
@@ -131,8 +131,8 @@
 
 (register-handler
  :send-to-console
- (fn send-to-console [db [_ console-key lines]]
-   (let [console (app/console db console-key)]
+ (fn send-to-console [db [_ console-id lines]]
+   (let [console (app/console db console-id)]
      (utils/scroll-to-top) ; in case we are at the bottom of the page
      (console/set-prompt-text! console (first lines))
      ;; hack after hack: the set-prompt-text! function does not trigger
@@ -140,21 +140,21 @@
      (highlight/highlight-prompt-line! (.-$prompt_left console) (atom "") )
      (highlight/highlight-prompt-lines! (.-$prompt_before console))
      (console/focus-console! console)
-     (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
+     (assoc-in db [:consoles console-id :interactive-examples] (rest lines)))))
 
 (register-handler
  :delete-first-example
- (fn delete-first-example [db [_ console-key]]
-   (let [examples (app/interactive-examples db console-key)]
-     (assoc-in db [:consoles (name console-key) :interactive-examples] (drop 1 examples)))))
+ (fn delete-first-example [db [_ console-id]]
+   (let [examples (app/interactive-examples db console-id)]
+     (assoc-in db [:consoles console-id :interactive-examples] (drop 1 examples)))))
 
 (register-handler
  :exit-interactive-examples
- (fn exit-interactive-examples [db [_ console-key]]
-   (let [console (app/console db console-key)]
+ (fn exit-interactive-examples [db [_ console-id]]
+   (let [console (app/console db console-id)]
      (console/set-prompt-text! console "")
      (console/focus-console! console)
-     (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
+     (assoc-in db [:consoles console-id :interactive-examples] []))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;  Media Queries   ;;;

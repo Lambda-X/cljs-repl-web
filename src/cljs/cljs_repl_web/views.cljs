@@ -24,12 +24,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn cljs-console-did-mount
-  [console-opts]
+  [console-id console-opts dom-node]
   (js/$
    (fn []
-     (let [jqconsole (cljs/cljs-console! console-opts)]
-       (dispatch [:add-console :cljs-console jqconsole])
-       (cljs/cljs-console-prompt! jqconsole cljs/repl-options)))))
+     (let [jqconsole (cljs/cljs-console! dom-node console-opts)]
+       (dispatch [:add-console console-id jqconsole])
+       (cljs/cljs-console-prompt! jqconsole console-id cljs/repl-options)))))
 
 (defn cljs-console-render []
   [:div.cljs-console.console])
@@ -52,12 +52,13 @@
   * :disable-auto-focus is a boolean indicating whether we should disable
     the default auto-focus behavior. Defaults to true, the console never
     takes focus."
-  []
-  (fn [console-opts]
+  [console-id]
+  (fn []
     (println "Building ClojureScript React component")
     (reagent/create-class {:display-name "cljs-console-component"
                            :reagent-render cljs-console-render
-                           :component-did-mount #(cljs-console-did-mount console-opts)})))
+                           :component-did-mount #(cljs-console-did-mount console-id {} (reagent/dom-node %))})))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -111,11 +112,11 @@
   (if (= :narrow @media-query) :below-center :right-center))
 
 (defn gist-login-dialog-body
-  []
+  [console-id]
   (let [showing? (subscribe [:gist-showing?])
         media-query (subscribe [:media-query-size])
         auth-data (subscribe [:gist-auth-data])
-        ok-fn #(dispatch [:create-gist :cljs-console auth-data on-gist-created gist-error-handler])
+        ok-fn #(dispatch [:create-gist console-id auth-data on-gist-created gist-error-handler])
         cancel-fn #(dispatch [:hide-gist-login])]
     (fn []
       [login-focus-wrapper
@@ -163,8 +164,8 @@
                                           :on-click cancel-fn]]]]])]]])))
 
 (defn gist-login-dialog
-  []
-  (let [can-dump-gist? (subscribe [:can-dump-gist? :cljs-console])
+  [console-id]
+  (let [can-dump-gist? (subscribe [:can-dump-gist? console-id])
         showing? (subscribe [:gist-showing?])
         media-query (subscribe [:media-query-size])]
     (fn []
@@ -178,39 +179,40 @@
                   :tooltip "Create Gist"
                   :tooltip-position :left-center
                   :disabled? @can-dump-gist?]
-       :popover  [gist-login-dialog-body]])))
+       :popover  [gist-login-dialog-body console-id]])))
 
 (defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
    To place them in a layout, call the function (it does not return a
    component)."
-  []
+  [console-id]
   (let [media-query (subscribe [:media-query-size])
-        console-created? (subscribe [:console-created? :cljs-console])
-        example-mode? (subscribe [:example-mode? :cljs-console])]
+        console-created? (subscribe [:console-created? console-id])
+        example-mode? (subscribe [:example-mode? console-id])]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
-                       :on-click #(dispatch [:reset-console :cljs-console])
+                       :on-click #(dispatch [:reset-console console-id])
                        :class "cljs-btn"
                        :tooltip "Reset"
                        :tooltip-position :left-center
                        :disabled? (not @console-created?)]
                       [md-icon-button
                        :md-icon-name "zmdi-format-clear-all"
-                       :on-click #(dispatch [:clear-console :cljs-console])
+                       :on-click #(dispatch [:clear-console console-id])
                        :class "cljs-btn"
                        :tooltip "Clear"
                        :tooltip-position :left-center
                        :disabled? (not @console-created?)]
-                      [gist-login-dialog]
+                      [gist-login-dialog console-id]
                       [md-icon-button
                        :md-icon-name "zmdi-stop"
-                       :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                       :on-click #(dispatch [:exit-interactive-examples console-id])
                        :class "cljs-btn"
                        :tooltip "Stop interactive example mode"
                        :tooltip-position :below-center
-                       :disabled? (not @example-mode?)]]]
+                       :disabled? (not @example-mode?)]
+                      ]]
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
@@ -306,31 +308,32 @@
 (defn api-example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
   [showing-atom example-index example-map]
-  {:pre [(:strings example-map) (:html example-map)]}
-  [v-box
-   :size "none"
-   :gap "4px"
-   :justify :center
-   ;; Why the box?
-   ;; See problem here, see https://github.com/Day8/re-com/issues/76
-   :children [[box
-               :class "api-panel-button-send-repl-box"
-               :size "1 0 auto"
-               :child [button
-                       :class "btn btn-default api-panel-button-send-repl"
-                       :style (merge (flex-child-style "1 0 auto")
-                                     {:width "100%"})
-                       :disabled? (not @(subscribe [:console-created? :cljs-console]))
-                       :label [h-box
-                               :size "1 1 auto"
-                               :justify :between
-                               :align :center
-                               :children [[example-number-icon example-index]
-                                          [example-send-to-repl-button-label example-index example-map]]]
-                       :on-click (handler-fn
-                                  (reset! showing-atom false)
-                                  (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
-              [api-example example-map]]])
+  (let [console-id (first (first @(subscribe [:get-consoles])))]
+    {:pre [(:strings example-map) (:html example-map)]}
+    [v-box
+     :size "none"
+     :gap "4px"
+     :justify :center
+     ;; Why the box?
+     ;; See problem here, see https://github.com/Day8/re-com/issues/76
+     :children [[box
+                 :class "api-panel-button-send-repl-box"
+                 :size "1 0 auto"
+                 :child [button
+                         :class "btn btn-default api-panel-button-send-repl"
+                         :style (merge (flex-child-style "1 0 auto")
+                                       {:width "100%"})
+                         :disabled? (not @(subscribe [:console-created? console-id]))
+                         :label [h-box
+                                 :size "1 1 auto"
+                                 :justify :between
+                                 :align :center
+                                 :children [[example-number-icon example-index]
+                                            [example-send-to-repl-button-label example-index example-map]]]
+                         :on-click (handler-fn
+                                    (reset! showing-atom false)
+                                    (dispatch [:send-to-console console-id (:strings example-map)]))]]
+                [api-example example-map]]]))
 
 (defn api-examples
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
@@ -417,31 +420,31 @@
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)]
     (fn api-symbol-form2 [symbol]
-     [box
-      :size "0 1 auto"
-      :align :center
-      :class "api-panel-symbol-label-box"
-      :child (if-let [symbol (get-symbol-doc-map (str symbol))]
-               [popover-anchor-wrapper
-                :showing? showing?
-                :position @popover-position
-                :anchor [button
-                         :class "btn btn-default api-panel-symbol-button"
-                         :label (:name symbol)
-                         ;; we use :attr's `:on-click` because button's `on-click` accepts
-                         ;; a parametless function and we need the mouse click coordinates
-                         :attr { :on-click
-                                (handler-fn
-                                 ;; later we can refactor it into re-frame
-                                 ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
-                                 (reset! popover-position
-                                         (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
-                                 (reset! showing? true))}]
-                :popover [symbol-popover showing? popover-position symbol]]
-               [label
-                :label (str symbol)
-                :class "api-panel-symbol-label"
-                :style (flex-child-style "80 1 auto")])])))
+      [box
+       :size "0 1 auto"
+       :align :center
+       :class "api-panel-symbol-label-box"
+       :child (if-let [symbol (get-symbol-doc-map (str symbol))]
+                [popover-anchor-wrapper
+                 :showing? showing?
+                 :position @popover-position
+                 :anchor [button
+                          :class "btn btn-default api-panel-symbol-button"
+                          :label (:name symbol)
+                          ;; we use :attr's `:on-click` because button's `on-click` accepts
+                          ;; a parametless function and we need the mouse click coordinates
+                          :attr { :on-click
+                                 (handler-fn
+                                  ;; later we can refactor it into re-frame
+                                  ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                                  (reset! popover-position
+                                          (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                                  (reset! showing? true))}]
+                 :popover [symbol-popover showing? popover-position symbol]]
+                [label
+                 :label (str symbol)
+                 :class "api-panel-symbol-label"
+                 :style (flex-child-style "80 1 auto")])])))
 
 (defn section-title-component
   [section-title]
@@ -590,13 +593,20 @@
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
 (defn repl-component []
-  (let [media-query (subscribe [:media-query-size])]
+  (let [media-query (subscribe [:media-query-size])
+        consoles (subscribe [:get-consoles])]
     (fn repl-component-form2 []
-      (let [children [[cljs-buttons]
-                      [box
-                       :size "0 0 auto"
-                       :style {:overflow "hidden"}
-                       :child [cljs-console-component]]]]
+      (let [consoles-ids (map first @consoles)
+            buttons (map (fn [console-id]
+                           [cljs-buttons console-id])
+                         consoles-ids)
+            boxes (map (fn [console-id]
+                         [box
+                          :size "0 0 auto"
+                          :style {:overflow "hidden"}
+                          :child [cljs-console-component console-id]])
+                       consoles-ids)
+            children (into [] (interleave buttons boxes))]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

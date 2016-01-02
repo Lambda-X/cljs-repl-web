@@ -28,9 +28,9 @@
       (console/write-exception! console err))))
 
 (defn cljs-console-set-prompt-text!
-  [console text]
+  [console-id console text]
   (console/set-prompt-text! console text)
-  (dispatch [:set-console-text :cljs-console text]))
+  (dispatch [:set-console-text console-id text]))
 
 (defn cljs-console-get-prompt-text!
   "Get the current text, prompt not included, unlike jqconsole's."
@@ -67,22 +67,22 @@
           :verbose false}))
 
 (defn cljs-console-prompt!
-  [console repl-opts]
+  [console console-id repl-opts]
   (.Prompt console true
            (fn [input]
              (cljs-read-eval-print! console repl-opts input)
              (.SetPromptLabel console (replumb/get-prompt)) ;; necessary for namespace changes
-             (cljs-console-prompt! console repl-opts)
-             (dispatch [:set-console-text :cljs-console input]))
+             (cljs-console-prompt! console console-id repl-opts)
+             (dispatch [:set-console-text console-id input]))
            cljs-console-multiline?)
-  (when-let [example @(subscribe [:get-next-example :cljs-console])]
+  (when-let [example @(subscribe [:get-next-example console-id])]
     (cljs-console-set-prompt-text! console example)
-    (dispatch [:delete-first-example :cljs-console])))
+    (dispatch [:delete-first-example console-id])))
 
 (defn cljs-console!
   "Create a console for ClojureScript."
-  [console-opts]
-  (doto (console/new-jqconsole ".cljs-console"
+  [dom-node console-opts]
+  (doto (console/new-jqconsole dom-node
                                (merge {:prompt-label (replumb/get-prompt)
                                        :disable-auto-focus false
                                        :continue-label "  "}
@@ -94,10 +94,10 @@
 
 (defn cljs-reset-console-and-prompt!
   "Resets the console and forces the focus onto it."
-  [console repl-opts]
+  [console console-id repl-opts]
   (console/reset-console! console)
   (console/focus-console! console)
-  (cljs-console-prompt! console repl-opts))
+  (cljs-console-prompt! console console-id repl-opts))
 
 (defn cljs-clear-console!
   "Clears the console and put forces the focus onto it."
