@@ -41,7 +41,7 @@
                         :compiler {:main launcher.runner
                                    :output-to "resources/private/test/compiled/cljs-repl-web.js"
                                    :pretty-print false}}
-                       {:id "min"
+                       {:id "prod"
                         :source-paths ["src/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; AR - No main! https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :closure-defines {:goog.DEBUG false}
@@ -56,7 +56,7 @@
                                    :source-map-timestamp true
                                    ;; https://github.com/clojure/clojurescript/wiki/Compiler-Options#elide-asserts
                                    :elide-asserts true
-                                   :optimizations :simple
+                                   :optimizations :none
                                    :pretty-print false
                                    :dump-core false}}]}
 
@@ -64,7 +64,7 @@
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
                   ["vcs" "tag" "--no-sign"]
-                  ["do" "clean" ["cljsbuild" "once" "min"]]
+                  ["do" "clean" ["cljsbuild" "once" "prod"]]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
                   ["vcs" "push"]]
@@ -73,9 +73,8 @@
 
   :aliases {"fig-dev" ^{:doc "Start figwheel with dev profile."} ["figwheel" "dev"]
             "fig-dev*" ^{:doc "Clean and start figwheel with dev profile"} ["do" "clean" ["figwheel" "dev"]]
-            "minify" ^{:doc "Compile sources, minified for production."} ["cljsbuild" "once" "min"]
-            "minify*" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "min"]]
-            "deploy" ^{:doc "Clean, compile (minified) sources, test and then deploy."} ["do" "clean" ["test" ":integration"] ["deploy" "clojars"]]
+            "minify" ^{:doc "Compile sources for production."} ["cljsbuild" "once" "prod"]
+            "minify*" ^{:doc "Clean and compile sources minified for production."} ["do" "clean" ["cljsbuild" "once" "prod"]]
             "test-phantom" ^{:doc "Execute once unit tests with PhantomJS (must be installed)."} ["doo" "phantom" "test" "once"]
             "test-phantom*" ^{:doc "Clean and execute once unit tests with PhantomJS (must be installed)."} ["do" "clean" ["doo" "phantom" "test" "once"]]
             "auto-phantom" ^{:doc "Clean and execute automatic unit tests with PhantomJS (must be installed)."} ["do" "clean" ["doo" "phantom" "test" "auto"]]
@@ -84,8 +83,8 @@
             "auto-slimer" ^{:doc "Clean and execute automatic unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "auto"]]
             "tests" ^{:doc "Execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["doo" "headless" "test" "once"]
             "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
-            "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "min" ["simpleton" "9090" ":from" "resources/public"]]
-            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "min"] ["simpleton" "9090" ":from" "resources/public"]]}
+            "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "prod" ["simpleton" "9090" ":from" "resources/public"]]
+            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "prod"] ["simpleton" "9090" ":from" "resources/public"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.12"]
