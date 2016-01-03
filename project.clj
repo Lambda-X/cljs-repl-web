@@ -92,7 +92,7 @@
                                   [org.clojars.stumitchell/clairvoyant "0.1.0-SNAPSHOT"]
                                   [day8/re-frame-tracer "0.1.0-SNAPSHOT"]]
                    :plugins [[lein-doo "0.1.6-SNAPSHOT"]
-                             [lein-figwheel "0.5.0-1" :exclusions [cider/cider-nrepl]]
+                             [lein-figwheel "0.5.0-2" :exclusions [cider/cider-nrepl]]
                              [lein-shell "0.4.2"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
