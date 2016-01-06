@@ -56,7 +56,7 @@ If you want a battery included alias, launch `lein serve`.
 
 ## Production Build
 
-```lein minify``` **or** ```lein do clean, cljsbuild once min```
+```lein minify```
 
 ## Testing
 
