@@ -4,7 +4,6 @@
             [re-com.core :refer [p h-box v-box box gap line]]
             [devtools.core :as devtools]
             [cljs-repl-web.handlers]
-            [cljs-repl-web.subs]
             [cljs-repl-web.views :as views]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
