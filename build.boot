@@ -8,13 +8,13 @@
                  [pandeiro/boot-http          "0.7.1-SNAPSHOT"]
                  [adzerk/boot-reload          "0.4.4" :scope "test"]
 
-                 ;;repl
+                 ;; Repl
                  [adzerk/boot-cljs-repl       "0.3.0"]
                  [com.cemerick/piggieback     "0.2.1"  :scope "test"]
                  [weasel                      "0.7.0"  :scope "test"]
                  [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
 
-                 ;;tests
+                 ;; Tests
                  [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT"  :scope "test"]
                  [adzerk/boot-test            "1.0.7"      :scope "test"]
 
