@@ -67,9 +67,9 @@
   (set-env! :source-paths #{"src/clj" "src/cljs"})
   (comp (serve :dir "resources/public")
         (watch)
-        (reload :on-jsload 'cljs-repl-web.core/main)
         (cljs-repl)
-        (cljs :compiler-options compiler-options)))
+        (cljs :compiler-options compiler-options)
+        (reload :on-jsload 'cljs-repl-web.core/main)))
 
 (ns-unmap 'boot.user 'test)
 
