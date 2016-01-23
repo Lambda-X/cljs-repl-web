@@ -83,8 +83,8 @@
             "auto-slimer" ^{:doc "Clean and execute automatic unit tests with SlimerJS (must be installed)."} ["do" "clean" ["doo" "slimer" "test" "auto"]]
             "tests" ^{:doc "Execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["doo" "headless" "test" "once"]
             "tests*" ^{:doc "Clean and execute once unit tests with PhantomJS and SlimerJS (must be installed)."} ["do" "clean" ["doo" "headless" "test" "once"]]
-            "serve" ^{:doc "Compile minified and start a server on port 9090 at resources/public"} ["do" "cljsbuild" "once" "prod" ["simpleton" "9090" ":from" "resources/public"]]
-            "serve*" ^{:doc "Clean, compile minified and start a server on port 9090 at resources/public"} ["do" "clean" ["cljsbuild" "once" "prod"] ["simpleton" "9090" ":from" "resources/public"]]}
+            "serve-dev" ^{:doc "Clean, compile minified and start a dev server on port 9090"} ["do" "clean" ["cljsbuild" "once" "dev"] ["simpleton" "9090" ":from" "resources/public"]]
+            "serve-prod" ^{:doc "Clean, compile minified and start a prod server on port 9090"} ["do" "clean" ["cljsbuild" "once" "prod"] ["simpleton" "9090" ":from" "resources/public"]]}
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.12"]
