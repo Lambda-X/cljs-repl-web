@@ -5,7 +5,7 @@
  :resource-paths #{"resouces/public/"}
  :dependencies '[;; Boot deps
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
-                 [pandeiro/boot-http          "0.7.1-SNAPSHOT"]
+                 [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
                  [adzerk/boot-reload          "0.4.4" :scope "test"]
 
                  ;; Repl
@@ -41,7 +41,7 @@
 
 (require '[adzerk.boot-cljs             :refer [cljs]]
          '[adzerk.boot-reload           :refer [reload]]
-         '[adzerk.boot-test             :refer [test]]
+         '[adzerk.boot-test             :as boot-test]
          '[pandeiro.boot-http           :refer [serve]]
          '[crisptrutski.boot-cljs-test  :refer [test-cljs]]
          '[adzerk.boot-cljs-repl        :refer [cljs-repl start-repl]])
@@ -71,17 +71,14 @@
         (cljs :compiler-options compiler-options)
         (reload :on-jsload 'cljs-repl-web.core/main)))
 
-(ns-unmap 'boot.user 'test)
-
 (deftask test
   "Run tests.."
   []
-  (test-cljs :namespaces #{"cljs-repl-web.core-test"}))
+  (set-env! :source-paths #{"test/clj" "test/cljs"})
+  (comp
+   (speak)
+   (test-cljs :namespaces #{"cljs-repl-web.core-test"})
+   (boot-test/test)))
 
 (deftask auto-test []
-  (set-env! :source-paths #{"test"})
-  (comp
-   (watch)
-   (speak)
-   (test)
-   ((eval 'adzerk.boot-test/test))))
+  (comp (watch) (test)))

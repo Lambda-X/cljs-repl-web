@@ -1,7 +1,6 @@
 (ns cljs-repl-web.core-test
   (:require [cljs.test :refer-macros [deftest is async]]
-            [cljs.core.async :as async :refer [chan put! <!]]
-            [cljs-repl-web.core :as core])
+            [cljs.core.async :as async :refer [chan put! <!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (deftest sanity-check
