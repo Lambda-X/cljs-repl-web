@@ -1,13 +1,13 @@
-# cljs-browser-repl
+# cljs-repl-web (aka http://www.clojurescript.io)
 
 A reagent app designed to embed a pure ClojureScript REPL in a web page.
 
-The JavaScript will be ```cljs-browser-repl.js``` and it is typically located in ```resources/public/js/compiled```.
+The JavaScript will be ```cljs-repl-web.js``` and it is typically located in ```resources/public/js/compiled```.
 
 
 ### Generate the ClojureScript API 
 
-The project needs to create the ClojureScript `cljs-browser-repl.cljs-api` namespace and relative custom data taken from the amazing work at [cljs-api-info](https://github.com/cljsinfo/cljs-api-docs).
+The project needs to create the ClojureScript `cljs-repl-web.cljs-api` namespace and relative custom data taken from the amazing work at [cljs-api-info](https://github.com/cljsinfo/cljs-api-docs).
 
 In order to generate the namespace inside `src`,  run:
 
@@ -18,7 +18,7 @@ If you need to update the `edn` with the latest version from `cljs-api-docs` fol
 
 ## Development Mode
 
-In dev mode, an ```out``` folder, containing all the compiled dependencies will be also created in the same folder of ```clojure-browser-repl.js```.
+In dev mode, an ```out``` folder, containing all the compiled dependencies will be also created in the same folder of ```cljs-repl-web.js```.
 
 #### Figwheel:
 
@@ -40,7 +40,7 @@ cd lein-simpleton
 lein install
 ```
 
-After that, you should have the fixed jar in `.m2/repository`. Come back to `cljs-browser-repl` and build the project with `lein cljsbuild once dev`. Open two terminals.
+After that, you should have the fixed jar in `.m2/repository`. Come back to `cljs-repl-web` and build the project with `lein cljsbuild once dev`. Open two terminals.
 
 In the first one, execute:
 `./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
