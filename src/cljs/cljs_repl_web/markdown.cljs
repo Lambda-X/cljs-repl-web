@@ -4,7 +4,6 @@
   borrowed from devcards, courtesy of Bruce Hauman."
   (:require [clojure.string :as string]
             [cljsjs.showdown]
-            [cljsjs.highlight]
             [reagent.core :as reagent]))
 
 (declare parse-out-blocks markdown-block->react)

@@ -9,8 +9,7 @@
             [hickory.core :as hickory]
             [hickory.zip :as hzip]
             [hickory.convert :as hconvert]
-            [goog.string :as gstring]
-            [cljs-repl-web.highlight :as hl]))
+            [goog.string :as gstring]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 
@@ -120,7 +119,7 @@
   (update-in node [:content] (fn [old-content]
                                (if-let [s (first old-content)]
                                  (if (string? s)
-                                   (let [parsed-hls (hickory/parse-fragment (hl/highlight-html s))]
+                                   (let [parsed-hls (hickory/parse-fragment s)]
                                      (mapv (comp zip/root as-hickory-zip) parsed-hls))
                                    old-content)
                                  old-content))))
