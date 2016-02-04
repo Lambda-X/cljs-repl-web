@@ -1,7 +1,8 @@
 (ns cljs-repl-web.code-mirror.handlers
   (:require [re-frame.core :refer [register-handler dispatch]]
             [clairvoyant.core :refer-macros [trace-forms]]
-            [re-frame-tracer.core :refer [tracer]]))
+            [re-frame-tracer.core :refer [tracer]]
+            [cljs-repl-web.code-mirror.app :as app]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
@@ -19,7 +20,7 @@
 (register-handler
  :focus-console-editor
  (fn focus-console-editor [db [_ console-key]]
-   (when-let [cm-instance (get-in db [:consoles (name console-key) :cm-inst])]
+   (when-let [cm-instance (app/console-instance db console-key)]
      (.focus cm-instance))
    db))
 
@@ -52,7 +53,7 @@
 (register-handler
  :add-console-input
  (fn add-console-input [db [_ console-key input ns]]
-   (let [inum (count (get-in db [:consoles (name console-key) :history]))]
+   (let [inum (count (app/console-history db console-key))]
      (-> db
          (assoc-in [:consoles (name console-key) :hist-pos] 0)
          (update-in [:consoles (name console-key) :history] conj "")
@@ -72,8 +73,8 @@
 (register-handler
  :console-set-text
  (fn console-set-text [db [_ console-key text]]
-   (let [history (get-in db [:consoles (name console-key) :history])
-         pos (get-in db [:consoles (name console-key) :hist-pos])
+   (let [history (app/console-history db console-key)
+         pos (app/console-history-pos db console-key)
          idx (- (count history) pos 1)]
      (-> db
          (assoc-in [:consoles (name console-key) :hist-pos] 0)
@@ -85,8 +86,8 @@
 (register-handler
  :console-go-up
  (fn console-go-up [db [_ console-key]]
-   (let [pos (get-in db [:consoles (name console-key) :hist-pos])
-         len (count (get-in db [:consoles (name console-key) :history]))
+   (let [pos (app/console-history-pos db console-key)
+         len (count (app/console-history db console-key))
          new-pos (if (>= pos (dec len))
                    pos
                    (inc pos))]
