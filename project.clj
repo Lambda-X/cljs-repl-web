@@ -13,7 +13,8 @@
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
                  [org.clojure/tools.reader "1.0.0-alpha2"]
-                 [cljsjs/enquire "2.1.2-0"]]
+                 [cljsjs/enquire "2.1.2-0"]
+                 [cljsjs/codemirror "5.10.0-0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
