@@ -14,7 +14,7 @@
  :add-console
  (fn add-console [db [_ console-key inst]]
    (assoc-in db [:consoles (name console-key)]
-             (assoc  initial-state :cm-inst inst))))
+             (assoc initial-state :cm-inst inst))))
 
 (register-handler
  :focus-console-editor
@@ -33,10 +33,11 @@
  :reset-console-items
  (fn reset-console-items [db [_ console-key]]
    (dispatch [:focus-console-editor console-key])
-   (let [current-state (get-in db [:consoles (name console-key)])
-         new-state (merge current-state
-                          (select-keys initial-state [:items :hist-pos :history]))]
-    (assoc-in db [:consoles (name console-key)] new-state))))
+   (update-in db
+              [:consoles (name console-key)]
+              (fn [current-state]
+                (merge current-state
+                       (select-keys initial-state [:items :hist-pos :history]))))))
 
 (register-handler
  :add-console-item
@@ -94,10 +95,10 @@
 (register-handler
  :console-go-down
  (fn console-go-down [db [_ console-key]]
-   (let [pos (get-in db [:consoles (name console-key) :hist-pos])
-         new-pos (if (<= pos 0)
-                   0
-                   (dec pos))]
-     (assoc-in db [:consoles (name console-key) :hist-pos] new-pos))))
+   (update-in db
+              [:consoles (name console-key) :hist-pos]
+              (fn [pos] (if (<= pos 0)
+                          0
+                          (dec pos))))))
 
 ;; )

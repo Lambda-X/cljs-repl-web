@@ -105,7 +105,7 @@
           (move-to-end @cm)))
 
       :reagent-render
-      (fn [_ _ _]
+      (fn []
         @value-atom
         [:div])})))
 
