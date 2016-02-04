@@ -205,7 +205,7 @@ body,html {
 /***************console*******************/
 
 /* :wide */
-.cljs-console, .cm-console {
+.cm-console {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
     position: relative;
     width: 660px;
@@ -216,7 +216,7 @@ body,html {
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
-    .cljs-console, .cm-console {
+    .cm-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 300px;
@@ -228,7 +228,7 @@ body,html {
 
 /* :medium */
 @media only screen and (min-width: 481px) and (max-width: 960px) {
-    .cljs-console, .cm-console {
+    .cm-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 460px;
@@ -247,17 +247,8 @@ body,html {
     background: #FFFFFF;
 }
 
-.cljs-console pre {
-    background: #FFFFFF;
-    border: none;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 20px;
-}
-
 @media only screen and (max-width: 960px) {
-    .cljs-console pre {
+    .cm-console pre {
         padding: 10px;
     }
 }
