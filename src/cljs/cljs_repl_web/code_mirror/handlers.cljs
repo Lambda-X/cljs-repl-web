@@ -1,5 +1,9 @@
 (ns cljs-repl-web.code-mirror.handlers
-  (:require [re-frame.core :refer [register-handler dispatch]]))
+  (:require [re-frame.core :refer [register-handler dispatch]]
+            [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame-tracer.core :refer [tracer]]))
+
+;; (trace-forms {:tracer (tracer :color "green")}
 
 (def initial-state {:items []
                     :hist-pos 0
@@ -95,3 +99,5 @@
                    0
                    (dec pos))]
      (assoc-in db [:consoles (name console-key) :hist-pos] new-pos))))
+
+;; )
