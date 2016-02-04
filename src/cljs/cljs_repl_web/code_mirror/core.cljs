@@ -5,7 +5,8 @@
             [cljs-repl-web.code-mirror.subs :as subs]
             [cljs-repl-web.code-mirror.editor :as editor]
             [cljs-repl-web.code-mirror.common :as common]
-            [cljs-repl-web.code-mirror.replumb :as replumb]))
+            [cljs-repl-web.code-mirror.replumb :as replumb]
+            [cljs-repl-web.code-mirror.utils :as utils]))
 
 ;;; many parts are taken from jaredly's reepl
 ;;; https://github.com/jaredly/reepl
@@ -26,7 +27,7 @@
     [:div.cm-console-item
      {:on-click #(do (dispatch [:console-set-text :cljs-console text])
                      (dispatch [:focus-console-editor :cljs-console]))}
-     [editor/colored-text (str (:ns item) "=> " text)]]
+     [utils/colored-text (str (:ns item) "=> " text)]]
 
     (if (= :error (:type item))
       [:div.cm-console-item.error-cm-console-item
