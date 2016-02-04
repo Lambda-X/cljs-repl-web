@@ -24,7 +24,6 @@
   ([value]
    (display-output-item value false))
   ([value error?]
-   (println value ", " error?)
    [:div
     {:on-click #(dispatch [:focus-console-editor :cljs-console])
      :class (str "cm-console-item" (when error? " error-cm-console-item"))}
