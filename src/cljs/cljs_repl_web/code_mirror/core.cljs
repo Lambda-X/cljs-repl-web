@@ -20,6 +20,15 @@
    :set-text     #(dispatch [:console-set-text :cljs-console %1])
    :add-log      #(dispatch [:add-console-log :cljs-console %])})
 
+(defn display-output-item
+  ([value]
+   (display-output-item value false))
+  ([value error?]
+   (println value ", " error?)
+   [:div
+    {:on-click #(dispatch [:focus-console-editor :cljs-console])
+     :class (str "cm-console-item" (when error? " error-cm-console-item"))}
+    value]))
 
 (defn display-repl-item
   [item]
@@ -30,12 +39,8 @@
      [utils/colored-text (str (:ns item) "=> " text)]]
 
     (if (= :error (:type item))
-      [:div.cm-console-item.error-cm-console-item
-       {:on-click #(dispatch [:focus-console-editor :cljs-console])}
-       (.-message (:value item))]
-      [:div.cm-console-item
-       {:on-click #(dispatch [:focus-console-editor :cljs-console])}
-       (:value item)])))
+      (display-output-item (.-message (:value item)) true)
+      (display-output-item (:value item)))))
 
 (defn repl-items [items]
   (into [:div] (map display-repl-item items)))
