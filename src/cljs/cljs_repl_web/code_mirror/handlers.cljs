@@ -7,16 +7,17 @@
                     :cm-inst nil})
 
 (register-handler
+ :add-console
+ (fn add-console [db [_ console-key inst]]
+   (assoc-in db [:consoles (name console-key)]
+             (assoc  initial-state :cm-inst inst))))
+
+(register-handler
  :focus-console-editor
  (fn register-console-cm-instance [db [_ console-key]]
    (when-let [cm-instance (get-in db [:consoles (name console-key) :cm-inst])]
      (.focus cm-instance))
    db))
-
-(register-handler
- :register-console-cm-instance
- (fn register-console-cm-instance [db [_ console-key inst]]
-   (assoc-in db [:consoles (name console-key) :cm-inst] inst)))
 
 (register-handler
  :clear-console-items

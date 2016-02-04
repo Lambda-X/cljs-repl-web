@@ -54,7 +54,7 @@
                       :value (str (get-prompt) @value-atom)
                       :mode "clojure"}))]
           
-          (dispatch [:register-console-cm-instance :cljs-console inst])
+          (dispatch [:add-console :cljs-console inst])
           (move-to-end inst)
 
           (.on inst "viewportChange"

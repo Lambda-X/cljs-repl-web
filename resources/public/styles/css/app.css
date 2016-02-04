@@ -205,7 +205,7 @@ body,html {
 /***************console*******************/
 
 /* :wide */
-.cljs-console {
+.cljs-console, .cm-console {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
     position: relative;
     width: 660px;
@@ -216,11 +216,11 @@ body,html {
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
-    .cljs-console {
+    .cljs-console, .cm-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 300px;
-        height: 200px;
+        height: 180px;
         min-width: 120px;
         min-height: 80px;
     }
@@ -228,11 +228,11 @@ body,html {
 
 /* :medium */
 @media only screen and (min-width: 481px) and (max-width: 960px) {
-    .cljs-console {
+    .cljs-console, .cm-console {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 460px;
-        height: 300px;
+        height: 280px;
         min-width: 220px;
         min-height: 75px;
     }
@@ -501,4 +501,54 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     .ribbon a {
         padding: 6px 36px;
     }
+}
+
+/*  Code Mirror  */
+
+.cm-console-container {
+    overflow-y: scroll;
+    background-color: white;
+    padding: 10px;
+}
+
+.cm-console-item, .error-cm-console-item {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.error-cm-console-item {
+    color: #e60000;
+}
+
+.cm-console-item pre {
+    background: #FFFFFF;
+    border-radius: 0px;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1px;
+}
+
+/* This classes serve the purpose of alignment the repl prompt */
+
+.cm-console-item pre code {
+    border: none;
+}
+
+.cm-console .CodeMirror {
+    height: auto;
+    font-size: 13px;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    margin-bottom: 20px;
+}
+
+.cm-console .CodeMirror-lines {
+    padding: 0;
+}
+
+.cm-console .CodeMirror pre {
+    padding: 0;
 }
