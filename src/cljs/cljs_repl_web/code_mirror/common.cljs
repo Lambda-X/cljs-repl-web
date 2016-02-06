@@ -12,7 +12,7 @@
   exp
   (subs exp (beginning-of-source exp)))
 
-(defn scroll-to-el-bottom
+(defn scroll-to-el-bottom!
   [el]
   (set! (.-scrollTop el) (.-scrollHeight el)))
 

@@ -62,7 +62,7 @@
                  (let [el (reagent/dom-node this)
                        cm-console (.-parentElement el)
                        box (.-parentElement cm-console)]
-                   (common/scroll-to-el-bottom box))))
+                   (common/scroll-to-el-bottom! box))))
 
           (.on inst "change"
                (fn []

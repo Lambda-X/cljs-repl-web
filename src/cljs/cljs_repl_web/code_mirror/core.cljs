@@ -87,4 +87,4 @@
                            (not (replumb/multiline? source)))})]])
       :component-did-update
       (fn [this]
-        (common/scroll-to-el-bottom (.-parentElement (reagent/dom-node this))))})))
+        (common/scroll-to-el-bottom! (.-parentElement (reagent/dom-node this))))})))
