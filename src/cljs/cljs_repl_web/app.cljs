@@ -19,7 +19,7 @@
   "Given a db and console key, returns its instance or nil if not
   found."
   [db k]
-  (get-in db [:consoles (name k) :cm-inst]))
+  (get-in db [:consoles (name k) :cm-instance]))
 
 (def console-created? "Was the console created? Returns a truey or falsey value."
   console)

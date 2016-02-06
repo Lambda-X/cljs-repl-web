@@ -2,7 +2,7 @@
 
 (defn console-instance
   [db k]
-  (get-in db [:consoles (name k) :cm-inst]))
+  (get-in db [:consoles (name k) :cm-instance]))
 
 (defn console-items
   [db k]

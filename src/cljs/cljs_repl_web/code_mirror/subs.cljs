@@ -25,6 +25,6 @@
 (register-sub
  :get-console-cm-instance
  (fn [db [_ console-key]]
-   (reaction (get-in @db [:consoles (name console-key) :cm-inst]))))
+   (reaction (get-in @db [:consoles (name console-key) :cm-instance]))))
 
 ;; )

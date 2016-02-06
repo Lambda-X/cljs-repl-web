@@ -9,13 +9,13 @@
 (def initial-state {:items []
                     :hist-pos 0
                     :history [""]
-                    :cm-inst nil})
+                    :cm-instance nil})
 
 (register-handler
  :add-console
  (fn add-console [db [_ console-key inst]]
    (assoc-in db [:consoles (name console-key)]
-             (assoc initial-state :cm-inst inst))))
+             (assoc initial-state :cm-instance inst))))
 
 (register-handler
  :focus-console-editor
