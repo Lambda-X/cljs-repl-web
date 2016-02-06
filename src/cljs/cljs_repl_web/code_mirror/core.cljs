@@ -5,7 +5,7 @@
             [cljs-repl-web.code-mirror.subs :as subs]
             [cljs-repl-web.code-mirror.editor :as editor]
             [cljs-repl-web.code-mirror.common :as common]
-            [cljs-repl-web.code-mirror.replumb :as replumb]
+            [cljs-repl-web.code-mirror.replumb :as replumb-proxy]
             [cljs-repl-web.code-mirror.utils :as utils]))
 
 ;;; many parts are taken from jaredly's reepl
@@ -45,7 +45,7 @@
   (into [:div] (map display-repl-item items)))
 
 (defn console []
-  (let [execute #(replumb/run-repl %1 {} %2)
+  (let [execute #(replumb-proxy/run-repl %1 {} %2)
         {:keys [add-input
                 add-result
                 go-up
@@ -61,7 +61,7 @@
                  (let [text (.trim text)]
                    (when (< 0 (count text))
                      (set-text text)
-                     (add-input text (replumb/current-ns))
+                     (add-input text (replumb-proxy/current-ns))
                      (execute text #(add-result (not %1) %2))
                      ;; todo - rethink better?
                      (when-let [example @(subscribe [:get-next-example :cljs-console])]
@@ -82,9 +82,9 @@
             :on-down go-down
             :on-change set-text
             :on-eval submit
-            :get-prompt replumb/get-prompt
+            :get-prompt replumb-proxy/get-prompt
             :should-eval (fn [source _ _]
-                           (not (replumb/multiline? source)))})]])
+                           (not (replumb-proxy/multiline? source)))})]])
       :component-did-update
       (fn [this]
         (common/scroll-to-el-bottom! (.-parentElement (reagent/dom-node this))))})))
