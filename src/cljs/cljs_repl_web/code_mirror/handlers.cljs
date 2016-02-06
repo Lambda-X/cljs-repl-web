@@ -6,16 +6,11 @@
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
-(def initial-state {:items []
-                    :hist-pos 0
-                    :history [""]
-                    :cm-instance nil})
-
 (register-handler
  :add-console
  (fn add-console [db [_ console-key inst]]
    (assoc-in db [:consoles (name console-key)]
-             (assoc initial-state :cm-instance inst))))
+             (assoc app/initial-console-state :cm-instance inst))))
 
 (register-handler
  :focus-console-editor
@@ -38,7 +33,7 @@
               [:consoles (name console-key)]
               (fn [current-state]
                 (merge current-state
-                       (select-keys initial-state [:items :hist-pos :history]))))))
+                       (select-keys app/initial-console-state [:items :hist-pos :history]))))))
 
 (register-handler
  :add-console-item

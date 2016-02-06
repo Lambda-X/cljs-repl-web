@@ -1,5 +1,10 @@
 (ns cljs-repl-web.code-mirror.app)
 
+(def initial-console-state {:items []
+                            :hist-pos 0
+                            :history [""]
+                            :cm-instance nil})
+
 (defn console-instance
   [db k]
   (get-in db [:consoles (name k) :cm-instance]))
