@@ -37,7 +37,7 @@
                       should-eval
                       get-prompt]}]
 
-  (let [cm (subscribe [:get-console-cm-instance :cljs-console])]
+  (let [cm (subscribe [:get-console :cljs-console])]
     (reagent/create-class
      {:component-did-mount
       (fn [this]

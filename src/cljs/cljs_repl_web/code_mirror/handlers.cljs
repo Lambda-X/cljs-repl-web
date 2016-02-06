@@ -15,8 +15,8 @@
 (register-handler
  :focus-console-editor
  (fn focus-console-editor [db [_ console-key]]
-   (when-let [cm-instance (app/console-instance db console-key)]
-     (.focus cm-instance))
+   (when-let [instance (app/console db console-key)]
+     (.focus instance))
    db))
 
 (register-handler

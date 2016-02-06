@@ -23,7 +23,7 @@
                  (get items pos))))))
 
 (register-sub
- :get-console-cm-instance
+ :get-console
  (fn [db [_ console-key]]
    (reaction (get-in @db [:consoles (name console-key) :cm-instance]))))
 

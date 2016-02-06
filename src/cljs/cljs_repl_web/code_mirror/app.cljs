@@ -5,7 +5,7 @@
                             :history [""]
                             :cm-instance nil})
 
-(defn console-instance
+(defn console
   [db k]
   (get-in db [:consoles (name k) :cm-instance]))
 
