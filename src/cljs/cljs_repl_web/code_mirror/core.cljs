@@ -5,7 +5,6 @@
             [cljs-repl-web.code-mirror.subs :as subs]
             [cljs-repl-web.code-mirror.editor :as editor]
             [cljs-repl-web.code-mirror.common :as common]
-            [cljs-repl-web.code-mirror.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.code-mirror.utils :as utils]))
 
 ;;; many parts are taken from jaredly's reepl
@@ -44,9 +43,8 @@
 (defn repl-items [items]
   (into [:div] (map display-repl-item items)))
 
-(defn console []
-  (let [execute #(replumb-proxy/run-repl %1 {} %2)
-        {:keys [add-input
+(defn console [eval-opts]
+  (let [{:keys [add-input
                 add-result
                 go-up
                 go-down
@@ -54,9 +52,18 @@
                 set-text
                 add-log]} (make-handlers)
 
-        items (subscribe [:get-console-items :cljs-console])
-        text  (subscribe [:get-console-current-text :cljs-console])
-        submit #(dispatch [:submit-source :cljs-console execute text])]
+                {:keys [get-prompt
+                        should-eval
+                        evaluate
+                        current-ns]} eval-opts
+
+                items (subscribe [:get-console-items :cljs-console])
+                text  (subscribe [:get-console-current-text :cljs-console])
+                submit (fn [source]
+                         (let [ns (current-ns)]
+                           (evaluate {}
+                                     #(dispatch [:on-eval-complete :cljs-console ns source %1 %2])
+                                     source)))]
 
     (reagent/create-class
      {:reagent-render
@@ -72,9 +79,8 @@
             :on-down go-down
             :on-change set-text
             :on-eval submit
-            :get-prompt replumb-proxy/get-prompt
-            :should-eval (fn [source _ _]
-                           (not (replumb-proxy/multiline? source)))})]])
+            :get-prompt get-prompt
+            :should-eval should-eval})]])
       :component-did-update
       (fn [this]
         (common/scroll-to-el-bottom! (.-parentElement (reagent/dom-node this))))})))

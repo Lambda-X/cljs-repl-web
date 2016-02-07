@@ -137,3 +137,23 @@
   (-> db
       (set-console-text k (first forms))
       (assoc-in [:consoles (name k) :queued-forms] (rest forms))))
+
+(defn drop-first-queued-form
+  [db k]
+  (update-in db [:consoles (name k) :queued-forms] (partial drop 1)))
+
+(defn set-next-queued-form-if-any
+  [db k]
+  (if-let [form (first (queued-forms db k))]
+       (-> db
+           (set-console-text k form)
+           (drop-first-queued-form k))
+       db))
+
+(defn on-eval-complete
+  [db k prev-ns text success? result]
+  (-> db
+       (set-console-text k text)
+       (add-console-input k text prev-ns)
+       (add-console-result k (not success?) result)
+       (set-next-queued-form-if-any k)))

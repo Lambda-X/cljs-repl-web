@@ -2,7 +2,6 @@
   (:require [re-frame.core :refer [register-handler dispatch]]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
-            [cljs-repl-web.code-mirror.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.code-mirror.app :as app]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
@@ -83,17 +82,8 @@
    (app/clear-console-queued-forms db console-key)))
 
 (register-handler
- :submit-source
- (fn submit-source [db [_  console-key execute-fn text]]
-   (let [text (.trim @text)]
-     (dispatch [:console-set-text console-key text])
-     (dispatch [:add-console-input console-key text (replumb-proxy/current-ns)])
-     (execute-fn text #(dispatch [:add-console-result console-key (not %1) %2]))
-
-     (if-let [form (first (app/queued-forms db console-key))]
-       (do
-         (dispatch [:console-set-text console-key form])
-         (update-in db [:consoles (name console-key) :queued-forms] (partial drop 1)))
-       db))))
+ :on-eval-complete
+ (fn on-eval-complete [db [_  console-key prev-ns text success? result]]
+   (app/on-eval-complete db console-key prev-ns text success? result)))
 
 ;; )
