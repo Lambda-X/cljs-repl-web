@@ -2,8 +2,8 @@
   (:require [re-frame.core :refer [register-handler dispatch]]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
-            [cljs-repl-web.code-mirror.app :as app]
-            [cljs-repl-web.code-mirror.replumb :as replumb-proxy]))
+            [cljs-repl-web.code-mirror.replumb-proxy :as replumb-proxy]
+            [cljs-repl-web.code-mirror.app :as app]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 

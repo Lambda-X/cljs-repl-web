@@ -1,4 +1,4 @@
-(ns cljs-repl-web.code-mirror.replumb
+(ns cljs-repl-web.code-mirror.replumb-proxy
   (:require [replumb.core :as replumb]
             [replumb.repl :as replumb-repl]
             [cljs-repl-web.io :as io]))
@@ -27,4 +27,3 @@
 (defn current-ns
   []
   (replumb-repl/current-ns))
-

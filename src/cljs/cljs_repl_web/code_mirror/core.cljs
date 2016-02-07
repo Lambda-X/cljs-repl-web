@@ -5,7 +5,7 @@
             [cljs-repl-web.code-mirror.subs :as subs]
             [cljs-repl-web.code-mirror.editor :as editor]
             [cljs-repl-web.code-mirror.common :as common]
-            [cljs-repl-web.code-mirror.replumb :as replumb-proxy]
+            [cljs-repl-web.code-mirror.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.code-mirror.utils :as utils]))
 
 ;;; many parts are taken from jaredly's reepl
