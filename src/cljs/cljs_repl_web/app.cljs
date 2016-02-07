@@ -15,21 +15,6 @@
 ;; {:console instance
 ;;  :text .....}
 
-(defn console
-  "Given a db and console key, returns its instance or nil if not
-  found."
-  [db k]
-  (get-in db [:consoles (name k) :cm-instance]))
-
-(def console-created? "Was the console created? Returns a truey or falsey value."
-  console)
-
-(defn interactive-examples
-  "Given a db and console key, returns its examples or nil if not
-  found."
-  [db k]
-  (get-in db [:consoles (name k) :interactive-examples]))
-
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
   It is not bound to any specific console."

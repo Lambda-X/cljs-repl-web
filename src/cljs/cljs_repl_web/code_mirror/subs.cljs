@@ -2,16 +2,22 @@
   (:require
    [re-frame.core :refer [register-sub]]
    [clairvoyant.core :refer-macros [trace-forms]]
-   [re-frame-tracer.core :refer [tracer]])
+   [re-frame-tracer.core :refer [tracer]]
+   [cljs-repl-web.code-mirror.app :as app])
   (:require-macros
    [reagent.ratom :refer [reaction]]))
 
 ;; (trace-forms {:tracer (tracer :color "brown")}
 
 (register-sub
+ :console-created?
+ (fn [db [_ console-key]]
+   (reaction (app/console-created? @db console-key))))
+
+(register-sub
  :get-console-items
  (fn [db [_ console-key]]
-   (reaction (get-in @db [:consoles (name console-key) :items]))))
+   (reaction (app/console-items @db console-key))))
 
 (register-sub
  :get-console-current-text
@@ -25,6 +31,12 @@
 (register-sub
  :get-console
  (fn [db [_ console-key]]
-   (reaction (get-in @db [:consoles (name console-key) :cm-instance]))))
+   (reaction (app/console @db console-key))))
+
+(register-sub
+ :queued-forms-empty?
+ (fn [db [_ console-key]]
+   (reaction (not (empty? (app/queued-forms @db console-key))))))
+
 
 ;; )

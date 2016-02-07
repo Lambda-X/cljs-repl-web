@@ -9,22 +9,6 @@
 ;; (trace-forms {:tracer (tracer :color "brown")}
 
 ;;;;;;;;;;;;;;;;;;
-;;   Console   ;;;
-;;;;;;;;;;;;;;;;;;
-
-(register-sub
- :console-created?
- (fn [db [_ console-key]]
-   (make-reaction (fn console-created? []
-                    (app/console-created? @db console-key)))))
-
-(register-sub
- :get-console
- (fn [db [_ console-key]]
-   (make-reaction (fn get-console []
-                    (app/console @db console-key)))))
-
-;;;;;;;;;;;;;;;;;;
 ;;     APIs    ;;;
 ;;;;;;;;;;;;;;;;;;
 
@@ -49,22 +33,6 @@
    (let [mq (subscribe [:media-query-size])]
      (make-reaction (fn api-panel-column-number []
                       (view-utils/api-panel-column-number @mq))))))
-
-;;;;;;;;;;;;;;;;;;
-;;   Examples  ;;;
-;;;;;;;;;;;;;;;;;;
-
-(register-sub
- :get-next-example
- (fn [db [_ console-key]]
-   (make-reaction (fn get-next-example []
-                    (first (app/interactive-examples @db console-key))))))
-
-(register-sub
- :example-mode?
- (fn [db [_ console-key]]
-   (make-reaction (fn example-mode? []
-                    (not (empty? (app/interactive-examples @db console-key)))))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Footer    ;;;

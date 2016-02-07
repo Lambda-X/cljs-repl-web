@@ -146,7 +146,7 @@
   []
   (let [media-query (subscribe [:media-query-size])
         console-created? (subscribe [:console-created? :cljs-console])
-        example-mode? (subscribe [:example-mode? :cljs-console])]
+        example-mode? (subscribe [:queued-forms-empty? :cljs-console])]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
@@ -165,7 +165,7 @@
                       [gist-login-dialog]
                       [md-icon-button
                        :md-icon-name "zmdi-stop"
-                       :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                       :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
                        :class "cljs-btn"
                        :tooltip "Stop interactive example mode"
                        :tooltip-position :below-center
@@ -288,7 +288,8 @@
                                           [example-send-to-repl-button-label example-index example-map]]]
                        :on-click (handler-fn
                                   (reset! showing-atom false)
-                                  (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
+                                  (utils/scroll-to-top) ; in case we are at the bottom of the page
+                                  (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
               [api-example example-map]]])
 
 (defn api-examples

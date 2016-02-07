@@ -56,17 +56,7 @@
 
         items (subscribe [:get-console-items :cljs-console])
         text  (subscribe [:get-console-current-text :cljs-console])
-
-        submit (fn [text]
-                 (let [text (.trim text)]
-                   (when (< 0 (count text))
-                     (set-text text)
-                     (add-input text (replumb-proxy/current-ns))
-                     (execute text #(add-result (not %1) %2))
-                     ;; todo - rethink better?
-                     (when-let [example @(subscribe [:get-next-example :cljs-console])]
-                       (set-text example)
-                       (dispatch [:delete-first-example :cljs-console])))))]
+        submit #(dispatch [:submit-source :cljs-console execute text])]
 
     (reagent/create-class
      {:reagent-render
