@@ -15,7 +15,7 @@
 
 (def console-created?
   "Was the console created? Returns a truey or falsey value."
-  console)
+  (comp not nil? console))
 
 (defn console-items
   [db k]
