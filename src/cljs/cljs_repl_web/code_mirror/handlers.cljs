@@ -9,9 +9,8 @@
 
 (register-handler
  :add-console
- (fn add-console [db [_ console-key inst]]
-   (assoc-in db [:consoles (name console-key)]
-             (assoc app/initial-console-state :cm-instance inst))))
+ (fn add-console [db [_ console-key instance]]
+   (app/add-console db console-key instance)))
 
 (register-handler
  :focus-console-editor
@@ -24,91 +23,64 @@
  :clear-console-items
  (fn clear-console-items [db [_ console-key]]
    (dispatch [:focus-console-editor console-key])
-   (assoc-in db [:consoles (name console-key) :items] [])))
+   (app/clear-console-items db console-key)))
 
 (register-handler
  :reset-console-items
  (fn reset-console-items [db [_ console-key]]
    (dispatch [:focus-console-editor console-key])
-   (update-in db
-              [:consoles (name console-key)]
-              (fn [current-state]
-                (merge current-state
-                       (select-keys app/initial-console-state [:items :hist-pos :history]))))))
+   (app/reset-console-items db console-key)))
 
 (register-handler
  :add-console-item
  (fn add-console-item [db [_ console-key item]]
-   (update-in db [:consoles (name console-key) :items] conj item)))
+   (app/add-console-item db console-key item)))
 
 (register-handler
  :add-console-items
  (fn add-console-items [db [_ console-key items]]
-   (update-in db [:consoles (name console-key) :items] concat items)))
+   (app/add-console-item db console-key items)))
 
 (register-handler
  :add-console-input
  (fn add-console-input [db [_ console-key input ns]]
-   (let [inum (count (app/console-history db console-key))]
-     (-> db
-         (assoc-in [:consoles (name console-key) :hist-pos] 0)
-         (update-in [:consoles (name console-key) :history] conj "")
-         (update-in [:consoles (name console-key) :items] conj {:type :input :text input :num inum :ns ns})))))
+   (app/add-console-input db console-key input ns)))
 
 (register-handler
  :add-console-result
  (fn add-console-result [db [_ console-key error? value]]
-   (update-in db [:consoles (name console-key) :items] conj {:type (if error? :error :output)
-                                                             :value value})))
+   (app/add-console-result db console-key error? value)))
 
 (register-handler
  :add-console-log
  (fn add-console-log [db [_ console-key item]]
-   (update-in db [:consoles (name console-key) :items] conj {:type :log :value item})))
+   (app/add-console-log db console-key item)))
 
 (register-handler
  :console-set-text
  (fn console-set-text [db [_ console-key text]]
-   (let [history (app/console-history db console-key)
-         pos (app/console-history-pos db console-key)
-         idx (- (count history) pos 1)]
-     (-> db
-         (assoc-in [:consoles (name console-key) :hist-pos] 0)
-         (assoc-in [:consoles (name console-key) :history]
-                   (if (= pos 0)
-                     (assoc history idx text)
-                     (conj history text)))))))
+   (app/set-console-text db console-key text)))
 
 (register-handler
  :console-go-up
  (fn console-go-up [db [_ console-key]]
-   (let [pos (app/console-history-pos db console-key)
-         len (count (app/console-history db console-key))
-         new-pos (if (>= pos (dec len))
-                   pos
-                   (inc pos))]
-     (assoc-in db [:consoles (name console-key) :hist-pos] new-pos))))
+   (app/console-go-up db console-key)))
 
 (register-handler
  :console-go-down
  (fn console-go-down [db [_ console-key]]
-   (update-in db
-              [:consoles (name console-key) :hist-pos]
-              (fn [pos] (if (<= pos 0)
-                          0
-                          (dec pos))))))
+   (app/console-go-down db console-key)))
 
 (register-handler
  :set-console-queued-forms
  (fn set-queued-forms [db [_ console-key forms]]
-   (dispatch [:console-set-text console-key (first forms)])
    (dispatch [:focus-console-editor console-key])
-   (assoc-in db [:consoles (name console-key) :queued-forms] (rest forms))))
+   (app/set-console-queued-forms db console-key forms)))
 
 (register-handler
  :clear-console-queued-forms
  (fn clear-console-queued-forms [db [_ console-key]]
-   (assoc-in db [:consoles (name console-key) :queued-forms] [])))
+   (app/clear-console-queued-forms db console-key)))
 
 (register-handler
  :submit-source
