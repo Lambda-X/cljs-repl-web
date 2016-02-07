@@ -35,7 +35,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;           Setters           ;;;
+;;;       State modifiers       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn add-console
@@ -151,9 +151,9 @@
        db))
 
 (defn on-eval-complete
-  [db k prev-ns text success? result]
+  [db k {:keys [prev-ns source success? result]}]
   (-> db
-       (set-console-text k text)
-       (add-console-input k text prev-ns)
+       (set-console-text k source)
+       (add-console-input k source prev-ns)
        (add-console-result k (not success?) result)
        (set-next-queued-form-if-any k)))

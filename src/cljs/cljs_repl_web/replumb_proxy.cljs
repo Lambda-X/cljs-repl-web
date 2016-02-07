@@ -10,10 +10,14 @@
          {:warning-as-error true
           :verbose false}))
 
-(defn read-eval-call [opts cb text]
-  (replumb/read-eval-call (merge repl-options opts)
-                          #(cb (replumb/success? %) (replumb/unwrap-result %))
-                          text))
+(defn read-eval-call [opts cb source]
+  (let [ns (replumb-repl/current-ns)]
+    (replumb/read-eval-call (merge repl-options opts)
+                            #(cb {:success? (replumb/success? %)
+                                  :result   (replumb/unwrap-result %)
+                                  :prev-ns  ns
+                                  :source   source})
+                            source)))
 
 (defn multiline?
   [input]
@@ -24,6 +28,5 @@
       true)))
 
 (def eval-opts {:get-prompt  replumb/get-prompt
-                :current-ns  replumb-repl/current-ns
-                :should-eval (comp not multiline?)
+                :should-eval (complement multiline?)
                 :evaluate    read-eval-call})

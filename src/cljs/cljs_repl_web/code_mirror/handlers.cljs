@@ -83,7 +83,7 @@
 
 (register-handler
  :on-eval-complete
- (fn on-eval-complete [db [_  console-key prev-ns text success? result]]
-   (app/on-eval-complete db console-key prev-ns text success? result)))
+ (fn on-eval-complete [db [_  console-key result-map]]
+   (app/on-eval-complete db console-key result-map)))
 
 ;; )

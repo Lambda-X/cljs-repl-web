@@ -54,16 +54,14 @@
 
                 {:keys [get-prompt
                         should-eval
-                        evaluate
-                        current-ns]} eval-opts
+                        evaluate]} eval-opts
 
                 items (subscribe [:get-console-items :cljs-console])
                 text  (subscribe [:get-console-current-text :cljs-console])
                 submit (fn [source]
-                         (let [ns (current-ns)]
-                           (evaluate {}
-                                     #(dispatch [:on-eval-complete :cljs-console ns source %1 %2])
-                                     source)))]
+                         (evaluate {}
+                                   #(dispatch [:on-eval-complete :cljs-console %])
+                                   source))]
 
     (reagent/create-class
      {:reagent-render
