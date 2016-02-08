@@ -27,6 +27,16 @@
         last-ch (count (.getLine cm last-line))]
     (.setCursor cm last-line last-ch)))
 
+(defn modifying-prompt?
+  [inst key]
+  (let [pos (.getCursor inst)
+        lno (.-line pos)
+        cno (.-ch pos)
+        compare-position-fn (if (= 8 key) <= <)]
+    (and ((complement #{37 38 39 40}) key)
+         (zero? lno)
+         (compare-position-fn cno (common/beginning-of-source (.getValue inst))))))
+
 (defn editor
   [value-atom {:keys [on-change
                       on-eval
@@ -53,7 +63,7 @@
                       :extraKeys #js {"Shift-Enter" "newlineAndIndent"}
                       :value (str (get-prompt) @value-atom)
                       :mode "clojure"}))]
-          
+
           (dispatch [:add-console :cljs-console inst])
           (move-to-end inst)
 
@@ -72,31 +82,27 @@
 
           (.on inst "keydown"
                (fn [inst evt]
-                 (case (.-keyCode evt)
-                   ;; backspace
-                   8 (let [pos (.getCursor inst)
-                           lno (.-line pos)
-                           cno (.-ch pos)]
-                       (when (and (zero? lno) (<= cno (common/beginning-of-source (.getValue inst))))
-                         (.preventDefault evt)))
-                   ;; enter
-                   13 (let [source (common/source-without-prompt (.getValue inst))]
-                        (when (should-eval source inst evt)
-                          (.preventDefault evt)
-                          (on-eval source)))
-                   ;; up
-                   38 (let [source (common/source-without-prompt (.getValue inst))]
-                        (when (and (not (.-shiftKey evt))
-                                   (should-go-up source inst))
-                          (.preventDefault evt)
-                          (on-up)))
-                   ;; down
-                   40 (let [source (common/source-without-prompt (.getValue inst))]
-                        (when (and (not (.-shiftKey evt))
-                                   (should-go-down source inst))
-                          (.preventDefault evt)
-                          (on-down)))
-                   :none)))))
+                 (if (modifying-prompt? inst (.-keyCode evt))
+                   (.preventDefault evt)
+                   (case (.-keyCode evt)
+                     ;; enter
+                     13 (let [source (common/source-without-prompt (.getValue inst))]
+                          (when (should-eval source inst evt)
+                            (.preventDefault evt)
+                            (on-eval source)))
+                     ;; up
+                     38 (let [source (common/source-without-prompt (.getValue inst))]
+                          (when (and (not (.-shiftKey evt))
+                                     (should-go-up source inst))
+                            (.preventDefault evt)
+                            (on-up)))
+                     ;; down
+                     40 (let [source (common/source-without-prompt (.getValue inst))]
+                          (when (and (not (.-shiftKey evt))
+                                     (should-go-down source inst))
+                            (.preventDefault evt)
+                            (on-down)))
+                     :none))))))
 
       :component-did-update
       (fn [this old-argv]
@@ -108,4 +114,3 @@
       (fn []
         @value-atom
         [:div])})))
-
