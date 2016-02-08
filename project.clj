@@ -1,7 +1,7 @@
 (defproject cljs-repl-web "0.2.7-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
-                 [replumb/replumb "0.1.4"]
+                 [replumb/replumb "0.1.5-SNAPSHOT"]
                  [reagent "0.5.1"]
                  [re-frame "0.5.0"]
                  [re-com "0.7.0-alpha2"]
@@ -28,7 +28,8 @@
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs" "test/cljs"]
-                        :figwheel {:on-jsload "cljs-repl-web.core/main"}
+                        :figwheel {:on-jsload "cljs-repl-web.core/main"
+                                   :css-dirs ["resources/public/styles/css/"]}
                         :compiler {:main cljs-repl-web.core
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"
                                    :output-dir "resources/public/js/compiled/out"
@@ -97,7 +98,6 @@
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :figwheel {:nrepl-port 5088
                               :repl true
-                              :css-dirs ["resources/public/styles/css/"]
                               ;; Load CIDER, refactor-nrepl and piggieback middleware
                               :nrepl-middleware ["cider.nrepl/cider-middleware"
                                                  "refactor-nrepl.middleware/wrap-refactor"
