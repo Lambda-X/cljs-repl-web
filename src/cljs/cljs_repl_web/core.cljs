@@ -5,9 +5,12 @@
             [devtools.core :as devtools]
             [cljs-repl-web.handlers]
             [cljs-repl-web.subs]
-            [cljs-repl-web.views :as views]))
+            [cljs-repl-web.views :as views]
+            [cljs-repl-web.replumb-proxy :as replumb-proxy]))
 
 ;; (defonce conn (repl/connect "http://localhost:9000/repl"))
+
+(defonce console-key :cljs-console)
 
 (devtools/set-pref! :install-sanity-hints true) ; this is optional
 (devtools/install!)
@@ -17,6 +20,6 @@
 (defn ^:export main []
   (println "In cljs-browser-repl.core/main")
   (dispatch-sync [:initialize])
-  (reagent/render [views/repl-component] (.getElementById js/document "app-center"))
+  (reagent/render [views/repl-component console-key replumb-proxy/eval-opts] (.getElementById js/document "app-center"))
   (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
   (reagent/render [views/footer-component] (.getElementById js/document "app-footer")))

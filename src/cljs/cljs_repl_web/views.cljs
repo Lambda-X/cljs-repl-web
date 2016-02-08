@@ -10,54 +10,13 @@
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]
-            [cljs-repl-web.console :as console]
-            [cljs-repl-web.console.cljs :as cljs]
             [cljs-repl-web.cljs-api :as api]
             [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
-            [cljs-repl-web.markdown :as md]))
+            [cljs-repl-web.markdown :as md]
+            [cljs-repl-web.code-mirror.core :as cm]))
 
 ;; (set! re-com.box/debug true)
-
-;;;;;;;;;;;;;;;;;;;;;;;
-;;; Reagent helpers ;;;
-;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn cljs-console-did-mount
-  [console-opts]
-  (js/$
-   (fn []
-     (let [jqconsole (cljs/cljs-console! console-opts)]
-       (dispatch [:add-console :cljs-console jqconsole])
-       (cljs/cljs-console-prompt! jqconsole cljs/repl-options)))))
-
-(defn cljs-console-render []
-  [:div.cljs-console.console])
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Reagent components ;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn cljs-console-component
-  "Creates a new instance of e which loads on the input
-  selector (any jQuery selector will work) and configuration. The
-  options are passed as named parameters and follow the jq-console ones.
-
-  * :welcome-string is the string to be shown when the terminal is first
-    rendered. Defaults to nil.
-  * :prompt-label is the label to be shown before the input when using
-    Prompt(). Defaults to namespace=>.
-  * :continue-label is the label to be shown before the continued lines
-    of the input when using Prompt(). Defaults to nil.
-  * :disable-auto-focus is a boolean indicating whether we should disable
-    the default auto-focus behavior. Defaults to true, the console never
-    takes focus."
-  []
-  (fn [console-opts]
-    (println "Building ClojureScript React component")
-    (reagent/create-class {:display-name "cljs-console-component"
-                           :reagent-render cljs-console-render
-                           :component-did-mount #(cljs-console-did-mount console-opts)})))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -187,18 +146,18 @@
   []
   (let [media-query (subscribe [:media-query-size])
         console-created? (subscribe [:console-created? :cljs-console])
-        example-mode? (subscribe [:example-mode? :cljs-console])]
+        example-mode? (subscribe [:queued-forms-empty? :cljs-console])]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
-                       :on-click #(dispatch [:reset-console :cljs-console])
+                       :on-click #(dispatch [:reset-console-items :cljs-console])
                        :class "cljs-btn"
                        :tooltip "Reset"
                        :tooltip-position :left-center
                        :disabled? (not @console-created?)]
                       [md-icon-button
                        :md-icon-name "zmdi-format-clear-all"
-                       :on-click #(dispatch [:clear-console :cljs-console])
+                       :on-click #(dispatch [:clear-console-items :cljs-console])
                        :class "cljs-btn"
                        :tooltip "Clear"
                        :tooltip-position :left-center
@@ -206,7 +165,7 @@
                       [gist-login-dialog]
                       [md-icon-button
                        :md-icon-name "zmdi-stop"
-                       :on-click #(dispatch [:exit-interactive-examples :cljs-console])
+                       :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
                        :class "cljs-btn"
                        :tooltip "Stop interactive example mode"
                        :tooltip-position :below-center
@@ -329,7 +288,8 @@
                                           [example-send-to-repl-button-label example-index example-map]]]
                        :on-click (handler-fn
                                   (reset! showing-atom false)
-                                  (dispatch [:send-to-console :cljs-console (:strings example-map)]))]]
+                                  (utils/scroll-to-top) ; in case we are at the bottom of the page
+                                  (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
               [api-example example-map]]])
 
 (defn api-examples
@@ -589,14 +549,14 @@
    :align :stretch
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
-(defn repl-component []
+(defn repl-component [console-key eval-opts]
   (let [media-query (subscribe [:media-query-size])]
     (fn repl-component-form2 []
       (let [children [[cljs-buttons]
                       [box
                        :size "0 0 auto"
-                       :style {:overflow "hidden"}
-                       :child [cljs-console-component]]]]
+                       :class "cm-console-container"
+                       :child [cm/console console-key eval-opts]]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

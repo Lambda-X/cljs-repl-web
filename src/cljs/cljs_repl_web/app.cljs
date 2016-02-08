@@ -15,33 +15,6 @@
 ;; {:console instance
 ;;  :text .....}
 
-(defn console
-  "Given a db and console key, returns its instance or nil if not
-  found."
-  [db k]
-  (get-in db [:consoles (name k) :console]))
-
-(defn console-text
-  "Given a db, returns the console text or nil if none found."
-  [db k]
-  (get-in db [:consoles (name k) :text]))
-
-(def console-created? "Was the console created? Returns a truey or falsey value."
-  console)
-
-(defn assoc-console-text!
-  "For the consoles in db, fetch the current text and assoc it
-  to its console map (:text keyword)"
-  [db console-key text]
-  {:post [(map? (:consoles %))]}
-  (assoc-in db [:consoles (name console-key) :text] text))
-
-(defn interactive-examples
-  "Given a db and console key, returns its examples or nil if not
-  found."
-  [db k]
-  (get-in db [:consoles (name k) :interactive-examples]))
-
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
   It is not bound to any specific console."

@@ -2,8 +2,6 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [replumb/replumb "0.1.4"]
-                 [cljsjs/jqconsole "2.13.1-0"]
-                 [cljsjs/highlight "8.4-0"]
                  [reagent "0.5.1"]
                  [re-frame "0.5.0"]
                  [re-com "0.7.0-alpha2"]
@@ -13,7 +11,8 @@
                  [hickory "0.5.4"]
                  [cljsjs/showdown "0.4.0-1"]
                  [org.clojure/tools.reader "1.0.0-alpha2"]
-                 [cljsjs/enquire "2.1.2-0"]]
+                 [cljsjs/enquire "2.1.2-0"]
+                 [cljsjs/codemirror "5.10.0-0"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-codox "0.9.0"]
