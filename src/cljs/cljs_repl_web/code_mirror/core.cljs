@@ -10,65 +10,65 @@
 ;;; many parts are taken from jaredly's reepl
 ;;; https://github.com/jaredly/reepl
 
-(defn make-handlers []
-  {:add-input    #(dispatch [:add-console-input :cljs-console %1 %2])
-   :add-result   #(dispatch [:add-console-result :cljs-console %1 %2])
-   :go-up        #(dispatch [:console-go-up :cljs-console %])
-   :go-down      #(dispatch [:console-go-down :cljs-console %])
-   :clear-items  #(dispatch [:clear-console-items :cljs-console %])
-   :set-text     #(dispatch [:console-set-text :cljs-console %1])
-   :add-log      #(dispatch [:add-console-log :cljs-console %])})
+(defn make-handlers [console-key]
+  {:add-input    #(dispatch [:add-console-input console-key %1 %2])
+   :add-result   #(dispatch [:add-console-result console-key %1 %2])
+   :go-up        #(dispatch [:console-go-up console-key %])
+   :go-down      #(dispatch [:console-go-down console-key %])
+   :clear-items  #(dispatch [:clear-console-items console-key %])
+   :set-text     #(dispatch [:console-set-text console-key %1])
+   :add-log      #(dispatch [:add-console-log console-key %])})
 
 (defn display-output-item
-  ([value]
-   (display-output-item value false))
-  ([value error?]
+  ([console-key value]
+   (display-output-item console-key value false))
+  ([console-key value error?]
    [:div
-    {:on-click #(dispatch [:focus-console-editor :cljs-console])
+    {:on-click #(dispatch [:focus-console-editor console-key])
      :class (str "cm-console-item" (when error? " error-cm-console-item"))}
     value]))
 
 (defn display-repl-item
-  [item]
+  [console-key item]
   (if-let [text (:text item)]
     [:div.cm-console-item
-     {:on-click #(do (dispatch [:console-set-text :cljs-console text])
-                     (dispatch [:focus-console-editor :cljs-console]))}
+     {:on-click #(do (dispatch [:console-set-text console-key text])
+                     (dispatch [:focus-console-editor console-key]))}
      [utils/colored-text (str (:ns item) "=> " text)]]
 
     (if (= :error (:type item))
-      (display-output-item (.-message (:value item)) true)
-      (display-output-item (:value item)))))
+      (display-output-item console-key (.-message (:value item)) true)
+      (display-output-item console-key (:value item)))))
 
-(defn repl-items [items]
-  (into [:div] (map display-repl-item items)))
+(defn repl-items [console-key items]
+  (into [:div] (map (partial display-repl-item console-key) items)))
 
-(defn console [eval-opts]
+(defn console [console-key eval-opts]
   (let [{:keys [add-input
                 add-result
                 go-up
                 go-down
                 clear-items
                 set-text
-                add-log]} (make-handlers)
+                add-log]} (make-handlers console-key)
 
                 {:keys [get-prompt
                         should-eval
                         evaluate]} eval-opts
 
-                items (subscribe [:get-console-items :cljs-console])
-                text  (subscribe [:get-console-current-text :cljs-console])
+                items (subscribe [:get-console-items console-key])
+                text  (subscribe [:get-console-current-text console-key])
                 submit (fn [source]
                          (evaluate {}
-                                   #(dispatch [:on-eval-complete :cljs-console %])
+                                   #(dispatch [:on-eval-complete console-key %])
                                    source))]
 
     (reagent/create-class
      {:reagent-render
       (fn []
         [:div.cm-console
-         {:on-click #(dispatch [:focus-console-editor :cljs-console])}
-         [repl-items @items]
+         {:on-click #(dispatch [:focus-console-editor console-key])}
+         [repl-items console-key @items]
          [editor/editor
           text
           (merge

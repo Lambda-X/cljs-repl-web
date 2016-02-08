@@ -549,14 +549,14 @@
    :align :stretch
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
-(defn repl-component [eval-opts]
+(defn repl-component [console-key eval-opts]
   (let [media-query (subscribe [:media-query-size])]
     (fn repl-component-form2 []
       (let [children [[cljs-buttons]
                       [box
                        :size "0 0 auto"
                        :class "cm-console-container"
-                       :child [cm/console eval-opts]]]]
+                       :child [cm/console console-key eval-opts]]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
