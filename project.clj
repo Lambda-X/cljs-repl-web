@@ -56,7 +56,7 @@
                                    :source-map-timestamp true
                                    ;; https://github.com/clojure/clojurescript/wiki/Compiler-Options#elide-asserts
                                    :elide-asserts true
-                                   :optimizations :none
+                                   :optimizations :simple
                                    :pretty-print false
                                    :dump-core false}}]}
 
