@@ -27,7 +27,7 @@
   :test-paths ["test/clj"]
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/cljs" "test/cljs"]
+                        :source-paths ["src/cljs" "test/cljs" "env/dev/cljs"]
                         :figwheel {:on-jsload "cljs-repl-web.core/main"
                                    :css-dirs ["resources/public/styles/css/"]}
                         :compiler {:main cljs-repl-web.core
@@ -40,9 +40,10 @@
                         :source-paths ["src/cljs" "test/doo"]
                         :compiler {:main launcher.runner
                                    :output-to "resources/private/test/compiled/cljs-repl-web.js"
+                                   :output-dir "resources/private/test/compiled/out"
                                    :pretty-print false}}
                        {:id "prod"
-                        :source-paths ["src/cljs"]
+                        :source-paths ["src/cljs" "env/prod/cljs"]
                         :compiler { ;; :main cljs-repl-web.core ;; AR - No main! https://github.com/emezeske/lein-cljsbuild/issues/420
                                    :closure-defines {:goog.DEBUG false}
                                    :output-to "resources/public/js/compiled/cljs-repl-web.js"

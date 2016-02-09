@@ -52,16 +52,15 @@
                 set-text
                 add-log]} (make-handlers console-key)
 
-                {:keys [get-prompt
-                        should-eval
-                        evaluate]} eval-opts
+        {:keys [get-prompt
+                should-eval
+                evaluate]} eval-opts
 
-                items (subscribe [:get-console-items console-key])
-                text  (subscribe [:get-console-current-text console-key])
-                submit (fn [source]
-                         (evaluate {}
-                                   #(dispatch [:on-eval-complete console-key %])
-                                   source))]
+        items (subscribe [:get-console-items console-key])
+        text  (subscribe [:get-console-current-text console-key])
+        submit (fn [source]
+                 (evaluate #(dispatch [:on-eval-complete console-key %])
+                           source))]
 
     (reagent/create-class
      {:reagent-render
