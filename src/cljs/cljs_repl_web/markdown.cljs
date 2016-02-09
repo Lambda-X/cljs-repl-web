@@ -47,15 +47,6 @@
 (defn get-props [this k]
   (aget (.-props this) (name k)))
 
-(defn get-hljs []
-  (aget js/goog.global "hljs"))
-
-(defn highlight-node [this]
-  (when-let [node (ref->node this "code-ref")]
-    (when-let [hljs (get-hljs)]
-      (when-let [highlight-block (aget hljs "highlightBlock")]
-        (highlight-block node)))))
-
 (defn leading-space-count [s]
   (when-let [ws (second (re-matches #"^([\s]*).*"  s))]
     (.-length ws)))
@@ -113,13 +104,9 @@
 
 (defmethod markdown-block->react :code-block [{:keys [content] :as block}]
   (reagent/create-class
-   {:component-did-mount
-    (fn [this] (highlight-node this))
-    :component-did-update
-    (fn [this] (highlight-node this))
-    :render
+   {:render
     (fn [this]
-      [:pre {:className (if (get-hljs) "markdown-code-highlighting" "")}
+      [:pre {:className ""}
        [:code {:className (or (get-props this :lang) "")
                :ref "code-ref"}
         (get-props this :code)]])}))
