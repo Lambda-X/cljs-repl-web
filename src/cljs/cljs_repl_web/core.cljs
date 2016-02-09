@@ -4,7 +4,6 @@
             [re-com.core :refer [p h-box v-box box gap line]]
             [devtools.core :as devtools]
             [cljs-repl-web.handlers]
-            [cljs-repl-web.subs]
             [cljs-repl-web.views :as views]
             [cljs-repl-web.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.config :as config]))
