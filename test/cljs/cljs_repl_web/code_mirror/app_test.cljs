@@ -3,6 +3,10 @@
             [cljs.test :refer-macros [deftest is async]]
             [cljs-repl-web.replumb-proxy :as replumb-proxy]))
 
+;; Or doo will exit with an error, see:
+;; https://github.com/bensu/doo/issues/83#issuecomment-165498172
+(set! (.-error js/console) (fn [x] (.log js/console x)))
+
 (def db (atom {:consoles {}}))
 
 (def console-key :cljs-console)
@@ -12,8 +16,7 @@
 (defn submit
   [db k source]
   (let [evaluate (:evaluate eval-opts)]
-    (evaluate {}
-              (partial app/on-eval-complete db k)
+    (evaluate (partial app/on-eval-complete db k)
               source)))
 
 (deftest initial-configuration

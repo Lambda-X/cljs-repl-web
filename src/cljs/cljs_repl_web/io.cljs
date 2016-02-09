@@ -5,11 +5,6 @@
   (:import [goog.events EventType]
            [goog.net XhrIo]))
 
-(def base-path "Website base path" "")
-;; (def base-path "Website base path" "/test")
-
-(def cache-url (str base-path "/js-cache/core.cljs.cache.aot.json"))
-
 ;;;;;;;;;;
 ;;  IO  ;;
 ;;;;;;;;;;
@@ -29,7 +24,9 @@
     (catch :default e
       (src-cb nil))))
 
-(defn get-cljs-core-cache! []
+(defn load-cljs-core-cache!
+  "Load core.cljs.cache.aot.json given the url"
+  [cache-url]
   (fetch-file! cache-url
                (fn [txt]
                  (let [rdr   (transit/reader :json)

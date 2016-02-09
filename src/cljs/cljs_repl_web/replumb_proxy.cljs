@@ -1,18 +1,21 @@
 (ns cljs-repl-web.replumb-proxy
   (:require [replumb.core :as replumb]
             [replumb.repl :as replumb-repl]
-            [cljs-repl-web.io :as io]))
+            [cljs-repl-web.io :as io]
+            [cljs-repl-web.config :as config]))
 
-(def repl-options
-  "Static set of options for replumb.core/read-eval-call"
-  (merge (replumb/browser-options [(str io/base-path "/cljs-src")]
-                                  io/fetch-file!)
+(defn repl-options
+  "Options for replumb.core/read-eval-call.
+
+  Read the docs at https://github.com/ScalaConsultants/replumb"
+  [verbose? src-paths]
+  (merge (replumb/browser-options src-paths io/fetch-file!)
          {:warning-as-error true
-          :verbose false}))
+          :verbose verbose?}))
 
 (defn read-eval-call [opts cb source]
   (let [ns (replumb-repl/current-ns)]
-    (replumb/read-eval-call (merge repl-options opts)
+    (replumb/read-eval-call opts
                             #(cb {:success? (replumb/success? %)
                                   :result   (replumb/unwrap-result %)
                                   :prev-ns  ns
@@ -29,4 +32,6 @@
 
 (def eval-opts {:get-prompt  replumb/get-prompt
                 :should-eval (complement multiline?)
-                :evaluate    read-eval-call})
+                :evaluate    (partial read-eval-call
+                                      (repl-options (:verbose-repl? config/defaults)
+                                                    (:src-paths config/defaults)))})

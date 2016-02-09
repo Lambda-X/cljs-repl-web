@@ -7,6 +7,7 @@
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.gist :as gist]
+            [cljs-repl-web.config :as config]
             [cljs-repl-web.code-mirror.handlers :as cm-handlers]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
@@ -35,10 +36,10 @@
    ;; we load the cljs core cache manually in order to reduce the app size
    ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
    ;; see also related issue in replbum https://github.com/ScalaConsultants/replumb/issues/42
-   (io/get-cljs-core-cache!)
+   (io/load-cljs-core-cache! (:core-cache-url config/defaults))
    (app/register-media-queries!)
    (assoc initial-state
-     :media-query-size (app/initial-media-query!))))
+          :media-query-size (app/initial-media-query!))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
