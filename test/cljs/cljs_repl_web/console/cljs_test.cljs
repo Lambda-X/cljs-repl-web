@@ -1,7 +1,6 @@
 (ns cljs-repl-web.console.cljs-test
   (:require [cljs.test :refer-macros [deftest is]]
-            [cljs.core.async :refer [<! >! chan close! put! timeout]]
-            [cljs-repl-web.console.cljs :as console :refer [cljs-read-eval-print!]])
+            [cljs.core.async :refer [<! >! chan close! put! timeout]])
   (:require-macros [cljs.core.async.macros :refer [go alt!]]))
 
 (deftest require

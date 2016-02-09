@@ -10,7 +10,7 @@
             [hickory.zip :as hzip]
             [hickory.convert :as hconvert]
             [goog.string :as gstring]
-            [cljs-repl-web.highlight :as hl]))
+            [cljs-repl-web.code-mirror.utils :as utils]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 
@@ -120,7 +120,7 @@
   (update-in node [:content] (fn [old-content]
                                (if-let [s (first old-content)]
                                  (if (string? s)
-                                   (let [parsed-hls (hickory/parse-fragment (hl/highlight-html s))]
+                                   (let [parsed-hls (hickory/parse-fragment s)]
                                      (mapv (comp zip/root as-hickory-zip) parsed-hls))
                                    old-content)
                                  old-content))))
@@ -154,12 +154,15 @@
   (into [:div (merge {:class class
                       :style style}
                      attr)]
-        (map (comp unescape-html
-                   hconvert/hickory-to-hiccup
-                   zip/root
-                   highlight-code-locs
-                   as-hickory-zip)
-             (hickory/parse-fragment html-string))))
+        (->> html-string
+             hickory/parse-fragment
+             (map hickory/as-hiccup)
+             (mapcat identity)
+             (filter #(or (string? %) (vector? %)))
+             (map (fn [item]
+                    (if (string? item)
+                      [:p (goog.string/unescapeEntities item)]
+                      [utils/colored-text (goog.string/unescapeEntities (last item)) {:padding "10"}]))))))
 
 (comment
   (require '[clairvoyant.core :as t :include-macros true])
