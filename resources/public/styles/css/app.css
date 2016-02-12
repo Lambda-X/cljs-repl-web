@@ -202,42 +202,6 @@ body,html {
     }
 }
 
-/***************console*******************/
-
-/* :wide */
-.cm-console {
-    /*  Note that this element must be explicity sized and positioned absolute or relative. */
-    position: relative;
-    width: 660px;
-    height: 300px;
-    min-width: 300px;
-    min-height: 186px;
-}
-
-/* :narrow */
-@media only screen and (max-width: 480px) {
-    .cm-console {
-        /*  Note that this element must be explicity sized and positioned absolute or relative. */
-        position: relative;
-        width: 300px;
-        height: 180px;
-        min-width: 120px;
-        min-height: 80px;
-    }
-}
-
-/* :medium */
-@media only screen and (min-width: 481px) and (max-width: 960px) {
-    .cm-console {
-        /*  Note that this element must be explicity sized and positioned absolute or relative. */
-        position: relative;
-        width: 460px;
-        height: 280px;
-        min-width: 220px;
-        min-height: 75px;
-    }
-}
-
 /* This overrides hljs's style, therefore it must go after */
 .hljs {
     display: inline;
@@ -245,12 +209,6 @@ body,html {
     padding: 0;
     border: 0;
     background: #FFFFFF;
-}
-
-@media only screen and (max-width: 960px) {
-    .cm-console pre {
-        padding: 10px;
-    }
 }
 
 .cljs-btn > i {
@@ -495,55 +453,56 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     }
 }
 
-/*  Code Mirror  */
+/* override re-console style */
 
-.cm-console-container {
-    overflow-y: scroll;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    -webkit-transform: translateZ(0);
-    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+/* :wide */
+.re-console-container {
+    /*  Note that this element must be explicity sized and positioned absolute or relative. */
+    position: relative;
+    width: 660px;
+    height: 300px;
+    min-width: 300px;
+    min-height: 186px;
 }
 
-.cm-console-item, .error-cm-console-item {
-    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-    font-size: 13px;
-    opacity: 0.7;
+/* :narrow */
+@media only screen and (max-width: 480px) {
+    .re-console-container {
+        /*  Note that this element must be explicity sized and positioned absolute or relative. */
+        position: relative;
+        width: 300px;
+        height: 180px;
+        min-width: 120px;
+        min-height: 80px;
+    }
 }
 
-.error-cm-console-item {
-    color: #e60000;
+/* :medium */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+    .re-console-container {
+        /*  Note that this element must be explicity sized and positioned absolute or relative. */
+        position: relative;
+        width: 460px;
+        height: 280px;
+        min-width: 220px;
+        min-height: 75px;
+    }
 }
 
-.cm-console-item pre {
-    background: #FFFFFF;
-    border-radius: 0px;
+/* Override bootstrap classes  */
+
+.re-console-item pre {
+    background: transparent;
     border: none;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     margin: 0;
     padding: 1px;
 }
 
-/* This classes serve the purpose of alignment the repl prompt */
+/* Custom styling do the console */
 
-.cm-console-item pre code {
-    border: none;
+.re-console-container {
+    border-radius: 5px;
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 }
 
-.cm-console .CodeMirror {
-    height: auto;
-    font-size: 13px;
-    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-    margin-bottom: 20px;
-}
-
-.cm-console .CodeMirror-lines {
-    padding: 0;
-}
-
-.cm-console .CodeMirror pre {
-    padding: 0;
-}

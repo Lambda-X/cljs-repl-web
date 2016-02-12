@@ -5,7 +5,7 @@
             [cljs-repl-web.config :as config]
             [adzerk.cljs-console :as log :include-macros true]))
 
-(defn repl-options
+(defn replumb-options
   "Options for replumb.core/read-eval-call.
 
   Read the docs at https://github.com/ScalaConsultants/replumb"
@@ -21,7 +21,7 @@
                             (fn [result]
                               (log/debug "Top of read-eval-call cb: ~{result}")
                               (cb {:success? (replumb/success? result)
-                                   :result   (replumb/unwrap-result result)
+                                   :result   result
                                    :prev-ns  ns
                                    :source   source}))
                             source)))
@@ -35,8 +35,11 @@
       (log/warn "multiline? caught @{e}")
       true)))
 
-(def eval-opts {:get-prompt  replumb/get-prompt
-                :should-eval (complement multiline?)
-                :evaluate    (partial read-eval-call
-                                      (repl-options (:verbose-repl? config/defaults)
-                                                    (:src-paths config/defaults)))})
+(defn eval-opts
+  [verbose src-path]
+  {:get-prompt  replumb/get-prompt
+   :should-eval (complement multiline?)
+   :to-str-fn   (partial replumb/result->string false true)
+   :evaluate    (partial read-eval-call
+                         (replumb-options verbose src-path))})
+

@@ -7,8 +7,7 @@
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.gist :as gist]
-            [cljs-repl-web.config :as config]
-            [cljs-repl-web.code-mirror.handlers :as cm-handlers]))
+            [cljs-repl-web.config :as config]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
