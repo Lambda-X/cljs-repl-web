@@ -59,13 +59,13 @@
    :source-map-timestamp true})
 
 (deftask build []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/prod"})
+  (set-env! :source-paths #{"src/clj" "src/cljs" "env/prod/cljs"})
   (comp (cljs :compiler-options compiler-options)))
 
 (deftask dev
   "Start the dev env..."
   []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev"})
+  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs"})
   (comp (serve :dir "resources/public")
         (watch)
         (cljs-repl)
