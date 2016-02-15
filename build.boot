@@ -1,5 +1,3 @@
-(def +version+ "0.2.7-SNAPSHOT")
-
 (set-env!
  :source-paths #{"src/cljs" "src/clj" "test/clj" "test/cljs"}
  :resource-paths #{"resouces/public/"}
@@ -7,6 +5,7 @@
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                  [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
                  [adzerk/boot-reload          "0.4.4" :scope "test"]
+                 [degree9/boot-semver "1.2.0"]
 
                  ;; Repl
                  [adzerk/boot-cljs-repl       "0.3.0"]
@@ -45,7 +44,10 @@
          '[adzerk.boot-test             :as boot-test]
          '[pandeiro.boot-http           :refer [serve]]
          '[crisptrutski.boot-cljs-test  :refer [test-cljs]]
-         '[adzerk.boot-cljs-repl        :refer [cljs-repl start-repl]])
+         '[adzerk.boot-cljs-repl        :refer [cljs-repl start-repl]]
+         '[boot-semver.core :refer :all])
+
+(def +version+ (get-version))
 
 (task-options!
  pom {:project "cljs-repl-web"
