@@ -1,6 +1,4 @@
 (set-env!
- :source-paths #{"src/cljs" "src/clj" "test/clj" "test/cljs"}
- :resource-paths #{"resouces/public/"}
  :dependencies '[;; Boot deps
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                  [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
@@ -49,39 +47,57 @@
 
 (def +version+ (get-version))
 
-(task-options!
- pom {:project "cljs-repl-web"
-      :version +version+}
- test-cljs {:js-env :phantom})
+(task-options! pom {:project "cljs-repl-web"
+                    :version +version+}
+               test-cljs {:js-env :phantom})
 
-(def compiler-options
+(def dev-compiler-options
+  {:source-map-timestamp true})
+
+(def prod-compiler-options
   {:closure-defines {"goog.DEBUG" false}
-   :source-map :true
-   :optimizations :none
+   :optimize-constants true
+   :static-fns true
+   :elide-asserts true
+   :pretty-print false
    :source-map-timestamp true})
 
-(deftask build []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/prod/cljs"})
-  (comp (cljs :compiler-options compiler-options)))
+(deftask build
+  "Build the final artifact, if not type is passed in, it builds production."
+  [t type VAL kw "The build type, either prod or dev"]
+  (let [{:keys [source-paths middleware]}
+        (cond
+          (= type :dev) {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
+                         :middleware (cljs :source-map true
+                                           :optimizations :none
+                                           :compiler-options dev-compiler-options)}
+          true {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
+                :middleware (cljs :source-map true
+                                  :optimizations :simple
+                                  :compiler-options prod-compiler-options)})]
+    (set-env! :source-paths source-paths
+              :resource-paths #{"resources/public/"})
+    (comp middleware
+          (target))))
 
 (deftask dev
-  "Start the dev env..."
+  "Start the dev interactive environment."
   []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs"})
-  (comp (serve :dir "resources/public")
+  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
+            :resource-paths #{"resources/public/"})
+  (comp (serve)
         (watch)
         (cljs-repl)
-        (cljs :compiler-options compiler-options)
+        (build :type :dev)
         (reload :on-jsload 'cljs-repl-web.core/main)))
 
 (deftask test
-  "Run tests.."
+  "Run tests."
   []
-  (set-env! :source-paths #{"test/clj" "test/cljs"})
-  (comp
-   (speak)
-   (test-cljs :namespaces #{"cljs-repl-web.core-test"})
-   (boot-test/test)))
+  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "test/clj" "test/cljs"})
+  (comp (speak)
+        (test-cljs :namespaces #{"cljs-repl-web.core-test"})
+        (boot-test/test)))
 
 (deftask auto-test []
   (comp (watch) (test)))
