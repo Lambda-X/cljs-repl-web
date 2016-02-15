@@ -19,11 +19,11 @@
 
                  ;; App deps
                  [org.clojure/clojure         "1.7.0"]
-                 [org.clojure/clojurescript   "1.7.170"]
+                 [org.clojure/clojurescript   "1.7.228"]
                  [org.clojure/core.async      "0.2.374"]
-                 [reagent                     "0.5.0"]
+                 [reagent                     "0.5.1"]
                  [re-frame                    "0.5.0"]
-                 [replumb/replumb             "0.1.3-SNAPSHOT"]
+                 [replumb/replumb             "0.1.5-SNAPSHOT"]
                  [cljsjs/jqconsole            "2.13.1-0"]
                  [cljsjs/highlight            "8.4-0"]
                  [re-com                      "0.7.0-alpha2"]
@@ -32,7 +32,7 @@
                  [markdown-clj                "0.9.78"]
                  [hickory                     "0.5.4"]
                  [cljsjs/showdown             "0.4.0-1"]
-                 [org.clojure/tools.reader    "1.0.0-alpha1"]
+                 [org.clojure/tools.reader    "1.0.0-alpha3"]
                  [cljsjs/enquire              "2.1.2-0"]
                  [com.cemerick/piggieback     "0.2.1"]
                  [binaryage/devtools          "0.4.1"]
