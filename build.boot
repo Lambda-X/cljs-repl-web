@@ -37,7 +37,8 @@
                  [cljsjs/enquire              "2.1.2-0"]
                  [com.cemerick/piggieback     "0.2.1"]
                  [binaryage/devtools          "0.4.1"]
-                 [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]])
+                 [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
+                 [cljsjs/codemirror           "5.10.0-0"]])
 
 (require '[adzerk.boot-cljs             :refer [cljs]]
          '[adzerk.boot-reload           :refer [reload]]
