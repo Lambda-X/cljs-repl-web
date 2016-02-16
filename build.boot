@@ -39,7 +39,6 @@
 
 (require '[adzerk.boot-cljs             :refer [cljs]]
          '[adzerk.boot-reload           :refer [reload]]
-         '[adzerk.boot-test             :as boot-test]
          '[pandeiro.boot-http           :refer [serve]]
          '[crisptrutski.boot-cljs-test  :refer [test-cljs]]
          '[adzerk.boot-cljs-repl        :refer [cljs-repl start-repl]]
@@ -49,7 +48,12 @@
 
 (task-options! pom {:project "cljs-repl-web"
                     :version +version+}
-               test-cljs {:js-env :phantom})
+               test-cljs {:js-env :phantom
+                          :out-file "phantom-tests.js"})
+
+;;;;;;;;;;;;;;;;;;;;;;
+;;;    Options     ;;;
+;;;;;;;;;;;;;;;;;;;;;;
 
 (def dev-compiler-options
   {:source-map-timestamp true})
@@ -62,42 +66,81 @@
    :pretty-print false
    :source-map-timestamp true})
 
+(def test-namespaces
+  #{"cljs-repl-web.core-test"
+    "cljs-repl-web.code-mirror.app-test"})
+
+(defmulti options
+  "Return the correct option map for the build, dispatching on identity"
+  identity)
+
+(defmethod options :dev
+  [selection]
+  {:type :dev
+   :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
+         :resource-paths #{"resources/public/"}
+         :cljs {:source-map true
+                :optimizations :none
+                :compiler-options dev-compiler-options}}
+   :test-cljs {:optimizations :none
+               :cljs-opts dev-compiler-options
+               :namespaces test-namespaces}})
+
+(defmethod options :prod
+  [selection]
+  {:type :prod
+   :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
+         :resource-paths #{"resources/public/"}}
+   :cljs {:source-map true
+          :optimizations :simple
+          :compiler-options prod-compiler-options}
+   :test-cljs {:optimizations :simple
+               :cljs-opts prod-compiler-options
+               :namespaces test-namespaces}})
+
 (deftask build
-  "Build the final artifact, if not type is passed in, it builds production."
+  "Build the final artifact, if no type is passed in, it builds production."
   [t type VAL kw "The build type, either prod or dev"]
-  (let [{:keys [source-paths middleware]}
-        (cond
-          (= type :dev) {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
-                         :middleware (cljs :source-map true
-                                           :optimizations :none
-                                           :compiler-options dev-compiler-options)}
-          true {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
-                :middleware (cljs :source-map true
-                                  :optimizations :simple
-                                  :compiler-options prod-compiler-options)})]
-    (set-env! :source-paths source-paths
-              :resource-paths #{"resources/public/"})
-    (comp middleware
+
+  (let [options (options (or type :prod))]
+    (boot.util/info "Building %s profile...\n" (:type options))
+    (apply set-env! (reduce #(into %2 %1) [] (:env options)))
+    (comp (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
           (target))))
 
 (deftask dev
   "Start the dev interactive environment."
   []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
-            :resource-paths #{"resources/public/"})
-  (comp (serve)
-        (watch)
-        (cljs-repl)
-        (build :type :dev)
-        (reload :on-jsload 'cljs-repl-web.core/main)))
+  (boot.util/info "Starting interactive dev...\n")
+  (let [options (options :dev)]
+    (apply set-env! (reduce #(into %2 %1) [] (:env options)))
+    (comp (serve)
+          (watch)
+          (cljs-repl)
+          (build :type :dev)
+          (reload :on-jsload 'cljs-repl-web.core/main))))
+
+;; This prevents a name collision WARNING between the test task and
+;; clojure.core/test, a function that nobody really uses or cares
+;; about.
+(ns-unmap 'boot.user 'test)
 
 (deftask test
-  "Run tests."
-  []
-  (set-env! :source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "test/clj" "test/cljs"})
-  (comp (speak)
-        (test-cljs :namespaces #{"cljs-repl-web.core-test"})
-        (boot-test/test)))
+  "Run tests, if no type is passed in, it tests against production."
+  [t type VAL kw "The build type, either prod or dev"]
+  (let [options (options (or type :prod))]
+    (boot.util/info "Testing %s profile...\n" (:type options))
+    (set-env! :source-paths (conj (get-in options [:env :source-paths]) "test/cljs" ))
+    (apply test-cljs (reduce #(into %2 %1) [] (:test-cljs options)))))
 
-(deftask auto-test []
-  (comp (watch) (test)))
+(deftask auto-test
+  "Run tests while updating on file change.
+
+  Always runs against :dev.
+
+  It automatically enables test sound notifications, use the -n parameter for
+  switching them off."
+  [n no-sounds bool "Enable notifications during tests"]
+  (comp (watch)
+        (if no-sounds identity (speak))
+        (test :type :dev)))

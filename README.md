@@ -72,10 +72,11 @@ Check `boot serve -h` for the other options.
 Tests at the moment use PhantomJS but there are just a few.
 
 For headless tests you need first of all
-[PhantomJS](https://github.com/ariya/phantomjs/). Then you can: `boot build -t
-prod|dev test`. Note that `boot` builds a pipeline, therefore you need to build
-if you want to test the last version. The `auto-test` tasks also provides
-automatic test execution on file change.
+[PhantomJS](https://github.com/ariya/phantomjs/). Then you can:
+
+`boot test -t prod|dev`
+
+The `auto-test` tasks also provides automatic test execution on file change.
 
 Featuring [doo](https://github.com/bensu/doo).
 
