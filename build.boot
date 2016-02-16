@@ -3,10 +3,10 @@
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                  [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
                  [adzerk/boot-reload          "0.4.4" :scope "test"]
-                 [degree9/boot-semver "1.2.0"]
+                 [degree9/boot-semver         "1.2.1" :scope "test"]
 
                  ;; Repl
-                 [adzerk/boot-cljs-repl       "0.3.0"]
+                 [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
                  [com.cemerick/piggieback     "0.2.1"  :scope "test"]
                  [weasel                      "0.7.0"  :scope "test"]
                  [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
