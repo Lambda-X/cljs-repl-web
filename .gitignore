@@ -11,6 +11,7 @@ pom.xml.asc
 .lein-plugins/
 .lein-failures
 .nrepl-port
+.nrepl-history
 .repl/
 figwheel_server.log
 resources/**/compiled/
