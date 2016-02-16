@@ -33,7 +33,8 @@
                  [org.clojure/tools.reader    "1.0.0-alpha3"]
                  [cljsjs/enquire              "2.1.2-0"]
                  [com.cemerick/piggieback     "0.2.1"]
-                 [binaryage/devtools          "0.4.1"]
+                 [org.clojars.stumitchell/clairvoyant "0.2.0"]
+                 [binaryage/devtools          "0.5.2"]
                  [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
                  [cljsjs/codemirror           "5.10.0-0"]])
 
