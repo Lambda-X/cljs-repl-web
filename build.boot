@@ -3,10 +3,10 @@
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                  [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
                  [adzerk/boot-reload          "0.4.4" :scope "test"]
-                 [degree9/boot-semver "1.2.0"]
+                 [degree9/boot-semver         "1.2.1" :scope "test"]
 
                  ;; Repl
-                 [adzerk/boot-cljs-repl       "0.3.0"]
+                 [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
                  [com.cemerick/piggieback     "0.2.1"  :scope "test"]
                  [weasel                      "0.7.0"  :scope "test"]
                  [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
@@ -98,6 +98,15 @@
                :cljs-opts prod-compiler-options
                :namespaces test-namespaces}})
 
+(deftask version-file
+  "A task that includes the version.properties file in the fileset."
+  []
+  (boot.util/info "Add version.properties...\n")
+  (with-pre-wrap [fileset]
+    (-> fileset
+        (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
+        commit!)))
+
 (deftask build
   "Build the final artifact, if no type is passed in, it builds production."
   [t type VAL kw "The build type, either prod or dev"]
@@ -106,6 +115,7 @@
     (boot.util/info "Building %s profile...\n" (:type options))
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
     (comp (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
+          (version-file)
           (target))))
 
 (deftask dev
