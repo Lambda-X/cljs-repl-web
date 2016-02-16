@@ -1,15 +1,14 @@
 (ns cljs-repl-web.handlers
-  (:require [re-frame.core :refer [register-handler]]
+  (:require [re-frame.core :refer [register-handler dispatch]]
             [replumb.core :as replumb]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.io :as io]
-            [cljs-repl-web.console.cljs :as cljs]
-            [cljs-repl-web.console :as console]
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.gist :as gist]
-            [cljs-repl-web.highlight :as highlight]))
+            [cljs-repl-web.config :as config]
+            [cljs-repl-web.code-mirror.handlers :as cm-handlers]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
@@ -19,7 +18,6 @@
                     :media-query-size :wide})
 
 ;; TODO Middleware
-
 
 ;;;;;;;;;;;;;;;;;;
 ;;;    DB      ;;;
@@ -38,43 +36,10 @@
    ;; we load the cljs core cache manually in order to reduce the app size
    ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
    ;; see also related issue in replbum https://github.com/ScalaConsultants/replumb/issues/42
-   (io/get-cljs-core-cache!)
+   (io/load-cljs-core-cache! (:core-cache-url config/defaults))
    (app/register-media-queries!)
    (assoc initial-state
           :media-query-size (app/initial-media-query!))))
-
-;;;;;;;;;;;;;;;;;;;;;;
-;;;    Console     ;;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-(register-handler
- :add-console
- (fn add-console [db [_ console-key console]]
-   (assoc-in db [:consoles (name console-key)] {:console console
-                                                :text ""})))
-
-(register-handler
- :set-console-text
- (fn set-console-text [db [_ console-key text]]
-   (app/assoc-console-text! db console-key text)))
-
-;;;;;;;;;;;;;;;;;;;;;;;
-;;; Console buttons ;;;
-;;;;;;;;;;;;;;;;;;;;;;;
-
-(register-handler
- :clear-console
- (fn clear-console [db [_ console-key]]
-   (let [console (app/console db console-key)]
-     (cljs/cljs-clear-console! console))
-   (assoc-in db [:consoles (name console-key) :empty?] true)))
-
-(register-handler
- :reset-console
- (fn reset-console [db [_ console-key]]
-   (let [console (app/console db console-key)]
-     (cljs/cljs-reset-console-and-prompt! console cljs/repl-options))
-   (assoc-in db [:consoles (name console-key) :empty?] true)))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
@@ -101,8 +66,14 @@
  :create-gist
  (fn create-gist [db [_ console-key auth-data success-handler error-handler]]
    (let [{:keys [username password]} @auth-data
-         console (app/console db console-key)
-         text (console/dump-console! console)
+         items (get-in db [:consoles (name console-key) :items])
+         text (apply str (interpose \newline (map (fn [item]
+                                                    (if-let [text (:text item)]
+                                                      (str (:ns item) "=> " text)
+                                                      (if (= :error (:type item))
+                                                        (.-message (:value item))
+                                                         (:value item))))
+                                                  items)))
          empty-usr? (empty? username)
          empty-pwd? (empty? password)
          empty-txt? (empty? text)
@@ -124,37 +95,6 @@
  :set-gist-error-msg
  (fn set-gist-error-msg [db [_ msg]]
    (assoc-in db [:gist-data :error-msg] msg)))
-
-;;;;;;;;;;;;;;;;;;;;;;;
-;;;     Popover     ;;;
-;;;;;;;;;;;;;;;;;;;;;;;
-
-(register-handler
- :send-to-console
- (fn send-to-console [db [_ console-key lines]]
-   (let [console (app/console db console-key)]
-     (utils/scroll-to-top) ; in case we are at the bottom of the page
-     (console/set-prompt-text! console (first lines))
-     ;; hack after hack: the set-prompt-text! function does not trigger
-     ;; the syntax highlight, so we need to invoke it manually
-     (highlight/highlight-prompt-line! (.-$prompt_left console) (atom "") )
-     (highlight/highlight-prompt-lines! (.-$prompt_before console))
-     (console/focus-console! console)
-     (assoc-in db [:consoles (name console-key) :interactive-examples] (rest lines)))))
-
-(register-handler
- :delete-first-example
- (fn delete-first-example [db [_ console-key]]
-   (let [examples (app/interactive-examples db console-key)]
-     (assoc-in db [:consoles (name console-key) :interactive-examples] (drop 1 examples)))))
-
-(register-handler
- :exit-interactive-examples
- (fn exit-interactive-examples [db [_ console-key]]
-   (let [console (app/console db console-key)]
-     (console/set-prompt-text! console "")
-     (console/focus-console! console)
-     (assoc-in db [:consoles (name console-key) :interactive-examples] []))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;  Media Queries   ;;;

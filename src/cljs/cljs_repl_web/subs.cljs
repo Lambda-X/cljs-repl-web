@@ -4,32 +4,9 @@
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
             [cljs-repl-web.app :as app]
-            [cljs-repl-web.console :as console]
             [cljs-repl-web.views.utils :as view-utils]))
 
 ;; (trace-forms {:tracer (tracer :color "brown")}
-
-;;;;;;;;;;;;;;;;;;
-;;   Console   ;;;
-;;;;;;;;;;;;;;;;;;
-
-(register-sub
- :console-created?
- (fn [db [_ console-key]]
-   (make-reaction (fn console-created? []
-                    (app/console-created? @db console-key)))))
-
-(register-sub
- :get-console
- (fn [db [_ console-key]]
-   (make-reaction (fn get-console []
-                    (app/console @db console-key)))))
-
-(register-sub
- :console-text
- (fn [db [_ console-key]]
-   (make-reaction (fn console-text []
-                    (app/console-text @db console-key)))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     APIs    ;;;
@@ -56,22 +33,6 @@
    (let [mq (subscribe [:media-query-size])]
      (make-reaction (fn api-panel-column-number []
                       (view-utils/api-panel-column-number @mq))))))
-
-;;;;;;;;;;;;;;;;;;
-;;   Examples  ;;;
-;;;;;;;;;;;;;;;;;;
-
-(register-sub
- :get-next-example
- (fn [db [_ console-key]]
-   (make-reaction (fn get-next-example []
-                    (first (app/interactive-examples @db console-key))))))
-
-(register-sub
- :example-mode?
- (fn [db [_ console-key]]
-   (make-reaction (fn example-mode? []
-                    (not (empty? (app/interactive-examples @db console-key)))))))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Footer    ;;;
@@ -109,11 +70,8 @@
 (register-sub
  :can-dump-gist?
  (fn [db [_ console-key]]
-   (let [console (subscribe [:get-console console-key])
-         console-text (subscribe [:console-text console-key])]
-     (make-reaction (fn can-save-gist? []
-                      (let [_ @console-text] ;; using this just as trigger
-                        (some-> @console (console/dump-console!) empty?)))))))
+   (let [items (subscribe [:get-console-items console-key])]
+     (make-reaction (fn can-save-gist? [] (nil? (seq @items)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;  Media Queries   ;;;

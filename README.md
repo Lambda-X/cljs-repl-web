@@ -1,76 +1,96 @@
-# cljs-browser-repl
-
-A reagent app designed to embed a pure ClojureScript REPL in a web page.
-
-The JavaScript will be ```cljs-browser-repl.js``` and it is typically located in ```resources/public/js/compiled```.
+# Clojure Web Repl ([clojurescript.io](http://www.clojurescript.io))
 
 
-### Generate the ClojureScript API 
+A reagent app designed to embed a pure ClojureScript REPL in a web
+page.
+Plumbing kindly provided by
+<a href="https://github.com/ScalaConsultants/replumb">
+ <img width="103px" height="24px" border="0" src="https://raw.githubusercontent.com/ScalaConsultants/replumb/master/images/replumb_logo_bg.jpg" alt="Replumb Logo"/></a>
+.
 
-The project needs to create the ClojureScript `cljs-browser-repl.cljs-api` namespace and relative custom data taken from the amazing work at [cljs-api-info](https://github.com/cljsinfo/cljs-api-docs).
+This project also employs the following libraries, whose authors we thank:
 
-In order to generate the namespace inside `src`,  run:
+* [regent](https://github.com/reagent-project/reagent)
+* [re-frame](https://github.com/Day8/re-frame)
+* [re-com](https://github.com/Day8/re-com)
+* [markdown-clj](https://github.com/yogthos/markdown-clj)
+* [hickory](https://github.com/davidsantiago/hickory)
+* [CodeMirror](https://github.com/codemirror/CodeMirror)
+* [showdown](https://github.com/showdownjs/showdown)
+* [enquire.js](https://github.com/WickyNilliams/enquire.js)
+* ...and more
 
-`lein run -m cljs-api.generator/-main`
+Last but not least, many kudos go to [@jaredly](https://github.com/jaredly) and
+his [Reepl](https://github.com/jaredly/reepl) with which we share the
+CodeMirror implementation (and yes, the plan is to create a separate component
+library with it).
 
-If you need to update the `edn` with the latest version from `cljs-api-docs` follow the instructions on their project page. This will generate a `cljs-api.edn` that you will need to copy from `cljs-api-docs/catalog` to `resources`.
+## Tooling
 
+We recently switched this project to [boot](http://boot-clj.com/)
+<img width="24px" height="24px" src="https://github.com/boot-clj/boot-clj.github.io/blob/master/assets/images/logos/boot-logo-3.png" alt="Boot Logo"/>
+and we could not be more happy.
 
-## Development Mode
+### Interactive workflow
 
-In dev mode, an ```out``` folder, containing all the compiled dependencies will be also created in the same folder of ```clojure-browser-repl.js```.
+Type `boot dev` and then browse to [http://localhost:3000](http://localhost:3000).
 
-#### Figwheel:
+### Build
 
-```lein fig-dev```  **or** ```lein fig-dev*``` if you want to clean as well.
+The same easy command is used to build the content directly, which will be
+materialized in the `target` folder:
 
-Figwheel will automatically push cljs changes to the browser.
+`boot build -t prod|dev`
 
-Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
+The `build` command defaults to `prod` when called with no arguments.
 
-#### Vanilla ClojureScript REPL:
+#### Config
 
-This is useful in order to be sure that Figwheel does not interfere with the classpath.
-
-There is a problem, solved [here](https://github.com/tailrecursion/lein-simpleton/pull/7) in `lein-simpleton`, so you need either to wait for the merge and then point to the correct version or build locally from my branch (at the moment the latest is `1.4.0-SNAPSHOT`):
+The `cljs-repl-web.config/defaults` var contains the configuration map:
 
 ```
-git clone -b from-fix git@github.com:arichiardi/lein-simpleton.git
-cd lein-simpleton
-lein install
+{:name "Clojurescript.io Website"
+ :production? true|false
+ :base-path "root/"
+ :core-cache-url "/my-cache/core.cljs.cache.aot.json")
+ :src-paths ["/some/path1" "/some/path2")]
+ :verbose-repl? true|false}
 ```
 
-After that, you should have the fixed jar in `.m2/repository`. Come back to `cljs-browser-repl` and build the project with `lein cljsbuild once dev`. Open two terminals.
+#### Serve files
 
-In the first one, execute:
-`./scripts/brepl`  (or `./scripts/brepl.bat`, untested, for Windows)
+Sometimes it is useful to serve files from `target`, for instance to check if
+everything works fine, kind of simulating the deployment. With `boot` you don't
+need no more `python -m SimpleHTTPServer`, only:
 
-In the second one, execute:
-```
-lein simpleton 5042 :from resources/public
-```
+`boot serve -d target wait`
 
-Then connect your browser to `http://localhost:5042` (your app will appear).
-
-If you want a battery included alias, launch `lein serve`.
-
-## Production Build
-
-```lein minify``` **or** ```lein do clean, cljsbuild once min```
+Check `boot serve -h` for the other options.
 
 ## Testing
 
-Tests at the moment complete smoothly in the Firefox/Chrome Developer Console, PhantomJS and SlimerJS.
+Tests at the moment use PhantomJS but there are just a few.
 
-You can test inside the browser's Developer Console after having booted Figwheel using ```luncher.test.run()```. Moreover, tests are executed every time Figwheel reloads.
+For headless tests you need first of all
+[PhantomJS](https://github.com/ariya/phantomjs/). Then you can:
 
-For headless tests you need first of all [PhantomJS](https://github.com/ariya/phantomjs/) and/or [SlimerJS](http://slimerjs.org/), after which you can: ```lein test-phantom``` and/or ```lein test-slimer``` respectively. Featuring [doo](https://github.com/bensu/doo) here.
+`boot test -t prod|dev`
 
-## Docs
+The `auto-test` tasks also provides automatic test execution on file change.
 
-The documentation tool of choice is [Codox](https://github.com/weavejester/codox). You just need to execute `lein codox` and open `doc/index.html` in order to see the result.
+Featuring [doo](https://github.com/bensu/doo).
 
-## Resources
+## Other Resources
 
- * [JQConsole](https://github.com/replit/jq-console)
  * [CLJSJS](https://github.com/cljsjs/packages)
+ * [Boot built-in tasks](https://github.com/boot-clj/boot/wiki/Built-in-Tasks)
+
+### License
+
+Distributed under the Eclipse Public License, the same as Clojure.
+
+Copyright (C) 2015-16 Scalac Sp. z o.o.
+
+Scalac [scalac.io](http://scalac.io/?utm_source=scalac_github&utm_campaign=scalac1&utm_medium=web) is a full-stack team of great functional developers focused around Scala/Clojure backed by great frontend and mobile developers.
+
+On our [blog](http://blog.scalac.io/?utm_source=scalac_github&utm_campaign=scalac1&utm_medium=web) we share our knowledge with community on how to write great, clean code, how to work remotely and about our culture.
