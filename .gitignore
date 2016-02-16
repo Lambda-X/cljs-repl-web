@@ -18,3 +18,4 @@ resources/**/compiled/
 out/
 *.orig
 .projectile
+.dir-locals.el
