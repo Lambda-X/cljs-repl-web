@@ -7,4 +7,4 @@
      :base-path base-path
      :core-cache-url (str base-path "/js-cache/core.cljs.cache.aot.json")
      :src-paths [(str base-path "/main.out")]
-     :verbose-repl? false}))
+     :verbose-repl? true}))
