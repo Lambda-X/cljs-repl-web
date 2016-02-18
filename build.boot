@@ -1,9 +1,9 @@
 (set-env!
  :dependencies '[;; Boot deps
                  [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
-                 [pandeiro/boot-http          "0.7.1-SNAPSHOT" :scope "test"]
-                 [adzerk/boot-reload          "0.4.4" :scope "test"]
-                 [degree9/boot-semver         "1.2.1" :scope "test"]
+                 [pandeiro/boot-http          "0.7.2"     :scope "test"]
+                 [adzerk/boot-reload          "0.4.4"     :scope "test"]
+                 [degree9/boot-semver         "1.2.4"     :scope "test"]
 
                  ;; Repl
                  [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
@@ -12,8 +12,8 @@
                  [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
 
                  ;; Tests
-                 [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT"  :scope "test"]
-                 [adzerk/boot-test            "1.0.7"      :scope "test"]
+                 [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
+                 [adzerk/boot-test            "1.0.7"          :scope "test"]
 
                  ;; App deps
                  [org.clojure/clojure         "1.7.0"]
@@ -102,8 +102,8 @@
 (deftask version-file
   "A task that includes the version.properties file in the fileset."
   []
-  (boot.util/info "Add version.properties...\n")
   (with-pre-wrap [fileset]
+    (boot.util/info "Add version.properties...\n")
     (-> fileset
         (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
         commit!)))
