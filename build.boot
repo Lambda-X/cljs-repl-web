@@ -79,10 +79,10 @@
   [selection]
   {:type :dev
    :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
-         :resource-paths #{"resources/public/"}
-         :cljs {:source-map true
-                :optimizations :none
-                :compiler-options dev-compiler-options}}
+         :resource-paths #{"resources/public/"}}
+   :cljs {:source-map true
+          :optimizations :none
+          :compiler-options dev-compiler-options}
    :test-cljs {:optimizations :none
                :cljs-opts dev-compiler-options
                :namespaces test-namespaces}})
@@ -115,8 +115,8 @@
   (let [options (options (or type :prod))]
     (boot.util/info "Building %s profile...\n" (:type options))
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
-    (comp (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (version-file)
+    (comp (version-file)
+          (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
           (target))))
 
 (deftask dev
@@ -125,11 +125,12 @@
   (boot.util/info "Starting interactive dev...\n")
   (let [options (options :dev)]
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
-    (comp (serve)
+    (comp (version-file)
+          (serve)
           (watch)
           (cljs-repl)
-          (build :type :dev)
-          (reload :on-jsload 'cljs-repl-web.core/main))))
+          (reload :on-jsload 'cljs-repl-web.core/main)
+          (apply cljs (reduce #(into %2 %1) [] (:cljs options))))))
 
 ;; This prevents a name collision WARNING between the test task and
 ;; clojure.core/test, a function that nobody really uses or cares
