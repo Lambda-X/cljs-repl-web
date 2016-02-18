@@ -9,8 +9,6 @@
             [cljs-repl-web.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.config :as config]))
 
-;; (defonce conn (repl/connect "http://localhost:9000/repl"))
-
 (defonce console-key :cljs-console)
 
 (devtools/set-pref! :install-sanity-hints true) ; this is optional

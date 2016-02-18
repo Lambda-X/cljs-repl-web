@@ -5,10 +5,6 @@
   (:import [goog.events EventType]
            [goog.net XhrIo]))
 
-;;;;;;;;;;
-;;  IO  ;;
-;;;;;;;;;;
-
 (defn fetch-file!
   "Very simple implementation of XMLHttpRequests that given a file path
   calls src-cb with the string fetched of nil in case of error.
