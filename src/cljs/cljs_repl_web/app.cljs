@@ -3,18 +3,6 @@
             cljsjs.enquire
             [re-frame.core :refer [dispatch]]))
 
-;; AR - we are going to use re-frame
-;; (defonce state (reagent/atom initial-state))
-
-(defn reset-state!
-  "Reset the app state. Use this do"
-  []
-  (dispatch [:reset-db]))
-
-;; AR - Console maps now are:
-;; {:console instance
-;;  :text .....}
-
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
   It is not bound to any specific console."
@@ -78,3 +66,23 @@
   to :wide."
   [db]
   (or (get db :media-query-size) :wide))
+
+;;;;;;;;;;;;;;;;;;;;;
+;;  Initial State  ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(def initial-state
+  {:consoles {}
+   :gist-data {:gist-showing? false
+               :auth-data {:username "" :password ""}}
+   :media-query-size :wide})
+
+(defn make-init-state!
+  "Create the initial state, can be side effecting."
+  [config]
+  (-> (merge initial-state {:media-query-size (initial-media-query!)})))
+
+(defn reset-state!
+  "Reset the app state. Use this do"
+  []
+  (dispatch [:reset-db]))

@@ -1,5 +1,6 @@
 (ns cljs-repl-web.io
   (:require [cljs.js :as cljs]
+            [clojure.string :as string]
             [cognitect.transit :as transit]
             [replumb.repl :as replumb-repl])
   (:import [goog.events EventType]
@@ -28,3 +29,18 @@
                  (let [rdr   (transit/reader :json)
                        cache (transit/read rdr txt)]
                    (cljs/load-analysis-cache! replumb-repl/st 'cljs.core cache)))))
+
+(defn print-version!
+  "Return the current version from the version.properties file."
+  [version-path]
+  (fetch-file! version-path
+               (fn [content]
+                 (let [version (second (string/split (->> (string/split-lines content)
+                                                          (remove #(= "#" (first %)))
+                                                          first)
+                                                     #"=" 2))]
+                   (println "[Version]" version)))))
+
+(comment
+  (def s "#Tue Feb 16 13:27:59 PST 2016\nVERSION=0.2.2-ar\nOTHER=STUFF")
+  )

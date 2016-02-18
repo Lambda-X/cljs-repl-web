@@ -12,11 +12,6 @@
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
-(def initial-state {:consoles {}
-                    :gist-data {:gist-showing? false
-                                :auth-data {:username "" :password ""}}
-                    :media-query-size :wide})
-
 ;; TODO Middleware
 
 ;;;;;;;;;;;;;;;;;;
@@ -25,21 +20,21 @@
 
 (register-handler
  :reset-db
- (fn reset-db [_ _]
-   initial-state))
+ (fn reset-db [_ [_ config]]
+   (app/make-init-state! config)))
 
 ;; On app startup, create initial state
 (register-handler
  :initialize
- (fn initialize [_ _]
+ (fn initialize [_ [_ config]]
    (println "Initializing app...")
    ;; we load the cljs core cache manually in order to reduce the app size
    ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
    ;; see also related issue in replbum https://github.com/ScalaConsultants/replumb/issues/42
-   (io/load-cljs-core-cache! (:core-cache-url config/defaults))
+   (io/load-cljs-core-cache! (:core-cache-url config))
+   (io/print-version! (:version-path config))
    (app/register-media-queries!)
-   (assoc initial-state
-          :media-query-size (app/initial-media-query!))))
+   (app/make-init-state! config)))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
