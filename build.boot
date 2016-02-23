@@ -26,8 +26,6 @@
                  [cljsjs/highlight            "8.4-0"]
                  [re-com                      "0.7.0-alpha2"]
                  [cljs-ajax                   "0.5.1"]
-                 [endophile                   "0.1.2"]
-                 [markdown-clj                "0.9.78"]
                  [hickory                     "0.5.4"]
                  [cljsjs/showdown             "0.4.0-1"]
                  [org.clojure/tools.reader    "1.0.0-alpha3"]
@@ -38,12 +36,18 @@
                  [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
                  [cljsjs/codemirror           "5.10.0-0"]])
 
-(require '[adzerk.boot-cljs             :refer [cljs]]
-         '[adzerk.boot-reload           :refer [reload]]
-         '[pandeiro.boot-http           :refer [serve]]
-         '[crisptrutski.boot-cljs-test  :refer [test-cljs]]
-         '[adzerk.boot-cljs-repl        :refer [cljs-repl start-repl]]
-         '[boot-semver.core :refer :all])
+(def generator-deps '[[org.clojure/clojure         "1.7.0"]
+                      [org.clojure/tools.reader    "1.0.0-alpha3"]
+                      [endophile                   "0.1.2"]
+                      [markdown-clj                "0.9.78"]])
+
+(require '[adzerk.boot-cljs            :refer [cljs]]
+         '[adzerk.boot-reload          :refer [reload]]
+         '[pandeiro.boot-http          :refer [serve]]
+         '[crisptrutski.boot-cljs-test :refer [test-cljs]]
+         '[adzerk.boot-cljs-repl       :refer [cljs-repl start-repl]]
+         '[boot-semver.core            :refer :all]
+         '[boot.pod                    :as pod])
 
 (def +version+ (get-version))
 
@@ -74,6 +78,13 @@
 (defmulti options
   "Return the correct option map for the build, dispatching on identity"
   identity)
+
+(defmethod options :generator
+  [selection]
+  {:type :generator
+   :env {:source-paths #{"src/clj"}
+         :dependencies generator-deps
+         :resource-paths #{"dev-resources"}}})
 
 (defmethod options :dev
   [selection]
@@ -155,3 +166,25 @@
   (comp (watch)
         (if no-sounds identity (speak))
         (test :type :dev)))
+
+(deftask cljs-api
+  "The task generates the Clojurescript API and the cljs-repl-web.cljs-api
+  namespace. It does NOT add it to the fileset, but calls
+  cljs-api.generator/-main and dump in src/cljs."
+  []
+  (with-pass-thru fs
+    (boot.util/info "Generating...\n")
+    (let [custom-env (:env (options :generator))
+          source-paths (:source-paths custom-env)
+          resource-paths (:resource-paths custom-env)
+          pod-env (assoc-in (get-env) [:dependencies] (:dependencies custom-env))]
+      (let [pod (future (pod/make-pod pod-env))]
+        (pod/with-eval-in @pod
+          (boot.util/dbug "Directories %s\n" (with-out-str (clojure.pprint/pprint boot.pod/env)))
+          (doseq [src ~source-paths]
+            (boot.pod/add-classpath src))
+          (doseq [resource ~resource-paths]
+            (boot.pod/add-classpath resource))
+          (require 'cljs-api.generator)
+          (cljs-api.generator/-main))
+        (pod/destroy-pod @pod)))))
