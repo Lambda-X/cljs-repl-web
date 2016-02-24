@@ -21,7 +21,7 @@
                  [org.clojure/core.async      "0.2.374"]
                  [reagent                     "0.5.1"]
                  [re-frame                    "0.5.0"]
-                 [replumb/replumb             "0.1.5-SNAPSHOT"]
+                 [replumb/replumb             "0.1.5-3"]
                  [cljsjs/jqconsole            "2.13.1-0"]
                  [cljsjs/highlight            "8.4-0"]
                  [re-com                      "0.7.0-alpha2"]
