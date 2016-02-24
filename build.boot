@@ -162,9 +162,8 @@
 
   It automatically enables test sound notifications, use the -n parameter for
   switching them off."
-  [n no-sounds bool "Enable notifications during tests"]
+  []
   (comp (watch)
-        (if no-sounds identity (speak))
         (test :type :dev)))
 
 (deftask cljs-api
