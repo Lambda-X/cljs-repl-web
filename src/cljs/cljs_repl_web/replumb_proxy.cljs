@@ -25,7 +25,7 @@
 (defn multiline?
   [input]
   (try
-    (replumb-repl/repl-read-string input)
+    (replumb-repl/read-string {:features #{:cljs}} input)
     false
     (catch :default _
       true)))
