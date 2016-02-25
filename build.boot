@@ -13,7 +13,6 @@
 
                  ;; Tests
                  [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
-                 [adzerk/boot-test            "1.0.7"          :scope "test"]
 
                  ;; App deps
                  [org.clojure/clojure         "1.7.0"]
@@ -44,10 +43,11 @@
 (require '[adzerk.boot-cljs            :refer [cljs]]
          '[adzerk.boot-reload          :refer [reload]]
          '[pandeiro.boot-http          :refer [serve]]
-         '[crisptrutski.boot-cljs-test :refer [test-cljs]]
+         '[crisptrutski.boot-cljs-test :refer [test-cljs exit!]]
          '[adzerk.boot-cljs-repl       :refer [cljs-repl start-repl]]
          '[boot-semver.core            :refer :all]
-         '[boot.pod                    :as pod])
+         '[boot.pod                    :as pod]
+         '[clojure.pprint              :refer [pprint]])
 
 (def +version+ (get-version))
 
@@ -71,10 +71,6 @@
    :pretty-print false
    :source-map-timestamp true})
 
-(def test-namespaces
-  #{"cljs-repl-web.core-test"
-    "cljs-repl-web.code-mirror.app-test"})
-
 (defmulti options
   "Return the correct option map for the build, dispatching on identity"
   identity)
@@ -96,7 +92,7 @@
           :compiler-options dev-compiler-options}
    :test-cljs {:optimizations :none
                :cljs-opts dev-compiler-options
-               :namespaces test-namespaces}})
+               :suite-ns 'cljs-repl-web.suite}})
 
 (defmethod options :prod
   [selection]
@@ -108,7 +104,7 @@
           :compiler-options prod-compiler-options}
    :test-cljs {:optimizations :simple
                :cljs-opts prod-compiler-options
-               :namespaces test-namespaces}})
+               :suite-ns 'cljs-repl-web.suite}})
 
 (deftask version-file
   "A task that includes the version.properties file in the fileset."
@@ -147,24 +143,44 @@
 ;; about.
 (ns-unmap 'boot.user 'test)
 
+(defn test-cljs-opts
+  [options namespaces exit?]
+  (cond-> options
+    namespaces (-> (update-in [:test-cljs :suite-ns] (fn [_] nil))
+                   (assoc-in [:test-cljs :namespaces] namespaces))
+    exit? (assoc-in [:test-cljs :exit?] exit?)))
+
+(defn set-test-env!
+  [options]
+  (apply set-env! (reduce #(into %2 %1) [] (update-in (:env options) [:source-paths] conj "test/cljs"))))
+
 (deftask test
-  "Run tests, if no type is passed in, it tests against the production build."
-  [t type VAL kw "The build type, either prod or dev"]
-  (let [options (options (or type :prod))]
-    (boot.util/info "Testing %s profile...\n" (:type options))
-    (apply set-env! (reduce #(into %2 %1) [] (update-in (:env options) [:source-paths] conj "test/cljs")))
+  "Run tests once.
+
+   If no type is passed in, it tests against the production build. It
+   optionally accepts (a set of) regular expressions that are used for testing
+   only some namespaces."
+  [t type       VAL        kw       "The build type, either prod or dev"
+   n namespace  NAMESPACE  #{regex} "Namespace regex to test against"]
+  (let [options (-> (options (or type :prod))
+                    (test-cljs-opts namespace true))]
+    (boot.util/info "Testing options %s\n" (with-out-str (pprint options)))
+    (set-test-env! options)
     (apply test-cljs (reduce #(into %2 %1) [] (:test-cljs options)))))
 
 (deftask auto-test
-  "Run tests while updating on file change.
+  "Run tests watching for file changes.
 
-  Always runs against :dev.
-
-  It automatically enables test sound notifications, use the -n parameter for
-  switching them off."
-  []
-  (comp (watch)
-        (test :type :dev)))
+  If no type is passed in, it tests against the production build. It optionally
+  accepts (a set of) regular expressions that are used for testing only some
+  namespaces."
+  [t type      VAL       kw       "The build type, either prod or dev"
+   n namespace NAMESPACE #{regex} "Namespace regex to test against"]
+  (let [options (-> (options (or type :prod))
+                    (test-cljs-opts namespace false))]
+    (set-test-env! options)
+    (comp (watch)
+          (apply test-cljs (reduce #(into %2 %1) [] (:test-cljs options))))))
 
 (deftask cljs-api
   "The task generates the Clojurescript API and the cljs-repl-web.cljs-api
