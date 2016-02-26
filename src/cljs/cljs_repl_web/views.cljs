@@ -477,29 +477,22 @@
                 :size "0 0 auto"
                 :gap "4px"
                 :children [[hyperlink-href
-                            :href "https://www.facebook.com/scalac.io"
-                            :target "_blank"
-                            :class "btn app-footer-btn"
-                            :label [md-icon-button
-                                    :md-icon-name "zmdi-facebook"
-                                    :class "app-footer-btn-icon"]]
-                           [hyperlink-href
-                            :href "https://twitter.com/scalac_io"
+                            :href "https://twitter.com/lambdax_io"
                             :target "_blank"
                             :class "btn app-footer-btn"
                             :label [md-icon-button
                                     :md-icon-name "zmdi-twitter"
                                     :class "app-footer-btn-icon"]]
                            [hyperlink-href
-                            :href "https://www.linkedin.com/company/scalac"
+                            :href "https://github.com/Lambda-X"
                             :target "_blank"
                             :class "btn app-footer-btn"
                             :label [md-icon-button
-                                    :md-icon-name "zmdi-linkedin"
+                                    :md-icon-name "zmdi-github"
                                     :class "app-footer-btn-icon"]]]]
                [:span "and check out our"]
                [hyperlink-href
-                :href "http://blog.scalac.io"
+                :href "http://lambdax.io/blog"
                 :target "_blank"
                 :class "btn app-footer-btn"
                 :label "BLOG"]]]
@@ -521,7 +514,7 @@
   (let [media-query (subscribe [:media-query-size])
         children [[box
                    :size "1 1 auto"
-                   :child [:strong "© Scalac Sp. z o.o. 2015"]]
+                   :child [:strong "LambdaX © 2016"]]
                   [footer-links media-query]]]
     (fn footer-component-form2 []
       (if (= :wide @media-query)
