@@ -478,6 +478,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 
     .ribbon a {
         padding: 6px 36px;
+        font: bold 50% 'Roboto';
     }
 }
 
@@ -500,6 +501,9 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     overflow-y: scroll;
     background-color: white;
     padding: 10px;
+    border-radius: 10px;
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 }
 
 .cm-console-item, .error-cm-console-item {
