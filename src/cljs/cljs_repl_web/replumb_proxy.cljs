@@ -2,7 +2,8 @@
   (:require [replumb.core :as replumb]
             [replumb.repl :as replumb-repl]
             [cljs-repl-web.io :as io]
-            [cljs-repl-web.config :as config]))
+            [cljs-repl-web.config :as config]
+            [adzerk.cljs-console :as log :include-macros true]))
 
 (defn repl-options
   "Options for replumb.core/read-eval-call.
@@ -17,10 +18,12 @@
   (let [ns (replumb-repl/current-ns)]
 
     (replumb/read-eval-call opts
-                            #(cb {:success? (replumb/success? %)
-                                  :result   (replumb/unwrap-result %)
-                                  :prev-ns  ns
-                                  :source   source})
+                            (fn [result]
+                              (log/debug "Top of read-eval-call cb: ~{result}")
+                              (cb {:success? (replumb/success? result)
+                                   :result   (replumb/unwrap-result result)
+                                   :prev-ns  ns
+                                   :source   source}))
                             source)))
 
 (defn multiline?
@@ -28,7 +31,8 @@
   (try
     (replumb-repl/read-string {:features #{:cljs}} input)
     false
-    (catch :default _
+    (catch :default e
+      (log/warn "multiline? caught @{e}")
       true)))
 
 (def eval-opts {:get-prompt  replumb/get-prompt

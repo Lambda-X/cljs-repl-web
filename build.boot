@@ -21,7 +21,6 @@
                  [reagent                     "0.5.1"]
                  [re-frame                    "0.5.0"]
                  [replumb/replumb             "0.2.1"]
-                 [cljsjs/jqconsole            "2.13.1-0"]
                  [cljsjs/highlight            "8.4-0"]
                  [re-com                      "0.7.0-alpha2"]
                  [cljs-ajax                   "0.5.1"]
@@ -33,7 +32,8 @@
                  [org.clojars.stumitchell/clairvoyant "0.2.0"]
                  [binaryage/devtools          "0.5.2"]
                  [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
-                 [cljsjs/codemirror           "5.10.0-0"]])
+                 [cljsjs/codemirror           "5.10.0-0"]
+                 [adzerk/cljs-console "0.1.1"]])
 
 (def generator-deps '[[org.clojure/clojure         "1.7.0"]
                       [org.clojure/tools.reader    "1.0.0-alpha3"]
@@ -85,6 +85,7 @@
 (defmethod options :dev
   [selection]
   {:type :dev
+   :props {"CLJS_LOG_LEVEL" "DEBUG"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
          :resource-paths #{"resources/public/"}}
    :cljs {:source-map true
@@ -97,6 +98,7 @@
 (defmethod options :prod
   [selection]
   {:type :prod
+   :props {"CLJS_LOG_LEVEL" "WARN"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
          :resource-paths #{"resources/public/"}}
    :cljs {:source-map true
@@ -105,6 +107,12 @@
    :test-cljs {:optimizations :simple
                :cljs-opts prod-compiler-options
                :suite-ns 'cljs-repl-web.suite}})
+
+(defn set-system-properties!
+  "Set a system property for each entry in the map m."
+  [m]
+  (doseq [kv m]
+    (System/setProperty (key kv) (val kv))))
 
 (deftask version-file
   "A task that includes the version.properties file in the fileset."
@@ -121,6 +129,7 @@
   (let [options (options (or type :prod))]
     (boot.util/info "Building %s profile...\n" (:type options))
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
+    (set-system-properties! (:props options))
     (comp (version-file)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
           (target))))
@@ -131,6 +140,7 @@
   (boot.util/info "Starting interactive dev...\n")
   (let [options (options :dev)]
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
+    (set-system-properties! (:props options))
     (comp (version-file)
           (serve)
           (watch)

@@ -1,6 +1,7 @@
 (ns cljs-repl-web.code-mirror.core
   (:require [reagent.core :as reagent :refer [atom]]
             [re-frame.core :refer [subscribe dispatch]]
+            [adzerk.cljs-console :as log :include-macros true]
             [cljs-repl-web.code-mirror.handlers :as handlers]
             [cljs-repl-web.code-mirror.subs :as subs]
             [cljs-repl-web.code-mirror.editor :as editor]
@@ -59,7 +60,8 @@
         items (subscribe [:get-console-items console-key])
         text  (subscribe [:get-console-current-text console-key])
         submit (fn [source]
-                 (evaluate #(dispatch [:on-eval-complete console-key %])
+                 (evaluate #(do (log/debug "Dispatching :on-eval-complete")
+                                (dispatch [:on-eval-complete console-key %]))
                            source))]
 
     (reagent/create-class
