@@ -1,7 +1,6 @@
 (ns cljs-repl-web.suite
   (:require [doo.runner :as doo :refer-macros [doo-all-tests]]
-            cljs-repl-web.core-test
-            cljs-repl-web.code-mirror.app-test))
+            cljs-repl-web.core-test))
 
 (enable-console-print!)
 

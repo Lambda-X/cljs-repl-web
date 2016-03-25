@@ -10,7 +10,7 @@
             [hickory.zip :as hzip]
             [hickory.convert :as hconvert]
             [goog.string :as gstring]
-            [cljs-repl-web.code-mirror.utils :as utils]))
+            [re-console.utils :as utils]))
 
 (def clojuredocs-url "http://clojuredocs.org/")
 

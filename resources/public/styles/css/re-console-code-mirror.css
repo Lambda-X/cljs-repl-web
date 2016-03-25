@@ -1,0 +1,36 @@
+.re-console-container {
+    background-color: #FFF;
+    overflow-y: scroll;
+    height: 400px;
+    padding: 10px;
+    margin: 0 0;
+    border-radius: 10px;
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+}
+
+.re-console .CodeMirror {
+        height: auto;
+        font-size: 15px;
+        font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+        margin-bottom: 20px;
+}
+
+.re-console .CodeMirror-code {
+    background-color: #FFF;
+}
+
+.re-console .CodeMirror-lines, .re-console .CodeMirror pre {
+    padding: 0;
+}
+
+.re-console-item, .re-console-item pre, .re-console-item-error pre {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 15px;
+    opacity: 0.7;
+}
+
+.re-console-item-error {
+    color: #e60000;
+}
+

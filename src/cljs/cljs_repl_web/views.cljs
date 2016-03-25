@@ -14,7 +14,7 @@
             [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]
-            [cljs-repl-web.code-mirror.core :as cm]))
+            [re-console.core :as console]))
 
 ;; (set! re-com.box/debug true)
 
@@ -548,8 +548,7 @@
       (let [children [[cljs-buttons]
                       [box
                        :size "0 0 auto"
-                       :class "cm-console-container"
-                       :child [cm/console console-key eval-opts]]]]
+                       :child [console/console console-key eval-opts]]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
