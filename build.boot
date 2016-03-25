@@ -20,7 +20,7 @@
                  [org.clojure/core.async      "0.2.374"]
                  [reagent                     "0.5.1"]
                  [re-frame                    "0.5.0"]
-                 [replumb/replumb             "0.2.1"]
+                 [replumb/replumb             "0.2.2-SNAPSHOT"]
                  [cljsjs/highlight            "8.4-0"]
                  [re-com                      "0.7.0-alpha2"]
                  [cljs-ajax                   "0.5.1"]
