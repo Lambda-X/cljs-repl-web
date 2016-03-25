@@ -11,7 +11,7 @@
 
 .re-console .CodeMirror {
         height: auto;
-        font-size: 15px;
+        font-size: 13px;
         font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
         margin-bottom: 20px;
 }
@@ -26,7 +26,7 @@
 
 .re-console-item, .re-console-item pre, .re-console-item-error pre {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-    font-size: 15px;
+    font-size: 13px;
     opacity: 0.7;
 }
 
