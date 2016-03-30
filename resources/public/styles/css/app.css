@@ -489,15 +489,6 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     }
 }
 
-/* Override bootstrap classes  */
-
-.re-console-item pre {
-    background: transparent;
-    border: none;
-    margin: 0;
-    padding: 1px;
-}
-
 /* Custom styling do the console */
 
 .re-console-container {
