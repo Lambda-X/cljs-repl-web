@@ -61,7 +61,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (def dev-compiler-options
-  {:source-map-timestamp true})
+  {:source-map-timestamp true
+   :elide-asserts true
+   :closure-defines {"clairvoyant.core.devmode" true}})
 
 (def prod-compiler-options
   {:closure-defines {"goog.DEBUG" false}
