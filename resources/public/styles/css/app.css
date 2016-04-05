@@ -465,7 +465,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     min-height: 186px;
 }
 
-.re-console-status {
+.re-console-mode-line {
     width: 660px;
     min-width: 300px;
 }
@@ -481,7 +481,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-height: 80px;
     }
 
-    .re-console-status {
+    .re-console-mode-line {
         width: 300px;
         min-width: 120px;
     }
@@ -502,7 +502,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-height: 75px;
     }
 
-    .re-console-status {
+    .re-console-mode-line {
         width: 460px;
         min-width: 220px;
     }

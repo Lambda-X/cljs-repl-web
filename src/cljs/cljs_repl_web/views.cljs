@@ -562,9 +562,9 @@
    :align :stretch
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
-(defn repl-component [console-key eval-opts]
+(defn repl-component [console-key opts]
   (let [media-query (subscribe [:media-query-size])
-        console (console/console console-key eval-opts)]
+        console (console/console console-key opts)]
     (fn repl-component-form2 []
       (let [children [[cljs-buttons]
                       [box
