@@ -1,7 +1,7 @@
 # Clojure Web Repl ([clojurescript.io](http://www.clojurescript.io))
 
 
-A reagent app designed to embed a pure ClojureScript REPL in a web
+A re-frame app designed to embed a pure ClojureScript REPL in a web
 page.
 Plumbing kindly provided by
 <a href="https://github.com/ScalaConsultants/replumb">
@@ -22,8 +22,8 @@ This project also employs the following libraries, whose authors we thank:
 
 Last but not least, many kudos go to [@jaredly](https://github.com/jaredly) and
 his [Reepl](https://github.com/jaredly/reepl) with which we share the
-CodeMirror implementation (and yes, the plan is to create a separate component
-library with it).
+CodeMirror implementation (and yes, we released a separate component
+[library](https://github.com/Lambda-X/re-console) with it).
 
 ## Tooling
 
