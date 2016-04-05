@@ -3,6 +3,7 @@
             [replumb.core :as replumb]
             [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame-tracer.core :refer [tracer]]
+            [re-console.app :as rc-app]
             [cljs-repl-web.io :as io]
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
@@ -61,13 +62,7 @@
  (fn create-gist [db [_ console-key auth-data success-handler error-handler]]
    (let [{:keys [username password]} @auth-data
          items (get-in db [:consoles (name console-key) :items])
-         text (apply str (interpose \newline (map (fn [item]
-                                                    (if-let [text (:text item)]
-                                                      (str (:ns item) "=> " text)
-                                                      (if (= :error (:type item))
-                                                        (.-message (:value item))
-                                                         (:value item))))
-                                                  items)))
+         text (rc-app/console-full-text db console-key)
          empty-usr? (empty? username)
          empty-pwd? (empty? password)
          empty-txt? (empty? text)

@@ -20,7 +20,7 @@
   (let [{:keys [name verbose-repl? src-paths]} config/defaults ]
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults])
-    (reagent/render [views/repl-component console-key (replumb-proxy/eval-opts verbose-repl? src-paths)]
+    (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)}]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
     (reagent/render [views/footer-component] (.getElementById js/document "app-footer"))))
