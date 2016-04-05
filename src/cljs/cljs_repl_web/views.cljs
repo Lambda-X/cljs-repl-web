@@ -134,6 +134,7 @@
                   :md-icon-name "zmdi-github"
                   :on-click #(dispatch [:show-gist-login])
                   :class "cljs-btn"
+                  :size (if-not (= :medium @media-query) :regular :smaller)
                   :tooltip "Create Gist"
                   :tooltip-position :left-center
                   :disabled? @can-dump-gist?]
@@ -146,12 +147,14 @@
   []
   (let [media-query (subscribe [:media-query-size])
         console-created? (subscribe [:console-created? :cljs-console])
-        example-mode? (subscribe [:queued-forms-empty? :cljs-console])]
+        example-mode? (subscribe [:queued-forms-empty? :cljs-console])
+        mode (subscribe [:get-console-mode :cljs-console])]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
                        :on-click #(dispatch [:reset-console-items :cljs-console])
                        :class "cljs-btn"
+                       :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Reset"
                        :tooltip-position :left-center
                        :disabled? (not @console-created?)]
@@ -159,6 +162,7 @@
                        :md-icon-name "zmdi-format-clear-all"
                        :on-click #(dispatch [:clear-console-items :cljs-console])
                        :class "cljs-btn"
+                       :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Clear"
                        :tooltip-position :left-center
                        :disabled? (not @console-created?)]
@@ -167,9 +171,18 @@
                        :md-icon-name "zmdi-stop"
                        :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
                        :class "cljs-btn"
+                       :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Stop interactive example mode"
                        :tooltip-position :below-center
-                       :disabled? (not @example-mode?)]]]
+                       :disabled? (not @example-mode?)]
+                      [md-icon-button
+                       :md-icon-name (if (= :none @mode) "zmdi-format-indent-increase" "zmdi-format-indent-decrease")
+                       :on-click #(let [new-mode (if (= @mode :none) :indent-mode :none)]
+                                    (dispatch [:set-console-mode :cljs-console new-mode]))
+                       :class "cljs-btn"
+                       :size (if-not (= :medium @media-query) :regular :smaller)
+                       :tooltip (str (if (= :none @mode) "Enable " "Disable ") "parinfer")
+                       :tooltip-position :below-center]]]
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
