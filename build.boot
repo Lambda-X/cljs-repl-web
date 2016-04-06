@@ -27,7 +27,7 @@
                        [re-frame                    "0.5.0"]
                        [replumb/replumb             "0.2.2-SNAPSHOT"]
                        [cljsjs/highlight            "8.4-0"]
-                       [re-console                  "0.1.3"]
+                       [re-console                  "0.1.4-SNAPSHOT"]
                        [re-com                      "0.7.0-alpha2"]
                        [cljs-ajax                   "0.5.1"]
                        [hickory                     "0.5.4"]
@@ -39,7 +39,8 @@
                        [binaryage/devtools          "0.6.0"]
                        [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
                        [cljsjs/codemirror           "5.10.0-0"]
-                       [adzerk/cljs-console "0.1.1"]]
+                       [adzerk/cljs-console         "0.1.1"]
+                       [re-complete                 "0.1.4-1-SNAPSHOT"]]
                      clojure-dep clojurescript-dep))
 
 (def pack-source-deps (conj '[[replumb/replumb             "0.2.2-SNAPSHOT"]

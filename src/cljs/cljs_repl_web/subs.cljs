@@ -83,4 +83,17 @@
    (make-reaction (fn media-query-size []
                     (app/media-query-size @db)))))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;  Re complete   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(register-sub
+ :get-options
+ (fn [db [_ console-key]]
+   (make-reaction (fn get-options [] (get-in @db [:autocomplete :linked-components console-key :options])))))
+
+
 ;; )
+

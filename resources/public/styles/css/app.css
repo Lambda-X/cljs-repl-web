@@ -509,3 +509,46 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-width: 220px;
     }
 }
+
+/* Styles for auto-complete */
+
+ul.re-completion-list {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    left: 364px;
+    top: 26px;
+    max-height: 246px;
+    min-height: 100px;
+    min-width: 200px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid green;
+}
+
+ul.re-completion-list li {
+    font-family: Consolas,monospace;
+    font-size: inherit;
+    margin: 0;
+    padding: 0 4px;
+    list-style: none;
+    white-space: pre;
+    word-wrap: normal;
+    line-height: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+ul.re-completion-list li:first-of-type {
+    padding-top: 2px;
+}
+
+ul.re-completion-list li:last-of-type {
+    padding-bottom: 2px;
+}
+
+ul.re-completion-list li:hover {
+    background-color: green;
+}
+

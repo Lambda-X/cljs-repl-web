@@ -14,7 +14,8 @@
             [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]
-            [re-console.core :as console]))
+            [re-console.core :as console]
+            [re-complete.core :as re-complete]))
 
 ;; (set! re-com.box/debug true)
 
@@ -568,7 +569,9 @@
       (let [children [[cljs-buttons]
                       [box
                        :size "0 0 auto"
-                       :child [console]]]]
+                       :child [console]]
+                      [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
+                                                                (dispatch [:focus-console-editor console-key]))]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

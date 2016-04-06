@@ -210,3 +210,23 @@
   (case media-query
     (:narrow :medium) 1
     :wide 2))
+
+(defn get-el-offset
+  [el offset-fn]
+  (loop [total 0
+         el el]
+    (if el
+      (recur (+ total (offset-fn el)) (.-offsetParent el))
+      total)))
+
+(defn align-suggestions-list
+  []
+  (let [container (first (array-seq (.getElementsByClassName js/document "re-console-container")))
+        cursor (first (array-seq (.getElementsByClassName js/document "CodeMirror-cursor")))
+        code (first (array-seq (.getElementsByClassName js/document "CodeMirror-lines")))
+        completions-list (first (array-seq (.getElementsByClassName js/document "re-completion-list")))
+        code-mirror (first (array-seq (.getElementsByClassName js/document "CodeMirror")))
+        top (+ (- (.-offsetTop code-mirror) (.-scrollTop container)) (.-offsetHeight code))
+        left (+ 20 (get-el-offset cursor #(.-offsetLeft %)))]
+    (set! (.-top (.-style completions-list)) (str top "px"))
+    (set! (.-left (.-style completions-list)) (str left "px"))))
