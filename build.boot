@@ -89,7 +89,7 @@
   [selection]
   {:type :dev
    :props {"CLJS_LOG_LEVEL" "DEBUG"}
-   :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
+   :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "dev"}
          :resource-paths #{"resources/public/"}}
    :cljs {:source-map true
           :optimizations :none
