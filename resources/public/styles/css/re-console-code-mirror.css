@@ -1,7 +1,6 @@
 .re-console-container {
     background-color: #FFF;
     overflow-y: scroll;
-    height: 400px;
     padding: 10px;
     margin: 0 0;
     border-top-left-radius: 10px;
@@ -33,6 +32,7 @@
     border: none;
     margin: 0;
     padding: 0px;
+    overflow: visible;
 }
 
 .re-console-item-error {
@@ -57,3 +57,9 @@
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;
 }
+
+.re-console-container::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
