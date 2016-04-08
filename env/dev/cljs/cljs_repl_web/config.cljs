@@ -6,6 +6,6 @@
      :production? false
      :base-path base-path
      :core-cache-url (str base-path "/js-cache/core.cljs.cache.aot.json")
-     :src-paths [(str base-path "/main.out")]
+     :src-paths [(str base-path "/cljs-src")]
      :version-path (str base-path "/version.properties")
      :verbose-repl? true}))
