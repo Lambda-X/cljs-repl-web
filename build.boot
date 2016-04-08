@@ -4,7 +4,7 @@
                  [pandeiro/boot-http          "0.7.2"     :scope "test"]
                  [adzerk/boot-reload          "0.4.4"     :scope "test"]
                  [degree9/boot-semver         "1.2.4"     :scope "test"]
-
+                 [replumb/boot-pack-source    "0.1.0"     :scope "test"]
                  ;; Repl
                  [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
                  [com.cemerick/piggieback     "0.2.1"  :scope "test"]
@@ -36,6 +36,13 @@
                  [cljsjs/codemirror           "5.10.0-0"]
                  [adzerk/cljs-console "0.1.1"]])
 
+(def pack-source-deps '[[org.clojure/clojurescript   "1.7.228"]
+                        [org.clojure/core.async      "0.2.374"]
+                        [reagent                     "0.5.1"]
+                        [re-frame                    "0.5.0"]
+                        [replumb/replumb             "0.2.2-SNAPSHOT"]
+                        [org.clojure/tools.reader    "1.0.0-alpha3"]])
+
 (def generator-deps '[[org.clojure/clojure         "1.7.0"]
                       [org.clojure/tools.reader    "1.0.0-alpha3"]
                       [endophile                   "0.1.2"]
@@ -48,7 +55,8 @@
          '[adzerk.boot-cljs-repl       :refer [cljs-repl start-repl]]
          '[boot-semver.core            :refer :all]
          '[boot.pod                    :as pod]
-         '[clojure.pprint              :refer [pprint]])
+         '[clojure.pprint              :refer [pprint]]
+         '[replumb.boot-pack-source    :refer [pack-source]])
 
 (def +version+ (get-version))
 
@@ -95,7 +103,7 @@
   [selection]
   {:type :dev
    :props {"CLJS_LOG_LEVEL" "DEBUG"}
-   :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs"}
+   :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "dev"}
          :resource-paths #{"resources/public/"}}
    :cljs {:source-map true
           :optimizations :none
@@ -110,8 +118,7 @@
    :props {"CLJS_LOG_LEVEL" "WARN"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
          :resource-paths #{"resources/public/"}}
-   :cljs {:source-map true
-          :optimizations :simple
+   :cljs {:optimizations :simple
           :compiler-options prod-compiler-options}
    :test-cljs {:optimizations :simple
                :cljs-opts prod-compiler-options
@@ -132,6 +139,15 @@
         (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
         commit!)))
 
+(deftask source
+  []
+  (comp (with-pre-wrap [fs]
+          (boot.util/info "Pack source files...\n")
+          fs)
+        (pack-source :deps (into #{} pack-source-deps)
+                     :exclusions '#{org.clojure/clojure
+                                    org.mozilla/rhino})))
+
 (deftask build
   "Build the final artifact, if no type is passed in, it builds production."
   [t type VAL kw "The build type, either prod or dev"]
@@ -141,6 +157,7 @@
     (set-system-properties! (:props options))
     (comp (version-file)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
+          (source)
           (target))))
 
 (deftask dev
@@ -151,11 +168,18 @@
     (apply set-env! (reduce #(into %2 %1) [] (:env options)))
     (set-system-properties! (:props options))
     (comp (version-file)
-          (serve)
           (watch)
           (cljs-repl)
           (reload :on-jsload 'cljs-repl-web.core/main)
-          (apply cljs (reduce #(into %2 %1) [] (:cljs options))))))
+          (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
+          (source)
+          (serve))))
+
+;; (deftask deploy-s3
+;; []
+;; (let [:username (System/getenv "CLOJARS_USER")
+;; :password]) (System/getenv "CLOJARS_PASS")
+;; )
 
 ;; This prevents a name collision WARNING between the test task and
 ;; clojure.core/test, a function that nobody really uses or cares

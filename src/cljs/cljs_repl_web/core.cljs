@@ -11,8 +11,10 @@
 
 (defonce console-key :cljs-console)
 
-(devtools/set-pref! :install-sanity-hints true) ; this is optional
-(devtools/install!)
+;; https://github.com/binaryage/cljs-devtools/releases/tag/v0.5.3
+(when-not (:production? config/defaults)
+  (devtools/set-pref! :install-sanity-hints true)
+  (devtools/install!))
 
 (enable-console-print!)
 
