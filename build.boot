@@ -112,8 +112,7 @@
    :props {"CLJS_LOG_LEVEL" "WARN"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
          :resource-paths #{"resources/public/"}}
-   :cljs {:source-map true
-          :optimizations :simple
+   :cljs {:optimizations :simple
           :compiler-options prod-compiler-options}
    :test-cljs {:optimizations :simple
                :cljs-opts prod-compiler-options
