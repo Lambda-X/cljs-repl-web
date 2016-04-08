@@ -69,6 +69,7 @@
   {:source-map-timestamp true
    :elide-asserts true
    :closure-defines {"clairvoyant.core.devmode" true}
+   :static-fns true
    :foreign-libs foreign-libs})
 
 (def prod-compiler-options
