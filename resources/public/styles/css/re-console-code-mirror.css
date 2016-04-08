@@ -4,7 +4,8 @@
     height: 400px;
     padding: 10px;
     margin: 0 0;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     -webkit-transform: translateZ(0);
     -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 }
@@ -38,3 +39,21 @@
     color: #e60000;
 }
 
+.re-console-mode-line {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 10px;
+    background-color: #414141;
+    text-align:center;
+    color: white;
+    padding: 5px;
+    margin: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+    white-space: pre-wrap;       /* CSS 3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+}

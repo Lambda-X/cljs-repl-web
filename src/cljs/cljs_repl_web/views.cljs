@@ -1,3 +1,4 @@
+
 (ns cljs-repl-web.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
@@ -148,7 +149,12 @@
   (let [media-query (subscribe [:media-query-size])
         console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:queued-forms-empty? :cljs-console])
-        mode (subscribe [:get-console-mode :cljs-console])]
+        mode (subscribe [:get-console-mode :cljs-console])
+        modes (atom (cycle '(:paren-mode :indent-mode :none)))
+        next-mode (fn []
+                    (let [m (first @modes)]
+                      (swap! modes rest)
+                      m))]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
@@ -176,12 +182,13 @@
                        :tooltip-position :below-center
                        :disabled? (not @example-mode?)]
                       [md-icon-button
-                       :md-icon-name (if (= :none @mode) "zmdi-format-indent-increase" "zmdi-format-indent-decrease")
-                       :on-click #(let [new-mode (if (= @mode :none) :indent-mode :none)]
+                       :md-icon-name "zmdi-keyboard"
+                       :on-click #(let [new-mode (next-mode)]
+                                    (println "Switching to" (name new-mode))
                                     (dispatch [:set-console-mode :cljs-console new-mode]))
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip (str (if (= :none @mode) "Enable " "Disable ") "parinfer")
+                       :tooltip "Switch input mode"
                        :tooltip-position :below-center]]]
         (if-not (= :narrow @media-query)
           [v-box

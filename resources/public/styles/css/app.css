@@ -465,6 +465,11 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     min-height: 186px;
 }
 
+.re-console-status {
+    width: 660px;
+    min-width: 300px;
+}
+
 /* :narrow */
 @media only screen and (max-width: 480px) {
     .re-console-container {
@@ -474,6 +479,15 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         height: 180px;
         min-width: 120px;
         min-height: 80px;
+    }
+
+    .re-console-status {
+        width: 300px;
+        min-width: 120px;
+    }
+
+    #app-bottom {
+        margin-top: 28px;
     }
 }
 
@@ -487,13 +501,9 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-width: 220px;
         min-height: 75px;
     }
+
+    .re-console-status {
+        width: 460px;
+        min-width: 220px;
+    }
 }
-
-/* Custom styling do the console */
-
-.re-console-container {
-    border-radius: 5px;
-    -webkit-transform: translateZ(0);
-    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
-}
-
