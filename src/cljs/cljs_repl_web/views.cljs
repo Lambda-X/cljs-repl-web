@@ -150,7 +150,7 @@
         console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:queued-forms-empty? :cljs-console])
         mode (subscribe [:get-console-mode :cljs-console])
-        modes (atom (cycle '(:paren-mode :indent-mode :none)))
+        modes (atom (cycle '(:paren-mode :none :indent-mode)))
         next-mode (fn []
                     (let [m (first @modes)]
                       (swap! modes rest)

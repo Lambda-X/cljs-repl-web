@@ -23,6 +23,7 @@
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults])
     (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
+                                                       :mode :indent-mode
                                                        :mode-line? true}]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
