@@ -137,7 +137,7 @@
                   :class "cljs-btn"
                   :size (if-not (= :medium @media-query) :regular :smaller)
                   :tooltip "Create Gist"
-                  :tooltip-position :left-center
+                  :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                   :disabled? @can-dump-gist?]
        :popover  [gist-login-dialog-body]])))
 
@@ -150,11 +150,13 @@
         console-created? (subscribe [:console-created? :cljs-console])
         example-mode? (subscribe [:queued-forms-empty? :cljs-console])
         mode (subscribe [:get-console-mode :cljs-console])
-        modes (atom (cycle '(:paren-mode :indent-mode :none)))
-        next-mode (fn []
-                    (let [m (first @modes)]
-                      (swap! modes rest)
-                      m))]
+        modes (atom (->> (cycle '(:indent-mode :paren-mode :none))
+                         (drop-while #(not= @mode %))
+                         (drop 1)))
+        get-next-mode (fn []
+                        (let [next-mode (first @modes)]
+                          (swap! modes rest)
+                          next-mode))]
     (fn cljs-buttons-form2 []
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
@@ -162,7 +164,7 @@
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Reset"
-                       :tooltip-position :left-center
+                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                        :disabled? (not @console-created?)]
                       [md-icon-button
                        :md-icon-name "zmdi-format-clear-all"
@@ -170,7 +172,7 @@
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Clear"
-                       :tooltip-position :left-center
+                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                        :disabled? (not @console-created?)]
                       [gist-login-dialog]
                       [md-icon-button
@@ -178,18 +180,16 @@
                        :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip "Stop interactive example mode"
-                       :tooltip-position :below-center
+                       :tooltip "Clear examples"
+                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                        :disabled? (not @example-mode?)]
                       [md-icon-button
                        :md-icon-name "zmdi-keyboard"
-                       :on-click #(let [new-mode (next-mode)]
-                                    (println "Switching to" (name new-mode))
-                                    (dispatch [:set-console-mode :cljs-console new-mode]))
+                       :on-click #(dispatch [:switch-console-mode (get-next-mode)])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Switch input mode"
-                       :tooltip-position :below-center]]]
+                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)]]]
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
