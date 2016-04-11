@@ -156,7 +156,8 @@
   (comp (with-pre-wrap [fs]
           (boot.util/info "Pack source files...\n")
           fs)
-        (pack-source :deps (into #{} pack-source-deps)
+        (pack-source :to-dir "cljs-src"
+                     :deps (into #{} pack-source-deps)
                      :exclusions '#{org.clojure/clojure
                                     org.mozilla/rhino})))
 
