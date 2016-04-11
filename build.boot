@@ -4,7 +4,10 @@
                  [pandeiro/boot-http          "0.7.2"     :scope "test"]
                  [adzerk/boot-reload          "0.4.4"     :scope "test"]
                  [degree9/boot-semver         "1.2.4"     :scope "test"]
-                 [replumb/boot-pack-source    "0.1.0"     :scope "test"]
+                 [replumb/boot-pack-source    "0.1.2-1"   :scope "test"]
+                 [confetti/confetti           "0.1.2-SNAPSHOT"     :scope "test"]
+                 [adzerk/env                  "0.3.0"     :scope "test"]
+
                  ;; Repl
                  [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
                  [com.cemerick/piggieback     "0.2.1"  :scope "test"]
@@ -37,9 +40,6 @@
                  [adzerk/cljs-console "0.1.1"]])
 
 (def pack-source-deps '[[org.clojure/clojurescript   "1.7.228"]
-                        [org.clojure/core.async      "0.2.374"]
-                        [reagent                     "0.5.1"]
-                        [re-frame                    "0.5.0"]
                         [replumb/replumb             "0.2.2-SNAPSHOT"]
                         [org.clojure/tools.reader    "1.0.0-alpha3"]])
 
@@ -56,18 +56,30 @@
          '[boot-semver.core            :refer :all]
          '[boot.pod                    :as pod]
          '[clojure.pprint              :refer [pprint]]
-         '[replumb.boot-pack-source    :refer [pack-source]])
+         '[replumb.boot-pack-source    :refer [pack-source]]
+         '[confetti.boot-confetti      :refer [create-site sync-bucket]]
+         '[adzerk.env                  :as env])
 
 (def +version+ (get-version))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;  Env Variables  ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(env/def
+  AWS_BUCKET nil
+  AWS_ACCESS_KEY nil
+  AWS_SECRET_KEY nil)
+
+;;;;;;;;;;;;;;;;;;;;;;
+;;;    Options     ;;;
+;;;;;;;;;;;;;;;;;;;;;;
 
 (task-options! pom {:project "cljs-repl-web"
                     :version +version+}
                test-cljs {:js-env :phantom
                           :out-file "phantom-tests.js"})
-
-;;;;;;;;;;;;;;;;;;;;;;
-;;;    Options     ;;;
-;;;;;;;;;;;;;;;;;;;;;;
 
 (def foreign-libs
   [{:file "resources/public/js/clojure-parinfer.js"
@@ -157,8 +169,7 @@
     (set-system-properties! (:props options))
     (comp (version-file)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (source)
-          (target))))
+          (source))))
 
 (deftask dev
   "Start the dev interactive environment."
@@ -175,11 +186,22 @@
           (source)
           (serve))))
 
-;; (deftask deploy-s3
-;; []
-;; (let [:username (System/getenv "CLOJARS_USER")
-;; :password]) (System/getenv "CLOJARS_PASS")
-;; )
+;;;;;;;;;;;;;;
+;;  DEPLOY  ;;
+;;;;;;;;;;;;;;
+
+(deftask deploy-s3
+  []
+  (let [bucket (get (env/env) "AWS_BUCKET")]
+    (boot.util/info "Deploying on bucket %s...\n" bucket)
+    (sync-bucket #_:dry-run #_true
+                 :bucket bucket
+                 :access-key (get (env/env) "AWS_ACCESS_KEY")
+                 :secret-key (get (env/env) "AWS_SECRET_KEY"))))
+
+;;;;;;;;;;;;;;;;;;;;;
+;;  TEST (please)  ;;
+;;;;;;;;;;;;;;;;;;;;;
 
 ;; This prevents a name collision WARNING between the test task and
 ;; clojure.core/test, a function that nobody really uses or cares
