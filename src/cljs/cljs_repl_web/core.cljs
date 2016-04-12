@@ -7,7 +7,8 @@
             [cljs-repl-web.subs]
             [cljs-repl-web.views :as views]
             [cljs-repl-web.replumb-proxy :as replumb-proxy]
-            [cljs-repl-web.config :as config]))
+            [cljs-repl-web.config :as config]
+            [cljs-repl-web.localstorage :as ls]))
 
 (defonce console-key :cljs-console)
 
@@ -19,10 +20,12 @@
 (enable-console-print!)
 
 (defn ^:export main []
-  (let [{:keys [name verbose-repl? src-paths]} config/defaults ]
+  (let [{:keys [name verbose-repl? src-paths]} config/defaults
+        local-storage-values (ls/get-local-storage-values)]
     (println "[Entering]" name)
-    (dispatch-sync [:initialize config/defaults])
+    (dispatch-sync [:initialize config/defaults local-storage-values])
     (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
+                                                       :mode (:mode local-storage-values)
                                                        :mode-line? true}]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))

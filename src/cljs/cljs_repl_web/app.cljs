@@ -79,8 +79,9 @@
 
 (defn make-init-state!
   "Create the initial state, can be side effecting."
-  [config]
-  (-> (merge initial-state {:media-query-size (initial-media-query!)})))
+  [config {:keys [username]}]
+  (-> (merge initial-state {:media-query-size (initial-media-query!)})
+      (assoc-in [:gist-data :auth-data :username] username)))
 
 (defn reset-state!
   "Reset the app state. Use this do"

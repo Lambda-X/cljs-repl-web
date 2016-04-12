@@ -8,7 +8,8 @@
             [cljs-repl-web.app :as app]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.gist :as gist]
-            [cljs-repl-web.config :as config]))
+            [cljs-repl-web.config :as config]
+            [cljs-repl-web.localstorage :as ls]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
@@ -20,13 +21,13 @@
 
 (register-handler
  :reset-db
- (fn reset-db [_ [_ config]]
-   (app/make-init-state! config)))
+ (fn reset-db [_ [_ config local-storage-vals]]
+   (app/make-init-state! config local-storage-vals)))
 
 ;; On app startup, create initial state
 (register-handler
  :initialize
- (fn initialize [_ [_ config]]
+ (fn initialize [_ [_ config local-storage-vals]]
    (println "Initializing app...")
    ;; we load the cljs core cache manually in order to reduce the app size
    ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
@@ -34,7 +35,7 @@
    (io/load-cljs-core-cache! (:core-cache-url config))
    (io/print-version! (:version-path config))
    (app/register-media-queries!)
-   (app/make-init-state! config)))
+   (app/make-init-state! config local-storage-vals)))
 
 ;;;;;;;;;;;;;;;;;;
 ;;     Gist    ;;;
@@ -68,7 +69,8 @@
          empty-txt? (empty? text)
          valid (not (or empty-usr? empty-pwd? empty-txt?))]
 
-     (if valid
+     (when valid
+       (ls/save-username! username)
        (gist/create-gist username password text success-handler error-handler))
 
      (assoc db :gist-data {:gist-showing? false
@@ -93,5 +95,17 @@
  :media-match
  (fn media-match [db [_ media-matched]]
    (assoc db :media-query-size media-matched)))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;   Console mode   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(register-handler
+ :switch-console-mode
+ (fn switch-console-mode [db [_ new-mode]]
+   (dispatch [:set-console-mode :cljs-console new-mode])
+   (ls/save-mode! new-mode)
+   db))
+
 
 ;; )
