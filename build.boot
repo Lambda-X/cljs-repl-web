@@ -99,6 +99,8 @@
    :elide-asserts true
    :pretty-print false
    :source-map-timestamp true
+   :dump-core false
+   :parallel-build true
    :foreign-libs foreign-libs})
 
 (defmulti options
@@ -152,7 +154,7 @@
         (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
         commit!)))
 
-(deftask source
+(deftask src
   []
   (comp (with-pre-wrap [fs]
           (boot.util/info "Pack source files...\n")
@@ -171,7 +173,11 @@
     (set-system-properties! (:props options))
     (comp (version-file)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (source))))
+          (if (= :prod (:type options))
+            (sift :include #{#"main.out"}
+                  :invert true)
+            identity)
+          (src))))
 
 (deftask dev
   "Start the dev interactive environment."
@@ -185,7 +191,7 @@
           (cljs-repl)
           (reload :on-jsload 'cljs-repl-web.core/main)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (source)
+          (src)
           (serve))))
 
 ;;;;;;;;;;;;;;
@@ -197,6 +203,7 @@
   (let [bucket (get (env/env) "AWS_BUCKET")]
     (boot.util/info "Deploying on bucket %s...\n" bucket)
     (sync-bucket #_:dry-run #_true
+                 :prune true
                  :bucket bucket
                  :access-key (get (env/env) "AWS_ACCESS_KEY")
                  :secret-key (get (env/env) "AWS_SECRET_KEY"))))
