@@ -41,7 +41,7 @@
 
 .re-console-mode-line {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-    font-size: 10px;
+    /* font-size: 10px; AR - handled in app.css */
     background-color: #414141;
     text-align:center;
     color: white;
@@ -62,4 +62,3 @@
 	width: 6px;
 	height: 6px;
 }
-
