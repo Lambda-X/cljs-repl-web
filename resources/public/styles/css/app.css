@@ -466,6 +466,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 }
 
 .re-console-mode-line {
+    font-size: 12px;
     width: 660px;
     min-width: 300px;
 }
@@ -482,6 +483,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     }
 
     .re-console-mode-line {
+        font-size: 10px;
         width: 300px;
         min-width: 120px;
     }
