@@ -2,6 +2,7 @@
 (def clojurescript-dep '[org.clojure/clojurescript "1.7.228"])
 
 (set-env!
+ :source-paths #{"dev"}
  :dependencies (conj '[;; Boot deps
                        [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                        [pandeiro/boot-http          "0.7.2"     :scope "test"]
@@ -50,10 +51,6 @@
                            [markdown-clj                "0.9.78"]]
                          clojure-dep))
 
-(def dump-cache-deps (conj '[[boot/core "2.6.0-SNAPSHOT"]
-                             [com.cognitect/transit-clj "0.8.285"]]
-                           clojurescript-dep))
-
 (require '[adzerk.boot-cljs            :refer [cljs]]
          '[adzerk.boot-reload          :refer [reload]]
          '[pandeiro.boot-http          :refer [serve]]
@@ -64,7 +61,8 @@
          '[clojure.pprint              :refer [pprint]]
          '[replumb.boot-pack-source    :refer [pack-source]]
          '[confetti.boot-confetti      :refer [create-site sync-bucket]]
-         '[adzerk.env                  :as env])
+         '[adzerk.env                  :as env]
+         '[lambdax.boot.addons         :as addons])
 
 (def +version+ (get-version))
 
@@ -115,7 +113,7 @@
 (defmethod options :generators
   [selection]
   {:type :generator
-   :env {:source-paths #{"src/clj"}
+   :env {:source-paths #{"dev" "src/clj"}
          :resource-paths #{"dev-resources"}}})
 
 (defmethod options :dev
@@ -268,13 +266,6 @@
                  :access-key (get (env/env) "AWS_ACCESS_KEY")
                  :secret-key (get (env/env) "AWS_SECRET_KEY"))))
 
-(defn pod-classpath!
-  [source-paths resource-paths]
-  (doseq [src source-paths]
-    (boot.pod/add-classpath src))
-  (doseq [resource resource-paths]
-    (boot.pod/add-classpath resource)))
-
 (deftask cljs-api
   "The task generates the Clojurescript API and the cljs-repl-web.cljs-api
   namespace.
@@ -286,23 +277,51 @@
 
   # boot cljs-api"
   []
-  (with-pass-thru fs
-    (boot.util/info "Generating cljs-api...\n")
-    (let [custom-env (:env (options :generators))
-          source-paths (:source-paths custom-env)
-          resource-paths (:resource-paths custom-env)
-          pod-env (assoc-in (get-env) [:dependencies] cljs-api-deps)]
-      (let [pod (future (pod/make-pod pod-env))]
-        (pod/with-eval-in @pod
-          (~pod-classpath! ~source-paths ~resource-paths)
-          (require 'cljs-api.generator)
-          (cljs-api.generator/-main))
-        (pod/destroy-pod @pod)))))
+  (let [custom-env (:env (options :generators))
+        pod-env (-> (get-env)
+                    (assoc :dependencies cljs-api-deps)
+                    (update :directories concat
+                            (:source-paths custom-env)
+                            (:resource-paths custom-env)))
+        pod (future (pod/make-pod pod-env))]
+    (with-pass-thru fs
+      (boot.util/info "Generating cljs-api...\n")
+      (pod/with-eval-in @pod
+        (require 'cljs-api.generator)
+        (cljs-api.generator/-main)))))
 
-(defn normalize-path
-  "Adds a / if missing at the end of the path."
-  [path]
-  (str path (when-not (= "/" (last path)) "/")))
+(def dump-cache-deps '[[boot/core "2.6.0-SNAPSHOT"]
+                       [com.cognitect/transit-clj "0.8.285"]])
+
+(deftask transit-jsonify
+  "Materializes the transit+json file resulting from the input transit file path.
+
+  The new file will be added to the fileset root and it is up to the next tasks
+  to move it to the proper place (use sift --move for this)."
+  [p transit-path PATH str "The fileset path to the cache file in transit format"
+   n json-name    NAME str "The name of the transit+json file"]
+  (let [custom-env (:env (options :generators))
+        pod-env (-> (get-env)
+                    (assoc :dependencies dump-cache-deps)
+                    (update :directories concat
+                            (:source-paths custom-env)
+                            (:resource-paths custom-env)))
+        pod (future (pod/make-pod pod-env))]
+    (dbug "transit-path %s - json-name %s\n" transit-path json-name)
+    (with-pre-wrap fs
+      (commit!
+       (let [tmp-dir (tmp-dir!)
+             input-path (->> transit-path (tmp-get fs) (tmp-file) (.getPath))
+             out-path (str (addons/normalize-path (.getPath tmp-dir)) json-name)]
+         (let [new-fs (if-let [transit-json (pod/with-eval-in @pod
+                                              (require '[lambdax.boot.addons :as addons])
+                                              (.getPath (addons/transit-json ~input-path ~out-path)))]
+                        (do (dbug "Conversion produced %s\n" transit-json)
+                            (add-resource fs tmp-dir))
+                        (do (warn "Could not perform Transit/Json conversion, skipping...\n")
+                            fs))]
+           (pod/destroy-pod @pod) ;; AR - ugly, I need to find a better way
+           new-fs))))))
 
 (deftask add-cache
   "The task fetches the core.cljs.cache.aot file from your .m2, and materializes it on the classpath.
@@ -310,37 +329,15 @@
   It is added to the filese so it should be part of the build pipeline:
 
   $ boot build add-cache target"
-  [d dir PATH str "The dir path where to dump core.cljs.cache.aot"]
+  [d dir PATH str "The dir path where to dump the cljs.core cache file"]
   (assert dir "The dir param cannot be nil")
-  (let [dir (normalize-path dir)
+  (let [dir (addons/normalize-path dir)
+        cache-json-name "core.cljs.cache.aot.json"
         cache-fs-path "cljs/core.cljs.cache.aot.edn"
-        cache-fs-path-regex (re-pattern cache-fs-path)
-        cache-json-name "core.cljs.cache.aot.json"]
+        cache-fs-path-regex (re-pattern cache-fs-path)]
     (comp (with-pass-thru fs
             (info "Adding cljs.core cache to %s...\n" dir))
           (sift :add-jar {(first clojurescript-dep) cache-fs-path-regex})
-          (with-pre-wrap fs
-            (commit!
-             (let [tmp-dir (tmp-dir!)
-                   cache-tmp-file (tmp-get fs cache-fs-path)]
-               (let [custom-env (:env (options :generators))
-                     source-paths (:source-paths custom-env)
-                     resource-paths (:resource-paths custom-env)
-                     pod-env (assoc-in (get-env) [:dependencies] dump-cache-deps)]
-                 (let [pod (future (pod/make-pod pod-env))
-                       input-path (.getPath (tmp-file cache-tmp-file))
-                       new-fs (if-let [cache-transit-json (pod/with-pod @pod
-                                                            (~pod-classpath! ~source-paths ~resource-paths)
-                                                            (require '[boot.core :as core])
-                                                            (require '[cljs-utils.caching :as caching])
-                                                            (let [out-path (str (~normalize-path ~(.getPath tmp-dir))
-                                                                                ~cache-json-name)]
-                                                              (.getPath (caching/->transit-json ~input-path out-path))))]
-                                (do (dbug "Conversion produced %s\n" cache-transit-json)
-                                    (add-resource fs tmp-dir))
-                                (do (warn "Could not perform Transit/Json conversion, skipping...\n")
-                                    fs))]
-                   (pod/destroy-pod @pod)
-                   new-fs)))))
+          (transit-jsonify :transit-path cache-fs-path :json-name cache-json-name)
           (sift :include #{cache-fs-path-regex} :invert true)
           (sift :move {(re-pattern cache-json-name) (str dir cache-json-name)}))))
