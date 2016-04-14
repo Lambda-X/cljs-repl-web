@@ -1,6 +1,5 @@
 # Clojure Web Repl ([clojurescript.io](http://www.clojurescript.io))
 
-
 A re-frame app designed to embed a pure ClojureScript REPL in a web
 page.
 Plumbing kindly provided by
@@ -40,7 +39,7 @@ Type `boot dev` and then browse to [http://localhost:3000](http://localhost:3000
 The same easy command is used to build the content directly, which will be
 materialized in the `target` folder:
 
-`boot build -t prod|dev`
+`boot build -t prod|dev target`
 
 The `build` command defaults to `prod` when called with no arguments.
 
