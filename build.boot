@@ -156,7 +156,7 @@
         (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
         commit!)))
 
-(declare add-cache src)
+(declare add-cache add-cljs-source)
 
 ;;;;;;;;;;;;;;;;;;
 ;;  MAIN TASKS  ;;
@@ -175,7 +175,7 @@
             (sift :include #{#"main.out"}
                   :invert true)
             identity)
-          (src)
+          (add-cljs-source)
           (add-cache :dir "js-cache"))))
 
 (deftask dev
@@ -190,7 +190,7 @@
           (cljs-repl)
           (reload :on-jsload 'cljs-repl-web.core/main)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (src)
+          (add-cljs-source)
           (add-cache :dir "js-cache")
           (serve))))
 
@@ -246,7 +246,7 @@
 ;;  OTHER TASKS  ;;
 ;;;;;;;;;;;;;;;;;;;
 
-(deftask src
+(deftask add-cljs-source
   []
   (comp (with-pre-wrap [fs]
           (boot.util/info "Pack source files...\n")
