@@ -257,10 +257,10 @@
                                     org.mozilla/rhino})))
 
 (deftask deploy-s3
-  []
+  [y dry-run bool "Report as usual but don't actually do anything"]
   (let [bucket (get (env/env) "AWS_BUCKET")]
     (boot.util/info "Deploying on bucket %s...\n" bucket)
-    (sync-bucket #_:dry-run #_true
+    (sync-bucket :dry-run dry-run
                  :prune true
                  :bucket bucket
                  :access-key (get (env/env) "AWS_ACCESS_KEY")
