@@ -1,52 +1,58 @@
+(def clojure-dep '[org.clojure/clojure "1.7.0"])
+(def clojurescript-dep '[org.clojure/clojurescript "1.7.228"])
+
 (set-env!
- :dependencies '[;; Boot deps
-                 [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
-                 [pandeiro/boot-http          "0.7.2"     :scope "test"]
-                 [adzerk/boot-reload          "0.4.4"     :scope "test"]
-                 [degree9/boot-semver         "1.2.4"     :scope "test"]
-                 [replumb/boot-pack-source    "0.1.2-1"   :scope "test"]
-                 [confetti/confetti           "0.1.2-SNAPSHOT"     :scope "test"]
-                 [adzerk/env                  "0.3.0"     :scope "test"]
+ :dependencies (conj '[;; Boot deps
+                       [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
+                       [pandeiro/boot-http          "0.7.2"     :scope "test"]
+                       [adzerk/boot-reload          "0.4.4"     :scope "test"]
+                       [degree9/boot-semver         "1.2.4"     :scope "test"]
+                       [replumb/boot-pack-source    "0.1.2-1"   :scope "test"]
+                       [confetti/confetti           "0.1.2-SNAPSHOT"     :scope "test"]
+                       [adzerk/env                  "0.3.0"     :scope "test"]
 
-                 ;; Repl
-                 [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
-                 [com.cemerick/piggieback     "0.2.1"  :scope "test"]
-                 [weasel                      "0.7.0"  :scope "test"]
-                 [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
+                       ;; Repl
+                       [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
+                       [com.cemerick/piggieback     "0.2.1"  :scope "test"]
+                       [weasel                      "0.7.0"  :scope "test"]
+                       [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
 
-                 ;; Tests
-                 [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
+                       ;; Tests
+                       [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
 
-                 ;; App deps
-                 [org.clojure/clojure         "1.7.0"]
-                 [org.clojure/clojurescript   "1.7.228"]
-                 [org.clojure/core.async      "0.2.374"]
-                 [reagent                     "0.5.1"]
-                 [re-frame                    "0.5.0"]
-                 [replumb/replumb             "0.2.2-SNAPSHOT"]
-                 [cljsjs/highlight            "8.4-0"]
-                 [re-console                  "0.1.3"]
-                 [re-com                      "0.7.0-alpha2"]
-                 [cljs-ajax                   "0.5.1"]
-                 [hickory                     "0.5.4"]
-                 [cljsjs/showdown             "0.4.0-1"]
-                 [org.clojure/tools.reader    "1.0.0-alpha3"]
-                 [cljsjs/enquire              "2.1.2-0"]
-                 [com.cemerick/piggieback     "0.2.1"]
-                 [org.clojars.stumitchell/clairvoyant "0.2.0"]
-                 [binaryage/devtools          "0.6.0"]
-                 [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
-                 [cljsjs/codemirror           "5.10.0-0"]
-                 [adzerk/cljs-console "0.1.1"]])
+                       ;; App deps
+                       [org.clojure/core.async      "0.2.374"]
+                       [reagent                     "0.5.1"]
+                       [re-frame                    "0.5.0"]
+                       [replumb/replumb             "0.2.2-SNAPSHOT"]
+                       [cljsjs/highlight            "8.4-0"]
+                       [re-console                  "0.1.3"]
+                       [re-com                      "0.7.0-alpha2"]
+                       [cljs-ajax                   "0.5.1"]
+                       [hickory                     "0.5.4"]
+                       [cljsjs/showdown             "0.4.0-1"]
+                       [org.clojure/tools.reader    "1.0.0-alpha3"]
+                       [cljsjs/enquire              "2.1.2-0"]
+                       [com.cemerick/piggieback     "0.2.1"]
+                       [org.clojars.stumitchell/clairvoyant "0.2.0"]
+                       [binaryage/devtools          "0.6.0"]
+                       [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
+                       [cljsjs/codemirror           "5.10.0-0"]
+                       [adzerk/cljs-console "0.1.1"]]
+                     clojure-dep clojurescript-dep))
 
-(def pack-source-deps '[[org.clojure/clojurescript   "1.7.228"]
-                        [replumb/replumb             "0.2.2-SNAPSHOT"]
-                        [org.clojure/tools.reader    "1.0.0-alpha3"]])
+(def pack-source-deps (conj '[[replumb/replumb             "0.2.2-SNAPSHOT"]
+                              [org.clojure/tools.reader    "1.0.0-alpha3"]]
+                            clojurescript-dep))
 
-(def generator-deps '[[org.clojure/clojure         "1.7.0"]
-                      [org.clojure/tools.reader    "1.0.0-alpha3"]
-                      [endophile                   "0.1.2"]
-                      [markdown-clj                "0.9.78"]])
+(def cljs-api-deps (conj '[[org.clojure/tools.reader    "1.0.0-alpha3"]
+                           [endophile                   "0.1.2"]
+                           [markdown-clj                "0.9.78"]]
+                         clojure-dep))
+
+(def dump-cache-deps (conj '[[boot/core "2.6.0-SNAPSHOT"]
+                             [com.cognitect/transit-clj "0.8.285"]]
+                           clojurescript-dep))
 
 (require '[adzerk.boot-cljs            :refer [cljs]]
          '[adzerk.boot-reload          :refer [reload]]
@@ -61,7 +67,6 @@
          '[adzerk.env                  :as env])
 
 (def +version+ (get-version))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;  Env Variables  ;;;
@@ -107,11 +112,10 @@
   "Return the correct option map for the build, dispatching on identity"
   identity)
 
-(defmethod options :generator
+(defmethod options :generators
   [selection]
   {:type :generator
    :env {:source-paths #{"src/clj"}
-         :dependencies generator-deps
          :resource-paths #{"dev-resources"}}})
 
 (defmethod options :dev
@@ -154,15 +158,11 @@
         (add-resource (java.io.File. ".") :include #{#"^version\.properties$"})
         commit!)))
 
-(deftask src
-  []
-  (comp (with-pre-wrap [fs]
-          (boot.util/info "Pack source files...\n")
-          fs)
-        (pack-source :to-dir "cljs-src"
-                     :deps (into #{} pack-source-deps)
-                     :exclusions '#{org.clojure/clojure
-                                    org.mozilla/rhino})))
+(declare add-cache src)
+
+;;;;;;;;;;;;;;;;;;
+;;  MAIN TASKS  ;;
+;;;;;;;;;;;;;;;;;;
 
 (deftask build
   "Build the final artifact, if no type is passed in, it builds production."
@@ -177,7 +177,8 @@
             (sift :include #{#"main.out"}
                   :invert true)
             identity)
-          (src))))
+          (src)
+          (add-cache :dir "js-cache"))))
 
 (deftask dev
   "Start the dev interactive environment."
@@ -192,21 +193,8 @@
           (reload :on-jsload 'cljs-repl-web.core/main)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
           (src)
+          (add-cache :dir "js-cache")
           (serve))))
-
-;;;;;;;;;;;;;;
-;;  DEPLOY  ;;
-;;;;;;;;;;;;;;
-
-(deftask deploy-s3
-  []
-  (let [bucket (get (env/env) "AWS_BUCKET")]
-    (boot.util/info "Deploying on bucket %s...\n" bucket)
-    (sync-bucket #_:dry-run #_true
-                 :prune true
-                 :bucket bucket
-                 :access-key (get (env/env) "AWS_ACCESS_KEY")
-                 :secret-key (get (env/env) "AWS_SECRET_KEY"))))
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;;  TEST (please)  ;;
@@ -256,24 +244,103 @@
     (comp (watch)
           (apply test-cljs (reduce #(into %2 %1) [] (:test-cljs options))))))
 
+;;;;;;;;;;;;;;;;;;;
+;;  OTHER TASKS  ;;
+;;;;;;;;;;;;;;;;;;;
+
+(deftask src
+  []
+  (comp (with-pre-wrap [fs]
+          (boot.util/info "Pack source files...\n")
+          fs)
+        (pack-source :to-dir "cljs-src"
+                     :deps (into #{} pack-source-deps)
+                     :exclusions '#{org.clojure/clojure
+                                    org.mozilla/rhino})))
+
+(deftask deploy-s3
+  []
+  (let [bucket (get (env/env) "AWS_BUCKET")]
+    (boot.util/info "Deploying on bucket %s...\n" bucket)
+    (sync-bucket #_:dry-run #_true
+                 :prune true
+                 :bucket bucket
+                 :access-key (get (env/env) "AWS_ACCESS_KEY")
+                 :secret-key (get (env/env) "AWS_SECRET_KEY"))))
+
+(defn pod-classpath!
+  [source-paths resource-paths]
+  (doseq [src source-paths]
+    (boot.pod/add-classpath src))
+  (doseq [resource resource-paths]
+    (boot.pod/add-classpath resource)))
+
 (deftask cljs-api
   "The task generates the Clojurescript API and the cljs-repl-web.cljs-api
-  namespace. It does NOT add it to the fileset, but calls
-  cljs-api.generator/-main and dump in src/cljs."
+  namespace.
+
+  It does NOT add it to the fileset, but calls cljs-api.generator/-main and
+  dumps in src/cljs (hard coded). It should not be part of the build pipeline
+  unless there is a ClojureScript version change, in which case it should be
+  executed once:
+
+  # boot cljs-api"
   []
   (with-pass-thru fs
-    (boot.util/info "Generating...\n")
-    (let [custom-env (:env (options :generator))
+    (boot.util/info "Generating cljs-api...\n")
+    (let [custom-env (:env (options :generators))
           source-paths (:source-paths custom-env)
           resource-paths (:resource-paths custom-env)
-          pod-env (assoc-in (get-env) [:dependencies] (:dependencies custom-env))]
+          pod-env (assoc-in (get-env) [:dependencies] cljs-api-deps)]
       (let [pod (future (pod/make-pod pod-env))]
         (pod/with-eval-in @pod
-          (boot.util/dbug "Directories %s\n" (with-out-str (clojure.pprint/pprint boot.pod/env)))
-          (doseq [src ~source-paths]
-            (boot.pod/add-classpath src))
-          (doseq [resource ~resource-paths]
-            (boot.pod/add-classpath resource))
+          (~pod-classpath! ~source-paths ~resource-paths)
           (require 'cljs-api.generator)
           (cljs-api.generator/-main))
         (pod/destroy-pod @pod)))))
+
+(defn normalize-path
+  "Adds a / if missing at the end of the path."
+  [path]
+  (str path (when-not (= "/" (last path)) "/")))
+
+(deftask add-cache
+  "The task fetches the core.cljs.cache.aot file from your .m2, and materializes it on the classpath.
+
+  It is added to the filese so it should be part of the build pipeline:
+
+  $ boot build add-cache target"
+  [d dir PATH str "The dir path where to dump core.cljs.cache.aot"]
+  (assert dir "The dir param cannot be nil")
+  (let [dir (normalize-path dir)
+        cache-fs-path "cljs/core.cljs.cache.aot.edn"
+        cache-fs-path-regex (re-pattern cache-fs-path)
+        cache-json-name "core.cljs.cache.aot.json"]
+    (comp (with-pass-thru fs
+            (info "Adding cljs.core cache to %s...\n" dir))
+          (sift :add-jar {(first clojurescript-dep) cache-fs-path-regex})
+          (with-pre-wrap fs
+            (commit!
+             (let [tmp-dir (tmp-dir!)
+                   cache-tmp-file (tmp-get fs cache-fs-path)]
+               (let [custom-env (:env (options :generators))
+                     source-paths (:source-paths custom-env)
+                     resource-paths (:resource-paths custom-env)
+                     pod-env (assoc-in (get-env) [:dependencies] dump-cache-deps)]
+                 (let [pod (future (pod/make-pod pod-env))
+                       input-path (.getPath (tmp-file cache-tmp-file))
+                       new-fs (if-let [cache-transit-json (pod/with-pod @pod
+                                                            (~pod-classpath! ~source-paths ~resource-paths)
+                                                            (require '[boot.core :as core])
+                                                            (require '[cljs-utils.caching :as caching])
+                                                            (let [out-path (str (~normalize-path ~(.getPath tmp-dir))
+                                                                                ~cache-json-name)]
+                                                              (.getPath (caching/->transit-json ~input-path out-path))))]
+                                (do (dbug "Conversion produced %s\n" cache-transit-json)
+                                    (add-resource fs tmp-dir))
+                                (do (warn "Could not perform Transit/Json conversion, skipping...\n")
+                                    fs))]
+                   (pod/destroy-pod @pod)
+                   new-fs)))))
+          (sift :include #{cache-fs-path-regex} :invert true)
+          (sift :move {(re-pattern cache-json-name) (str dir cache-json-name)}))))
