@@ -43,6 +43,20 @@ materialized in the `target` folder:
 
 The `build` command defaults to `prod` when called with no arguments.
 
+### Deploy
+
+In order to deploy just follow the `build` task with `deploy-s3`:
+
+```
+export ...
+export ...
+boot build -t prod|dev deploy-s3
+```
+
+The environment variables to set up are listed
+[here](https://github.com/Lambda-X/cljs-repl-web/blob/devel/build.boot#L73)
+
+
 #### Config
 
 The `cljs-repl-web.config/defaults` var contains the configuration map:

@@ -73,7 +73,8 @@
 (env/def
   AWS_BUCKET nil
   AWS_ACCESS_KEY nil
-  AWS_SECRET_KEY nil)
+  AWS_SECRET_KEY nil
+  AWS_CLOUDFRONT_ID nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;;;    Options     ;;;
@@ -265,7 +266,8 @@
                  :prune prune
                  :bucket bucket
                  :access-key (get (env/env) "AWS_ACCESS_KEY")
-                 :secret-key (get (env/env) "AWS_SECRET_KEY"))))
+                 :secret-key (get (env/env) "AWS_SECRET_KEY")
+                 :cloudfront-id (get (env/env) "AWS_CLOUDFRONT_ID"))))
 
 (deftask cljs-api
   "The task generates the Clojurescript API and the cljs-repl-web.cljs-api
