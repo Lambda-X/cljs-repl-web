@@ -1,0 +1,8 @@
+language: clojure
+sudo: false
+jdk:
+- oraclejdk8
+install:
+- wget -O boot.jar https://github.com/boot-clj/boot/releases/download/2.6.0-SNAPSHOT/boot.jar
+- java -jar boot.jar -V
+script: java -jar boot.jar test
