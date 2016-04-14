@@ -257,11 +257,12 @@
                                     org.mozilla/rhino})))
 
 (deftask deploy-s3
-  [y dry-run bool "Report as usual but don't actually do anything"]
+  [y dry-run bool "Run dryly :)"
+   p prune   bool "Delete files from S3 bucket not in the current fileset"]
   (let [bucket (get (env/env) "AWS_BUCKET")]
     (boot.util/info "Deploying on bucket %s...\n" bucket)
     (sync-bucket :dry-run dry-run
-                 :prune true
+                 :prune prune
                  :bucket bucket
                  :access-key (get (env/env) "AWS_ACCESS_KEY")
                  :secret-key (get (env/env) "AWS_SECRET_KEY"))))
