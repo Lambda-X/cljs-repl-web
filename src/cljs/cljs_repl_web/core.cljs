@@ -33,6 +33,7 @@
                                                        :mode (:mode local-storage-values)
                                                        :mode-line? true
                                                        :on-after-change #(do (dispatch [:input console-key (common/source-without-prompt (.getValue %))])
+                                                                             (dispatch [:focus console-key true])
                                                                              (app/create-dictionary (common/source-without-prompt (.getValue %)) console-key)
                                                                              (utils/align-suggestions-list))}]
                     (.getElementById js/document "app-center"))

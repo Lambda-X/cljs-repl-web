@@ -552,3 +552,7 @@ ul.re-completion-list li:hover {
     background-color: green;
 }
 
+li.re-completion-selected {
+    background-color: green;
+}
+
