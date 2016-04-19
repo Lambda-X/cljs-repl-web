@@ -20,9 +20,9 @@
 (def cljs-special-ns->clj-ns {"special" "clojure.core"})
 
 ;; We need to convert some special characters to generate the url
-(def url-special-characters { #"/"    "_fs"
-                              #"\?$"  "_q"
-                              #"^\."  "_." })
+(def url-special-characters {#"/"   "_fs"
+                             #"\?$" "_q"
+                             #"^\." "_." })
 
 (defn strip-namespace
   "Given a cljs symbol, strip the namespace part. `sym` must be
@@ -59,9 +59,9 @@
         h-threshold-left (quot w 3)
         h-threshold-cent (* 2 h-threshold-left)
         h-position (cond
-                    (< x h-threshold-left) "right"
-                    (< x h-threshold-cent) "center"
-                    :else "left")]
+                     (< x h-threshold-left) "right"
+                     (< x h-threshold-cent) "center"
+                     :else "left")]
     (keyword (str v-position \- h-position))))
 
 (defn message-box
