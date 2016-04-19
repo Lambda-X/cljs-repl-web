@@ -54,9 +54,9 @@
  :hide-gist-login
  (fn hide-gist-login [db [_]]
    (let [saved-username (app/gist-saved-username db)]
-         (assoc db :gist-data {:gist-showing? false
-                               :auth-data {:username saved-username
-                                           :password ""}}))))
+     (assoc db :gist-data {:gist-showing? false
+                           :auth-data {:username saved-username
+                                       :password ""}}))))
 
 (register-handler
  :create-gist
