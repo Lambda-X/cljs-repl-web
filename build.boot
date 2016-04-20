@@ -1,5 +1,5 @@
-(def clojure-dep '[org.clojure/clojure "1.7.0"])
-(def clojurescript-dep '[org.clojure/clojurescript "1.7.228"])
+(def clojure-dep '[org.clojure/clojure "1.8.0"])
+(def clojurescript-dep '[org.clojure/clojurescript "1.8.40"])
 
 (set-env!
  :source-paths #{"dev"}
