@@ -524,7 +524,7 @@ ul.re-completion-list {
     overflow-y: scroll;
     border-radius: 5px;
     background-color: white;
-    border: 1px solid green;
+    border: 1px solid #65B58C;
 }
 
 ul.re-completion-list li {
@@ -549,10 +549,10 @@ ul.re-completion-list li:last-of-type {
 }
 
 ul.re-completion-list li:hover {
-    background-color: green;
+    background-color: #EEE;
 }
 
 li.re-completion-selected {
-    background-color: green;
+    background-color: #EEE;
 }
 
