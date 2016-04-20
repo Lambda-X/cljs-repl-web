@@ -4,8 +4,7 @@
             [re-frame.core :refer [dispatch subscribe]]
             [re-complete.app :as complete-app]
             [replumb.ast :as ast]
-            [clojure.string :as str]
-            [replumb.ast :as ast]))
+            [clojure.string :as str]))
 
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
