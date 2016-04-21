@@ -26,7 +26,9 @@
 (defn ^:export main []
   (let [{:keys [name verbose-repl? src-paths]} config/defaults
         local-storage-values (ls/get-local-storage-values)]
-    (dispatch [:options console-key {:trim-chars "[](){}"}])
+    (dispatch [:options console-key {:trim-chars "[](){}"
+                                     :keys-handling {:visible-items 12
+                                                     :item-height 20}}])
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults local-storage-values])
     (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)

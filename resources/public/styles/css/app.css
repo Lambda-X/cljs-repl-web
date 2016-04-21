@@ -548,10 +548,6 @@ ul.re-completion-list li:last-of-type {
     padding-bottom: 2px;
 }
 
-ul.re-completion-list li:hover {
-    background-color: #EEE;
-}
-
 li.re-completion-selected {
     background-color: #EEE;
 }
