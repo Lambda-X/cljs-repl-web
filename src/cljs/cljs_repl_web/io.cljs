@@ -2,7 +2,8 @@
   (:require [cljs.js :as cljs]
             [clojure.string :as string]
             [cognitect.transit :as transit]
-            [replumb.repl :as replumb-repl])
+            [replumb.repl :as replumb-repl]
+            [adzerk.cljs-console :as log :include-macros true])
   (:import [goog.events EventType]
            [goog.net XhrIo]))
 
@@ -39,7 +40,7 @@
                                                           (remove #(= "#" (first %)))
                                                           first)
                                                      #"=" 2))]
-                   (println "[Version]" version)))))
+                   (log/info "[Version] ~{version}")))))
 
 (comment
   (def s "#Tue Feb 16 13:27:59 PST 2016\nVERSION=0.2.2-ar\nOTHER=STUFF")

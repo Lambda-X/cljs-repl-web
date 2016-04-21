@@ -8,7 +8,8 @@
             [cljs-repl-web.views :as views]
             [cljs-repl-web.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.config :as config]
-            [cljs-repl-web.localstorage :as ls]))
+            [cljs-repl-web.localstorage :as ls]
+            [adzerk.cljs-console :as log :include-macros true]))
 
 (defonce console-key :cljs-console)
 
@@ -22,7 +23,7 @@
 (defn ^:export main []
   (let [{:keys [name verbose-repl? src-paths]} config/defaults
         local-storage-values (ls/get-local-storage-values)]
-    (println "[Entering]" name)
+    (log/debug "[Entering] ~{name}")
     (dispatch-sync [:initialize config/defaults local-storage-values])
     (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
                                                        :mode (:mode local-storage-values)

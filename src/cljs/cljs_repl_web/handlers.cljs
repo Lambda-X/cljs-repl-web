@@ -9,7 +9,8 @@
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.gist :as gist]
             [cljs-repl-web.config :as config]
-            [cljs-repl-web.localstorage :as ls]))
+            [cljs-repl-web.localstorage :as ls]
+            [adzerk.cljs-console :as log :include-macros true]))
 
 ;; (trace-forms {:tracer (tracer :color "green")}
 
@@ -28,7 +29,7 @@
 (register-handler
  :initialize
  (fn initialize [_ [_ config local-storage-vals]]
-   (println "Initializing app...")
+   (log/debug "Initializing app...")
    ;; we load the cljs core cache manually in order to reduce the app size
    ;; see https://github.com/clojure/clojurescript/wiki/Optional-Self-hosting for more info
    ;; see also related issue in replbum https://github.com/ScalaConsultants/replumb/issues/42
