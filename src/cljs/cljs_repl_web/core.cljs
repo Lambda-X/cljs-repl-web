@@ -37,7 +37,7 @@
                                                        :on-after-change #(do (dispatch [:input console-key (common/source-without-prompt (.getValue %))])
                                                                              (dispatch [:focus console-key true])
                                                                              (app/create-dictionary (common/source-without-prompt (.getValue %)) console-key)
-                                                                             (utils/align-suggestions-list))}]
+                                                                             (utils/align-suggestions-list %2))}]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
     (reagent/render [views/footer-component] (.getElementById js/document "app-footer"))))

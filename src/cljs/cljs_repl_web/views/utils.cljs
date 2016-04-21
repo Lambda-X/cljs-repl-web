@@ -220,13 +220,19 @@
       total)))
 
 (defn align-suggestions-list
-  []
+  [evt]
   (let [container (first (array-seq (.getElementsByClassName js/document "re-console-container")))
         cursor (first (array-seq (.getElementsByClassName js/document "CodeMirror-cursor")))
         code (first (array-seq (.getElementsByClassName js/document "CodeMirror-lines")))
         completions-list (first (array-seq (.getElementsByClassName js/document "re-completion-list")))
+        left-threshold (- (+ (get-el-offset container #(.-offsetLeft %)) (.-offsetWidth container))
+                          (.-offsetWidth completions-list)
+                          10)
         code-mirror (first (array-seq (.getElementsByClassName js/document "CodeMirror")))
-        top (+ (- (.-offsetTop code-mirror) (.-scrollTop container)) (.-offsetHeight code))
-        left (+ 20 (get-el-offset cursor #(.-offsetLeft %)))]
+        top (+ 5 (- (.-offsetTop code-mirror) (.-scrollTop container)) (.-offsetHeight code))
+        ;; if backspace or delete, use minus (-) otherwise plus (+)
+        left ((if (= "+delete" (.-origin evt)) - +) (get-el-offset cursor #(.-offsetLeft %)) 8)]
     (set! (.-top (.-style completions-list)) (str top "px"))
-    (set! (.-left (.-style completions-list)) (str left "px"))))
+    (set! (.-left (.-style completions-list)) (if (> left left-threshold)
+                                                (str left-threshold "px")
+                                                (str left "px")))))
