@@ -27,7 +27,7 @@
   (let [{:keys [name verbose-repl? src-paths]} config/defaults
         local-storage-values (ls/get-local-storage-values)]
     (dispatch [:options console-key {:trim-chars "[](){}"
-                                     :keys-handling {:visible-items 12
+                                     :keys-handling {:visible-items 6
                                                      :item-height 20}}])
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults local-storage-values])

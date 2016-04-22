@@ -518,9 +518,9 @@ ul.re-completion-list {
     padding: 0;
     left: 364px;
     top: 26px;
-    max-height: 146px;
-    min-height: 50px;
-    min-width: 220px;
+    min-height: 24px;
+    max-height: 123px;
+    width: 220px;
     overflow-y: scroll;
     border-radius: 5px;
     background-color: white;
