@@ -142,9 +142,9 @@
         cljs-user (get-functions-from-ns 'cljs.user)
         cljs-core (get-functions-from-ns 'cljs.core)
         base-libs (concat cljs-user cljs-core)
-        list-of-requires-vars (apply concat (map (fn [[k v]]
-                                                   (map #(str k "/" %) (keys (ast/ns-publics @replumb.repl.st v))))
-                                                 requires))
+        list-of-requires-vars (mapcat (fn [[k v]]
+                                        (map #(str k "/" %) (keys (ast/ns-publics @replumb.repl.st v))))
+                                      requires)
         created-dictionary (concat base-libs list-of-requires-vars)]
     (if (= new-text "")
       ""
