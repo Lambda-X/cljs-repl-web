@@ -89,15 +89,9 @@
   [{:file "resources/public/js/clojure-parinfer.js"
     :provides ["parinfer.codemirror.mode.clojure.clojure-parinfer"]}])
 
-(def dev-compiler-options
-  {:source-map-timestamp true
-   :elide-asserts true
-   :closure-defines {"clairvoyant.core.devmode" true}
-   :static-fns true
-   :foreign-libs foreign-libs})
-
 (def prod-compiler-options
-  {:closure-defines {"goog.DEBUG" false}
+  {:closure-defines {"goog.DEBUG" false
+                     "clairvoyant.core.devmode" false}
    :optimize-constants true
    :static-fns true
    :elide-asserts true
@@ -106,6 +100,11 @@
    :dump-core false
    :parallel-build true
    :foreign-libs foreign-libs})
+
+(def dev-compiler-options
+  (merge prod-compiler-options
+         {:closure-defines {"goog.DEBUG" true
+                            "clairvoyant.core.devmode" true}}))
 
 (defmulti options
   "Return the correct option map for the build, dispatching on identity"
@@ -124,16 +123,16 @@
    :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "dev"}
          :resource-paths #{"resources/public/"}}
    :cljs {:source-map true
-          :optimizations :none
+          :optimizations :simple
           :compiler-options dev-compiler-options}
-   :test-cljs {:optimizations :none
+   :test-cljs {:optimizations :simple
                :cljs-opts dev-compiler-options
                :suite-ns 'cljs-repl-web.suite}})
 
 (defmethod options :prod
   [selection]
   {:type :prod
-   :props {"CLJS_LOG_LEVEL" "WARN"}
+   :props {"CLJS_LOG_LEVEL" "INFO"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
          :resource-paths #{"resources/public/"}}
    :cljs {:optimizations :simple
@@ -172,10 +171,8 @@
     (set-system-properties! (:props options))
     (comp (version-file)
           (apply cljs (reduce #(into %2 %1) [] (:cljs options)))
-          (if (= :prod (:type options))
-            (sift :include #{#"main.out"}
-                  :invert true)
-            identity)
+          (sift :include #{#"main.out"}
+                :invert true)
           (add-cljs-source)
           (add-cache :dir "js-cache"))))
 
