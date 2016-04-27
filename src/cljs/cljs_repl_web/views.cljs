@@ -4,7 +4,8 @@
             [re-frame.core :refer [subscribe dispatch]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
-                                 popover-tooltip title label scroller line modal-panel]]
+                                 popover-tooltip title label scroller line modal-panel align-style
+                                 make-tour start-tour make-tour-nav p]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
             [clairvoyant.core :refer-macros [trace-forms]]
@@ -18,6 +19,49 @@
             [re-complete.core :as re-complete]))
 
 ;; (set! re-com.box/debug true)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;      Tour          ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(def tour
+  (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7]))
+
+(def tour-steps
+  {:step1 {:title "Tour 1 of 7"
+           :body "Start"}
+   :step2 {:title "Tour 2 of 7"
+           :body "Reset"}
+   :step3 {:title "Tour 3 of 7"
+           :body "Clear"}
+   :step4 {:title "Tour 4 of 7"
+           :body "Create Gist"}
+   :step5 {:title "Tour 5 of 7"
+           :body "Clear examples"}
+   :step6 {:title "Tour 6 of 7"
+           :body "Switch input mode"}
+   :step7 {:title "Tour 7 of 7"
+           :body "Console"}})
+
+(defn create-tour-step
+  ([step position anchor]
+   (create-tour-step step position anchor nil))
+  ([step position anchor style]
+   (let [step-keyword (keyword (str "step" step))]
+     [popover-anchor-wrapper
+      :showing? (step-keyword tour)
+      :position position
+      :anchor anchor
+      :popover [popover-content-wrapper
+                :showing? (:step2 tour)
+                :position position
+                :width    "250px"
+                :title    [:strong (get-in tour-steps [step-keyword :title])]
+                :body     [:div (get-in tour-steps [step-keyword :body])
+                           [make-tour-nav tour]]]
+      :style  (if style
+                style
+                (align-style :align-self :end))])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -128,18 +172,27 @@
         showing? (subscribe [:gist-showing?])
         media-query (subscribe [:media-query-size])]
     (fn []
-      [popover-anchor-wrapper
-       :showing? showing?
-       :position (gist-position media-query)
-       :anchor   [md-icon-button
-                  :md-icon-name "zmdi-github"
-                  :on-click #(dispatch [:show-gist-login])
-                  :class "cljs-btn"
-                  :size (if-not (= :medium @media-query) :regular :smaller)
-                  :tooltip "Create Gist"
-                  :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                  :disabled? @can-dump-gist?]
-       :popover  [gist-login-dialog-body]])))
+      (if @showing?
+        [popover-anchor-wrapper
+         :showing? showing?
+         :position (gist-position media-query)
+         :anchor   [md-icon-button
+                    :md-icon-name "zmdi-github"
+                    :on-click #(dispatch [:show-gist-login])
+                    :class "cljs-btn"
+                    :size (if-not (= :medium @media-query) :regular :smaller)
+                    :tooltip "Create Gist"
+                    :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
+                    :disabled? @can-dump-gist?]
+         :popover  [gist-login-dialog-body]]
+        (create-tour-step 4 :below-center [md-icon-button
+                                           :md-icon-name "zmdi-github"
+                                           :on-click #(dispatch [:show-gist-login])
+                                           :class "cljs-btn"
+                                           :size (if-not (= :medium @media-query) :regular :smaller)
+                                           :tooltip "Create Gist"
+                                           :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
+                                           :disabled? @can-dump-gist?])))))
 
 (defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
@@ -158,38 +211,39 @@
                           (swap! modes rest)
                           next-mode))]
     (fn cljs-buttons-form2 []
-      (let [children [[md-icon-button
-                       :md-icon-name "zmdi-delete"
-                       :on-click #(dispatch [:reset-console-items :cljs-console])
-                       :class "cljs-btn"
-                       :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip "Reset"
-                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                       :disabled? (not @console-created?)]
-                      [md-icon-button
-                       :md-icon-name "zmdi-format-clear-all"
-                       :on-click #(dispatch [:clear-console-items :cljs-console])
-                       :class "cljs-btn"
-                       :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip "Clear"
-                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                       :disabled? (not @console-created?)]
+      (let [children [(create-tour-step 2 :below-center
+                                        [md-icon-button
+                                         :md-icon-name "zmdi-delete"
+                                         :on-click #(dispatch [:reset-console-items :cljs-console])
+                                         :class "cljs-btn"
+                                         :size (if-not (= :medium @media-query) :regular :smaller)
+                                         :tooltip "Reset"
+                                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
+                                         :disabled? (not @console-created?)])
+                      (create-tour-step 3 :below-center [md-icon-button
+                                                         :md-icon-name "zmdi-format-clear-all"
+                                                         :on-click #(dispatch [:clear-console-items :cljs-console])
+                                                         :class "cljs-btn"
+                                                         :size (if-not (= :medium @media-query) :regular :smaller)
+                                                         :tooltip "Clear"
+                                                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
+                                                         :disabled? (not @console-created?)])
                       [gist-login-dialog]
-                      [md-icon-button
-                       :md-icon-name "zmdi-stop"
-                       :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
-                       :class "cljs-btn"
-                       :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip "Clear examples"
-                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                       :disabled? (not @example-mode?)]
-                      [md-icon-button
-                       :md-icon-name "zmdi-keyboard"
-                       :on-click #(dispatch [:switch-console-mode (get-next-mode)])
-                       :class "cljs-btn"
-                       :size (if-not (= :medium @media-query) :regular :smaller)
-                       :tooltip "Switch input mode"
-                       :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)]]]
+                      (create-tour-step 5 :below-center [md-icon-button
+                                                         :md-icon-name "zmdi-stop"
+                                                         :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
+                                                         :class "cljs-btn"
+                                                         :size (if-not (= :medium @media-query) :regular :smaller)
+                                                         :tooltip "Clear examples"
+                                                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
+                                                         :disabled? (not @example-mode?)])
+                      (create-tour-step 6 :below-center [md-icon-button
+                                                         :md-icon-name "zmdi-keyboard"
+                                                         :on-click #(dispatch [:switch-console-mode (get-next-mode)])
+                                                         :class "cljs-btn"
+                                                         :size (if-not (= :medium @media-query) :regular :smaller)
+                                                         :tooltip "Switch input mode"
+                                                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)])]]
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
@@ -566,12 +620,23 @@
   (let [media-query (subscribe [:media-query-size])
         console (console/console console-key opts)]
     (fn repl-component-form2 []
-      (let [children [[cljs-buttons]
+      (let [children [(create-tour-step 1
+                                        :above-center
+                                        [button
+                                         :label    "Start Tour!"
+                                         :on-click #(start-tour tour)
+                                         :style    {:font-weight "bold" :color "yellow"}
+                                         :class    "btn-info"]
+                                        {:width     "34px"
+                                         :font-size "26px"
+                                         :position  "absolute"
+                                         :top       "240px"
+                                         :left      "250px"})
+                      [cljs-buttons]
                       [box
                        :size "0 0 auto"
-                       :child [console]]
-                      [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
-                                                                (dispatch [:focus-console-editor console-key]))]]]
+                       :child
+                       (create-tour-step 7 :above-center [console])]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
