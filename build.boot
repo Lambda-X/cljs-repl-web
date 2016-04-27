@@ -28,7 +28,7 @@
                        [replumb/replumb             "0.2.2-SNAPSHOT"]
                        [cljsjs/highlight            "8.4-0"]
                        [re-console                  "0.1.4-SNAPSHOT"]
-                       [re-com                      "0.7.0-alpha2"]
+                       [re-com                      "0.8.1"]
                        [cljs-ajax                   "0.5.1"]
                        [hickory                     "0.5.4"]
                        [cljsjs/showdown             "0.4.0-1"]
