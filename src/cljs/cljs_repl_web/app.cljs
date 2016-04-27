@@ -1,7 +1,10 @@
 (ns cljs-repl-web.app
   (:require [reagent.core :as reagent]
             cljsjs.enquire
-            [re-frame.core :refer [dispatch]]))
+            [re-frame.core :refer [dispatch subscribe]]
+            [re-complete.app :as complete-app]
+            [replumb.ast :as ast]
+            [clojure.string :as str]))
 
 (defn gist-showing?
   "Given a db, indicates if the gist login dialog is shown.
@@ -87,3 +90,62 @@
   "Reset the app state. Use this do"
   []
   (dispatch [:reset-db]))
+
+;;;;;;;;;;;;;;;;;;;;;
+;;; Autocomplete  ;;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(defn opening-excluded-chars [word excluded-chars]
+  (let [starts-with-excluded-char? ((set excluded-chars) (first word))]
+    (if starts-with-excluded-char?
+      (opening-excluded-chars (apply str (rest word)) excluded-chars)
+      word)))
+
+(defn closing-excluded-chars [word excluded-chars]
+  (let [ends-with-excluded-char? ((set excluded-chars) (last word))]
+    (if ends-with-excluded-char?
+      (closing-excluded-chars (apply str (butlast word)) excluded-chars)
+      word)))
+
+(defn current-word [previous-input input]
+  (->> input
+       (complete-app/index previous-input)
+       (complete-app/current-word input)))
+
+(defn sort-case-insensitive-way [data]
+  (sort #(compare (str/upper-case %1) (str/upper-case %2)) data))
+
+(defn get-functions-from-ns [ns]
+  (sort-case-insensitive-way (map str (keys (ast/ns-publics @replumb.repl.st ns)))))
+
+(defn lower-case-first [items-to-sort]
+  (let [lower-case-items (sort (filter #((set (map char (range 97 122))) (first %))
+                                       items-to-sort))
+        other-items (sort (vec (clojure.set/difference (set items-to-sort) (set lower-case-items))))]
+    (apply conj other-items (reverse lower-case-items))))
+
+(defn sort-dictionary [dictionary]
+  (->> dictionary
+       sort-case-insensitive-way
+       lower-case-first))
+
+(defn create-dictionary [event console-key]
+  (let [previous-input (subscribe [:get-previous-input console-key])
+        options (subscribe [:get-options console-key])
+        trim-chars (:trim-chars @options)
+        new-text (-> @previous-input
+                     (current-word event)
+                     (opening-excluded-chars trim-chars)
+                     (closing-excluded-chars trim-chars))
+        user-ns (keys (replumb.ast/ns-publics @replumb.repl.st 'cljs.user))
+        requires (ast/requires @replumb.repl.st 'cljs.user)
+        cljs-user (get-functions-from-ns 'cljs.user)
+        cljs-core (get-functions-from-ns 'cljs.core)
+        base-libs (concat cljs-user cljs-core)
+        list-of-requires-vars (mapcat (fn [[k v]]
+                                        (map #(str k "/" %) (keys (ast/ns-publics @replumb.repl.st v))))
+                                      requires)
+        created-dictionary (concat base-libs list-of-requires-vars)]
+    (if (= new-text "")
+      ""
+      (dispatch [:dictionary console-key (sort-dictionary created-dictionary)]))))

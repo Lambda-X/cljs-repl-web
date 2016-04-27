@@ -110,3 +110,12 @@
 
 
 ;; )
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;  Re-complete   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(register-handler
+ :console-set-autocompleted-text
+ (fn console-set-text [db [_ console-key]]
+   (rc-app/set-console-text db console-key (get-in db [:re-complete :linked-components (keyword console-key) :text]))))
