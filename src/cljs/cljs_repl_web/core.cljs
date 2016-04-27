@@ -1,6 +1,6 @@
 (ns cljs-repl-web.core
   (:require [reagent.core :as reagent]
-            [re-frame.core :refer [dispatch dispatch-sync subscribe]]
+            [re-frame.core :refer [dispatch dispatch-sync]]
             [re-com.core :refer [p h-box v-box box gap line]]
             [devtools.core :as devtools]
             [cljs-repl-web.handlers]

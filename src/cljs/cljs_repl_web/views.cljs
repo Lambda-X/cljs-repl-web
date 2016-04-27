@@ -6,6 +6,7 @@
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller line modal-panel align-style
                                  make-tour start-tour make-tour-nav p]]
+            [re-com.tour :refer [finish-tour]]
             [re-com.box :refer [flex-child-style]]
             [re-com.util :refer [px]]
             [clairvoyant.core :refer-macros [trace-forms]]
@@ -17,6 +18,7 @@
             [cljs-repl-web.markdown :as md]
             [re-console.core :as console]
             [re-complete.core :as re-complete]))
+            [cljs-repl-web.localstorage :as local-storage]))
 
 ;; (set! re-com.box/debug true)
 
@@ -29,19 +31,19 @@
 
 (def tour-steps
   {:step1 {:title "Tour 1 of 7"
-           :body "Start"}
-   :step2 {:title "Tour 2 of 7"
            :body "Reset"}
-   :step3 {:title "Tour 3 of 7"
+   :step2 {:title "Tour 2 of 7"
            :body "Clear"}
-   :step4 {:title "Tour 4 of 7"
+   :step3 {:title "Tour 3 of 7"
            :body "Create Gist"}
-   :step5 {:title "Tour 5 of 7"
+   :step4 {:title "Tour 4 of 7"
            :body "Clear examples"}
-   :step6 {:title "Tour 6 of 7"
+   :step5 {:title "Tour 5 of 7"
            :body "Switch input mode"}
+   :step6 {:title "Tour 6 of 7"
+           :body "Console"}
    :step7 {:title "Tour 7 of 7"
-           :body "Console"}})
+           :body "Send to repl"}})
 
 (defn create-tour-step
   ([step position anchor]
@@ -58,7 +60,9 @@
                 :width    "250px"
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
-                           [make-tour-nav tour]]]
+                           [make-tour-nav tour]]
+                :on-cancel #(do (finish-tour tour)
+                                (local-storage/set-item! :closed-tour? true))] 
       :style  (if style
                 style
                 (align-style :align-self :center))])))
@@ -185,7 +189,7 @@
                     :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                     :disabled? @can-dump-gist?]
          :popover  [gist-login-dialog-body]]
-        [create-tour-step 4
+        [create-tour-step 3
          :below-center
          [md-icon-button
           :md-icon-name "zmdi-github"
@@ -213,7 +217,7 @@
                           (swap! modes rest)
                           next-mode))]
     (fn cljs-buttons-form2 []
-      (let [children [[create-tour-step 2
+      (let [children [[create-tour-step 1
                        :below-center
                        [md-icon-button
                         :md-icon-name "zmdi-delete"
@@ -223,7 +227,7 @@
                         :tooltip "Reset"
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                         :disabled? (not @console-created?)]]
-                      [create-tour-step 3
+                      [create-tour-step 2
                        :below-center
                        [md-icon-button
                         :md-icon-name "zmdi-format-clear-all"
@@ -234,7 +238,7 @@
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                         :disabled? (not @console-created?)]]
                       [gist-login-dialog]
-                      [create-tour-step 5
+                      [create-tour-step 4
                        :below-center
                        [md-icon-button
                         :md-icon-name "zmdi-stop"
@@ -244,7 +248,7 @@
                         :tooltip "Clear examples"
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                         :disabled? (not @example-mode?)]]
-                      [create-tour-step 6
+                      [create-tour-step 5
                        :below-center
                        [md-icon-button
                         :md-icon-name "zmdi-keyboard"
@@ -473,7 +477,7 @@
                           :label (:name symbol)
                           ;; we use :attr's `:on-click` because button's `on-click` accepts
                           ;; a parametless function and we need the mouse click coordinates
-                          :attr { :on-click
+                          :attr {:on-click
                                  (handler-fn
                                   ;; later we can refactor it into re-frame
                                   ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
@@ -629,23 +633,11 @@
   (let [media-query (subscribe [:media-query-size])
         console (console/console console-key opts)]
     (fn repl-component-form2 []
-      (let [children [[create-tour-step 1
-                       :above-center
-                       [button
-                        :label    "Start Tour!"
-                        :on-click #(start-tour tour)
-                        :style    {:font-weight "bold" :color "yellow"}
-                        :class    "btn-info"]
-                       {:width     "34px"
-                        :font-size "26px"
-                        :position  "absolute"
-                        :top       "240px"
-                        :left      "250px"}]
-                      [cljs-buttons]
+      (let [children [[cljs-buttons]
                       [box
                        :size "0 0 auto"
                        :child
-                       [create-tour-step 7 :above-center [console]]]]]
+                       [create-tour-step 6 :above-center [console]]]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
