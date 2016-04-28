@@ -27,22 +27,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def tour
-  (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7]))
+  (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7 :step8]))
 
 (def tour-steps
-  {:step1 {:title "Tour 1 of 7"
+  {:step1 {:title "Tour 1 of 8"
            :body "Reset"}
-   :step2 {:title "Tour 2 of 7"
+   :step2 {:title "Tour 2 of 8"
            :body "Clear"}
-   :step3 {:title "Tour 3 of 7"
+   :step3 {:title "Tour 3 of 8"
            :body "Create Gist"}
-   :step4 {:title "Tour 4 of 7"
+   :step4 {:title "Tour 4 of 8"
            :body "Clear examples"}
-   :step5 {:title "Tour 5 of 7"
+   :step5 {:title "Tour 5 of 8"
            :body "Switch input mode"}
-   :step6 {:title "Tour 6 of 7"
+   :step6 {:title "Tour 6 of 8"
            :body "Console"}
-   :step7 {:title "Tour 7 of 7"
+   :step7 {:title "Tour 7 of 8"
+           :body "Symbol"}
+   :step8 {:title "Tour 8 of 8"
            :body "Send to repl"}})
 
 (defn create-tour-step
@@ -62,7 +64,7 @@
                 :body     [:div (get-in tour-steps [step-keyword :body])
                            [make-tour-nav tour]]
                 :on-cancel #(do (finish-tour tour)
-                                (local-storage/set-item! :closed-tour? true))] 
+                                (local-storage/set-item! :closed-tour? true))]
       :style  (if style
                 style
                 (align-style :align-self :center))])))
@@ -468,23 +470,38 @@
        :size "0 1 auto"
        :align :center
        :class "api-panel-symbol-label-box"
-       :child (if-let [symbol (get-symbol-doc-map (str symbol))]
-                [popover-anchor-wrapper
-                 :showing? showing?
-                 :position @popover-position
-                 :anchor [button
-                          :class "btn btn-default api-panel-symbol-button"
-                          :label (:name symbol)
-                          ;; we use :attr's `:on-click` because button's `on-click` accepts
-                          ;; a parametless function and we need the mouse click coordinates
-                          :attr {:on-click
-                                 (handler-fn
-                                  ;; later we can refactor it into re-frame
-                                  ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
-                                  (reset! popover-position
-                                          (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
-                                  (reset! showing? true))}]
-                 :popover [symbol-popover showing? popover-position symbol]]
+       :child (if-let [symbol' (get-symbol-doc-map (str symbol))]
+                (if (and (= (str symbol) "+") (not @showing?))
+                  [create-tour-step 7
+                   :below-center
+                   [button
+                    :class "btn btn-default api-panel-symbol-button"
+                    :label (:name symbol')
+                    ;; we use :attr's `:on-click` because button's `on-click` accepts
+                    ;; a parametless function and we need the mouse click coordinates
+                    :attr {:on-click
+                           (handler-fn
+                            ;; later we can refactor it into re-frame
+                            ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                            (reset! popover-position
+                                    (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                            (reset! showing? true))}]]
+                  [popover-anchor-wrapper
+                   :showing? showing?
+                   :position @popover-position
+                   :anchor [button
+                            :class "btn btn-default api-panel-symbol-button"
+                            :label (:name symbol')
+                            ;; we use :attr's `:on-click` because button's `on-click` accepts
+                            ;; a parametless function and we need the mouse click coordinates
+                            :attr {:on-click
+                                   (handler-fn
+                                    ;; later we can refactor it into re-frame
+                                    ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                                    (reset! popover-position
+                                            (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                                    (reset! showing? true))}]
+                   :popover [symbol-popover showing? popover-position symbol']])
                 [label
                  :label (str symbol)
                  :class "api-panel-symbol-label"
