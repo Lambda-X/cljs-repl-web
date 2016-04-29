@@ -17,8 +17,9 @@
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]
             [re-console.core :as console]
-            [re-complete.core :as re-complete]))
-            [cljs-repl-web.localstorage :as local-storage]))
+            [re-complete.core :as re-complete]
+            [cljs-repl-web.localstorage :as local-storage]
+            [re-com.buttons :refer [button]]))
 
 ;; (set! re-com.box/debug true)
 
@@ -28,6 +29,55 @@
 
 (def tour
   (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7 :step8]))
+
+(defn- next-tour-step
+  [tour]
+  (let [steps     (:steps tour)
+        old-step  @(:current-step tour)
+        new-step  (inc old-step)]
+    (when (< new-step (count (:steps tour)))
+      (reset! (:current-step tour) new-step)
+      (reset! ((nth steps old-step) tour) false)
+      (reset! ((nth steps new-step) tour) true))))
+
+(defn- prev-tour-step [tour]
+  (let [steps    (:steps tour)
+        old-step @(:current-step tour)
+        new-step (dec old-step)]
+    (when (>= new-step 0)
+      (reset! (:current-step tour) new-step)
+      (reset! ((nth steps old-step) tour) false)
+      (reset! ((nth steps new-step) tour) true))))
+
+(defn tour-buttons
+  "Generate the hr and previous/next buttons markup.
+  If first button in tour, don't generate a Previous button.
+  If last button in tour, change Next button to a Finish button"
+  [tour another-step]
+  (let [on-first-button (= @(:current-step tour) 0)
+        on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))]
+    [:div
+     [:hr {:style (merge (flex-child-style "none")
+                         {:margin "10px 0 10px"
+                          :z-index 5000})}]
+     (when-not on-first-button
+       [button
+        :label    "Previous"
+        :on-click (handler-fn (prev-tour-step tour))
+        :style    {:margin-right "15px"
+                   :z-index 5000}
+        :class     "btn-default"])
+     [button
+      :label    (if on-last-button "Finish" "Next")
+      :on-click (handler-fn (if on-last-button
+                              (finish-tour tour)
+                              (if another-step
+                                ((another-step)
+                                 (next-tour-step tour))
+                                (next-tour-step tour))))
+      :style    {:z-index 5000}
+      :class     "btn-default"]]))
+
 
 (def tour-steps
   {:step1 {:title "Tour 1 of 8"
@@ -47,10 +97,12 @@
    :step8 {:title "Tour 8 of 8"
            :body "Send to repl"}})
 
+
+
 (defn create-tour-step
   ([step position anchor]
    (create-tour-step step position anchor nil))
-  ([step position anchor style]
+  ([step position anchor another-step]
    (let [step-keyword (keyword (str "step" step))]
      [popover-anchor-wrapper
       :showing? (step-keyword tour)
@@ -62,12 +114,12 @@
                 :width    "250px"
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
-                           [make-tour-nav tour]]
+                           [tour-buttons tour another-step]]
                 :on-cancel #(do (finish-tour tour)
-                                (local-storage/set-item! :closed-tour? true))]
-      :style  (if style
-                style
-                (align-style :align-self :center))])))
+                                (local-storage/set-item! :closed-tour? true))
+                :backdrop-opacity 0.5]
+      ;;:style (align-style :align-self)
+      ])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -346,6 +398,7 @@
 (defn example-send-to-repl-button-label
   "https://github.com/Day8/re-com/blob/master/src/re_demo/button.cljs#L80"
   [example-index example-map]
+  ;;[create-tour-step 8 :below-center]
   [:span "Send to REPL"
    [:img {:class "api-panel-send-repl-img zmdi-hc-fw-rc"
           :src "styles/images/cljs.svg"
@@ -361,24 +414,25 @@
    :justify :center
    ;; Why the box?
    ;; See problem here, see https://github.com/Day8/re-com/issues/76
-   :children [[box
-               :class "api-panel-button-send-repl-box"
-               :size "1 0 auto"
-               :child [button
-                       :class "btn btn-default api-panel-button-send-repl"
-                       :style (merge (flex-child-style "1 0 auto")
-                                     {:width "100%"})
-                       :disabled? (not @(subscribe [:console-created? :cljs-console]))
-                       :label [h-box
-                               :size "1 1 auto"
-                               :justify :between
-                               :align :center
-                               :children [[example-number-icon example-index]
-                                          [example-send-to-repl-button-label example-index example-map]]]
-                       :on-click (handler-fn
-                                  (reset! showing-atom false)
-                                  (utils/scroll-to-top) ; in case we are at the bottom of the page
-                                  (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
+   :children [[create-tour-step 8 :above-center
+               [box
+                :class "api-panel-button-send-repl-box"
+                :size "1 0 auto"
+                :child [button
+                        :class "btn btn-default api-panel-button-send-repl"
+                        :style (merge (flex-child-style "1 0 auto")
+                                      {:width "100%"})
+                        :disabled? (not @(subscribe [:console-created? :cljs-console]))
+                        :label [h-box
+                                :size "1 1 auto"
+                                :justify :between
+                                :align :center
+                                :children [[example-number-icon example-index]
+                                           [example-send-to-repl-button-label example-index example-map]]]
+                        :on-click (handler-fn
+                                   (reset! showing-atom false)
+                                   (utils/scroll-to-top) ; in case we are at the bottom of the page
+                                   (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]]
               [api-example example-map]]])
 
 (defn api-examples
@@ -485,7 +539,15 @@
                             ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
                             (reset! popover-position
                                     (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
-                            (reset! showing? true))}]]
+                            (reset! showing? true))}]
+                   #(do (reset! showing? true)
+                        (popover-anchor-wrapper
+                         :showing? showing?
+                         :position :below-center
+                         :anchor [button
+                                  :class "btn btn-default api-panel-symbol-button"
+                                  :label (:name "+")]
+                         :popover [symbol-popover showing? :below-center "+"]))]
                   [popover-anchor-wrapper
                    :showing? showing?
                    :position @popover-position

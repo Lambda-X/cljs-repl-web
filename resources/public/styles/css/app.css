@@ -378,6 +378,17 @@ body,html {
     border: none;
 }
 
+/*********************/
+/***     Tour      ***/
+/*********************/
+
+
+.rc-v-box .rc-popover-anchor-wrapper .rc-point-wrapper {
+    /*align-items: stretch !important;*/
+    /*flex: 0 1 auto !important;*/
+    flex-flow: row !important;
+}
+
 /* Some examples contains tables in their markdown.
  * These tables have a class of "code-tbl-9bef6"
  * see: http://stackoverflow.com/questions/5110249/wildcard-in-css-for-classes
@@ -425,6 +436,9 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     /* shadow */
     text-shadow: 0 0 5px #444;
 }
+
+
+
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
