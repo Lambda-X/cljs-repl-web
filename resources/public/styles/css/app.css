@@ -365,6 +365,7 @@ body,html {
 }
 
 .api-panel-button-send-repl {
+    align-items: stretch !important;
     border: 0;
 }
 
@@ -384,10 +385,15 @@ body,html {
 
 
 .rc-v-box .rc-popover-anchor-wrapper .rc-point-wrapper {
-    /*align-items: stretch !important;*/
+    align-items: stretch !important;
     /*flex: 0 1 auto !important;*/
-    flex-flow: row !important;
+    /*flex-flow: row !important;*/
 }
+
+.rc-v-box .rc-popover-anchor-wrapper .rc-point-wrapper .rc-popover-point {
+    align-self: center !important;
+}
+
 
 /* Some examples contains tables in their markdown.
  * These tables have a class of "code-tbl-9bef6"

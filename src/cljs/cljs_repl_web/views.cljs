@@ -117,7 +117,9 @@
                            [tour-buttons tour another-step]]
                 :on-cancel #(do (finish-tour tour)
                                 (local-storage/set-item! :closed-tour? true))
-                :backdrop-opacity 0.5]
+                :backdrop-opacity 0.5
+                ]
+      :style (align-style :align-items :stretch)
       ;;:style (align-style :align-self)
       ])))
 
@@ -418,6 +420,7 @@
                [box
                 :class "api-panel-button-send-repl-box"
                 :size "1 0 auto"
+                :style (align-style :align-items :stretch)
                 :child [button
                         :class "btn btn-default api-panel-button-send-repl"
                         :style (merge (flex-child-style "1 0 auto")
@@ -525,7 +528,7 @@
        :align :center
        :class "api-panel-symbol-label-box"
        :child (if-let [symbol' (get-symbol-doc-map (str symbol))]
-                (if (and (= (str symbol) "+") (not @showing?))
+                (if (and (= (str symbol) "/") (not @showing?))
                   [create-tour-step 7
                    :below-center
                    [button
