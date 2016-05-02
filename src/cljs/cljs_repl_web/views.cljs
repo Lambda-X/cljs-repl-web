@@ -532,7 +532,7 @@
        :child (if-let [symbol' (get-symbol-doc-map (str symbol))]
                 (if (and (= (str symbol) "/") (not @showing?))
                   [create-tour-step 7
-                   :below-center
+                   :above-center
                    [button
                     :class "btn btn-default api-panel-symbol-button"
                     :label (:name symbol')
@@ -548,13 +548,14 @@
                    #(do (finish-tour tour)
                         (utils/scroll-to-top))
                    #(do (reset! showing? true)
+                        (reset! popover-position :above-center)
                         (popover-anchor-wrapper
                          :showing? showing?
-                         :position :below-center
+                         :position @popover-position
                          :anchor [button
                                   :class "btn btn-default api-panel-symbol-button"
-                                  :label (:name "+")]
-                         :popover [symbol-popover showing? :below-center "+"]))]
+                                  :label (:name "/")]
+                         :popover [symbol-popover showing? popover-position "/"]))]
                   [popover-anchor-wrapper
                    :showing? showing?
                    :position @popover-position
@@ -723,7 +724,7 @@
                       [box
                        :size "0 0 auto"
                        :child
-                       [create-tour-step 6 :above-center [console] #(do (finish-tour tour)
+                       [create-tour-step 6 :below-center [console] #(do (finish-tour tour)
                                                                         (utils/scroll-to-top))]]]]
         (if (= :narrow @media-query)
           [v-box
