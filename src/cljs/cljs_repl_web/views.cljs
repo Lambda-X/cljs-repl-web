@@ -109,7 +109,7 @@
       :popover [popover-content-wrapper
                 :showing? (step-keyword tour)
                 :position position
-                :width    "250px"
+                :width    "200px"
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
                            [tour-buttons tour another-step close-fn]]
