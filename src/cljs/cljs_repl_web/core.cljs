@@ -41,8 +41,4 @@
                                                                              (utils/align-suggestions-list %2))}]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
-    (reagent/render [views/footer-component] (.getElementById js/document "app-footer"))
-    (comment (let [first-bottom-panel-item (dom/getElementByClass "api-panel-symbol-label-box")
-                   item-coordinates (.getBoundingClientRect (dom/getElementByClass "api-panel-symbol-label-box"))
-                   item-popup-position (utils/calculate-popover-position [(.-top item-coordinates) (.-left item-coordinates)])]
-               (views/create-tour-step 7 item-popup-position first-bottom-panel-item)))))
+    (reagent/render [views/footer-component] (.getElementById js/document "app-footer"))))

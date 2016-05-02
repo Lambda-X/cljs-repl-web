@@ -53,7 +53,7 @@
   "Generate the hr and previous/next buttons markup.
   If first button in tour, don't generate a Previous button.
   If last button in tour, change Next button to a Finish button"
-  [tour another-step]
+  [tour another-step close-fn]
   (let [on-first-button (= @(:current-step tour) 0)
         on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))]
     [:div
@@ -70,7 +70,7 @@
      [button
       :label    (if on-last-button "Finish" "Next")
       :on-click (handler-fn (if on-last-button
-                              (finish-tour tour)
+                              (close-fn)
                               (if another-step
                                 ((another-step)
                                  (next-tour-step tour))
@@ -97,12 +97,10 @@
    :step8 {:title "Tour 8 of 8"
            :body "Send to repl"}})
 
-
-
 (defn create-tour-step
-  ([step position anchor]
-   (create-tour-step step position anchor nil))
-  ([step position anchor another-step]
+  ([step position anchor close-fn]
+   (create-tour-step step position anchor close-fn nil))
+  ([step position anchor close-fn another-step]
    (let [step-keyword (keyword (str "step" step))]
      [popover-anchor-wrapper
       :showing? (step-keyword tour)
@@ -114,14 +112,11 @@
                 :width    "250px"
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
-                           [tour-buttons tour another-step]]
-                :on-cancel #(do (finish-tour tour)
+                           [tour-buttons tour another-step close-fn]]
+                :on-cancel #(do (close-fn)
                                 (local-storage/set-item! :closed-tour? true))
-                :backdrop-opacity 0.5
-                ]
-      :style (align-style :align-items :stretch)
-      ;;:style (align-style :align-self)
-      ])))
+                :backdrop-opacity 0.5]
+      :style (align-style :align-items :stretch)])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -254,7 +249,8 @@
           :size (if-not (= :medium @media-query) :regular :smaller)
           :tooltip "Create Gist"
           :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-          :disabled? @can-dump-gist?]]))))
+          :disabled? @can-dump-gist?]
+         #(finish-tour tour)]))))
 
 (defn cljs-buttons
   "Return a vector of components containing the cljs console buttons.
@@ -282,7 +278,8 @@
                         :size (if-not (= :medium @media-query) :regular :smaller)
                         :tooltip "Reset"
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                        :disabled? (not @console-created?)]]
+                        :disabled? (not @console-created?)]
+                       #(finish-tour tour)]
                       [create-tour-step 2
                        :below-center
                        [md-icon-button
@@ -292,7 +289,8 @@
                         :size (if-not (= :medium @media-query) :regular :smaller)
                         :tooltip "Clear"
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                        :disabled? (not @console-created?)]]
+                        :disabled? (not @console-created?)]
+                       #(finish-tour tour)]
                       [gist-login-dialog]
                       [create-tour-step 4
                        :below-center
@@ -303,7 +301,8 @@
                         :size (if-not (= :medium @media-query) :regular :smaller)
                         :tooltip "Clear examples"
                         :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
-                        :disabled? (not @example-mode?)]]
+                        :disabled? (not @example-mode?)]
+                       #(finish-tour tour)]
                       [create-tour-step 5
                        :below-center
                        [md-icon-button
@@ -312,7 +311,8 @@
                         :class "cljs-btn"
                         :size (if-not (= :medium @media-query) :regular :smaller)
                         :tooltip "Switch input mode"
-                        :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)]]]]
+                        :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)]
+                       #(finish-tour tour)]]]
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
@@ -400,7 +400,6 @@
 (defn example-send-to-repl-button-label
   "https://github.com/Day8/re-com/blob/master/src/re_demo/button.cljs#L80"
   [example-index example-map]
-  ;;[create-tour-step 8 :below-center]
   [:span "Send to REPL"
    [:img {:class "api-panel-send-repl-img zmdi-hc-fw-rc"
           :src "styles/images/cljs.svg"
@@ -435,7 +434,10 @@
                         :on-click (handler-fn
                                    (reset! showing-atom false)
                                    (utils/scroll-to-top) ; in case we are at the bottom of the page
-                                   (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]]
+                                   (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
+               #(do (finish-tour tour)
+                    (reset! showing-atom false)
+                    (utils/scroll-to-top))]
               [api-example example-map]]])
 
 (defn api-examples
@@ -543,6 +545,8 @@
                             (reset! popover-position
                                     (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
                             (reset! showing? true))}]
+                   #(do (finish-tour tour)
+                        (utils/scroll-to-top))
                    #(do (reset! showing? true)
                         (popover-anchor-wrapper
                          :showing? showing?
@@ -719,7 +723,8 @@
                       [box
                        :size "0 0 auto"
                        :child
-                       [create-tour-step 6 :above-center [console]]]]]
+                       [create-tour-step 6 :above-center [console] #(do (finish-tour tour)
+                                                                        (utils/scroll-to-top))]]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
