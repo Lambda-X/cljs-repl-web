@@ -19,7 +19,8 @@
             [re-console.core :as console]
             [re-complete.core :as re-complete]
             [cljs-repl-web.localstorage :as local-storage]
-            [re-com.buttons :refer [button]]))
+            [re-com.buttons :refer [button]]
+            [goog.dom :as dom]))
 
 ;; (set! re-com.box/debug true)
 
@@ -458,72 +459,80 @@
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing-atom position-atom sym-doc-map]
-  (let [media-query (subscribe [:media-query-size])]
-    (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
-      (let [{name :name
-             full-name :full-name
-             desc :description
-             docstring :docstring
-             examples-htmls :examples-htmls
-             examples-strings :examples-strings
-             sign :signature
-             related :related} sym-doc-map
-            desc (or desc docstring) ; some symbols don't have a description so we use
+  ([showing-atom position-atom sym-doc-map]
+   (symbol-popover showing-atom position-atom sym-doc-map nil))
+  ([showing-atom position-atom sym-doc-map tour?]
+   (let [media-query (subscribe [:media-query-size])]
+     (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
+       (let [{name :name
+              full-name :full-name
+              desc :description
+              docstring :docstring
+              examples-htmls :examples-htmls
+              examples-strings :examples-strings
+              sign :signature
+              related :related} sym-doc-map
+             desc (or desc docstring) ; some symbols don't have a description so we use
                                         ; the docstring instead; docstring is a regular string,
                                         ; without markdown. Nonetheless, it will be passed to
                                         ; md->react->component function to gain some basic html
                                         ; formatting (like paragraphs)
-            examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
-            popover-width  (if (= :narrow @media-query) 280 400)
-            popover-height (if (= :narrow @media-query) 250 400)
-            popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
-        [popover-content-wrapper
-         :showing? showing-atom
-         :position @position-atom
-         :on-cancel (handler-fn (reset! showing-atom false))
-         :style {:max-height (str popover-height)
-                 :max-width (str popover-width)}
-         :backdrop-opacity 0.1
-         :close-button? (= :narrow @media-query)
-         :title [h-box
-                 :gap "6px"
-                 :align :center
-                 :children [[title
-                             :label name
-                             :level :level4]
-                            [md-icon-button
-                             :md-icon-name "zmdi-info"
-                             :tooltip "See online documentation"
-                             :tooltip-position :right-center
-                             :size :smaller
-                             :style {:justify-content :center}
-                             :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
-         :body [(fn []
-                  [scroller
-                   :size "1 1 auto"
-                   :max-width (str popover-width)
-                   :max-height (str (- popover-height 50))
-                   :scroll :auto
-                   :child [v-box
-                           :size "1 1 auto"
-                           :gap "8px"
-                           :width (str popover-content-width)
-                           :style {:padding "4px"}
-                           :children [(when (not-empty sign)
-                                        [api-signatures sign])
-                                      (when (not-empty desc)
-                                        [api-symbol-description desc])
-                                      (when (not-empty related)
-                                        [api-related-symbols related])
-                                      (when (not-empty examples)
-                                        [api-examples showing-atom examples])]]])]]))))
+             examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
+             popover-width  (if (= :narrow @media-query) 280 400)
+             popover-height (if (= :narrow @media-query) 250 400)
+             popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
+         [popover-content-wrapper
+          :showing? showing-atom
+          :position @position-atom
+          :on-cancel (handler-fn (reset! showing-atom false))
+          :style {:max-height (str popover-height)
+                  :max-width (str popover-width)}
+          :backdrop-opacity 0.1
+          :close-button? (= :narrow @media-query)
+          :title [h-box
+                  :gap "6px"
+                  :align :center
+                  :children [[title
+                              :label name
+                              :level :level4]
+                             [md-icon-button
+                              :md-icon-name "zmdi-info"
+                              :tooltip "See online documentation"
+                              :tooltip-position :right-center
+                              :size :smaller
+                              :style {:justify-content :center}
+                              :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
+          :body [reagent/create-class
+                 {:component-did-mount (fn [this]
+                                         (let [node (reagent/dom-node this)]
+                                           (when tour?
+                                             (set! (.-scrollTop node) 133))))
+                  :reagent-render (fn []
+                                    [scroller
+                                     :size "1 1 auto"
+                                     :max-width (str popover-width)
+                                     :max-height (str (- popover-height 50))
+                                     :scroll :auto
+                                     :child [v-box
+                                             :size "1 1 auto"
+                                             :gap "8px"
+                                             :width (str popover-content-width)
+                                             :style {:padding "4px"}
+                                             :children [(when (not-empty sign)
+                                                          [api-signatures sign])
+                                                        (when (not-empty desc)
+                                                          [api-symbol-description desc])
+                                                        (when (not-empty related)
+                                                          [api-related-symbols related])
+                                                        (when (not-empty examples)
+                                                          [api-examples showing-atom examples])]]])}]])))))
 
 (defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
   [symbol]
   (let [showing? (reagent/atom false)
-        popover-position (reagent/atom :below-center)]
+        popover-position (reagent/atom :below-center)
+        tour? (reagent/atom false)]
     (fn api-symbol-form2 [symbol]
       [box
        :size "0 1 auto"
@@ -546,32 +555,35 @@
                                     (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
                             (reset! showing? true))}]
                    #(do (finish-tour tour)
-                        (utils/scroll-to-top))
-                   #(do (reset! showing? true)
-                        (reset! popover-position :above-center)
-                        (popover-anchor-wrapper
+                        (utils/scroll-to-top)
+                        (reset! tour? false))
+                   #(do (reset! popover-position :above-center)
+                        (reset! tour? true)
+                        (reset! showing? true)
+                        [popover-anchor-wrapper
                          :showing? showing?
                          :position @popover-position
                          :anchor [button
                                   :class "btn btn-default api-panel-symbol-button"
-                                  :label (:name "/")]
-                         :popover [symbol-popover showing? popover-position "/"]))]
-                  [popover-anchor-wrapper
-                   :showing? showing?
-                   :position @popover-position
-                   :anchor [button
-                            :class "btn btn-default api-panel-symbol-button"
-                            :label (:name symbol')
-                            ;; we use :attr's `:on-click` because button's `on-click` accepts
-                            ;; a parametless function and we need the mouse click coordinates
-                            :attr {:on-click
-                                   (handler-fn
-                                    ;; later we can refactor it into re-frame
-                                    ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
-                                    (reset! popover-position
-                                            (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
-                                    (reset! showing? true))}]
-                   :popover [symbol-popover showing? popover-position symbol']])
+                                  :label (:name symbol)]])]
+                  (do [popover-anchor-wrapper
+                       :showing? showing?
+                       :position @popover-position
+                       :anchor [button
+                                :class "btn btn-default api-panel-symbol-button"
+                                :label (:name symbol')
+                                ;; we use :attr's `:on-click` because button's `on-click` accepts
+                                ;; a parametless function and we need the mouse click coordinates
+                                :attr {:on-click
+                                       (handler-fn
+                                        ;; later we can refactor it into re-frame
+                                        ;; see also https://github.com/Day8/re-frame/wiki/Beware-Returning-False#user-content-usage-examples
+                                        (reset! popover-position
+                                                (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
+                                        (reset! showing? true))}]
+                       :popover (if @tour?
+                                  [symbol-popover showing? popover-position symbol' true]
+                                  [symbol-popover showing? popover-position symbol'])]))
                 [label
                  :label (str symbol)
                  :class "api-panel-symbol-label"
