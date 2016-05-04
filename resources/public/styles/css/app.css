@@ -394,10 +394,6 @@ body,html {
     align-self: center !important;
 }
 
-.welcome-popup div:parent {
-    margin-top: 150px;
-}
-
 h1.tour-title {
     margin-top: 5px;
     color: rgba(68, 68, 68, 0.6);
@@ -424,6 +420,11 @@ ul.tour {
     border: 1px solid rgba(128, 128, 128, 0.15);
     border-radius: 5px;
     background-color: #eee;
+}
+
+a.tour {
+    color:#337ab7;
+    text-decoration: none;
 }
 
 /* Some examples contains tables in their markdown.
@@ -544,7 +545,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     }
 
 
-    .welcome-popup {
+    .modal-tour-popup {
         width: 250px;
     }
 

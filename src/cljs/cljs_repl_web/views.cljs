@@ -71,7 +71,9 @@
                   [:span.mode "X form(s) in the evaluation queue"]]}
    :step5 {:title "Tour 5 of 9"
            :body [:div [:h1.tour-title "Switch input mode"]
-                  [:span "We integrated shaunlebron’s excellent [parinfer](https://github.com/shaunlebron/parinfer) to our REPL with the default input mode as "]
+                  [:span "We integrated shaunlebron’s excellent"]
+                  [:a.tour {:href "https://github.com/shaunlebron/parinfer"} " parinfer"]
+                  [:span " to our REPL with the default input mode as "]
                   [:span.mode "indent-mode"]
                   [:p " You can shuffle between three modes:"]
                   [:ul.tour
@@ -93,7 +95,16 @@
    :step6 {:title "Tour 6 of 9"
            :body [:div [:h1.tour-title "Console"]
                   [:p "We already saw many feature of the REPL like history navigation, input mode or examples evaluation (more on this in the next step)."]
-                  [:p "Another feature we want to mention here is the autocompletion feature:"]]}
+                  [:p "Another feature we want to mention here is the autocompletion feature:"]
+                  [:ul.tour]
+                  [:span "The suggestion list is shown immediately when user starts typing. The word to autocomplete is selected by using"]
+                  [:span.symbol " ↑ "]
+                  [:span "and"]
+                  [:span.symbol " ↓ "]
+                  [:span "arrows, or by clicking on the selected item."]
+                  [:span " When user presses "]
+                  [:span.mode "tab"]
+                  [:span " the first item from suggestion list is picked for autocompletion."]]}
    :step7 {:title "Tour 7 of 9"
            :body [:div [:h1.tour-title "Symbol"]
                   [:p "As mentioned earlier there are many buttons in the lower section of the page."]
@@ -110,7 +121,12 @@
                   [:p "click on this button to send the examples to the REPL"]]}
    :step10 {:title  "Excellent!"
             :body [:div [:p "This is the end of the tutorial. If you want to report an issue or fork the repository click on the ribbon in the top-left corner."]
-                   [:p "Check also our blog at lambdax.io/blog for posts about Clojure and follow us on Twitter at @lambdax_io."]
+                   [:span "Check also our blog at "]
+                   [:a {:href "http://lambdax.io/blog"} "lambdax.io/blog"]
+                   [:span " for posts about Clojure and follow us on Twitter at"]
+                   [:a {:href "https://twitter.com/lambdax_io"} " @lambdax_io"]
+                   [:span "."]
+                   [:p]
                    [:p "Thanks and enjoy."]]}})
 
 (defn welcome-modal-dialog
@@ -124,7 +140,7 @@
          :child [v-box
                  :align :center
                  :max-width "400px"
-                 :class "welcome-popup"
+                 :class "modal-tour-popup"
                  :children [[title
                              :label (get-in tour-steps [:welcome :title])
                              :style {:font-weight "bold"
@@ -152,14 +168,13 @@
   []
   (let [showing? (reagent/atom true)]
     (fn []
-      (.log js/console "current-step?" @current-step)
       (when (and @showing? (= @current-step (dec (count (:steps tour)))))
         [modal-panel
          :backdrop-opacity 0.4
          :child [v-box
                  :align :center
                  :max-width "400px"
-                 :class "welcome-popup"
+                 :class "modal-tour-popup"
                  :children [[title
                              :label (get-in tour-steps [:step10 :title])
                              :style {:font-weight "bold"
@@ -199,9 +214,6 @@
       (reset! ((nth steps new-step) tour) true))))
 
 (defn tour-buttons
-  "Generate the hr and previous/next buttons markup.
-  If first button in tour, don't generate a Previous button.
-  If last button in tour, change Next button to a Finish button"
   [tour another-step close-fn]
   (let [on-first-button (= @(:current-step tour) 0)
         on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))
@@ -229,7 +241,8 @@
   ([step position anchor close-fn]
    (create-tour-step step position anchor close-fn nil))
   ([step position anchor close-fn another-step]
-   (let [step-keyword (keyword (str "step" step))]
+   (let [step-keyword (keyword (str "step" step))
+         media-query (subscribe [:media-query-size])]
      [popover-anchor-wrapper
       :showing? (step-keyword tour)
       :position position
@@ -237,7 +250,9 @@
       :popover [popover-content-wrapper
                 :showing? (step-keyword tour)
                 :position position
-                :width    "200px"
+                :width     (if (or (= @current-step (dec 9)) (= :narrow @media-query))
+                             "200px"
+                             "400px")
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
                            [tour-buttons tour another-step close-fn]]
