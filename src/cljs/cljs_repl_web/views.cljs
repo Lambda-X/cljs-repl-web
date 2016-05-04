@@ -212,6 +212,7 @@
         new-step (dec old-step)]
     (when (>= new-step 0)
       (reset! (:current-step tour) new-step)
+      (reset! current-step new-step)
       (reset! ((nth steps old-step) tour) false)
       (reset! ((nth steps new-step) tour) true))))
 
@@ -258,7 +259,8 @@
       :popover [popover-content-wrapper
                 :showing? (step-keyword tour)
                 :position position
-                :width     (if (or (= @current-step (dec 9)) (= :narrow @media-query))
+                :width     (if (or (= @current-step (dec 9))
+                                   (= :narrow @media-query))
                              "200px"
                              "400px")
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
