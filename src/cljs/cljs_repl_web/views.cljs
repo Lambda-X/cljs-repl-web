@@ -31,6 +31,8 @@
 (def tour
   (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7 :step8 :step9 :step10]))
 
+(def current-step (reagent/atom @(:current-step tour)))
+
 (def tour-steps
   {:welcome {:title "Welcome to clojurescript.io!"
              :body [:div [:p "Here you will find a terminal-like REPL which you can use when learning Clojure/ClojureScript or just trying new things out."]
@@ -105,8 +107,11 @@
                    [:li "related symbols list"]]]}
    :step9 {:title  "Tour 9 of 9"
            :body [:div [:h1.tour-title "Send to repl"]
-                  [:p "click on this button to send the examples to the REPL"]]}})
-
+                  [:p "click on this button to send the examples to the REPL"]]}
+   :step10 {:title  "Excellent!"
+            :body [:div [:p "This is the end of the tutorial. If you want to report an issue or fork the repository click on the ribbon in the top-left corner."]
+                   [:p "Check also our blog at lambdax.io/blog for posts about Clojure and follow us on Twitter at @lambdax_io."]
+                   [:p "Thanks and enjoy."]]}})
 
 (defn welcome-modal-dialog
   []
@@ -144,36 +149,34 @@
          :style {:padding-bottom "150px"}]))))
 
 (defn finished-tour-modal-dialog
-  [current-step]
+  []
   (let [showing? (reagent/atom true)]
     (fn []
-      (.log js/console "test")
-      (let [finished-tour? (= current-step (dec (count (:steps tour))))]
-        (.log js/console "finished-tour?" finished-tour?)
-        (when (and @showing? finished-tour?)
-          [modal-panel
-           :backdrop-opacity 0.4
-           :child [v-box
-                   :align :center
-                   :max-width "400px"
-                   :class "welcome-popup"
-                   :children [[title
-                               :label (get-in tour-steps [:welcome :title])
-                               :style {:font-weight "bold"
-                                       :font-size "20px"
-                                       :text-align "center"
-                                       :color "rgba(68, 68, 68, 0.6)"}]
-                              [p (get-in tour-steps [:welcome :body])]
-                              [:hr {:style {:margin "10px 0 10px"}}]
-                              [button
-                               :label "finish"
-                               :on-click #(do (finish-tour tour)
-                                              (ls/set-item! :closed-tour? true)
-                                              (reset! showing? false))
-                               :class "btn-default"
-                               :style {:margin-right "15px"}]]
-                   :style {:display "inline-block"}]
-           :style {:padding-bottom "150px"}])))))
+      (.log js/console "current-step?" @current-step)
+      (when (and @showing? (= @current-step (dec (count (:steps tour)))))
+        [modal-panel
+         :backdrop-opacity 0.4
+         :child [v-box
+                 :align :center
+                 :max-width "400px"
+                 :class "welcome-popup"
+                 :children [[title
+                             :label (get-in tour-steps [:step10 :title])
+                             :style {:font-weight "bold"
+                                     :font-size "20px"
+                                     :text-align "center"
+                                     :color "rgba(68, 68, 68, 0.6)"}]
+                            [p (get-in tour-steps [:step10 :body])]
+                            [:hr {:style {:margin "10px 0 10px"}}]
+                            [button
+                             :label "finish"
+                             :on-click #(do (finish-tour tour)
+                                            (ls/set-item! :closed-tour? true)
+                                            (reset! showing? false))
+                             :class "btn-default"
+                             :style {:margin-right "15px"}]]
+                 :style {:display "inline-block"}]
+         :style {:padding-bottom "150px"}]))))
 
 (defn- next-tour-step
   [tour]
@@ -182,6 +185,7 @@
         new-step  (inc old-step)]
     (when (< new-step (count (:steps tour)))
       (reset! (:current-step tour) new-step)
+      (reset! current-step new-step)
       (reset! ((nth steps old-step) tour) false)
       (reset! ((nth steps new-step) tour) true))))
 
@@ -241,7 +245,6 @@
                                 (ls/set-item! :closed-tour? true))
                 :backdrop-opacity 0.5]
       :style (align-style :align-items :stretch)])))
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -563,8 +566,8 @@
                                    (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
                #(do (finish-tour tour)
                     (reset! showing-atom false)
-                    (utils/scroll-to-top))]
-
+                    (utils/scroll-to-top))
+               #(reset! showing-atom false)]
               [api-example example-map]]])
 
 (defn api-examples
@@ -872,7 +875,7 @@
                         #(do (finish-tour tour)
                              (utils/scroll-to-top))]]
                       [welcome-modal-dialog]
-                      [finished-tour-modal-dialog @(:current-step tour)]]]
+                      [finished-tour-modal-dialog]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
