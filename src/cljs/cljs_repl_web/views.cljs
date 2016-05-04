@@ -889,6 +889,8 @@
                         [console]
                         #(do (finish-tour tour)
                              (utils/scroll-to-top))]]
+                      [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
+                                                                (dispatch [:focus-console-editor console-key]))]
                       [welcome-modal-dialog]
                       [finished-tour-modal-dialog]]]
         (if (= :narrow @media-query)
