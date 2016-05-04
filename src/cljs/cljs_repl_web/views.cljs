@@ -16,9 +16,9 @@
             [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]
+            [cljs-repl-web.localstorage :as ls]
             [re-console.core :as console]
             [re-complete.core :as re-complete]
-            [cljs-repl-web.localstorage :as local-storage]
             [re-com.buttons :refer [button]]
             [goog.dom :as dom]))
 
@@ -29,7 +29,151 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def tour
-  (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7 :step8]))
+  (make-tour [:step1 :step2 :step3 :step4 :step5 :step6 :step7 :step8 :step9 :step10]))
+
+(def tour-steps
+  {:welcome {:title "Welcome to clojurescript.io!"
+             :body [:div [:p "Here you will find a terminal-like REPL which you can use when learning Clojure/ClojureScript or just trying new things out."]
+                    [:p "It contains many features, so let’s start!"]]}
+   :step1 {:title "Tour 1 of 9"
+           :body [:div [:h1.tour-title "Clicking the Bin icon"]
+                  [:p "will reset the REPL, that is:"]
+                  [:ul.tour
+                   [:li "it will clear the current prompt"]
+                   [:li "it will clear the REPL “screen”"]
+                   [:li "it will delete the history"]]
+                  [:span "By the way, there are two ways to navigate back and forth in the history: with key arrows"]
+                  [:span.symbol " ↑ "]
+                  [:span "and"]
+                  [:span.symbol " ↓ "]
+                  [:span "or just by clicking on the item you are interested in."]]}
+   :step2 {:title "Tour 2 of 8"
+           :body [:div [:h1.tour-title "Clicking the Clear icon"]
+                  [:p "will trigger the same action as before with the difference that the history will not be deleted"]]}
+   :step3 {:title "Tour 3 of 9"
+           :body [:div [:h1.tour-title "Creating a Gist"]
+                  [:p "is really one of the nicest features of our app."]
+                  [:p "You will need to fill your username and password and a new window with the newly created Gist will be opened."]
+                  [:p "The username will be saved (but not the password) so you won’t need to fill it every time."]
+                  [:h4 "note:"]
+                  [:p "only what is shown in the REPL will be sent to Gist. So even if you have some items in your history but the current “screen” is empty you won’t be able to create a Gist."]]}
+   :step4 {:title "Tour 4 of 9"
+           :body [:div [:h1.tour-title "Clear examples"]
+                  [:p "Just under the REPL you will find many buttons, logically grouped by topic. Clicking on them will open a popup (this feature will be explained in another step of this tutorial)."]
+                  [:p "One of the actions you can take is send the examples directly to the REPL:"]
+                  [:span "for example the"]
+                  [:span.symbol " + "]
+                  [:span "symbol contains 5 examples you can evaluate. If for any reason you want to interrupt the examples’ evaluation just click on this button."]
+                  [:h4 "note:"]
+                  [:p "the number of current examples to evaluate is shown in the mode-line:"]
+                  [:span.mode "X form(s) in the evaluation queue"]]}
+   :step5 {:title "Tour 5 of 9"
+           :body [:div [:h1.tour-title "Switch input mode"]
+                  [:span "We integrated shaunlebron’s excellent [parinfer](https://github.com/shaunlebron/parinfer) to our REPL with the default input mode as "]
+                  [:span.mode "indent-mode"]
+                  [:p " You can shuffle between three modes:"]
+                  [:ul.tour
+                   [:li "Indent Mode"]
+                   [:li "Parent Mode"]
+                   [:li "none"]]
+                  [:span "The "]
+                  [:span.mode "non"]
+                  [:span " mode will just disable parinfer and switch to normal editing"]
+                  [:h4 "note:"]
+                  [:span "Our REPL is clever enough to determine whether a form should be evaluated or whether issue a new-line. For example if you are in "]
+                  [:span.mode "none"]
+                  [:span " mode, write "]
+                  [:span.mode "(def a"]
+                  [:span " and press ENTER the cursor will be placed on a newline."]
+                  [:span "This is not always the case with Indent Mode, which will try to balance parenthesis causing the previous expression to be transformed to "]
+                  [:span.mode "(def a)"]
+                  [:p "If you now press ENTER you’ll receive an error: to overcome this problem just press SHIFT+ENTER to issue a new line."]]}
+   :step6 {:title "Tour 6 of 9"
+           :body [:div [:h1.tour-title "Console"]
+                  [:p "We already saw many feature of the REPL like history navigation, input mode or examples evaluation (more on this in the next step)."]
+                  [:p "Another feature we want to mention here is the autocompletion feature:"]]}
+   :step7 {:title "Tour 7 of 9"
+           :body [:div [:h1.tour-title "Symbol"]
+                  [:p "As mentioned earlier there are many buttons in the lower section of the page."]
+                  [:p "Just click on any of those to open a popup and see what happens."]]}
+   :step8 {:title "Tour 8 of 9"
+           :body [:div [:h1.tour-title "Popup"]
+                  [:p "In the popup you will see a detailed explanation of a symbol:"]
+                  [:ul.tour
+                   [:li "the (i) icon will open the relative online doc page"]
+                   [:li "signatures"]
+                   [:li "related symbols list"]]]}
+   :step9 {:title  "Tour 9 of 9"
+           :body [:div [:h1.tour-title "Send to repl"]
+                  [:p "click on this button to send the examples to the REPL"]]}})
+
+
+(defn welcome-modal-dialog
+  []
+  (let [showing? (reagent/atom true)
+        closed-tour? (ls/get-item :closed-tour?)]
+    (fn []
+      (when (and @showing? (not closed-tour?))
+        [modal-panel
+         :backdrop-opacity 0.4
+         :child [v-box
+                 :align :center
+                 :max-width "400px"
+                 :class "welcome-popup"
+                 :children [[title
+                             :label (get-in tour-steps [:welcome :title])
+                             :style {:font-weight "bold"
+                                     :font-size "20px"
+                                     :text-align "center"
+                                     :color "rgba(68, 68, 68, 0.6)"}]
+                            [p (get-in tour-steps [:welcome :body])]
+                            [:hr {:style {:margin "10px 0 10px"}}]
+                            [button
+                             :label "skip"
+                             :on-click #(do (finish-tour tour)
+                                            (ls/set-item! :closed-tour? true)
+                                            (reset! showing? false))
+                             :class "btn-default"
+                             :style {:margin-right "15px"}]
+                            [button
+                             :label "next"
+                             :on-click #(do (start-tour tour)
+                                            (reset! showing? false))
+                             :class "btn-default"]]
+                 :style {:display "inline-block"}]
+         :style {:padding-bottom "150px"}]))))
+
+(defn finished-tour-modal-dialog
+  [current-step]
+  (let [showing? (reagent/atom true)]
+    (fn []
+      (.log js/console "test")
+      (let [finished-tour? (= current-step (dec (count (:steps tour))))]
+        (.log js/console "finished-tour?" finished-tour?)
+        (when (and @showing? finished-tour?)
+          [modal-panel
+           :backdrop-opacity 0.4
+           :child [v-box
+                   :align :center
+                   :max-width "400px"
+                   :class "welcome-popup"
+                   :children [[title
+                               :label (get-in tour-steps [:welcome :title])
+                               :style {:font-weight "bold"
+                                       :font-size "20px"
+                                       :text-align "center"
+                                       :color "rgba(68, 68, 68, 0.6)"}]
+                              [p (get-in tour-steps [:welcome :body])]
+                              [:hr {:style {:margin "10px 0 10px"}}]
+                              [button
+                               :label "finish"
+                               :on-click #(do (finish-tour tour)
+                                              (ls/set-item! :closed-tour? true)
+                                              (reset! showing? false))
+                               :class "btn-default"
+                               :style {:margin-right "15px"}]]
+                   :style {:display "inline-block"}]
+           :style {:padding-bottom "150px"}])))))
 
 (defn- next-tour-step
   [tour]
@@ -56,47 +200,26 @@
   If last button in tour, change Next button to a Finish button"
   [tour another-step close-fn]
   (let [on-first-button (= @(:current-step tour) 0)
-        on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))]
+        on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))
+        showing? (reagent/atom true)]
     [:div
      [:hr {:style (merge (flex-child-style "none")
-                         {:margin "10px 0 10px"
-                          :z-index 5000})}]
+                         {:margin "10px 0 10px"})}]
      (when-not on-first-button
        [button
         :label    "Previous"
         :on-click (handler-fn (prev-tour-step tour))
-        :style    {:margin-right "15px"
-                   :z-index 5000}
+        :style    {:margin-right "15px"}
         :class     "btn-default"])
      [button
-      :label    (if on-last-button "Finish" "Next")
-      :on-click (handler-fn (if on-last-button
-                              (close-fn)
-                              (if another-step
-                                ((another-step)
-                                 (next-tour-step tour))
-                                (next-tour-step tour))))
+      :label    "Next"
+      :on-click (handler-fn
+                 (if another-step
+                   ((another-step)
+                    (next-tour-step tour))
+                   (next-tour-step tour)))
       :style    {:z-index 5000}
       :class     "btn-default"]]))
-
-
-(def tour-steps
-  {:step1 {:title "Tour 1 of 8"
-           :body "Reset"}
-   :step2 {:title "Tour 2 of 8"
-           :body "Clear"}
-   :step3 {:title "Tour 3 of 8"
-           :body "Create Gist"}
-   :step4 {:title "Tour 4 of 8"
-           :body "Clear examples"}
-   :step5 {:title "Tour 5 of 8"
-           :body "Switch input mode"}
-   :step6 {:title "Tour 6 of 8"
-           :body "Console"}
-   :step7 {:title "Tour 7 of 8"
-           :body "Symbol"}
-   :step8 {:title "Tour 8 of 8"
-           :body "Send to repl"}})
 
 (defn create-tour-step
   ([step position anchor close-fn]
@@ -115,9 +238,11 @@
                 :body     [:div (get-in tour-steps [step-keyword :body])
                            [tour-buttons tour another-step close-fn]]
                 :on-cancel #(do (close-fn)
-                                (local-storage/set-item! :closed-tour? true))
+                                (ls/set-item! :closed-tour? true))
                 :backdrop-opacity 0.5]
       :style (align-style :align-items :stretch)])))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;      Buttons       ;;;
@@ -416,7 +541,7 @@
    :justify :center
    ;; Why the box?
    ;; See problem here, see https://github.com/Day8/re-com/issues/76
-   :children [[create-tour-step 8 :above-center
+   :children [[create-tour-step 9 :above-center
                [box
                 :class "api-panel-button-send-repl-box"
                 :size "1 0 auto"
@@ -439,6 +564,7 @@
                #(do (finish-tour tour)
                     (reset! showing-atom false)
                     (utils/scroll-to-top))]
+
               [api-example example-map]]])
 
 (defn api-examples
@@ -446,8 +572,7 @@
   [showing-atom examples-map]
   [v-box
    :size "0 1 auto"
-   :children [
-              [gap :size "4px"]
+   :children [[gap :size "4px"]
               [title
                :label "Examples"
                :level :level4
@@ -495,18 +620,22 @@
                   :children [[title
                               :label name
                               :level :level4]
-                             [md-icon-button
-                              :md-icon-name "zmdi-info"
-                              :tooltip "See online documentation"
-                              :tooltip-position :right-center
-                              :size :smaller
-                              :style {:justify-content :center}
-                              :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]]]
+                             [create-tour-step 8 :below-center
+                              [md-icon-button
+                               :md-icon-name "zmdi-info"
+                               :tooltip "See online documentation"
+                               :tooltip-position :right-center
+                               :size :smaller
+                               :style {:justify-content :center}
+                               :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]
+                              #(do (finish-tour tour)
+                                   (reset! showing-atom false)
+                                   (utils/scroll-to-top))]]]
           :body [reagent/create-class
                  {:component-did-mount (fn [this]
                                          (let [node (reagent/dom-node this)]
                                            (when tour?
-                                             (set! (.-scrollTop node) 133))))
+                                             (set! (.-scrollTop node) 80))))
                   :reagent-render (fn []
                                     [scroller
                                      :size "1 1 auto"
@@ -736,8 +865,14 @@
                       [box
                        :size "0 0 auto"
                        :child
-                       [create-tour-step 6 :below-center [console] #(do (finish-tour tour)
-                                                                        (utils/scroll-to-top))]]]]
+                       [create-tour-step
+                        6
+                        :below-center
+                        [console]
+                        #(do (finish-tour tour)
+                             (utils/scroll-to-top))]]
+                      [welcome-modal-dialog]
+                      [finished-tour-modal-dialog @(:current-step tour)]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

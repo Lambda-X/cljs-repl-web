@@ -394,6 +394,37 @@ body,html {
     align-self: center !important;
 }
 
+.welcome-popup div:parent {
+    margin-top: 150px;
+}
+
+h1.tour-title {
+    margin-top: 5px;
+    color: rgba(68, 68, 68, 0.6);
+    font-weight: bold;
+    font-size: 17px;
+}
+
+ul.tour {
+    -webkit-padding-start: 20px;
+    padding-start: 20px;
+}
+
+.symbol {
+    font-weight: bold;
+    color: #a50;
+    font-size: 110%;
+}
+
+.mode {
+    display:inline-block;
+    color: #a50;
+    padding: 4px;
+    font-size: 95%;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    border-radius: 5px;
+    background-color: #eee;
+}
 
 /* Some examples contains tables in their markdown.
  * These tables have a class of "code-tbl-9bef6"
@@ -511,6 +542,12 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     #app-bottom {
         margin-top: 28px;
     }
+
+
+    .welcome-popup {
+        width: 250px;
+    }
+
 }
 
 /* :medium */
