@@ -39,7 +39,7 @@
                     [:p "It contains many features, so let’s start!"]]}
    :step1 {:title "Tour 1 of 9"
            :body [:div [:h1.tour-title "Clicking the Bin icon"]
-                  [:p "will reset the REPL, that is:"]
+                  [:p "It will reset the REPL, that is:"]
                   [:ul.tour
                    [:li "it will clear the current prompt"]
                    [:li "it will clear the REPL “screen”"]
@@ -51,23 +51,23 @@
                   [:span "or just by clicking on the item you are interested in."]]}
    :step2 {:title "Tour 2 of 8"
            :body [:div [:h1.tour-title "Clicking the Clear icon"]
-                  [:p "will trigger the same action as before with the difference that the history will not be deleted"]]}
+                  [:p "It will trigger the same action as before with the difference that the history will not be deleted."]]}
    :step3 {:title "Tour 3 of 9"
            :body [:div [:h1.tour-title "Creating a Gist"]
-                  [:p "is really one of the nicest features of our app."]
+                  [:p "It is really one of the nicest features of our app."]
                   [:p "You will need to fill your username and password and a new window with the newly created Gist will be opened."]
                   [:p "The username will be saved (but not the password) so you won’t need to fill it every time."]
-                  [:h4 "note:"]
-                  [:p "only what is shown in the REPL will be sent to Gist. So even if you have some items in your history but the current “screen” is empty you won’t be able to create a Gist."]]}
+                  [:h5 "Note:"]
+                  [:p "Only what is shown in the REPL will be sent to Gist. So even if you have some items in your history but the current “screen” is empty you won’t be able to create a Gist."]]}
    :step4 {:title "Tour 4 of 9"
            :body [:div [:h1.tour-title "Clear examples"]
                   [:p "Just under the REPL you will find many buttons, logically grouped by topic. Clicking on them will open a popup (this feature will be explained in another step of this tutorial)."]
                   [:p "One of the actions you can take is send the examples directly to the REPL:"]
-                  [:span "for example the"]
+                  [:span "For example the"]
                   [:span.symbol " + "]
                   [:span "symbol contains 5 examples you can evaluate. If for any reason you want to interrupt the examples’ evaluation just click on this button."]
-                  [:h4 "note:"]
-                  [:p "the number of current examples to evaluate is shown in the mode-line:"]
+                  [:h5 "Note:"]
+                  [:p "The number of current examples to evaluate is shown in the mode-line:"]
                   [:span.mode "X form(s) in the evaluation queue"]]}
    :step5 {:title "Tour 5 of 9"
            :body [:div [:h1.tour-title "Switch input mode"]
@@ -75,6 +75,7 @@
                   [:a.tour {:href "https://github.com/shaunlebron/parinfer"} " parinfer"]
                   [:span " to our REPL with the default input mode as "]
                   [:span.mode "indent-mode"]
+                  [:span "."]
                   [:p " You can shuffle between three modes:"]
                   [:ul.tour
                    [:li "Indent Mode"]
@@ -82,8 +83,8 @@
                    [:li "none"]]
                   [:span "The "]
                   [:span.mode "non"]
-                  [:span " mode will just disable parinfer and switch to normal editing"]
-                  [:h4 "note:"]
+                  [:span " mode will just disable parinfer and switch to normal editing."]
+                  [:h5 "Note:"]
                   [:span "Our REPL is clever enough to determine whether a form should be evaluated or whether issue a new-line. For example if you are in "]
                   [:span.mode "none"]
                   [:span " mode, write "]
@@ -91,6 +92,7 @@
                   [:span " and press ENTER the cursor will be placed on a newline."]
                   [:span "This is not always the case with Indent Mode, which will try to balance parenthesis causing the previous expression to be transformed to "]
                   [:span.mode "(def a)"]
+                  [:span "."]
                   [:p "If you now press ENTER you’ll receive an error: to overcome this problem just press SHIFT+ENTER to issue a new line."]]}
    :step6 {:title "Tour 6 of 9"
            :body [:div [:h1.tour-title "Console"]
@@ -118,7 +120,7 @@
                    [:li "related symbols list"]]]}
    :step9 {:title  "Tour 9 of 9"
            :body [:div [:h1.tour-title "Send to repl"]
-                  [:p "click on this button to send the examples to the REPL"]]}
+                  [:p "Click on this button to send the examples to the REPL."]]}
    :step10 {:title  "Excellent!"
             :body [:div [:p "This is the end of the tutorial. If you want to report an issue or fork the repository click on the ribbon in the top-left corner."]
                    [:span "Check also our blog at "]
@@ -214,8 +216,10 @@
       (reset! ((nth steps new-step) tour) true))))
 
 (defn tour-buttons
-  [tour another-step close-fn]
-  (let [on-first-button (= @(:current-step tour) 0)
+  [tour another-steps close-fn]
+  (let [next-step (:next another-steps)
+        previous-step (:prev another-steps)
+        on-first-button (= @(:current-step tour) 0)
         on-last-button  (= @(:current-step tour) (dec (count (:steps tour))))
         showing? (reagent/atom true)]
     [:div
@@ -224,14 +228,18 @@
      (when-not on-first-button
        [button
         :label    "Previous"
-        :on-click (handler-fn (prev-tour-step tour))
+        :on-click (handler-fn
+                   (if previous-step
+                     ((previous-step)
+                      (prev-tour-step tour))
+                     (prev-tour-step tour)))
         :style    {:margin-right "15px"}
         :class     "btn-default"])
      [button
       :label    "Next"
       :on-click (handler-fn
-                 (if another-step
-                   ((another-step)
+                 (if next-step
+                   ((next-step)
                     (next-tour-step tour))
                    (next-tour-step tour)))
       :style    {:z-index 5000}
@@ -582,7 +590,7 @@
                #(do (finish-tour tour)
                     (reset! showing-atom false)
                     (utils/scroll-to-top))
-               #(reset! showing-atom false)]
+               {:next #(reset! showing-atom false)}]
               [api-example example-map]]])
 
 (defn api-examples
@@ -648,7 +656,9 @@
                                :on-click #(utils/open-new-window (utils/symbol->clojuredocs-url full-name))]
                               #(do (finish-tour tour)
                                    (reset! showing-atom false)
-                                   (utils/scroll-to-top))]]]
+                                   (utils/scroll-to-top))
+                              {:prev #(reset! showing-atom false)}
+                               ]]]
           :body [reagent/create-class
                  {:component-did-mount (fn [this]
                                          (let [node (reagent/dom-node this)]
@@ -704,15 +714,15 @@
                    #(do (finish-tour tour)
                         (utils/scroll-to-top)
                         (reset! tour? false))
-                   #(do (reset! popover-position :above-center)
-                        (reset! tour? true)
-                        (reset! showing? true)
-                        [popover-anchor-wrapper
-                         :showing? showing?
-                         :position @popover-position
-                         :anchor [button
-                                  :class "btn btn-default api-panel-symbol-button"
-                                  :label (:name symbol)]])]
+                   {:next #(do (reset! popover-position :above-center)
+                               (reset! tour? true)
+                               (reset! showing? true)
+                               [popover-anchor-wrapper
+                                :showing? showing?
+                                :position @popover-position
+                                :anchor [button
+                                         :class "btn btn-default api-panel-symbol-button"
+                                         :label (:name symbol)]])}]
                   (do [popover-anchor-wrapper
                        :showing? showing?
                        :position @popover-position
