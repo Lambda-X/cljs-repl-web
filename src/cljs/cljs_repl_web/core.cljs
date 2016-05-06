@@ -14,7 +14,7 @@
             [re-console.common :as common]
             [re-complete.core :as re-complete]))
 
-(defonce console-key :cljs-console)
+(defonce console-key :console-1)
 
 ;; https://github.com/binaryage/cljs-devtools/releases/tag/v0.5.3
 (when-not (:production? config/defaults)
@@ -31,13 +31,9 @@
                                                      :item-height 20}}])
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults local-storage-values])
-    (reagent/render [views/repl-component console-key {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
-                                                       :mode (:mode local-storage-values)
-                                                       :mode-line? true
-                                                       :on-after-change #(do (dispatch [:input console-key (common/source-without-prompt (.getValue %))])
-                                                                             (dispatch [:focus console-key true])
-                                                                             (app/create-dictionary (common/source-without-prompt (.getValue %)) console-key)
-                                                                             (utils/align-suggestions-list %2))}]
+    (dispatch-sync [:init-console console-key (views/options console-key)])
+    (dispatch-sync [:switch-console console-key])
+    (reagent/render [views/repl-component]
                     (.getElementById js/document "app-center"))
     (reagent/render [views/bottom-panel] (.getElementById js/document "app-bottom"))
     (reagent/render [views/footer-component] (.getElementById js/document "app-footer"))))

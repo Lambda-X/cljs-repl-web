@@ -8,6 +8,25 @@
 
 ;; (trace-forms {:tracer (tracer :color "brown")}
 
+
+;;;;;;;;;;;;;;;;;;
+;;   Consoles  ;;;
+;;;;;;;;;;;;;;;;;;
+
+(register-sub
+ :get-consoles
+ (fn [db [_]]
+   (make-reaction
+    (fn get-consoles []
+      (map first (:consoles @db))))))
+
+(register-sub
+ :get-current-console
+ (fn [db [_]]
+   (make-reaction
+    (fn get-current-console []
+      (:current-console @db)))))
+
 ;;;;;;;;;;;;;;;;;;
 ;;     APIs    ;;;
 ;;;;;;;;;;;;;;;;;;

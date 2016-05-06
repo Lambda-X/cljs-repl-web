@@ -14,8 +14,13 @@
             [cljs-api.utils :as api-utils]
             [cljs-repl-web.views.utils :as utils]
             [cljs-repl-web.markdown :as md]
-            [re-console.core :as console]
-            [re-complete.core :as re-complete]))
+            [re-console.core :as re-console]
+            [re-console.editor :as editor]
+            [re-complete.core :as re-complete]
+            [cljs-repl-web.replumb-proxy :as replumb-proxy]
+            [cljs-repl-web.config :as config]
+            [cljs-repl-web.localstorage :as ls]
+            [re-console.common :as common]))
 
 ;; (set! re-com.box/debug true)
 
@@ -562,16 +567,66 @@
    :align :stretch
    :children [[api-panel (:sections api-utils/custom-api-map)]]])
 
-(defn repl-component [console-key opts]
+(defn options [my-console-key]
+  (let [{:keys [name verbose-repl? src-paths]} config/defaults
+        local-storage-values (ls/get-local-storage-values)]
+    {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
+     :mode (:mode local-storage-values)
+     :mode-line? true
+     :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))])
+                           (dispatch [:focus my-console-key true])
+                           (app/create-dictionary (common/source-without-prompt (.getValue %)) my-console-key)
+                           (utils/align-suggestions-list %2))}))
+
+(defn render-console [console-key]
+  (let [items (subscribe [:get-console-items console-key])
+        text  (subscribe [:get-console-current-text console-key])
+        current-console (subscribe [:get-current-console])]
+    (reagent/create-class
+     {:reagent-render
+      (fn []
+        [:div
+         [:div.re-console-container
+          {:style {:display (if (= (str console-key) @current-console) "inline-block" "none")}
+           :on-click #(dispatch [:focus-console-editor console-key])}
+          [:div.re-console
+           [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
+           [editor/console-editor console-key text]]]
+         (when (:mode-line? (options console-key))
+           [re-console/mode-line console-key])])
+      :component-did-update
+      (fn [this]
+        (common/scroll-to-el-bottom! (.-firstChild (reagent/dom-node this))))})))
+
+(defn render-consoles-list []
+  (let [consoles (subscribe [:get-consoles])]
+    (fn []
+      [:ul
+       (map (fn [console]
+              [:li {:style {:color "white"}
+                    :on-click #(dispatch [:switch-console console])}
+               console])
+            @consoles)])))
+
+(defn render-consoles [consoles]
+  (mapv (fn [console]
+          [render-console console])
+        consoles))
+
+(defn repl-component []
   (let [media-query (subscribe [:media-query-size])
-        console (console/console console-key opts)]
+        consoles (subscribe [:get-consoles])
+        current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
-      (let [children [[cljs-buttons]
-                      [box
-                       :size "0 0 auto"
-                       :child [console]]
-                      [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
-                                                                (dispatch [:focus-console-editor console-key]))]]]
+      (let [next-console-id (utils/next-console-id @consoles)
+            children (into [[cljs-buttons]
+                            [button
+                             :label             "add console"
+                             :on-click          #(dispatch [:init-console next-console-id (options next-console-id)])]
+                            [render-consoles-list]
+                            [re-complete/completions @current-console #(do (dispatch [:console-set-autocompleted-text @current-console])
+                                                                           (dispatch [:focus-console-editor @current-console]))]]
+                           (render-consoles @consoles))]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

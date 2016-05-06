@@ -1,6 +1,7 @@
 (ns cljs-repl-web.views.utils
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [cljs.pprint :as pprint :refer [pprint]]
+            [cljs.reader :as reader]
             [clojure.string :as string]
             [clojure.walk :as walk]
             [clojure.zip :as zip]
@@ -240,3 +241,16 @@
                                                                          (str left "px")))
                              (set! (.-top (.-style completions-list)) (str top "px"))))
                20))
+
+(defn next-console-id
+  "Function takes previous console ids (keywords) list as argument and
+   returns next console-id as keyword"
+  [previous-console-ids]
+  (let [[name id] (->> previous-console-ids
+                       (map (comp #(-> %
+                                       name
+                                       (clojure.string/split "-")
+                                       (update 1 cljs.reader/read-string))))
+                       (sort-by second >)
+                       first)]
+    (keyword (str name "-" (inc id)))))
