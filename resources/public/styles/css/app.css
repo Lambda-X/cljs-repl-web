@@ -525,6 +525,7 @@ ul.re-completion-list {
     border-radius: 5px;
     background-color: white;
     border: 1px solid #65B58C;
+    z-index: 1000;
 }
 
 ul.re-completion-list li {
@@ -551,4 +552,3 @@ ul.re-completion-list li:last-of-type {
 li.re-completion-selected {
     background-color: #EEE;
 }
-

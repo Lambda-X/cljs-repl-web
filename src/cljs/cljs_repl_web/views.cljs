@@ -1,7 +1,7 @@
 (ns cljs-repl-web.views
   (:require-macros [re-com.core :refer [handler-fn]])
   (:require [reagent.core :as reagent]
-            [re-frame.core :refer [subscribe dispatch]]
+            [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [re-com.core :refer [md-icon-button h-box v-box box gap button input-text
                                  popover-content-wrapper popover-anchor-wrapper hyperlink-href
                                  popover-tooltip title label scroller line modal-panel]]
@@ -128,8 +128,8 @@
                                           :on-click cancel-fn]]]]])]]])))
 
 (defn gist-login-dialog
-  []
-  (let [can-dump-gist? (subscribe [:can-dump-gist? :cljs-console])
+  [console-id]
+  (let [can-dump-gist? (subscribe [:can-dump-gist? console-id])
         showing? (subscribe [:gist-showing?])
         media-query (subscribe [:media-query-size])]
     (fn []
@@ -150,11 +150,11 @@
   "Return a vector of components containing the cljs console buttons.
    To place them in a layout, call the function (it does not return a
    component)."
-  []
+  [console-id]
   (let [media-query (subscribe [:media-query-size])
-        console-created? (subscribe [:console-created? :cljs-console])
-        example-mode? (subscribe [:queued-forms-empty? :cljs-console])
-        mode (subscribe [:get-console-mode :cljs-console])
+        console-created? (subscribe [:console-created? console-id])
+        example-mode? (subscribe [:queued-forms-empty? console-id])
+        mode (subscribe [:get-console-mode console-id])
         modes (atom (->> (cycle '(:indent-mode :paren-mode :none))
                          (drop-while #(not= @mode %))
                          (drop 1)))
@@ -162,10 +162,10 @@
                         (let [next-mode (first @modes)]
                           (swap! modes rest)
                           next-mode))]
-    (fn cljs-buttons-form2 []
+    (fn cljs-buttons-form2 [console-id]
       (let [children [[md-icon-button
                        :md-icon-name "zmdi-delete"
-                       :on-click #(dispatch [:reset-console-items :cljs-console])
+                       :on-click #(dispatch [:reset-console-items console-id])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Reset"
@@ -173,16 +173,16 @@
                        :disabled? (not @console-created?)]
                       [md-icon-button
                        :md-icon-name "zmdi-format-clear-all"
-                       :on-click #(dispatch [:clear-console-items :cljs-console])
+                       :on-click #(dispatch [:clear-console-items console-id])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Clear"
                        :tooltip-position (if-not (= :narrow @media-query) :left-center :above-center)
                        :disabled? (not @console-created?)]
-                      [gist-login-dialog]
+                      [gist-login-dialog console-id]
                       [md-icon-button
                        :md-icon-name "zmdi-stop"
-                       :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
+                       :on-click #(dispatch [:clear-console-queued-forms console-id])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Clear examples"
@@ -190,7 +190,7 @@
                        :disabled? (not @example-mode?)]
                       [md-icon-button
                        :md-icon-name "zmdi-keyboard"
-                       :on-click #(dispatch [:switch-console-mode (get-next-mode)])
+                       :on-click #(dispatch [:switch-console-mode (get-next-mode) console-id])
                        :class "cljs-btn"
                        :size (if-not (= :medium @media-query) :regular :smaller)
                        :tooltip "Switch input mode"
@@ -572,9 +572,9 @@
         local-storage-values (ls/get-local-storage-values)]
     {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
      :mode (:mode local-storage-values)
-     :mode-line? true
+     ;;:mode-line? false
      :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))])
-                           (dispatch [:focus my-console-key true])
+                           ;;(dispatch [:focus my-console-key true])
                            (app/create-dictionary (common/source-without-prompt (.getValue %)) my-console-key)
                            (utils/align-suggestions-list %2))}))
 
@@ -592,25 +592,47 @@
           [:div.re-console
            [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
            [editor/console-editor console-key text]]]
-         (when (:mode-line? (options console-key))
+         (when (= console-key @current-console) ;;(:mode-line? (options console-key))
            [re-console/mode-line console-key])])
       :component-did-update
       (fn [this]
         (common/scroll-to-el-bottom! (.-firstChild (reagent/dom-node this))))})))
 
-(defn render-consoles-list []
-  (let [consoles (subscribe [:get-consoles])]
-    (fn []
-      [:ul
-       (map (fn [console]
-              [:li {:style {:color "white"}
-                    :on-click #(dispatch [:switch-console console])}
-               console])
-            @consoles)])))
+(defn consoles-focus [consoles current-console]
+  (doall
+   (map #(if (= % current-console)
+           (dispatch [:focus % true])
+           (dispatch [:focus % false]))
+        consoles)))
+
+(def console-1
+  (:focus (:console-1 (:linked-components (:re-complete @re-frame.db/app-db)))))
+
+(def console-2 (:focus (:console-2 (:linked-components (:re-complete @re-frame.db/app-db)))))
+
+(defn render-consoles-list [consoles current-console]
+  (.log js/console current-console)
+  (.log js/console (str consoles))
+  (.log js/console (str (map #(= % current-console) consoles)))
+  [:ul
+   (map (fn [console]
+          [:li {:style {:color (if (= console current-console)
+                                 "yellow"
+                                 "white")}
+                :on-click #(do (dispatch [:switch-console console])
+                               (dispatch [:focus-console-editor console]))}
+           console])
+        consoles)])
 
 (defn render-consoles [consoles]
   (mapv (fn [console]
           [render-console console])
+        consoles))
+
+(defn render-completions [consoles]
+  (mapv (fn [console]
+          [re-complete/completions console #(do (dispatch [:console-set-autocompleted-text console])
+                                                (dispatch [:focus-console-editor console]))])
         consoles))
 
 (defn repl-component []
@@ -619,14 +641,19 @@
         current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
       (let [next-console-id (utils/next-console-id @consoles)
-            children (into [[cljs-buttons]
-                            [button
-                             :label             "add console"
-                             :on-click          #(dispatch [:init-console next-console-id (options next-console-id)])]
-                            [render-consoles-list]
-                            [re-complete/completions @current-console #(do (dispatch [:console-set-autocompleted-text @current-console])
-                                                                           (dispatch [:focus-console-editor @current-console]))]]
-                           (render-consoles @consoles))]
+            children (into (render-completions @consoles)
+                           (into [[cljs-buttons @current-console]
+                                  [button
+                                   :label             "add console"
+                                   :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                                                           (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
+                                                                                                :keys-handling {:visible-items 6
+                                                                                                                :item-height 20}}])
+                                                           (dispatch [:focus-console-editor next-console-id])
+                                                           (dispatch [:switch-console next-console-id]))]
+                                  [render-consoles-list @consoles @current-console]]
+                                 (render-consoles @consoles)))]
+        (consoles-focus @consoles @current-console)
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

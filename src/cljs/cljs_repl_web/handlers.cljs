@@ -103,8 +103,8 @@
 
 (register-handler
  :switch-console-mode
- (fn switch-console-mode [db [_ new-mode]]
-   (dispatch [:set-console-mode :cljs-console new-mode])
+ (fn switch-console-mode [db [_ new-mode console-id]]
+   (dispatch [:set-console-mode console-id new-mode])
    (ls/save-mode! new-mode)
    db))
 
