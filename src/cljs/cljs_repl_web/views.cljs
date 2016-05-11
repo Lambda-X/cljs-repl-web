@@ -491,10 +491,11 @@
   [v-box
    :size "0 0 auto"
    :gap "2px"
-   :children [(for [s signatures]
-                ^{:key s} [label
-                           :label s
-                           :class "api-panel-signature"])]])
+   :children [(for [[index s] (map-indexed vector signatures)]
+                ^{:key index}
+                [label
+                 :label s
+                 :class "api-panel-signature"])]])
 
 (defn api-symbol-description
   "Builds the UI for the symbol's description in the popover. Desc needs
@@ -812,8 +813,8 @@
       [h-box
        :size "1 1 auto"
        :gap "10px"
-       :children (for [sections @sections-by-column]
-                   ^{:key sections}
+       :children (for [[index sections] (map-indexed vector @sections-by-column)]
+                   ^{:key index}
                    [v-box
                     :size (str "0 1 " (quot 100 @column-number) "%")
                     :gap "10px"
