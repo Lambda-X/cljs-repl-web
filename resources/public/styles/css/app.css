@@ -475,9 +475,6 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     text-shadow: 0 0 5px #444;
 }
 
-
-
-
 /* :narrow */
 @media only screen and (max-width: 480px) {
     .ribbon {
@@ -543,7 +540,6 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     #app-bottom {
         margin-top: 28px;
     }
-
 
     .modal-tour-popup {
         width: 250px;

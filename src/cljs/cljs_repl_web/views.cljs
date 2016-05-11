@@ -38,7 +38,7 @@
              :body [:div [:p "Here you will find a terminal-like REPL which you can use when learning Clojure/ClojureScript or just trying new things out."]
                     [:p "It contains many features, so let’s start!"]]}
    :step1 {:title "Tour 1 of 9"
-           :body [:div [:h1.tour-title "Clicking the Bin icon"]
+           :body [:div [:h1.tour-title "Reset button"]
                   [:p "It will reset the REPL, that is:"]
                   [:ul.tour
                    [:li "it will clear the current prompt"]
@@ -50,7 +50,7 @@
                   [:span.symbol " ↓ "]
                   [:span "or just by clicking on the item you are interested in."]]}
    :step2 {:title "Tour 2 of 8"
-           :body [:div [:h1.tour-title "Clicking the Clear icon"]
+           :body [:div [:h1.tour-title "Clear button"]
                   [:p "It will trigger the same action as before with the difference that the history will not be deleted."]]}
    :step3 {:title "Tour 3 of 9"
            :body [:div [:h1.tour-title "Creating a Gist"]
@@ -62,49 +62,46 @@
    :step4 {:title "Tour 4 of 9"
            :body [:div [:h1.tour-title "Clear examples"]
                   [:p "Just under the REPL you will find many buttons, logically grouped by topic. Clicking on them will open a popup (this feature will be explained in another step of this tutorial)."]
-                  [:p "One of the actions you can take is send the examples directly to the REPL:"]
-                  [:span "For example the"]
+                  [:span "One of the actions you can take is send the examples directly to the REPL: for example the"]
                   [:span.symbol " + "]
                   [:span "symbol contains 5 examples you can evaluate. If for any reason you want to interrupt the examples’ evaluation just click on this button."]
                   [:h5 "Note:"]
-                  [:p "The number of current examples to evaluate is shown in the mode-line:"]
-                  [:span.mode "X form(s) in the evaluation queue"]]}
+                  [:span "The number of current examples to evaluate is shown in the mode-line:"]
+                  [:code "X form(s) in the evaluation queue"]]}
    :step5 {:title "Tour 5 of 9"
            :body [:div [:h1.tour-title "Switch input mode"]
-                  [:span "We integrated shaunlebron’s excellent"]
+                  [:span "We integrated"]
+                  [:a.tour {:href "https://github.com/shaunlebron"} " shaunlebron"]
+                  [:span "’s excellent"]
                   [:a.tour {:href "https://github.com/shaunlebron/parinfer"} " parinfer"]
                   [:span " to our REPL with the default input mode as "]
-                  [:span.mode "indent-mode"]
+                  [:i "Indent Mode"]
                   [:span "."]
-                  [:p " You can shuffle between three modes:"]
-                  [:ul.tour
-                   [:li "Indent Mode"]
-                   [:li "Parent Mode"]
-                   [:li "none"]]
+                  [:p " You can shuffle between three modes: Indent Mode, Paren Mode and none."]
                   [:span "The "]
-                  [:span.mode "non"]
+                  [:i "none"]
                   [:span " mode will just disable parinfer and switch to normal editing."]
                   [:h5 "Note:"]
-                  [:span "Our REPL is clever enough to determine whether a form should be evaluated or whether issue a new-line. For example if you are in "]
-                  [:span.mode "none"]
+                  [:span "Our REPL is clever enough to determine whether a form should be evaluated or whether issue a newline. For example if you are in "]
+                  [:i "none"]
                   [:span " mode, write "]
                   [:span.mode "(def a"]
                   [:span " and press ENTER the cursor will be placed on a newline."]
                   [:span "This is not always the case with Indent Mode, which will try to balance parenthesis causing the previous expression to be transformed to "]
                   [:span.mode "(def a)"]
                   [:span "."]
-                  [:p "If you now press ENTER you’ll receive an error: to overcome this problem just press SHIFT+ENTER to issue a new line."]]}
+                  [:p "If you now press ENTER you’ll receive an error: to overcome this problem and issue a newline  just press SHIFT+ENTER."]]}
    :step6 {:title "Tour 6 of 9"
            :body [:div [:h1.tour-title "Console"]
-                  [:p "We already saw many feature of the REPL like history navigation, input mode or examples evaluation (more on this in the next step)."]
-                  [:p "Another feature we want to mention here is the autocompletion feature:"]
+                  [:p "We already saw many features of the REPL like history navigation, input mode or examples evaluation (more on this in the next step)."]
+                  [:p "Another feature we want to mention here is autocompletion:"]
                   [:ul.tour]
-                  [:span "The suggestion list is shown immediately when user starts typing. The word to autocomplete is selected by using"]
+                  [:span "The suggestion list is shown immediately when the user starts typing. The word to autocomplete is selected by using"]
                   [:span.symbol " ↑ "]
                   [:span "and"]
                   [:span.symbol " ↓ "]
                   [:span "arrows, or by clicking on the selected item."]
-                  [:span " When user presses "]
+                  [:span " When the user presses "]
                   [:span.mode "tab"]
                   [:span " the first item from suggestion list is picked for autocompletion."]]}
    :step7 {:title "Tour 7 of 9"
@@ -117,6 +114,7 @@
                   [:ul.tour
                    [:li "the (i) icon will open the relative online doc page"]
                    [:li "signatures"]
+                   [:li "description"]
                    [:li "related symbols list"]]]}
    :step9 {:title  "Tour 9 of 9"
            :body [:div [:h1.tour-title "Send to repl"]
@@ -152,14 +150,14 @@
                             [p (get-in tour-steps [:welcome :body])]
                             [:hr {:style {:margin "10px 0 10px"}}]
                             [button
-                             :label "skip"
+                             :label "Skip"
                              :on-click #(do (finish-tour tour)
                                             (ls/set-item! :closed-tour? true)
                                             (reset! showing? false))
                              :class "btn-default"
                              :style {:margin-right "15px"}]
                             [button
-                             :label "next"
+                             :label "Next"
                              :on-click #(do (start-tour tour)
                                             (reset! showing? false))
                              :class "btn-default"]]
@@ -186,7 +184,7 @@
                             [p (get-in tour-steps [:step10 :body])]
                             [:hr {:style {:margin "10px 0 10px"}}]
                             [button
-                             :label "finish"
+                             :label "Finish"
                              :on-click #(do (finish-tour tour)
                                             (ls/set-item! :closed-tour? true)
                                             (reset! showing? false))
@@ -247,11 +245,12 @@
       :class     "btn-default"]]))
 
 (defn create-tour-step
-  ([step position anchor close-fn]
-   (create-tour-step step position anchor close-fn nil))
-  ([step position anchor close-fn another-step]
+  ([step position width anchor close-fn]
+   (let [media-query (subscribe [:media-query-size])]
+     (create-tour-step step position width anchor close-fn nil)))
+  ([step position width anchor close-fn another-step]
    (let [step-keyword (keyword (str "step" step))
-         media-query (subscribe [:media-query-size])]
+         media-query  (subscribe [:media-query-size])]
      [popover-anchor-wrapper
       :showing? (step-keyword tour)
       :position position
@@ -259,10 +258,7 @@
       :popover [popover-content-wrapper
                 :showing? (step-keyword tour)
                 :position position
-                :width     (if (or (= @current-step (dec 9))
-                                   (= :narrow @media-query))
-                             "200px"
-                             "400px")
+                :width    width
                 :title    [:strong (get-in tour-steps [step-keyword :title])]
                 :body     [:div (get-in tour-steps [step-keyword :body])
                            [tour-buttons tour another-step close-fn]]
@@ -395,7 +391,8 @@
                     :disabled? @can-dump-gist?]
          :popover  [gist-login-dialog-body]]
         [create-tour-step 3
-         :below-center
+         (if (= @media-query :narrow) :below-center :right-center)
+         (if (= @media-query :narrow) "300px" "400px")
          [md-icon-button
           :md-icon-name "zmdi-github"
           :on-click #(dispatch [:show-gist-login])
@@ -424,7 +421,8 @@
                           next-mode))]
     (fn cljs-buttons-form2 []
       (let [children [[create-tour-step 1
-                       :below-center
+                       (if (= @media-query :narrow) :below-center :right-center)
+                       (if (= @media-query :narrow) "240px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-delete"
                         :on-click #(dispatch [:reset-console-items :cljs-console])
@@ -435,7 +433,8 @@
                         :disabled? (not @console-created?)]
                        #(finish-tour tour)]
                       [create-tour-step 2
-                       :below-center
+                       (if (= @media-query :narrow) :below-center :right-center)
+                       (if (= @media-query :narrow) "300px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-format-clear-all"
                         :on-click #(dispatch [:clear-console-items :cljs-console])
@@ -447,7 +446,8 @@
                        #(finish-tour tour)]
                       [gist-login-dialog]
                       [create-tour-step 4
-                       :below-center
+                       (if (= @media-query :narrow) :below-center :right-center)
+                       (if (= @media-query :narrow) "250px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-stop"
                         :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
@@ -458,7 +458,8 @@
                         :disabled? (not @example-mode?)]
                        #(finish-tour tour)]
                       [create-tour-step 5
-                       :below-center
+                       (if (= @media-query :narrow) :below-left :right-center)
+                       (if (= @media-query :narrow) "260px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-keyboard"
                         :on-click #(dispatch [:switch-console-mode (get-next-mode)])
@@ -561,39 +562,44 @@
 
 (defn api-example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [showing-atom example-index example-map]
-  {:pre [(:strings example-map) (:html example-map)]}
-  [v-box
-   :size "none"
-   :gap "4px"
-   :justify :center
-   ;; Why the box?
-   ;; See problem here, see https://github.com/Day8/re-com/issues/76
-   :children [[create-tour-step 9 :above-center
-               [box
-                :class "api-panel-button-send-repl-box"
-                :size "1 0 auto"
-                :style (align-style :align-items :stretch)
-                :child [button
-                        :class "btn btn-default api-panel-button-send-repl"
-                        :style (merge (flex-child-style "1 0 auto")
-                                      {:width "100%"})
-                        :disabled? (not @(subscribe [:console-created? :cljs-console]))
-                        :label [h-box
-                                :size "1 1 auto"
-                                :justify :between
-                                :align :center
-                                :children [[example-number-icon example-index]
-                                           [example-send-to-repl-button-label example-index example-map]]]
-                        :on-click (handler-fn
-                                   (reset! showing-atom false)
-                                   (utils/scroll-to-top) ; in case we are at the bottom of the page
-                                   (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
-               #(do (finish-tour tour)
-                    (reset! showing-atom false)
-                    (utils/scroll-to-top))
-               {:next #(reset! showing-atom false)}]
-              [api-example example-map]]])
+  []
+  (let [media-query (subscribe [:media-query-size])]
+    (fn
+      [showing-atom example-index example-map]
+      {:pre [(:strings example-map) (:html example-map)]}
+      [v-box
+       :size "none"
+       :gap "4px"
+       :justify :center
+       ;; Why the box?
+       ;; See problem here, see https://github.com/Day8/re-com/issues/76
+       :children [[create-tour-step 9
+                   :above-center
+                   (if (= @media-query :narrow) "200px" "300px")
+                   [box
+                    :class "api-panel-button-send-repl-box"
+                    :size "1 0 auto"
+                    :style (align-style :align-items :stretch)
+                    :child [button
+                            :class "btn btn-default api-panel-button-send-repl"
+                            :style (merge (flex-child-style "1 0 auto")
+                                          {:width "100%"})
+                            :disabled? (not @(subscribe [:console-created? :cljs-console]))
+                            :label [h-box
+                                    :size "1 1 auto"
+                                    :justify :between
+                                    :align :center
+                                    :children [[example-number-icon example-index]
+                                               [example-send-to-repl-button-label example-index example-map]]]
+                            :on-click (handler-fn
+                                       (reset! showing-atom false)
+                                       (utils/scroll-to-top) ; in case we are at the bottom of the page
+                                       (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
+                   #(do (finish-tour tour)
+                        (reset! showing-atom false)
+                        (utils/scroll-to-top))
+                   {:next #(reset! showing-atom false)}]
+                  [api-example example-map]]])))
 
 (defn api-examples
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
@@ -608,7 +614,7 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed (partial api-example-panel showing-atom) examples-map)]]])
+               :children (map-indexed (partial (api-example-panel) showing-atom) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
@@ -648,7 +654,9 @@
                   :children [[title
                               :label name
                               :level :level4]
-                             [create-tour-step 8 :below-center
+                             [create-tour-step 8
+                              (if (= @media-query :narrow) :below-center :right-below)
+                              (if (= @media-query :narrow) "220px" "400px")
                               [md-icon-button
                                :md-icon-name "zmdi-info"
                                :tooltip "See online documentation"
@@ -659,8 +667,7 @@
                               #(do (finish-tour tour)
                                    (reset! showing-atom false)
                                    (utils/scroll-to-top))
-                              {:prev #(reset! showing-atom false)}
-                               ]]]
+                              {:prev #(reset! showing-atom false)}]]]
           :body [reagent/create-class
                  {:component-did-mount (fn [this]
                                          (let [node (reagent/dom-node this)]
@@ -691,7 +698,8 @@
   [symbol]
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)
-        tour? (reagent/atom false)]
+        tour? (reagent/atom false)
+        media-query (subscribe [:media-query-size])]
     (fn api-symbol-form2 [symbol]
       [box
        :size "0 1 auto"
@@ -701,6 +709,7 @@
                 (if (and (= (str symbol) "/") (not @showing?))
                   [create-tour-step 7
                    :above-center
+                   (if (= @media-query :narrow) "280px" "400px")
                    [button
                     :class "btn btn-default api-panel-symbol-button"
                     :label (:name symbol')
@@ -895,9 +904,9 @@
                       [box
                        :size "0 0 auto"
                        :child
-                       [create-tour-step
-                        6
+                       [create-tour-step 6
                         :below-center
+                        (if (= @media-query :narrow) "300px" "400px")
                         [console]
                         #(do (finish-tour tour)
                              (utils/scroll-to-top))]]
