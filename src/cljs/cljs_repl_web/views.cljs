@@ -74,23 +74,15 @@
                   [:a.tour {:href "https://github.com/shaunlebron"} " shaunlebron"]
                   [:span "’s excellent"]
                   [:a.tour {:href "https://github.com/shaunlebron/parinfer"} " parinfer"]
-                  [:span " to our REPL with the default input mode as "]
-                  [:i "Indent Mode"]
-                  [:span "."]
-                  [:p " You can shuffle between three modes: Indent Mode, Paren Mode and none."]
-                  [:span "The "]
-                  [:i "none"]
-                  [:span " mode will just disable parinfer and switch to normal editing."]
+                  [:span " to our REPL with the default input mode as Indent Mode (the other two being Paren Mode and none)."]
                   [:h5 "Note:"]
-                  [:span "Our REPL is clever enough to determine whether a form should be evaluated or whether issue a newline. For example if you are in "]
-                  [:i "none"]
-                  [:span " mode, write "]
+                  [:span "If you write for exmaple "]
                   [:span.mode "(def a"]
-                  [:span " and press ENTER the cursor will be placed on a newline."]
+                  [:span " and press ENTER the cursor will be placed on a newline automatically (none mode)."]
                   [:span "This is not always the case with Indent Mode, which will try to balance parenthesis causing the previous expression to be transformed to "]
                   [:span.mode "(def a)"]
                   [:span "."]
-                  [:p "If you now press ENTER you’ll receive an error: to overcome this problem and issue a newline  just press SHIFT+ENTER."]]}
+                  [:p "In this case you need to press SHIFT+ENTER."]]}
    :step6 {:title "Tour 6 of 9"
            :body [:div [:h1.tour-title "Console"]
                   [:p "We already saw many features of the REPL like history navigation, input mode or examples evaluation (more on this in the next step)."]
@@ -421,8 +413,8 @@
                           next-mode))]
     (fn cljs-buttons-form2 []
       (let [children [[create-tour-step 1
-                       (if (= @media-query :narrow) :below-center :right-center)
-                       (if (= @media-query :narrow) "240px" "400px")
+                       (if (= @media-query :narrow) :below-right :right-center)
+                       (if (= @media-query :narrow) "230px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-delete"
                         :on-click #(dispatch [:reset-console-items :cljs-console])
@@ -434,7 +426,7 @@
                        #(finish-tour tour)]
                       [create-tour-step 2
                        (if (= @media-query :narrow) :below-center :right-center)
-                       (if (= @media-query :narrow) "300px" "400px")
+                       (if (= @media-query :narrow) "240px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-format-clear-all"
                         :on-click #(dispatch [:clear-console-items :cljs-console])
@@ -447,7 +439,7 @@
                       [gist-login-dialog]
                       [create-tour-step 4
                        (if (= @media-query :narrow) :below-center :right-center)
-                       (if (= @media-query :narrow) "250px" "400px")
+                       (if (= @media-query :narrow) "240px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-stop"
                         :on-click #(dispatch [:clear-console-queued-forms :cljs-console])
@@ -459,7 +451,7 @@
                        #(finish-tour tour)]
                       [create-tour-step 5
                        (if (= @media-query :narrow) :below-left :right-center)
-                       (if (= @media-query :narrow) "260px" "400px")
+                       (if (= @media-query :narrow) "240px" "400px")
                        [md-icon-button
                         :md-icon-name "zmdi-keyboard"
                         :on-click #(dispatch [:switch-console-mode (get-next-mode)])
@@ -639,7 +631,7 @@
                                         ; formatting (like paragraphs)
              examples (map (fn [html string] {:html html :strings string}) examples-htmls examples-strings)
              popover-width  (if (= :narrow @media-query) 280 400)
-             popover-height (if (= :narrow @media-query) 250 400)
+             popover-height (if (= :narrow @media-query) 300 400)
              popover-content-width (- popover-width (* 2 14) 15)] ; bootstrap padding + scrollbar width
          [popover-content-wrapper
           :showing? showing-atom
@@ -709,8 +701,8 @@
        :child (if-let [symbol' (get-symbol-doc-map (str symbol))]
                 (if (and (= (str symbol) "/") (not @showing?))
                   [create-tour-step 7
-                   :above-center
-                   (if (= @media-query :narrow) "280px" "400px")
+                   :above-left
+                   (if (= @media-query :narrow) "200px" "280px")
                    [button
                     :class "btn btn-default api-panel-symbol-button"
                     :label (:name symbol')

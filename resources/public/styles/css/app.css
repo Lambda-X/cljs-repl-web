@@ -586,8 +586,8 @@ ul.re-completion-list {
     position: absolute;
     margin: 0;
     padding: 0;
-    left: 364px;
-    top: 26px;
+    /* left: 364px; */
+    /* top: 26px; */
     min-height: 24px;
     max-height: 123px;
     width: 220px;
