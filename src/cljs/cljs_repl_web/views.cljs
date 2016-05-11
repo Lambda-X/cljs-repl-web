@@ -902,15 +902,16 @@
         console (console/console console-key opts)]
     (fn repl-component-form2 []
       (let [children [[cljs-buttons]
-                      [box
+                      [v-box
                        :size "0 0 auto"
-                       :child
-                       [create-tour-step 6
-                        :below-center
-                        (if (= @media-query :narrow) "300px" "400px")
-                        [console]
-                        #(do (finish-tour tour)
-                             (utils/scroll-to-top))]]
+                       :children
+                       [[create-tour-step 6
+                         :below-center
+                         (if (= @media-query :narrow) "300px" "400px")
+                         [:div.popup-tour-console-anchor]
+                         #(do (finish-tour tour)
+                              (utils/scroll-to-top))]
+                        [console]]]
                       [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
                                                                 (dispatch [:focus-console-editor console-key]))]
                       [welcome-modal-dialog]

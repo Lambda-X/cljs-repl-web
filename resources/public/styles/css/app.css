@@ -520,6 +520,12 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     min-width: 300px;
 }
 
+.popup-tour-console-anchor {
+    width: 660px;
+    min-width: 300px;
+    height: 0;
+}
+
 /* :narrow */
 @media only screen and (max-width: 480px) {
     .re-console-container {
@@ -533,6 +539,11 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 
     .re-console-mode-line {
         font-size: 10px;
+        width: 300px;
+        min-width: 120px;
+    }
+
+    .popup-tour-console-anchor {
         width: 300px;
         min-width: 120px;
     }
@@ -559,6 +570,11 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     }
 
     .re-console-mode-line {
+        width: 460px;
+        min-width: 220px;
+    }
+
+    .popup-tour-console-anchor {
         width: 460px;
         min-width: 220px;
     }
