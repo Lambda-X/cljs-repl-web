@@ -122,7 +122,7 @@
                    [:p "Thanks and enjoy."]]}})
 
 (defn welcome-modal-dialog
-  []
+  [console-key]
   (let [showing? (reagent/atom true)
         closed-tour? (ls/get-item :closed-tour?)]
     (fn []
@@ -145,7 +145,8 @@
                              :label "Skip"
                              :on-click #(do (finish-tour tour)
                                             (ls/set-item! :closed-tour? true)
-                                            (reset! showing? false))
+                                            (reset! showing? false)
+                                            (dispatch [:focus-console-editor console-key]))
                              :class "btn-default"
                              :style {:margin-right "15px"}]
                             [button
@@ -157,7 +158,7 @@
          :style {:padding-bottom "150px"}]))))
 
 (defn finished-tour-modal-dialog
-  []
+  [console-key]
   (let [showing? (reagent/atom true)]
     (fn []
       (when (and @showing? (= @current-step (dec (count (:steps tour)))))
@@ -179,7 +180,8 @@
                              :label "Finish"
                              :on-click #(do (finish-tour tour)
                                             (ls/set-item! :closed-tour? true)
-                                            (reset! showing? false))
+                                            (reset! showing? false)
+                                            (dispatch [:focus-console-editor console-key]))
                              :class "btn-default"
                              :style {:margin-right "15px"}]]
                  :style {:display "inline-block"}]
@@ -906,8 +908,8 @@
                         [console]]]
                       [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
                                                                 (dispatch [:focus-console-editor console-key]))]
-                      [welcome-modal-dialog]
-                      [finished-tour-modal-dialog]]]
+                      [welcome-modal-dialog console-key]
+                      [finished-tour-modal-dialog console-key]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
