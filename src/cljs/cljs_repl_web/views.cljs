@@ -893,7 +893,9 @@
 
 (defn repl-component [console-key opts]
   (let [media-query (subscribe [:media-query-size])
-        console (console/console console-key opts)]
+        console (console/console console-key opts)
+        welcome-dialog (welcome-modal-dialog console-key)
+        finished-dialog (finished-tour-modal-dialog console-key)]
     (fn repl-component-form2 []
       (let [children [[cljs-buttons]
                       [v-box
@@ -908,8 +910,8 @@
                         [console]]]
                       [re-complete/completions console-key #(do (dispatch [:console-set-autocompleted-text console-key])
                                                                 (dispatch [:focus-console-editor console-key]))]
-                      [welcome-modal-dialog console-key]
-                      [finished-tour-modal-dialog console-key]]]
+                      [welcome-dialog]
+                      [finished-dialog]]]
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
