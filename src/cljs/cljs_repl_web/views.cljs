@@ -231,10 +231,9 @@
      [button
       :label    "Next"
       :on-click (handler-fn
-                 (if next-step
-                   ((next-step)
-                    (next-tour-step tour))
-                   (next-tour-step tour)))
+                 (when next-step
+                   (next-step))
+                 (next-tour-step tour))
       :style    {:z-index 5000}
       :class     "btn-default"]]))
 
