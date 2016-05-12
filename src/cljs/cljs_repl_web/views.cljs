@@ -289,37 +289,39 @@
 
 (defn api-example-panel
   "UI for a single example. Wants a map {:html ... :strings}."
-  [showing-atom example-index example-map]
-  {:pre [(:strings example-map) (:html example-map)]}
-  [v-box
-   :size "none"
-   :gap "4px"
-   :justify :center
-   ;; Why the box?
-   ;; See problem here, see https://github.com/Day8/re-com/issues/76
-   :children [[box
-               :class "api-panel-button-send-repl-box"
-               :size "1 0 auto"
-               :child [button
-                       :class "btn btn-default api-panel-button-send-repl"
-                       :style (merge (flex-child-style "1 0 auto")
-                                     {:width "100%"})
-                       :disabled? (not @(subscribe [:console-created? :cljs-console]))
-                       :label [h-box
-                               :size "1 1 auto"
-                               :justify :between
-                               :align :center
-                               :children [[example-number-icon example-index]
-                                          [example-send-to-repl-button-label example-index example-map]]]
-                       :on-click (handler-fn
-                                  (reset! showing-atom false)
-                                  (utils/scroll-to-top) ; in case we are at the bottom of the page
-                                  (dispatch [:set-console-queued-forms :cljs-console (:strings example-map)]))]]
-              [api-example example-map]]])
+  [showing-atom console-id example-index example-map]
+  (let [current-console (keyword @(subscribe [:get-current-console]))]
+    ;;(.log js/console (str current-console))
+    {:pre [(:strings example-map) (:html example-map)]}
+    [v-box
+     :size "none"
+     :gap "4px"
+     :justify :center
+     ;; Why the box?
+     ;; See problem here, see https://github.com/Day8/re-com/issues/76
+     :children [[box
+                 :class "api-panel-button-send-repl-box"
+                 :size "1 0 auto"
+                 :child [button
+                         :class "btn btn-default api-panel-button-send-repl"
+                         :style (merge (flex-child-style "1 0 auto")
+                                       {:width "100%"})
+                         :disabled? (not @(subscribe [:console-created? current-console]))
+                         :label [h-box
+                                 :size "1 1 auto"
+                                 :justify :between
+                                 :align :center
+                                 :children [[example-number-icon example-index]
+                                            [example-send-to-repl-button-label example-index example-map]]]
+                         :on-click (handler-fn
+                                    (reset! showing-atom false)
+                                    (utils/scroll-to-top) ; in case we are at the bottom of the page
+                                    (dispatch [:set-console-queued-forms current-console (:strings example-map)]))]]
+                [api-example example-map]]]))
 
 (defn api-examples
   "Builds the UI for the symbol's examples. Wants a list of {:html ... :strings}."
-  [showing-atom examples-map]
+  [showing-atom examples-map console-id]
   [v-box
    :size "0 1 auto"
    :children [
@@ -331,11 +333,11 @@
               [v-box
                :size "0 0 auto"
                :gap "2px"
-               :children (map-indexed (partial api-example-panel showing-atom) examples-map)]]])
+               :children (map-indexed (partial api-example-panel console-id showing-atom) examples-map)]]])
 
 (defn symbol-popover
   "A popover's body in which details of the given symbol will be shown."
-  [showing-atom position-atom sym-doc-map]
+  [showing-atom position-atom sym-doc-map console-id]
   (let [media-query (subscribe [:media-query-size])]
     (fn symbol-popover-form2 [showing-atom position-atom sym-doc-map]
       (let [{name :name
@@ -394,11 +396,11 @@
                                       (when (not-empty related)
                                         [api-related-symbols related])
                                       (when (not-empty examples)
-                                        [api-examples showing-atom examples])]]])]]))))
+                                        [api-examples showing-atom examples console-id])]]])]]))))
 
 (defn api-symbol
   "Builds the UI for a single symbol. Will be a button."
-  [symbol]
+  [symbol console-id]
   (let [showing? (reagent/atom false)
         popover-position (reagent/atom :below-center)]
     (fn api-symbol-form2 [symbol]
@@ -422,7 +424,7 @@
                                   (reset! popover-position
                                           (utils/calculate-popover-position [(.-clientX event) (.-clientY event)]))
                                   (reset! showing? true))}]
-                 :popover [symbol-popover showing? popover-position symbol]]
+                 :popover [symbol-popover showing? popover-position symbol console-id]]
                 [label
                  :label (str symbol)
                  :class "api-panel-symbol-label"
@@ -443,7 +445,7 @@
 
 (defn api-section
   "Builds the UI for a section."
-  [section]
+  [section console-id]
   (let [media-query (subscribe [:media-query-size])]
     (fn api-section-form2 []
       [v-box
@@ -472,13 +474,14 @@
                                                         :justify (if (= :wide @media-query) :start :center)
                                                         :style {:flex-flow "wrap"}
                                                         :children (for [symbol (:symbols topic)]
-                                                                    [api-symbol symbol])]]])]]]]])))
+                                                                    [api-symbol symbol console-id])]]])]]]]])))
 
 (defn api-panel
   "Builds the UI for the api panel."
   [sections]
   (let [column-number (subscribe [:api-panel-column-number])
-        sections-by-column (subscribe [:api-panel-section-columns sections])]
+        sections-by-column (subscribe [:api-panel-section-columns sections])
+        current-console (subscribe [:get-current-console])]
     (fn api-panel-form2 []
       [h-box
        :size "1 1 auto"
@@ -489,7 +492,7 @@
                     :size (str "0 1 " (quot 100 @column-number) "%")
                     :gap "10px"
                     :children (for [section sections]
-                                [api-section section])])])))
+                                [api-section section @current-console])])])))
 
 ;;;;;;;;;;;;;;;;;;
 ;;   Footer    ;;;
@@ -611,9 +614,9 @@
 (def console-2 (:focus (:console-2 (:linked-components (:re-complete @re-frame.db/app-db)))))
 
 (defn render-consoles-list [consoles current-console]
-  (.log js/console current-console)
-  (.log js/console (str consoles))
-  (.log js/console (str (map #(= % current-console) consoles)))
+  ;;(.log js/console current-console)
+  ;;(.log js/console (str consoles))
+  ;;(.log js/console (str (map #(= % current-console) consoles)))
   [:ul
    (map (fn [console]
           [:li {:style {:color (if (= console current-console)
@@ -641,18 +644,17 @@
         current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
       (let [next-console-id (utils/next-console-id @consoles)
-            children (into (render-completions @consoles)
-                           (into [[cljs-buttons @current-console]
-                                  [button
-                                   :label             "add console"
-                                   :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
-                                                           (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
-                                                                                                :keys-handling {:visible-items 6
-                                                                                                                :item-height 20}}])
-                                                           (dispatch [:focus-console-editor next-console-id])
-                                                           (dispatch [:switch-console next-console-id]))]
-                                  [render-consoles-list @consoles @current-console]]
-                                 (render-consoles @consoles)))]
+            children (into [[cljs-buttons @current-console]
+                            [button
+                             :label             "add console"
+                             :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                                                     (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
+                                                                                          :keys-handling {:visible-items 6
+                                                                                                          :item-height 20}}])
+                                                     (dispatch [:focus-console-editor next-console-id])
+                                                     (dispatch [:switch-console next-console-id]))]
+                            [render-consoles-list @consoles @current-console]]
+                           (render-consoles @consoles))]
         (consoles-focus @consoles @current-console)
         (if (= :narrow @media-query)
           [v-box
