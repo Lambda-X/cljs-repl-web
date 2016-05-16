@@ -20,7 +20,8 @@
             [cljs-repl-web.replumb-proxy :as replumb-proxy]
             [cljs-repl-web.config :as config]
             [cljs-repl-web.localstorage :as ls]
-            [re-console.common :as common]))
+            [re-console.common :as common]
+            [clojure.string :as string]))
 
 ;; (set! re-com.box/debug true)
 
@@ -572,20 +573,18 @@
   (let [{:keys [name verbose-repl? src-paths]} config/defaults
         local-storage-values (ls/get-local-storage-values)]
     {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
-     :mode (:mode local-storage-values)
-     ;;:mode-line? false
-     :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))])
-                           ;;(dispatch [:focus my-console-key true])
+     :mode (:mode local-storage-values) 
+     :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))]) 
                            (app/create-dictionary (common/source-without-prompt (.getValue %)) my-console-key)
                            (utils/align-suggestions-list %2))}))
 
 (defn render-console [console-key]
-  (let [items (subscribe [:get-console-items console-key])
-        text  (subscribe [:get-console-current-text console-key])
-        current-console (subscribe [:get-current-console])]
+  (let [current-console (subscribe [:get-current-console])
+        items (subscribe [:get-console-items console-key])
+        text  (subscribe [:get-console-current-text console-key])]
     (reagent/create-class
      {:reagent-render
-      (fn []
+      (fn [console-key]
         [:div
          [:div.re-console-container
           {:style {:display (if (= (str console-key) @current-console) "inline-block" "none")}
@@ -593,7 +592,7 @@
           [:div.re-console
            [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
            [editor/console-editor console-key text]]]
-         (when (= console-key @current-console) ;;(:mode-line? (options console-key))
+         (when (= console-key @current-console)
            [re-console/mode-line console-key])])
       :component-did-update
       (fn [this]
@@ -606,11 +605,6 @@
            (dispatch [:focus % false]))
         consoles)))
 
-(def console-1
-  (:focus (:console-1 (:linked-components (:re-complete @re-frame.db/app-db)))))
-
-(def console-2 (:focus (:console-2 (:linked-components (:re-complete @re-frame.db/app-db)))))
-
 (defn render-consoles-list [consoles current-console]
   [:ul
    (map (fn [console]
@@ -618,7 +612,9 @@
                                  "yellow"
                                  "white")}
                 :on-click #(do (dispatch [:switch-console console])
-                               (dispatch [:focus-console-editor console]))}
+                               (dispatch [:focus-console-editor console])
+                               ;; (dispatch [:focus console true])
+                               )}
            console])
         consoles)])
 
@@ -627,30 +623,74 @@
           [render-console console])
         consoles))
 
-(defn render-completions [consoles]
-  (mapv (fn [console]
-          [re-complete/completions console #(do (dispatch [:console-set-autocompleted-text console])
-                                                (dispatch [:focus-console-editor console]))])
-        consoles))
+(defn completion-list
+  "Render list of the items to autocomplete.
+  Every item of the list is dispatched to the right place in the right input with :on-click event."
+  []
+  (let [linked-component-key (subscribe [:get-current-console])]
+    (reagent/create-class
+     {:component-did-mount (fn [this]
+                             (let [linked-component-keyword @linked-component-key]
+                               (re-complete/setup-key-handling this (name linked-component-keyword) #(do (dispatch [:console-set-autocompleted-text linked-component-keyword])
+                                                                                                         (dispatch [:focus-console-editor linked-component-keyword])))))
+      :reagent-render (fn []
+                        (let [linked-component-keyword (keyword @linked-component-key)
+                              items-to-re-complete @(subscribe [:get-items-to-complete linked-component-keyword])
+                              current-word @(subscribe [:get-previous-input linked-component-keyword])
+                              selected @(subscribe [:get-selected-item linked-component-keyword])
+                              is-mouse-on-suggestion-list? @(subscribe [:is-mouse-on-suggestion-list linked-component-keyword])
+                              focus? @(subscribe [:focus? linked-component-keyword])]
+                          (when (zero? (count items-to-re-complete))
+                            (dispatch [:clear-selected-item linked-component-keyword]))
+                          [:ul {:className (str "re-completion-list " (name linked-component-keyword))
+                                :style {:visibility (if (empty? items-to-re-complete) "hidden" "visible")
+                                        :display "inline-block"}}
+                           (when-not (string/blank? current-word)
+                             (map (fn [item]
+                                    (if (= (str (second selected))
+                                           (str item))
+                                      ^{:key item}
+                                      [:li.re-completion-selected
+                                       {:on-click #(do (dispatch [:add-completed-word linked-component-keyword item])
+                                                       (dispatch [:console-set-autocompleted-text linked-component-keyword])
+                                                       (dispatch [:focus-console-editor linked-component-keyword]))
+                                        :on-mouse-out #(dispatch [:mouse-on-suggestion-list (name linked-component-keyword) false])}
+                                       item]
+                                      ^{:key item}
+                                      [:li.re-completion-item
+                                       {:on-click #(do (dispatch [:add-completed-word linked-component-keyword item])
+                                                       (dispatch [:console-set-autocompleted-text linked-component-keyword])
+                                                       (dispatch [:focus-console-editor linked-component-keyword]))
+                                        :on-mouse-over  #(when-not is-mouse-on-suggestion-list?
+                                                           (dispatch [:selected-item linked-component-keyword item]))
+                                        :on-mouse-out #(dispatch [:mouse-on-suggestion-list (name linked-component-keyword) false])}
+                                       item]))
+                                  items-to-re-complete))]))})))
 
 (defn repl-component []
   (let [media-query (subscribe [:media-query-size])
         consoles (subscribe [:get-consoles])
         current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
-      (let [next-console-id (utils/next-console-id @consoles)
-            children (into [[cljs-buttons @current-console]
-                            [button
-                             :label             "add console"
-                             :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
-                                                     (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
-                                                                                          :keys-handling {:visible-items 6
-                                                                                                          :item-height 20}}])
-                                                     (dispatch [:focus-console-editor next-console-id])
-                                                     (dispatch [:switch-console next-console-id]))]
-                            [render-consoles-list @consoles @current-console]]
-                           (render-consoles @consoles))]
-        (consoles-focus @consoles @current-console)
+      (let [consoles-list @consoles
+            current-console-id @current-console
+            next-console-id (utils/next-console-id consoles-list)
+            ;;rendered-consoles (render-consoles consoles-list)
+            children (reduce into [[[cljs-buttons current-console-id]
+                                    [button
+                                     :label             "add console"
+                                     :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                                                             (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
+                                                                                                  :keys-handling {:visible-items 6
+                                                                                                                  :item-height 20}}])
+                                                             (dispatch [:focus-console-editor next-console-id])
+                                                             (dispatch [:switch-console next-console-id]))]
+                                    [render-consoles-list consoles-list current-console-id]
+                                    [completion-list]]
+                                   (render-consoles consoles-list)
+                                   ;;rendered-consoles
+                                   ])]
+        (consoles-focus consoles-list current-console-id)
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
