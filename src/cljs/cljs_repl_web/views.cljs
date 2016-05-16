@@ -573,8 +573,8 @@
   (let [{:keys [name verbose-repl? src-paths]} config/defaults
         local-storage-values (ls/get-local-storage-values)]
     {:eval-opts (replumb-proxy/eval-opts verbose-repl? src-paths)
-     :mode (:mode local-storage-values) 
-     :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))]) 
+     :mode (:mode local-storage-values)
+     :on-after-change #(do (dispatch [:input my-console-key (common/source-without-prompt (.getValue %))])
                            (app/create-dictionary (common/source-without-prompt (.getValue %)) my-console-key)
                            (utils/align-suggestions-list %2))}))
 
@@ -607,15 +607,16 @@
 
 (defn render-consoles-list [consoles current-console]
   [:ul
-   (map (fn [console]
-          [:li {:style {:color (if (= console current-console)
+   (map (fn [[k v]] 
+          [:li {:className (name k)
+                :style {:color (if (= (name k) current-console)
                                  "yellow"
                                  "white")}
-                :on-click #(do (dispatch [:switch-console console])
-                               (dispatch [:focus-console-editor console])
+                :on-click #(do (dispatch [:switch-console k])
+                               (dispatch [:focus-console-editor k])
                                ;; (dispatch [:focus console true])
                                )}
-           console])
+           v])
         consoles)])
 
 (defn render-consoles [consoles]
@@ -667,30 +668,39 @@
                                        item]))
                                   items-to-re-complete))]))})))
 
+(defn change-alias [console-ids]
+  (doall (map (fn [console-id] 
+                (let [new-ns? @(subscribe [:changed-ns? console-id])]
+                  (when new-ns?
+                    (dispatch [:console-alias (keyword console-id) new-ns?]))))
+              console-ids)))
+
 (defn repl-component []
   (let [media-query (subscribe [:media-query-size])
         consoles (subscribe [:get-consoles])
         current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
-      (let [consoles-list @consoles
+      (let [consoles-map (into (sorted-map) @consoles)
+            consoles-ids (map name (keys consoles-map))
+            consoles-aliases (vals consoles-map)
             current-console-id @current-console
-            next-console-id (utils/next-console-id consoles-list)
-            ;;rendered-consoles (render-consoles consoles-list)
+            next-console-id (utils/next-console-id consoles-ids)
+            rendered-consoles (render-consoles consoles-ids)
             children (reduce into [[[cljs-buttons current-console-id]
                                     [button
                                      :label             "add console"
                                      :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                                                             (dispatch [:console-alias next-console-id "cljs.user"])
                                                              (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
                                                                                                   :keys-handling {:visible-items 6
                                                                                                                   :item-height 20}}])
                                                              (dispatch [:focus-console-editor next-console-id])
                                                              (dispatch [:switch-console next-console-id]))]
-                                    [render-consoles-list consoles-list current-console-id]
+                                    [render-consoles-list consoles-map current-console-id]
                                     [completion-list]]
-                                   (render-consoles consoles-list)
-                                   ;;rendered-consoles
-                                   ])]
-        (consoles-focus consoles-list current-console-id)
+                                   (render-consoles consoles-ids)])]
+        (consoles-focus consoles-ids current-console-id)
+        (change-alias consoles-ids)
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"

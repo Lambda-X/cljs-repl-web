@@ -125,6 +125,11 @@
 ;;;;;;;;;;;;;;;;;;
 
 (register-handler
+ :console-alias
+ (fn consoles-with-aliases [db [_ console-id alias]] 
+   (assoc-in db [:consoles-aliases console-id] alias)))
+
+(register-handler
  :switch-console
  (fn switch-cosnole [db [_ console-key]]
    (assoc db :current-console (name console-key))))

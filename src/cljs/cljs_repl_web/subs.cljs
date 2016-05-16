@@ -18,7 +18,7 @@
  (fn [db [_]]
    (make-reaction
     (fn get-consoles []
-      (map first (:consoles @db))))))
+      (:consoles-aliases @db)))))
 
 (register-sub
  :get-current-console
@@ -113,5 +113,24 @@
  (fn [db [_ console-key]]
    (make-reaction (fn get-options [] (get-in @db [:autocomplete :linked-components console-key :options])))))
 
+;;;;;;;;;;;;;;;;;;;;;;;
+;;  Re complete   ;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(register-sub
+ :changed-ns?
+ (fn [db [_ console-key]]
+   (make-reaction (fn get-history []
+                    (let [history (get-in @db [:consoles console-key :history])
+                          last-eval (when (> (count history) 1)
+                                      (get history (- (count history) 2)))
+                          excluded-chars "')"]
+                      (when (and last-eval (re-find #"in-ns" last-eval))
+                        (-> last-eval
+                            (clojure.string/split " ")
+                            last
+                            (app/opening-excluded-chars excluded-chars)
+                            (app/closing-excluded-chars excluded-chars)))
+                      )))))
 
 ;; )

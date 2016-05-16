@@ -33,6 +33,7 @@
     (println "[Entering]" name)
     (dispatch-sync [:initialize config/defaults local-storage-values])
     (dispatch-sync [:init-console console-key (views/options console-key)])
+    (dispatch-sync [:console-alias console-key "cljs.user"])
     (dispatch-sync [:switch-console console-key])
     (reagent/render [views/repl-component]
                     (.getElementById js/document "app-center"))
