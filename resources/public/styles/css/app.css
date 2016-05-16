@@ -365,6 +365,7 @@ body,html {
 }
 
 .api-panel-button-send-repl {
+    align-items: stretch !important;
     border: 0;
 }
 
@@ -376,6 +377,54 @@ body,html {
     color: inherit;
     background-color: inherit;
     border: none;
+}
+
+/*********************/
+/***     Tour      ***/
+/*********************/
+
+
+.rc-v-box .rc-popover-anchor-wrapper .rc-point-wrapper {
+    align-items: stretch !important;
+    /*flex: 0 1 auto !important;*/
+    /*flex-flow: row !important;*/
+}
+
+.rc-v-box .rc-popover-anchor-wrapper .rc-point-wrapper .rc-popover-point {
+    align-self: center !important;
+}
+
+h1.tour-title {
+    margin-top: 5px;
+    color: rgba(68, 68, 68, 0.6);
+    font-weight: bold;
+    font-size: 17px;
+}
+
+ul.tour {
+    -webkit-padding-start: 20px;
+    padding-start: 20px;
+}
+
+.symbol {
+    font-weight: bold;
+    color: #a50;
+    font-size: 110%;
+}
+
+.mode {
+    display:inline-block;
+    color: #a50;
+    padding: 4px;
+    font-size: 95%;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+a.tour {
+    color:#337ab7;
+    text-decoration: none;
 }
 
 /* Some examples contains tables in their markdown.
@@ -471,6 +520,12 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     min-width: 300px;
 }
 
+.popup-tour-console-anchor {
+    width: 660px;
+    min-width: 300px;
+    height: 0;
+}
+
 /* :narrow */
 @media only screen and (max-width: 480px) {
     .re-console-container {
@@ -488,9 +543,19 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-width: 120px;
     }
 
+    .popup-tour-console-anchor {
+        width: 300px;
+        min-width: 120px;
+    }
+
     #app-bottom {
         margin-top: 28px;
     }
+
+    .modal-tour-popup {
+        width: 250px;
+    }
+
 }
 
 /* :medium */
@@ -508,6 +573,11 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         width: 460px;
         min-width: 220px;
     }
+
+    .popup-tour-console-anchor {
+        width: 460px;
+        min-width: 220px;
+    }
 }
 
 /* Styles for auto-complete */
@@ -516,8 +586,8 @@ ul.re-completion-list {
     position: absolute;
     margin: 0;
     padding: 0;
-    left: 364px;
-    top: 26px;
+    /* left: 364px; */
+    /* top: 26px; */
     min-height: 24px;
     max-height: 123px;
     width: 220px;

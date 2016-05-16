@@ -1,6 +1,6 @@
 (ns cljs-repl-web.core
   (:require [reagent.core :as reagent]
-            [re-frame.core :refer [dispatch dispatch-sync subscribe]]
+            [re-frame.core :refer [dispatch dispatch-sync]]
             [re-com.core :refer [p h-box v-box box gap line]]
             [devtools.core :as devtools]
             [cljs-repl-web.handlers]
@@ -12,7 +12,8 @@
             [cljs-repl-web.localstorage :as ls]
             [cljs-repl-web.app :as app]
             [re-console.common :as common]
-            [re-complete.core :as re-complete]))
+            [re-complete.core :as re-complete]
+            [goog.dom :as dom]))
 
 (defonce console-key :cljs-console)
 
