@@ -144,7 +144,7 @@ body,html {
     text-align: center;
     border-bottom: 0; /* or bootstrap adds it */
     border-bottom: 10px solid #FFFFFF;
-    padding-bottom: 200px;
+    padding-bottom: 224px;
     background: #363636 url(../images/header-bg.png) no-repeat center bottom;
 }
 
@@ -551,4 +551,144 @@ ul.re-completion-list li:last-of-type {
 
 li.re-completion-selected {
     background-color: #EEE;
+}
+
+/* Styles for multiple-consoles */
+
+.tabrow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 24px;
+}
+.tabrow li {
+    margin: 0 10px;
+    padding: 0 10px;
+    border: 1px solid #AAA;
+    background: #ECECEC;
+    display: inline-block;
+}
+
+.tabrow li.selected {
+    background: #FFF;
+    color: #000;
+}
+
+.tabrow {
+    position: relative;
+}
+
+
+.tabrow:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid #AAA;
+    z-index: 1;
+}
+
+.tabrow:before {
+    z-index: 1;
+}
+.tabrow li {
+    position: relative;
+    z-index: 0;
+}
+.tabrow li.selected {
+    z-index: 2;
+    border-bottom-color: #FFF;
+}
+
+.tabrow li:before,
+.tabrow li:after {
+    position: absolute;
+    bottom: -1px;
+    width: 6px;
+    height: 6px;
+    content: " ";
+}
+.tabrow li:before {
+    left: -6px;
+}
+.tabrow li:after {
+    right: -6px;
+}
+.tabrow li:after, .tabrow li:before {
+                      border: 1px solid #AAA;
+                  }
+
+.tabrow li {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.tabrow li:before {
+    border-bottom-right-radius: 6px;
+    border-width: 0 1px 1px 0;
+}
+.tabrow li:after {
+    border-bottom-left-radius: 6px;
+    border-width: 0 0 1px 1px;
+}
+
+.tabrow li:before {
+    box-shadow: 2px 2px 0 red;
+}
+.tabrow li:after {
+    box-shadow: -2px 2px 0 red;
+}
+
+.tabrow li:before {
+    box-shadow: 2px 2px 0 #ECECEC;
+}
+.tabrow li:after {
+    box-shadow: -2px 2px 0 #ECECEC;
+}
+.tabrow li.selected:before {
+    box-shadow: 2px 2px 0 #FFF;
+}
+.tabrow li.selected:after {
+    box-shadow: -2px 2px 0 #FFF;
+}.tabrow li:before {
+    box-shadow: 2px 2px 0 #ECECEC;
+}
+.tabrow li:after {
+    box-shadow: -2px 2px 0 #ECECEC;
+}
+.tabrow li.selected:before {
+    box-shadow: 2px 2px 0 #FFF;
+}
+.tabrow li.selected:after {
+    box-shadow: -2px 2px 0 #FFF;
+}
+
+.tabrow li {
+    background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
+    text-shadow: 0 1px #FFF;
+    margin: 0 -5px;
+    padding: 0 20px;
+}
+
+.tabrow li:first-of-type {
+    margin-left: 0px;
+    border-left: 0px;
+}
+
+.tabrow li:first-of-type:before {
+    /* all: reset; */
+    box-shadow: none;
+    border-bottom-right-radius: none;
+    border-width: none;
+    border: none;
+}
+
+.consoles-list {
+    position: relative;
+    width: 660px;
+    min-width: 300px;
+}
+
+#app-center .re-console-container {
+    border-top-left-radius: 0px;
 }

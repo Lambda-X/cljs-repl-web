@@ -199,6 +199,7 @@
         (if-not (= :narrow @media-query)
           [v-box
            :gap "8px"
+           :style {:margin-top "24px"}
            :children children]
           [h-box
            :gap "8px"
@@ -578,51 +579,30 @@
                            (app/create-dictionary (common/source-without-prompt (.getValue %)) my-console-key)
                            (utils/align-suggestions-list %2))}))
 
-(defn render-console [console-key]
-  (let [current-console (subscribe [:get-current-console])
-        items (subscribe [:get-console-items console-key])
-        text  (subscribe [:get-console-current-text console-key])]
-    (reagent/create-class
-     {:reagent-render
-      (fn [console-key]
-        [:div
-         [:div.re-console-container
-          {:style {:display (if (= (str console-key) @current-console) "inline-block" "none")}
-           :on-click #(dispatch [:focus-console-editor console-key])}
-          [:div.re-console
-           [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
-           [editor/console-editor console-key text]]]
-         (when (= console-key @current-console)
-           [re-console/mode-line console-key])])
-      :component-did-update
-      (fn [this]
-        (common/scroll-to-el-bottom! (.-firstChild (reagent/dom-node this))))})))
-
-(defn consoles-focus [consoles current-console]
-  (doall
-   (map #(if (= % current-console)
-           (dispatch [:focus % true])
-           (dispatch [:focus % false]))
-        consoles)))
-
-(defn render-consoles-list [consoles current-console]
-  [:ul
-   (map (fn [[k v]] 
-          [:li {:className (name k)
-                :style {:color (if (= (name k) current-console)
-                                 "yellow"
-                                 "white")}
-                :on-click #(do (dispatch [:switch-console k])
-                               (dispatch [:focus-console-editor k])
-                               ;; (dispatch [:focus console true])
-                               )}
-           v])
-        consoles)])
-
-(defn render-consoles [consoles]
-  (mapv (fn [console]
-          [render-console console])
-        consoles))
+(defn render-consoles-list []
+  (let [consoles (subscribe [:get-consoles])
+        current-console (subscribe [:get-current-console])]
+    (fn []
+      (let [consoles-map @consoles
+            consoles-ids (map name (keys consoles-map))
+            next-console-id (utils/next-console-id consoles-ids)]
+        [:ul.tabrow
+         (map (fn [[k v]]
+                [:li {:className (when (= (name k) @current-console)
+                                   "selected")
+                      :on-click #(do (dispatch [:switch-console k])
+                                     (dispatch [:focus-console-editor k]))}
+                 v])
+              consoles-map)
+         [:li {:className "new"
+               :on-click #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                              (dispatch [:console-alias next-console-id "cljs.user"])
+                              (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
+                                                                   :keys-handling {:visible-items 6
+                                                                                   :item-height 20}}])
+                              (dispatch [:focus-console-editor next-console-id])
+                              (dispatch [:switch-console next-console-id]))}
+          "+"]]))))
 
 (defn completion-list
   "Render list of the items to autocomplete.
@@ -668,8 +648,43 @@
                                        item]))
                                   items-to-re-complete))]))})))
 
+(defn render-console [console-key]
+  (let [current-console (subscribe [:get-current-console])
+        items (subscribe [:get-console-items console-key])
+        text  (subscribe [:get-console-current-text console-key])]
+    (reagent/create-class
+     {:reagent-render
+      (fn [console-key]
+        [:div
+         [:div.re-console-container
+          {:style {:display (if (= (str console-key) @current-console) "inline-block" "none")}
+           :on-click #(dispatch [:focus-console-editor console-key])}
+          [:div.re-console
+           [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
+           [editor/console-editor console-key text]]]
+         (when (= console-key @current-console)
+           [re-console/mode-line console-key])
+         ])
+      :component-did-update
+      (fn [this]
+        (common/scroll-to-el-bottom! (.-firstChild (reagent/dom-node this))))})))
+
+(defn consoles-focus [consoles current-console]
+  (doall
+   (map #(if (= % current-console)
+           (dispatch [:focus % true])
+           (dispatch [:focus % false]))
+        consoles)))
+
+(defn render-consoles [consoles-ids]
+  [:div#consoles
+   [render-consoles-list]
+   (map (fn [console]
+          [render-console console])
+        consoles-ids)])
+
 (defn change-alias [console-ids]
-  (doall (map (fn [console-id] 
+  (doall (map (fn [console-id]
                 (let [new-ns? @(subscribe [:changed-ns? console-id])]
                   (when new-ns?
                     (dispatch [:console-alias (keyword console-id) new-ns?]))))
@@ -682,23 +697,10 @@
     (fn repl-component-form2 []
       (let [consoles-map (into (sorted-map) @consoles)
             consoles-ids (map name (keys consoles-map))
-            consoles-aliases (vals consoles-map)
             current-console-id @current-console
-            next-console-id (utils/next-console-id consoles-ids)
-            rendered-consoles (render-consoles consoles-ids)
-            children (reduce into [[[cljs-buttons current-console-id]
-                                    [button
-                                     :label             "add console"
-                                     :on-click          #(do (dispatch [:init-console next-console-id (options next-console-id)])
-                                                             (dispatch [:console-alias next-console-id "cljs.user"])
-                                                             (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
-                                                                                                  :keys-handling {:visible-items 6
-                                                                                                                  :item-height 20}}])
-                                                             (dispatch [:focus-console-editor next-console-id])
-                                                             (dispatch [:switch-console next-console-id]))]
-                                    [render-consoles-list consoles-map current-console-id]
-                                    [completion-list]]
-                                   (render-consoles consoles-ids)])]
+            children [[cljs-buttons current-console-id]
+                      [render-consoles consoles-ids]
+                      [completion-list]]]
         (consoles-focus consoles-ids current-console-id)
         (change-alias consoles-ids)
         (if (= :narrow @media-query)
