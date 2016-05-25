@@ -581,28 +581,45 @@
 
 (defn render-consoles-list []
   (let [consoles (subscribe [:get-consoles])
-        current-console (subscribe [:get-current-console])]
+        current-console-sub (subscribe [:get-current-console])]
     (fn []
-      (let [consoles-map @consoles
-            consoles-ids (map name (keys consoles-map))
-            next-console-id (utils/next-console-id consoles-ids)]
+      (let [consoles-ids @consoles
+            next-console-id (utils/next-console-id consoles-ids)
+            current-console @current-console-sub
+            consoles-count (count consoles-ids)]
+        (.log js/console (count consoles-ids))
         [:ul.tabrow
-         (map (fn [[k v]]
-                [:li {:className (when (= (name k) @current-console)
+         {:style {:width "660px"}}
+         (map (fn [console]
+                [:li {:className (when (= console current-console)
                                    "selected")
-                      :on-click #(do (dispatch [:switch-console k])
-                                     (dispatch [:focus-console-editor k]))}
-                 v])
-              consoles-map)
-         [:li {:className "new"
-               :on-click #(do (dispatch [:init-console next-console-id (options next-console-id)])
-                              (dispatch [:console-alias next-console-id "cljs.user"])
-                              (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
-                                                                   :keys-handling {:visible-items 6
-                                                                                   :item-height 20}}])
-                              (dispatch [:focus-console-editor next-console-id])
-                              (dispatch [:switch-console next-console-id]))}
-          "+"]]))))
+                      :style (when (> consoles-count 6)
+                               {:width (cond (= console current-console) "120px"
+                                             (= consoles-count 20) "38px"
+                                             :else (str (+ 10 (/ 500 (- consoles-count 1))) "px"))
+                                    :line-height "24px"
+                                    :overflow "hidden"})}
+                 [:div.console-item
+                  [:p {:className "console-name"
+                       :on-click #(do (dispatch [:switch-console console])
+                                      (dispatch [:focus-console-editor console]))}
+                   console]
+
+                  (when (or (< consoles-count 8) (= console current-console))
+                    [:p {:className "close close-console"
+                         :on-click #(dispatch [:delete-console console])}
+                     "x"])]])
+              consoles-ids)
+         (when (< consoles-count 20)
+           [:li {:className "new"
+                 :on-click #(do (dispatch [:init-console next-console-id (options next-console-id)])
+                                (dispatch [:console-alias next-console-id "cljs.user"])
+                                (dispatch [:options next-console-id {:trim-chars "[](){}#'@^`~."
+                                                                     :keys-handling {:visible-items 6
+                                                                                     :item-height 20}}])
+                                (dispatch [:focus-console-editor next-console-id])
+                                (dispatch [:switch-console next-console-id]))}
+            [:div.console-item [:p.new-console "+"]]])]))))
 
 (defn completion-list
   "Render list of the items to autocomplete.
@@ -677,6 +694,7 @@
         consoles)))
 
 (defn render-consoles [consoles-ids]
+  (.log js/console (str consoles-ids))
   [:div#consoles
    [render-consoles-list]
    (map (fn [console]
@@ -695,8 +713,7 @@
         consoles (subscribe [:get-consoles])
         current-console (subscribe [:get-current-console])]
     (fn repl-component-form2 []
-      (let [consoles-map (into (sorted-map) @consoles)
-            consoles-ids (map name (keys consoles-map))
+      (let [consoles-ids @consoles
             current-console-id @current-console
             children [[cljs-buttons current-console-id]
                       [render-consoles consoles-ids]

@@ -562,8 +562,8 @@ li.re-completion-selected {
     line-height: 24px;
 }
 .tabrow li {
-    margin: 0 10px;
-    padding: 0 10px;
+    /* margin: 0 10px; */
+    /* padding: 0 10px; */
     border: 1px solid #AAA;
     background: #ECECEC;
     display: inline-block;
@@ -585,7 +585,7 @@ li.re-completion-selected {
     width: 100%;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid #AAA;
+    /* border-bottom: 1px solid #AAA; */
     z-index: 1;
 }
 
@@ -667,8 +667,20 @@ li.re-completion-selected {
     background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
     text-shadow: 0 1px #FFF;
     margin: 0 -5px;
-    padding: 0 20px;
+    /* padding: 0 14px; */
+    height: 26px;
 }
+
+.tabrow li {
+    width: 110px;
+    overflow: hidden;
+}
+
+.tabrow li.selected {
+    width: 110px;
+    overflow: hidden;
+}
+
 
 .tabrow li:first-of-type {
     margin-left: 0px;
@@ -691,4 +703,40 @@ li.re-completion-selected {
 
 #app-center .re-console-container {
     border-top-left-radius: 0px;
+}
+
+.console-name {
+    cursor: pointer;
+    padding-left: 5px;
+    text-align: center;
+    width: 80px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+p.new-console {
+    cursor:pointer;
+}
+
+p.close-console {
+    width: 20px;
+    margin-bottom: 0px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+p.new-console {
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
+    margin-bottom: 0px;
+    margin-left: 5px;
+    padding: 0 7px;
+    /* width: 10px; */
+    text-align: center;
+}
+
+.tabrow li.new {
+    width: 40px;
 }

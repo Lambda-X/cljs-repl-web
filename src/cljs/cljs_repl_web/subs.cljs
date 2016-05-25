@@ -18,7 +18,9 @@
  (fn [db [_]]
    (make-reaction
     (fn get-consoles []
-      (into (sorted-map) (:consoles-aliases @db))))))
+      (view-utils/sort-consoles (keys (:consoles @db)))
+      ;;(into (sorted-map) (:consoles-aliases @db))
+      ))))
 
 (register-sub
  :get-current-console

@@ -254,3 +254,13 @@
                        (sort-by second >)
                        first)]
     (keyword (str name "-" (inc id)))))
+
+(defn sort-consoles [consoles-ids]
+  (map (fn [[k v]]
+         (str k "-" v))
+       (->> consoles-ids
+            (map (comp #(-> %
+                            name
+                            (clojure.string/split "-")
+                            (update 1 cljs.reader/read-string))))
+            (sort-by second <))))

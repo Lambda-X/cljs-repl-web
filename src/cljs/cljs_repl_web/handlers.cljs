@@ -133,3 +133,11 @@
  :switch-console
  (fn switch-cosnole [db [_ console-key]]
    (assoc db :current-console (name console-key))))
+
+(register-handler
+ :delete-console
+ (fn delete-console [db [_ console-key]]
+   (-> db
+       (update-in [:consoles] dissoc console-key)
+       (update-in [:consoles-aliases] dissoc (keyword console-key))
+       (update-in [:re-complete :linked-components] dissoc (keyword console-key)))))
