@@ -587,7 +587,7 @@
             next-console-id (utils/next-console-id consoles-ids)
             current-console @current-console-sub
             consoles-count (count consoles-ids)
-            previous-console (utils/previous-console consoles-ids current-console)]
+            previous-next-console (utils/previous-next-console consoles-ids current-console)]
         ;;(.log js/console (str consoles-ids))
         ;;(.log js/console current-console)
         (.log js/console (str @(subscribe [:get-consoles])))
@@ -612,7 +612,7 @@
                          :style {:display (when (and (> consoles-count 6) (not= console current-console)) "none")}
                          :on-click #(do (dispatch [:delete-console console])
                                         (when (= console current-console)
-                                          (dispatch [:switch-console previous-console])))}
+                                          (dispatch [:switch-console previous-next-console])))}
                      "x"])]])
               consoles-ids)
          (when (< consoles-count 10)

@@ -265,11 +265,12 @@
                             (update 1 cljs.reader/read-string))))
             (sort-by second <))))
 
-(defn previous-console [consoles-list current-console]
+(defn previous-next-console [consoles-list current-console]
   (let [consoles-vec (vec consoles-list)
-        previous-console-index (->> consoles-vec
+        current-console-index (->> consoles-vec
                                     (map-indexed vector)
                                     (filter #(= current-console (second %)))
-                                    ffirst
-                                    dec)]
-    (get consoles-vec previous-console-index)))
+                                    ffirst)] 
+    (get consoles-vec (if (= current-console (first consoles-list))
+                        (inc current-console-index)
+                        (dec current-console-index)))))
