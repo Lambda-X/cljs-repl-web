@@ -465,7 +465,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
     min-height: 186px;
 }
 
-.re-console-mode-line {
+.re-console-mode-line, .tabrow {
     font-size: 12px;
     width: 660px;
     min-width: 300px;
@@ -482,7 +482,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-height: 80px;
     }
 
-    .re-console-mode-line {
+    .re-console-mode-line, .tabrow {
         font-size: 10px;
         width: 300px;
         min-width: 120px;
@@ -504,7 +504,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
         min-height: 75px;
     }
 
-    .re-console-mode-line {
+    .re-console-mode-line, .tabrow {
         width: 460px;
         min-width: 220px;
     }
@@ -554,30 +554,13 @@ li.re-completion-selected {
 }
 
 /* Styles for multiple-consoles */
-
 .tabrow {
     list-style: none;
     margin: 0;
     padding: 0;
     line-height: 24px;
-}
-.tabrow li {
-    /* margin: 0 10px; */
-    /* padding: 0 10px; */
-    border: 1px solid #AAA;
-    background: #ECECEC;
-    display: inline-block;
-}
-
-.tabrow li.selected {
-    background: #FFF;
-    color: #000;
-}
-
-.tabrow {
     position: relative;
 }
-
 
 .tabrow:after {
     position: absolute;
@@ -592,13 +575,22 @@ li.re-completion-selected {
 .tabrow:before {
     z-index: 1;
 }
+
 .tabrow li {
+    /* margin: 0 10px; */
+    /* padding: 0 10px; */
+    border: 1px solid #AAA;
+    /* background: #ECECEC; */
+    display: inline-block;
     position: relative;
     z-index: 0;
-}
-.tabrow li.selected {
-    z-index: 2;
-    border-bottom-color: #FFF;
+
+    background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
+    text-shadow: 0 1px #FFF;
+    margin: 0 -5px;
+    /* padding: 0 14px; */
+    height: 26px;
+    width: 110px;
 }
 
 .tabrow li:before,
@@ -608,79 +600,38 @@ li.re-completion-selected {
     width: 6px;
     height: 6px;
     content: " ";
+    border: 1px solid #AAA;
 }
+
 .tabrow li:before {
     left: -6px;
-}
-.tabrow li:after {
-    right: -6px;
-}
-.tabrow li:after, .tabrow li:before {
-                      border: 1px solid #AAA;
-                  }
-
-.tabrow li {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-}
-.tabrow li:before {
     border-bottom-right-radius: 6px;
     border-width: 0 1px 1px 0;
+    box-shadow: 2px 2px 0 #ECECEC;
 }
+
 .tabrow li:after {
+    right: -6px;
     border-bottom-left-radius: 6px;
     border-width: 0 0 1px 1px;
-}
-
-.tabrow li:before {
-    box-shadow: 2px 2px 0 red;
-}
-.tabrow li:after {
-    box-shadow: -2px 2px 0 red;
-}
-
-.tabrow li:before {
-    box-shadow: 2px 2px 0 #ECECEC;
-}
-.tabrow li:after {
     box-shadow: -2px 2px 0 #ECECEC;
-}
-.tabrow li.selected:before {
-    box-shadow: 2px 2px 0 #FFF;
-}
-.tabrow li.selected:after {
-    box-shadow: -2px 2px 0 #FFF;
-}.tabrow li:before {
-    box-shadow: 2px 2px 0 #ECECEC;
-}
-.tabrow li:after {
-    box-shadow: -2px 2px 0 #ECECEC;
-}
-.tabrow li.selected:before {
-    box-shadow: 2px 2px 0 #FFF;
-}
-.tabrow li.selected:after {
-    box-shadow: -2px 2px 0 #FFF;
-}
-
-.tabrow li {
-    background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
-    text-shadow: 0 1px #FFF;
-    margin: 0 -5px;
-    /* padding: 0 14px; */
-    height: 26px;
-}
-
-.tabrow li {
-    width: 110px;
-    overflow: hidden;
 }
 
 .tabrow li.selected {
+    z-index: 2;
+    border-bottom-color: #FFF;
     width: 110px;
-    overflow: hidden;
+    background: #FFF;
+    color: #000;
 }
 
+.tabrow li.selected:before {
+    box-shadow: 2px 2px 0 #FFF;
+}
+
+.tabrow li.selected:after {
+    box-shadow: -2px 2px 0 #FFF;
+}
 
 .tabrow li:first-of-type {
     margin-left: 0px;
@@ -694,6 +645,12 @@ li.re-completion-selected {
     border-width: none;
     border: none;
 }
+
+.tabrow li {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
 
 .consoles-list {
     position: relative;

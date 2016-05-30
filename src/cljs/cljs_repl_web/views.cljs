@@ -593,7 +593,6 @@
         (.log js/console (str @(subscribe [:get-consoles])))
         (.log js/console @(subscribe [:get-current-console]))
         [:ul.tabrow
-         {:style {:width "660px"}}
          (map (fn [console]
                 [:li {:className (when (= console current-console)
                                    "selected")
@@ -680,7 +679,7 @@
       (fn [console-key]
         [:div
          [:div.re-console-container
-          {:style {:display (if (= (str console-key) @current-console) "inline-block" "none")}
+          {:style {:display (when-not (= (str console-key) @current-console) "none")}
            :on-click #(dispatch [:focus-console-editor console-key])}
           [:div.re-console
            [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
