@@ -600,8 +600,7 @@
                                {:width (cond (= console current-console) "120px"
                                              (= consoles-count 10) "68px"
                                              :else (str (+ 10 (/ 500 (- consoles-count 1))) "px"))
-                                :line-height "24px"
-                                :overflow "hidden"})}
+                                :line-height "24px"})}
                  [:div.console-item
                   [:p {:className "console-name"
                        :on-click #(do (dispatch [:switch-console console])
@@ -610,7 +609,7 @@
 
                   (when-not (= consoles-count 1)
                     [:p {:className "close close-console"
-                         :style {:display (when (and (> consoles-count 6) (not= console current-console)) "none")} 
+                         :style {:display (when (and (> consoles-count 6) (not= console current-console)) "none")}
                          :on-click #(do (dispatch [:delete-console console])
                                         (when (= console current-console)
                                           (dispatch [:switch-console previous-console])))}
