@@ -16,11 +16,13 @@
 (register-sub
  :get-consoles
  (fn [db [_]]
-   (make-reaction
-    (fn get-consoles []
-      (view-utils/sort-consoles (keys (:consoles @db)))
-      ;;(into (sorted-map) (:consoles-aliases @db))
-      ))))
+   (make-reaction (fn get-consoles []
+                    (view-utils/sort-consoles
+                     (filter some? (map (fn [[k v]]
+                                          (if (:deleted v)
+                                            nil
+                                            k))
+                                        (:consoles @db))))))))
 
 (register-sub
  :get-current-console

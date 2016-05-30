@@ -245,8 +245,8 @@
 (defn next-console-id
   "Function takes previous console ids (keywords) list as argument and
    returns next console-id as keyword"
-  [previous-console-ids]
-  (let [[name id] (->> previous-console-ids
+  [console-ids]
+  (let [[name id] (->> console-ids
                        (map (comp #(-> %
                                        name
                                        (clojure.string/split "-")
@@ -264,3 +264,12 @@
                             (clojure.string/split "-")
                             (update 1 cljs.reader/read-string))))
             (sort-by second <))))
+
+(defn previous-console [consoles-list current-console]
+  (let [consoles-vec (vec consoles-list)
+        previous-console-index (->> consoles-vec
+                                    (map-indexed vector)
+                                    (filter #(= current-console (second %)))
+                                    ffirst
+                                    dec)]
+    (get consoles-vec previous-console-index)))

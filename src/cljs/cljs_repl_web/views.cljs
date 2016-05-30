@@ -586,8 +586,12 @@
       (let [consoles-ids @consoles
             next-console-id (utils/next-console-id consoles-ids)
             current-console @current-console-sub
-            consoles-count (count consoles-ids)]
-        (.log js/console (count consoles-ids))
+            consoles-count (count consoles-ids)
+            previous-console (utils/previous-console consoles-ids current-console)]
+        ;;(.log js/console (str consoles-ids))
+        ;;(.log js/console current-console)
+        (.log js/console (str @(subscribe [:get-consoles])))
+        (.log js/console @(subscribe [:get-current-console]))
         [:ul.tabrow
          {:style {:width "660px"}}
          (map (fn [console]
@@ -595,22 +599,24 @@
                                    "selected")
                       :style (when (> consoles-count 6)
                                {:width (cond (= console current-console) "120px"
-                                             (= consoles-count 20) "38px"
+                                             (= consoles-count 10) "68px"
                                              :else (str (+ 10 (/ 500 (- consoles-count 1))) "px"))
-                                    :line-height "24px"
-                                    :overflow "hidden"})}
+                                :line-height "24px"
+                                :overflow "hidden"})}
                  [:div.console-item
                   [:p {:className "console-name"
                        :on-click #(do (dispatch [:switch-console console])
                                       (dispatch [:focus-console-editor console]))}
                    console]
 
-                  (when (or (< consoles-count 8) (= console current-console))
+                  (when-not (= consoles-count 1)
                     [:p {:className "close close-console"
-                         :on-click #(dispatch [:delete-console console])}
+                         :on-click #(do (dispatch [:delete-console console])
+                                        (when (= console current-console)
+                                          (dispatch [:switch-console previous-console])))}
                      "x"])]])
               consoles-ids)
-         (when (< consoles-count 20)
+         (when (< consoles-count 10)
            [:li {:className "new"
                  :on-click #(do (dispatch [:init-console next-console-id (options next-console-id)])
                                 (dispatch [:console-alias next-console-id "cljs.user"])
@@ -680,8 +686,7 @@
            [re-console/console-items console-key @items (-> (options console-key) :eval-opts :to-str-fn)]
            [editor/console-editor console-key text]]]
          (when (= console-key @current-console)
-           [re-console/mode-line console-key])
-         ])
+           [re-console/mode-line console-key])])
       :component-did-update
       (fn [this]
         (common/scroll-to-el-bottom! (.-firstChild (reagent/dom-node this))))})))
@@ -694,7 +699,7 @@
         consoles)))
 
 (defn render-consoles [consoles-ids]
-  (.log js/console (str consoles-ids))
+  ;;(.log js/console (str consoles-ids))
   [:div#consoles
    [render-consoles-list]
    (map (fn [console]
@@ -719,7 +724,7 @@
                       [render-consoles consoles-ids]
                       [completion-list]]]
         (consoles-focus consoles-ids current-console-id)
-        (change-alias consoles-ids)
+        ;;(change-alias consoles-ids)
         (if (= :narrow @media-query)
           [v-box
            :size "1 1 auto"
