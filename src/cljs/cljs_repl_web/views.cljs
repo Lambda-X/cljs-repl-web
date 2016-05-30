@@ -610,6 +610,7 @@
 
                   (when-not (= consoles-count 1)
                     [:p {:className "close close-console"
+                         :style {:display (when (and (> consoles-count 6) (not= console current-console)) "none")} 
                          :on-click #(do (dispatch [:delete-console console])
                                         (when (= console current-console)
                                           (dispatch [:switch-console previous-console])))}
