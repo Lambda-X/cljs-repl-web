@@ -456,7 +456,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 /* override re-console style */
 
 /* :wide */
-.re-console-container {
+.re-console-container, #consoles {
     /*  Note that this element must be explicity sized and positioned absolute or relative. */
     position: relative;
     width: 660px;
@@ -473,7 +473,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 
 /* :narrow */
 @media only screen and (max-width: 480px) {
-    .re-console-container {
+    .re-console-container, #consoles {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 300px;
@@ -495,7 +495,7 @@ table[class^="code-tbl-"] td, table[class*=" code-tbl-"] td {
 
 /* :medium */
 @media only screen and (min-width: 481px) and (max-width: 960px) {
-    .re-console-container {
+    .re-console-container, #consoles {
         /*  Note that this element must be explicity sized and positioned absolute or relative. */
         position: relative;
         width: 460px;
@@ -701,7 +701,7 @@ li.re-completion-selected {
     min-width: 300px;
 }
 
-#app-center .re-console-container {
+#app-center .re-console-container, #consoles {
     border-top-left-radius: 0px;
 }
 
