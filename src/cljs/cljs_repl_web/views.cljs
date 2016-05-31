@@ -581,26 +581,28 @@
 
 (defn render-consoles-list []
   (let [consoles (subscribe [:get-consoles])
-        current-console-sub (subscribe [:get-current-console])]
+        current-console-sub (subscribe [:get-current-console])
+        console-width-sub (subscribe [:get-console-width])]
     (fn []
       (let [consoles-ids @consoles
             next-console-id (utils/next-console-id consoles-ids)
             current-console @current-console-sub
             consoles-count (count consoles-ids)
-            previous-next-console (utils/previous-next-console consoles-ids current-console)]
-        ;;(.log js/console (str consoles-ids))
-        ;;(.log js/console current-console)
-        (.log js/console (str @(subscribe [:get-consoles])))
-        (.log js/console @(subscribe [:get-current-console]))
+            previous-next-console (utils/previous-next-console consoles-ids current-console)
+            console-width @console-width-sub]
         [:ul.tabrow
          (map (fn [console]
                 [:li {:className (when (= console current-console)
                                    "selected")
-                      :style (when (> consoles-count 6)
-                               {:width (cond (= console current-console) "120px"
-                                             (= consoles-count 10) "68px"
-                                             :else (str (+ 10 (/ 500 (- consoles-count 1))) "px"))
-                                :line-height "24px"})}
+                      :style (cond (and (>= console-width 660) (> consoles-count 6))  {:width (cond (= console current-console) "120px"
+                                                                                                    (= consoles-count 10) "69px"
+                                                                                                    :else (str (+ 10 (/ (- console-width 120 69) (- consoles-count 1))) "px"))
+                                                                                       :line-height "24px"}
+                                   (< console-width 660) {:width (cond (= consoles-count 2) (str (/ (- console-width 30) 2) "px")
+                                                                       (= console current-console) "120px"
+                                                                       (= consoles-count 10) (str (+ 10 (/ (- (- console-width 120) (/ console-width 10)) 9)) "px")
+                                                                       :else (str (+ 10 (/ (- (- console-width 130) (/ console-width 10)) (- consoles-count 1))) "px"))
+                                                          :line-height "24px"})}
                  [:div.console-item
                   [:p {:className "console-name"
                        :on-click #(do (dispatch [:switch-console console])
@@ -609,7 +611,7 @@
 
                   (when-not (= consoles-count 1)
                     [:p {:className "close close-console"
-                         :style {:display (when (and (> consoles-count 6) (not= console current-console)) "none")}
+                         :style {:display (when (and (>= console-width 660) (> consoles-count 6) (not= console current-console)) "none")}
                          :on-click #(do (dispatch [:delete-console console])
                                         (when (= console current-console)
                                           (dispatch [:switch-console previous-next-console])))}
@@ -698,12 +700,16 @@
         consoles)))
 
 (defn render-consoles [consoles-ids]
-  ;;(.log js/console (str consoles-ids))
-  [:div#consoles
-   [render-consoles-list]
-   (map (fn [console]
-          [render-console console])
-        consoles-ids)])
+  (reagent/create-class
+   {:reagent-render
+    (fn [consoles-ids]
+      [:div#consoles
+       [render-consoles-list]
+       (map (fn [console]
+              [render-console console])
+            consoles-ids)])
+    :component-did-mount (fn [this]
+                           (dispatch [:console-width (.-offsetWidth (reagent/dom-node this))]))}))
 
 (defn change-alias [console-ids]
   (doall (map (fn [console-id]

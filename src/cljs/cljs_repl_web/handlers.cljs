@@ -126,7 +126,7 @@
 
 (register-handler
  :console-alias
- (fn consoles-with-aliases [db [_ console-id alias]] 
+ (fn consoles-with-aliases [db [_ console-id alias]]
    (assoc-in db [:consoles-aliases console-id] alias)))
 
 (register-handler
@@ -141,3 +141,8 @@
        (assoc-in [:consoles console-key :deleted] true)
        (update-in [:consoles-aliases] dissoc (keyword console-key))
        (update-in [:re-complete :linked-components] dissoc (keyword console-key)))))
+
+(register-handler
+ :console-width
+ (fn console-width [db [_ width]]
+   (assoc-in db [:console-width] width)))

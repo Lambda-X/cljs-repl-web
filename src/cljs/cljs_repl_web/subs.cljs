@@ -137,4 +137,14 @@
                             (app/closing-excluded-chars excluded-chars)))
                       )))))
 
+(register-sub
+ :get-console-width
+ (fn [db [_]]
+   (make-reaction
+    (fn get-console-width []
+      (:console-width @db)))))
+
+
+
+
 ;; )
