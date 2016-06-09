@@ -25,7 +25,7 @@
                        [org.clojure/core.async      "0.2.374"]
                        [reagent                     "0.6.0-SNAPSHOT"]
                        [re-frame                    "0.7.0"]
-                       [replumb/replumb             "0.2.2-SNAPSHOT"]
+                       [replumb/replumb             "0.2.2"]
                        [cljsjs/highlight            "8.4-0"]
                        [re-console                  "0.1.4-SNAPSHOT"]
                        [re-com                      "0.8.1"]
@@ -122,7 +122,7 @@
   {:type :dev
    :props {"CLJS_LOG_LEVEL" "DEBUG"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/dev/cljs" "dev"}
-         :resource-paths #{"resources/public/"}}
+         :resource-paths #{"resources/public/" "sources/"}}
    :cljs {:source-map true
           :optimizations :simple
           :compiler-options dev-compiler-options}
@@ -135,7 +135,7 @@
   {:type :prod
    :props {"CLJS_LOG_LEVEL" "INFO"}
    :env {:source-paths #{"src/clj" "src/cljs" "env/prod/cljs"}
-         :resource-paths #{"resources/public/"}}
+         :resource-paths #{"resources/public/" "sources/"}}
    :cljs {:optimizations :simple
           :compiler-options prod-compiler-options}
    :test-cljs {:optimizations :simple

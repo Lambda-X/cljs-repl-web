@@ -12,7 +12,9 @@
   [verbose? src-paths]
   (merge (replumb/options :browser src-paths io/fetch-file!)
          {:warning-as-error true
-          :verbose verbose?}))
+          :verbose verbose?
+          :init {:nss {:require #{'[init-require.test1 :refer [var1 fun1]]
+                                  '[init-require.test2 :as t2]}}}}))
 
 (defn read-eval-call [opts cb source]
   (let [ns (replumb-repl/current-ns)]
@@ -42,4 +44,3 @@
    :to-str-fn   (partial replumb/result->string false true)
    :evaluate    (partial read-eval-call
                          (replumb-options verbose src-path))})
-
