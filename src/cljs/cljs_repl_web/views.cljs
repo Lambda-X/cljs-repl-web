@@ -76,7 +76,7 @@
                   [:a.tour {:href "https://github.com/shaunlebron/parinfer"} " parinfer"]
                   [:span " to our REPL with the default input mode as Indent Mode (the other two being Paren Mode and none)."]
                   [:h5 "Note:"]
-                  [:span "If you write for exmaple "]
+                  [:span "If you write for example "]
                   [:span.mode "(def a"]
                   [:span " and press ENTER the cursor will be placed on a newline automatically (none mode)."]
                   [:span "This is not always the case with Indent Mode, which will try to balance parenthesis causing the previous expression to be transformed to "]
