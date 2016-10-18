@@ -9,7 +9,7 @@ Plumbing kindly provided by
 
 This project also employs the following libraries, whose authors we thank:
 
-* [regent](https://github.com/reagent-project/reagent)
+* [reagent](https://github.com/reagent-project/reagent)
 * [re-frame](https://github.com/Day8/re-frame)
 * [re-com](https://github.com/Day8/re-com)
 * [markdown-clj](https://github.com/yogthos/markdown-clj)
