@@ -1,22 +1,23 @@
-(def clojure-dep '[org.clojure/clojure "1.8.0"])
-(def clojurescript-dep '[org.clojure/clojurescript "1.8.40"])
+(def clojure-dep '[org.clojure/clojure "1.9.0-alpha4"])
+(def clojurescript-dep '[org.clojure/clojurescript "1.9.36"])
 
 (set-env!
  :source-paths #{"dev"}
  :dependencies (conj '[;; Boot deps
                        [adzerk/boot-cljs            "1.7.228-1" :scope "test"]
                        [pandeiro/boot-http          "0.7.2"     :scope "test"]
-                       [adzerk/boot-reload          "0.4.4"     :scope "test"]
+                       [adzerk/boot-reload          "0.4.8"     :scope "test"]
                        [degree9/boot-semver         "1.2.4"     :scope "test"]
                        [replumb/boot-pack-source    "0.1.2-1"   :scope "test"]
                        [confetti/confetti           "0.1.2-SNAPSHOT"     :scope "test"]
                        [adzerk/env                  "0.3.0"     :scope "test"]
 
                        ;; Repl
-                       [adzerk/boot-cljs-repl       "0.3.0"  :scope "test"]
-                       [com.cemerick/piggieback     "0.2.1"  :scope "test"]
-                       [weasel                      "0.7.0"  :scope "test"]
-                       [org.clojure/tools.nrepl     "0.2.12" :scope "test"]
+                       [adzerk/boot-cljs-repl       "0.3.0"    :scope "test"]
+                       [com.cemerick/piggieback     "0.2.1"    :scope "test"]
+                       [weasel                      "0.7.0"    :scope "test"]
+                       [org.clojure/tools.nrepl     "0.2.12"   :scope "test"]
+                       [com.cognitect/transit-clj   "0.8.285"  :scope "test"] ;; makes repl faster
 
                        ;; Tests
                        [crisptrutski/boot-cljs-test "0.2.2-SNAPSHOT" :scope "test"]
@@ -40,7 +41,8 @@
                        [day8/re-frame-tracer        "0.1.0-SNAPSHOT"]
                        [cljsjs/codemirror           "5.10.0-0"]
                        [adzerk/cljs-console         "0.1.1"]
-                       [re-complete                 "0.1.4-1-SNAPSHOT"]]
+                       [re-complete                 "0.1.4-1-SNAPSHOT"]
+                       [com.andrewmcveigh/cljs-time "0.5.0-alpha1"]]
                      clojure-dep clojurescript-dep))
 
 (def pack-source-deps (conj '[[replumb/replumb             "0.2.2-SNAPSHOT"]
